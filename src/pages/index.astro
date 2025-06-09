@@ -9,7 +9,15 @@ import Team from '../components/Team.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 ---
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4MEPY7MLVN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-4MEPY7MLVN');
+</script>
 <Layout 
 	title="SAAIL Lab - Sustainable AI for Agriculture & Intelligent Livelihoods"
 	description="SAAIL Lab at IIT Madras Zanzibar pioneers transformative AI solutions for sustainable agriculture and intelligent livelihoods in East Africa through ethical research and innovation."
