@@ -10,7 +10,6 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta name="google-site-verification" content="79eI-0LpoZO40_fi3NrESGSWSn00G909GMgS_4GV6YM" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -18,8 +17,8 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 		<meta name="description" content={description} />
 		
 		<!-- Enhanced SEO Meta Tags -->
-		<meta name="keywords" content="Dr Innocent Nyalala, SAAIL Lab, IIT Madras Zanzibar, AI agriculture, sustainable farming, medical imaging, responsible AI, East Africa, machine learning, precision agriculture, agricultural technology, Tanzania, Zanzibar">
-		<meta name="author" content="Dr. Innocent Nyalala">
+		<meta name="keywords" content="Innocent Nyalala, SAAIL Lab, IIT Madras Zanzibar, AI agriculture, sustainable farming, medical imaging, responsible AI, East Africa, machine learning, precision agriculture, agricultural technology, Tanzania, Zanzibar">
+		<meta name="author" content="Innocent Nyalala">
 		<meta name="robots" content="index, follow">
 		<link rel="canonical" href="https://saaillab.github.io">
 		
@@ -37,10 +36,17 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 		<meta name="twitter:description" content={description}>
 		<meta name="twitter:image" content="https://saaillab.github.io/favicon.svg">
 		
+		<!-- Theme Toggle Script -->
+		<script>
+			// Check for saved theme preference or default to 'light'
+			const theme = localStorage.getItem('theme') || 'light';
+			document.documentElement.setAttribute('data-theme', theme);
+		</script>
+		
 		<title>{title}</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 		
 		<!-- Schema.org Structured Data -->
 		<script type="application/ld+json">
@@ -54,7 +60,7 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 		  "logo": "https://saaillab.github.io/favicon.svg",
 		  "founder": {
 		    "@type": "Person",
-		    "name": "Dr. Innocent Nyalala",
+		    "name": "Innocent Nyalala",
 		    "jobTitle": "Assistant Professor",
 		    "affiliation": {
 		      "@type": "EducationalOrganization",
@@ -99,10 +105,77 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 	</head>
 	<body>
 		<slot />
+		
+		<!-- Back to Top Button -->
+		<button id="backToTop" class="back-to-top" aria-label="Back to top">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+				<path d="M12 19V5M5 12L12 5L19 12"/>
+			</svg>
+		</button>
+		
+		<script>
+			// Back to top and theme functionality
+			document.addEventListener('DOMContentLoaded', function() {
+				const backToTopBtn = document.getElementById('backToTop');
+				
+				// Back to top visibility
+				window.addEventListener('scroll', function() {
+					if (window.scrollY > 300) {
+						backToTopBtn?.classList.add('visible');
+					} else {
+						backToTopBtn?.classList.remove('visible');
+					}
+				});
+				
+				// Back to top click
+				backToTopBtn?.addEventListener('click', function() {
+					window.scrollTo({
+						top: 0,
+						behavior: 'smooth'
+					});
+				});
+			});
+		</script>
 	</body>
 </html>
 
 <style is:global>
+	:root {
+		/* Light theme colors */
+		--bg-primary: #ffffff;
+		--bg-secondary: #f8fafc;
+		--bg-tertiary: #e2e8f0;
+		--text-primary: #1e293b;
+		--text-secondary: #475569;
+		--text-muted: #64748b;
+		--accent-primary: #0f172a;
+		--accent-secondary: #334155;
+		--accent-blue: #1e40af;
+		--accent-green: #059669;
+		--border-color: #e2e8f0;
+		--shadow-light: rgba(0, 0, 0, 0.1);
+		--shadow-medium: rgba(0, 0, 0, 0.15);
+		--accent-blue-rgb: 30, 64, 175;
+	}
+
+	[data-theme="dark"] {
+		/* Dark theme colors */
+		--bg-primary: #0f172a;
+		--bg-secondary: #1e293b;
+		--bg-tertiary: #334155;
+		--text-primary: #f1f5f9;
+		--text-secondary: #cbd5e1;
+		--text-muted: #94a3b8;
+		--accent-primary: #f1f5f9;
+		--accent-secondary: #e2e8f0;
+		--accent-blue: #3b82f6;
+		--accent-green: #10b981;
+		--border-color: #334155;
+		--shadow-light: rgba(0, 0, 0, 0.3);
+		--shadow-medium: rgba(0, 0, 0, 0.4);
+		--accent-blue-rgb: 59, 130, 246;
+	}
+
 	* {
 		margin: 0;
 		padding: 0;
@@ -116,8 +189,9 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 	body {
 		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 		line-height: 1.6;
-		color: #1f2937;
-		background-color: #ffffff;
+		color: var(--text-primary);
+		background-color: var(--bg-primary);
+		transition: background-color 0.3s ease, color 0.3s ease;
 	}
 
 	.container {
@@ -127,7 +201,7 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 	}
 
 	.section {
-		padding: 4rem 0;
+		padding: 5rem 0;
 	}
 
 	.section-title {
@@ -135,14 +209,14 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 		font-weight: 700;
 		text-align: center;
 		margin-bottom: 3rem;
-		color: #1e3a8a;
+		color: var(--text-primary);
 	}
 
 	.section-subtitle {
 		font-size: 1.25rem;
 		font-weight: 500;
 		margin-bottom: 2rem;
-		color: #374151;
+		color: var(--text-secondary);
 	}
 
 	.btn {
@@ -158,44 +232,44 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 	}
 
 	.btn-primary {
-		background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
 		color: white;
-		box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+		box-shadow: 0 4px 12px var(--shadow-light);
 	}
 
 	.btn-primary:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 8px 20px rgba(30, 58, 138, 0.4);
+		box-shadow: 0 8px 20px var(--shadow-medium);
 	}
 
 	.btn-secondary {
-		background: white;
-		color: #1e3a8a;
-		border: 2px solid #1e3a8a;
+		background: var(--bg-primary);
+		color: var(--accent-blue);
+		border: 2px solid var(--accent-blue);
 	}
 
 	.btn-secondary:hover {
-		background: #1e3a8a;
+		background: var(--accent-blue);
 		color: white;
 		transform: translateY(-2px);
 	}
 
 	.card {
-		background: white;
+		background: var(--bg-primary);
 		border-radius: 1rem;
 		padding: 2rem;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4px 12px var(--shadow-light);
 		transition: all 0.3s ease;
-		border: 1px solid #e5e7eb;
+		border: 1px solid var(--border-color);
 	}
 
 	.card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+		box-shadow: 0 12px 24px var(--shadow-medium);
 	}
 
 	.text-gradient {
-		background: linear-gradient(135deg, #1e3a8a 0%, #059669 100%);
+		background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-green) 100%);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
@@ -212,6 +286,49 @@ const { title = "SAAIL Lab - IIT Madras Zanzibar", description = "Sustainable AI
 
 		.container {
 			padding: 0 1rem;
+		}
+	}
+	
+	/* Back to Top Button */
+	.back-to-top {
+		position: fixed;
+		bottom: 2rem;
+		right: 2rem;
+		width: 50px;
+		height: 50px;
+		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
+		color: white;
+		border: none;
+		border-radius: 50%;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 4px 12px var(--shadow-light);
+		transition: all 0.3s ease;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(20px);
+		z-index: 1000;
+	}
+	
+	.back-to-top.visible {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+	
+	.back-to-top:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 16px var(--shadow-medium);
+	}
+
+	@media (max-width: 768px) {
+		.back-to-top {
+			bottom: 1rem;
+			right: 1rem;
+			width: 45px;
+			height: 45px;
 		}
 	}
 </style>
