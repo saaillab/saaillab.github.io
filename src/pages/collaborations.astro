@@ -1,0 +1,245 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+---
+
+<Layout 
+	title="Collaborations - SAAIL Lab"
+	description="Explore our international research collaborations and partnerships with leading universities worldwide at SAAIL Lab, IIT Madras Zanzibar."
+>
+	<ModernHeader />
+	
+	<main class="collaborations-page">
+		<!-- Hero Section -->
+		<section class="collaborations-hero">
+			<div class="container">
+				<div class="hero-content">
+					<h1>International Collaborations</h1>
+					<p class="hero-description">
+						SAAIL Lab maintains active research partnerships with leading universities worldwide, 
+						fostering innovation through international collaboration and knowledge exchange.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Collaborations Grid -->
+		<section class="collaborations-content">
+			<div class="container">
+				<div class="collaborations-grid">
+					<div class="collaboration-card">
+						<div class="collab-flag">🇦🇺</div>
+						<h3>Deakin University</h3>
+						<p class="collab-location">Australia</p>
+						<p class="collab-project">
+							Cotutelle PhD Program in "Agentic AI Framework for Agricultural Technologies" 
+							with Prof. Sunil Aryal and Dr. Kallol Krishna Karmakar.
+						</p>
+						<div class="collab-details">
+							<span class="collab-status active">Active</span>
+							<span class="collab-type">PhD Program</span>
+						</div>
+					</div>
+
+					<div class="collaboration-card">
+						<div class="collab-flag">🇺🇸</div>
+						<h3>Penn State University</h3>
+						<p class="collab-location">USA</p>
+						<p class="collab-project">
+							PlacentaVision medical imaging collaboration focusing on placental weight and volume 
+							estimation from 2D ultrasound for neonatal outcome prediction.
+						</p>
+						<div class="collab-details">
+							<span class="collab-status active">Active</span>
+							<span class="collab-type">Medical Imaging</span>
+						</div>
+					</div>
+
+					<div class="collaboration-card">
+						<div class="collab-flag">🇺🇸</div>
+						<h3>Columbia University</h3>
+						<p class="collab-location">USA</p>
+						<p class="collab-project">
+							AI-driven air quality index monitoring research with Dr. Sathish R. S., 
+							focusing on environmental health applications.
+						</p>
+						<div class="collab-details">
+							<span class="collab-status initiating">Initiating</span>
+							<span class="collab-type">Environmental AI</span>
+						</div>
+					</div>
+
+					<div class="collaboration-card">
+						<div class="collab-flag">🇬🇧</div>
+						<h3>University of Cambridge</h3>
+						<p class="collab-location">United Kingdom</p>
+						<p class="collab-project">
+							Responsible AI framework development with Dr. Soumya Banerjee, 
+							focusing on ethical AI guidelines for African contexts.
+						</p>
+						<div class="collab-details">
+							<span class="collab-status active">Active</span>
+							<span class="collab-type">Responsible AI</span>
+						</div>
+					</div>
+
+					<div class="collaboration-card">
+						<div class="collab-flag">🇨🇳</div>
+						<h3>Nanjing Agricultural University</h3>
+						<p class="collab-location">China</p>
+						<p class="collab-project">
+							Ongoing agricultural technology research collaboration building on Dr. Nyalala's 
+							PhD research and continued partnership.
+						</p>
+						<div class="collab-details">
+							<span class="collab-status ongoing">Ongoing</span>
+							<span class="collab-type">Agriculture Tech</span>
+						</div>
+					</div>
+
+					<div class="collaboration-card">
+						<div class="collab-flag">🇬🇧</div>
+						<h3>University of Salford</h3>
+						<p class="collab-location">United Kingdom</p>
+						<p class="collab-project">
+							Responsible AI development research with Dr. Vikranth Nagaraja, 
+							contributing to ethical AI frameworks.
+						</p>
+						<div class="collab-details">
+							<span class="collab-status active">Active</span>
+							<span class="collab-type">AI Ethics</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<ModernFooter />
+</Layout>
+
+<style>
+	.collaborations-page {
+		padding-top: 90px;
+	}
+
+	.collaborations-hero {
+		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+		padding: 4rem 0;
+		text-align: center;
+	}
+
+	.hero-content h1 {
+		font-size: 3rem;
+		font-weight: 700;
+		color: var(--accent-blue);
+		margin-bottom: 1.5rem;
+	}
+
+	.hero-description {
+		font-size: 1.25rem;
+		color: var(--text-secondary);
+		max-width: 800px;
+		margin: 0 auto;
+		line-height: 1.7;
+	}
+
+	.collaborations-content {
+		padding: 5rem 0;
+		background: var(--bg-primary);
+	}
+
+	.collaborations-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		gap: 2rem;
+	}
+
+	.collaboration-card {
+		background: var(--bg-secondary);
+		border-radius: 1.5rem;
+		padding: 2rem;
+		text-align: center;
+		box-shadow: 0 4px 12px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s ease;
+	}
+
+	.collaboration-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 20px var(--shadow-medium);
+	}
+
+	.collab-flag {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+
+	.collaboration-card h3 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.collab-location {
+		color: var(--text-muted);
+		font-weight: 500;
+		margin-bottom: 1rem;
+	}
+
+	.collab-project {
+		color: var(--text-secondary);
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+		font-size: 0.875rem;
+	}
+
+	.collab-details {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.collab-status,
+	.collab-type {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.collab-status.active {
+		background: #dcfce7;
+		color: #166534;
+	}
+
+	.collab-status.initiating {
+		background: #fef3c7;
+		color: #d97706;
+	}
+
+	.collab-status.ongoing {
+		background: #e0f2fe;
+		color: #0369a1;
+	}
+
+	.collab-type {
+		background: var(--bg-tertiary);
+		color: var(--text-secondary);
+	}
+
+	@media (max-width: 768px) {
+		.hero-content h1 {
+			font-size: 2.5rem;
+		}
+
+		.collaborations-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
