@@ -1,0 +1,48 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://saaillab.github.io/sitemap.xml
+
+# Allow search engines to index all content
+Crawl-delay: 0.5
+
+# Specific instructions for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Academic and research search engines
+User-agent: Googlebot-Scholar
+Allow: /
+
+# Social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Related websites
+# Cross-reference: https://inyalala.github.io
+# Institution: https://www.iitmz.ac.in
+# Research Areas: AI, Machine Learning, Agriculture, Healthcare, East Africa
