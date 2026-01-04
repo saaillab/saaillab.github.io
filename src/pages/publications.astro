@@ -1,0 +1,1627 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+---
+
+<Layout 
+	title="Publications - SAAIL Lab"
+	description="Explore our research publications, academic papers, and scholarly contributions in AI for agriculture, healthcare, and responsible AI at SAAIL Lab, IIT Madras Zanzibar."
+>
+	<ModernHeader />
+	
+	<main class="publications-page">
+		<!-- Hero Section -->
+		<section class="publications-hero">
+			<div class="container">
+				<div class="hero-content">
+					<div class="hero-icon">
+						<svg width="100" height="100" viewBox="0 0 120 120" fill="none">
+							<!-- Outer glow ring -->
+							<circle cx="60" cy="60" r="55" stroke="url(#publicationGradient)" stroke-width="2" fill="none" opacity="0.3"/>
+							<circle cx="60" cy="60" r="48" stroke="url(#publicationGradient)" stroke-width="1.5" fill="none" opacity="0.5"/>
+							
+							<!-- Main document stack -->
+							<rect x="30" y="25" width="50" height="65" rx="8" fill="url(#documentGradient)" opacity="0.9"/>
+							<rect x="35" y="30" width="50" height="65" rx="8" fill="url(#documentGradient2)" opacity="0.8"/>
+							<rect x="40" y="35" width="50" height="65" rx="8" fill="white" stroke="url(#publicationGradient)" stroke-width="2"/>
+							
+							<!-- Document lines -->
+							<line x1="48" y1="45" x2="82" y2="45" stroke="url(#publicationGradient)" stroke-width="2" opacity="0.7"/>
+							<line x1="48" y1="52" x2="78" y2="52" stroke="url(#publicationGradient)" stroke-width="2" opacity="0.5"/>
+							<line x1="48" y1="59" x2="80" y2="59" stroke="url(#publicationGradient)" stroke-width="2" opacity="0.5"/>
+							<line x1="48" y1="66" x2="75" y2="66" stroke="url(#publicationGradient)" stroke-width="2" opacity="0.3"/>
+							
+							<!-- Academic cap -->
+							<path d="M45 40 L65 32 L85 40 L80 43 L65 38 L50 43 Z" fill="url(#capGradient)"/>
+							<ellipse cx="65" cy="40" rx="20" ry="3" fill="url(#capGradient)" opacity="0.8"/>
+							
+							<!-- Citation metrics -->
+							<circle cx="25" cy="30" r="8" fill="url(#metricGradient)"/>
+							<text x="25" y="34" text-anchor="middle" fill="white" font-size="8" font-weight="bold">22+</text>
+							
+							<circle cx="95" cy="85" r="8" fill="url(#citationGradient)"/>
+							<text x="95" y="89" text-anchor="middle" fill="white" font-size="6" font-weight="bold">830+</text>
+							
+							<!-- Decorative elements -->
+							<circle cx="20" cy="80" r="3" fill="url(#publicationGradient)" opacity="0.4"/>
+							<circle cx="100" cy="40" r="2" fill="url(#publicationGradient)" opacity="0.6"/>
+							<circle cx="15" cy="50" r="1.5" fill="url(#publicationGradient)" opacity="0.3"/>
+							
+							<!-- Gradient definitions -->
+							<defs>
+								<linearGradient id="publicationGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+									<stop offset="0%" style="stop-color:#667eea"/>
+									<stop offset="50%" style="stop-color:#764ba2"/>
+									<stop offset="100%" style="stop-color:#f093fb"/>
+								</linearGradient>
+								<linearGradient id="documentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+									<stop offset="0%" style="stop-color:#e0f2fe"/>
+									<stop offset="100%" style="stop-color:#bae6fd"/>
+								</linearGradient>
+								<linearGradient id="documentGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+									<stop offset="0%" style="stop-color:#f0f9ff"/>
+									<stop offset="100%" style="stop-color:#e0f2fe"/>
+								</linearGradient>
+								<linearGradient id="capGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+									<stop offset="0%" style="stop-color:#fbbf24"/>
+									<stop offset="100%" style="stop-color:#f59e0b"/>
+								</linearGradient>
+								<linearGradient id="metricGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+									<stop offset="0%" style="stop-color:#10b981"/>
+									<stop offset="100%" style="stop-color:#059669"/>
+								</linearGradient>
+								<linearGradient id="citationGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+									<stop offset="0%" style="stop-color:#3b82f6"/>
+									<stop offset="100%" style="stop-color:#1d4ed8"/>
+								</linearGradient>
+							</defs>
+						</svg>
+					</div>
+					<h1>Research Publications</h1>
+					<p class="hero-description">
+						Discover our cutting-edge research contributions to the scientific community through 
+						peer-reviewed publications and conference presentations in AI for agriculture and healthcare.
+					</p>
+					
+					<!-- Research Metrics -->
+					<div class="research-metrics">
+						<div class="metric-card">
+							<div class="metric-icon">📚</div>
+							<span class="metric-number">22+</span>
+							<span class="metric-label">Publications</span>
+						</div>
+						<div class="metric-card">
+							<div class="metric-icon">📈</div>
+							<span class="metric-number">830+</span>
+							<span class="metric-label">Citations</span>
+						</div>
+						<div class="metric-card">
+							<div class="metric-icon">🎯</div>
+							<span class="metric-number">13</span>
+							<span class="metric-label">h-index</span>
+						</div>
+						<div class="metric-card">
+							<div class="metric-icon">🏆</div>
+							<span class="metric-number">IF 8.2</span>
+							<span class="metric-label">Highest Impact</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Publications Filter -->
+		<section class="publications-filter">
+			<div class="container">
+				<div class="filter-controls">
+					<div class="search-box">
+						<input type="text" id="publicationSearch" placeholder="Search publications..." />
+						<svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="11" cy="11" r="8"></circle>
+							<path d="m21 21-4.35-4.35"></path>
+						</svg>
+					</div>
+					<div class="filter-tabs">
+						<button class="filter-tab active" data-filter="all">All Publications</button>
+						<button class="filter-tab" data-filter="2025">2025</button>
+						<button class="filter-tab" data-filter="2024">2024</button>
+						<button class="filter-tab" data-filter="journal">Journal Articles</button>
+						<button class="filter-tab" data-filter="conference">Conference Papers</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Publications List -->
+		<section class="publications-list">
+			<div class="container">
+				<div class="publications-timeline" id="publicationsGrid">
+					<!-- 2025 Publications -->
+					<div class="year-section">
+						<div class="year-header">
+					<div class="publication-card featured">
+						<div class="publication-poster">
+							<img src="/images/posters/dli-cara-fm-poster.jpg" alt="CARA-FMs Framework Poster" class="poster-image" />
+						</div>
+						<div class="publication-header">
+							<div class="publication-type conference">Conference</div>
+							<div class="award-badge">🏆 Best Poster Award</div>
+						</div>
+						<h3>CARA-FMs: A Framework for Context-Aware and Responsible AI in East Africa</h3>
+						<div class="authors">
+							<strong>Innocent Nyalala</strong> (Presenter)
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">Deep Learning Indaba 2025</span>
+							<span class="venue-details">• Oral Presentation at Responsible AI Workshop (Aug 22) • Poster Presentation (Aug 20) • Winner, Best Poster Award (Publication & Dataset Category)</span>
+						</div>
+						<div class="publication-meta">
+							<span class="pub-date">August 16-23, 2025</span>
+							<span class="pub-location">Kigali, Rwanda</span>
+						</div>
+						<div class="publication-tags">
+							<span class="tag responsible-ai">Responsible AI</span>
+							<span class="tag africa">Africa</span>
+							<span class="tag framework">Framework</span>
+							<span class="tag award">Award Winner</span>
+						</div>
+						<div class="publication-actions">
+							<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="pub-link">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15,3 21,3 21,9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+								View Details
+							</a>
+							<button class="citation-btn" data-citation="Nyalala, I. (2025). CARA-FMs: A Framework for Context-Aware and Responsible AI in East Africa. Deep Learning Indaba 2025, Kigali, Rwanda.">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+									<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+								</svg>
+								Copy Citation
+							</button>
+						</div>
+					</div>
+
+							<h2>2025</h2>
+							<div class="year-stats">
+								<span class="stat">2 Journal Articles</span>
+								<span class="stat">4 Conference Presentations</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Recent 2025 Publications -->
+					<div class="publication-card journal featured" data-category="journal 2025 agriculture">
+						<div class="publication-header">
+							<div class="publication-type journal">Journal Article</div>
+							<div class="publication-year">2025</div>
+							<div class="publication-status new">New</div>
+						</div>
+						<h3>Rectifying the extremely weakened signals for cassava leaf disease detection</h3>
+						<div class="publication-authors">
+							Zhang Jiayu, Baohua Zhang, <strong>Innocent Nyalala</strong>, Peter Mecha, Junlong Chen, Kunjie Chen, Junfeng Gao
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">Computers and Electronics in Agriculture</span>
+							<span class="impact-factor">IF: 7.7</span>
+							<span class="doi-badge">DOI: 10.1016/j.compag.2025.110107</span>
+						</div>
+						<p class="publication-abstract">
+							Advanced signal processing techniques for enhancing weakened signals in cassava leaf disease detection, 
+							improving diagnostic accuracy for agricultural AI applications.
+						</p>
+						<div class="publication-tags">
+							<span class="tag agriculture">Agriculture</span>
+							<span class="tag signal-processing">Signal Processing</span>
+							<span class="tag disease-detection">Disease Detection</span>
+							<span class="tag cassava">Cassava</span>
+						</div>
+						<div class="publication-links">
+							<a href="https://doi.org/10.1016/j.compag.2025.110107" target="_blank" class="pub-link doi">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15,3 21,3 21,9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+								View Paper
+							</a>
+							<button class="pub-link cite-btn" data-citation="zhang2025rectifying">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+									<rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+								</svg>
+								Cite
+							</button>
+							<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" class="pub-link scholar">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+								</svg>
+								Scholar
+							</a>
+						</div>
+					</div>
+
+					<!-- Conference Presentations 2025 -->
+					<div class="publication-card conference featured" data-category="conference 2025">
+						<div class="publication-header">
+							<div class="publication-type conference">Invited Talk</div>
+							<div class="publication-year">2025</div>
+							<div class="publication-status invited">Invited</div>
+						</div>
+						<h3>How Can Innovation Modernize Public Service Delivery and Create an Inclusive Digital Economy</h3>
+						<div class="publication-authors">
+							<strong>Innocent Nyalala</strong> (Presenter)
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">ZRCP 4th Joint Annual Conference</span>
+							<span class="venue-location">Zanzibar, Tanzania</span>
+						</div>
+						<p class="publication-abstract">
+							Invited presentation exploring how innovation can transform public service delivery and foster 
+							inclusive digital economic growth in East Africa.
+						</p>
+						<div class="publication-tags">
+							<span class="tag innovation">Innovation</span>
+							<span class="tag digital-economy">Digital Economy</span>
+							<span class="tag public-service">Public Service</span>
+							<span class="tag invited">Invited Talk</span>
+						</div>
+						<div class="publication-links">
+							<span class="pub-date">August 27, 2025</span>
+							<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="pub-link">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+								</svg>
+								LinkedIn
+							</a>
+						</div>
+					</div>
+
+					<div class="publication-card conference award" data-category="conference 2025">
+						<div class="publication-header">
+							<div class="publication-type conference">Conference Paper</div>
+							<div class="publication-year">2025</div>
+							<div class="publication-status award">Best Poster</div>
+						</div>
+						<h3>CARA-FMs: A Framework for Context-Aware and Responsible AI in East Africa</h3>
+						<div class="publication-authors">
+							<strong>Innocent Nyalala</strong>, Nirav Bhatt, Soumya Banerjee, Vikranth Nagaraja
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">Deep Learning Indaba 2025</span>
+							<span class="venue-location">Kigali, Rwanda</span>
+						</div>
+						<p class="publication-abstract">
+							Framework for developing context-aware and responsible AI solutions specifically designed for East African contexts, 
+							addressing ethical considerations and cultural awareness in AI development.
+						</p>
+						<div class="publication-achievements">
+							<div class="achievement">🏆 Best Poster Award (Publication & Dataset Category)</div>
+							<div class="achievement">🎤 Oral Presentation at Responsible AI Workshop</div>
+						</div>
+						<div class="publication-tags">
+							<span class="tag responsible-ai">Responsible AI</span>
+							<span class="tag africa">East Africa</span>
+							<span class="tag frameworks">AI Frameworks</span>
+							<span class="tag award">Award Winner</span>
+						</div>
+						<div class="publication-links">
+							<span class="pub-date">August 16-23, 2025</span>
+							<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="pub-link">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15,3 21,3 21,9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+								View Details
+							</a>
+						</div>
+					</div>
+
+					<div class="publication-card conference" data-category="conference 2025">
+						<div class="publication-header">
+							<div class="publication-type conference">Conference Paper</div>
+							<div class="publication-year">2025</div>
+						</div>
+						<h3>Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology</h3>
+						<div class="publication-authors">
+							<strong>Innocent Nyalala</strong> (Presenter), Nirav Bhatt, Soumya Banerjee, Vikranth Nagaraja
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">Data Science Africa (DSA) 2025 Conference</span>
+							<span class="venue-location">Ibadan, Nigeria</span>
+						</div>
+						<p class="publication-abstract">
+							Manifesto establishing prime directives for responsible AI development in Africa, 
+							focusing on inclusive technology development and ethical AI frameworks.
+						</p>
+						<div class="publication-tags">
+							<span class="tag responsible-ai">Responsible AI</span>
+							<span class="tag africa">Africa</span>
+							<span class="tag ethics">Ethics</span>
+							<span class="tag manifesto">Manifesto</span>
+						</div>
+						<div class="publication-links">
+							<span class="pub-date">June 4-6, 2025</span>
+							<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="pub-link">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15,3 21,3 21,9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+								View Details
+							</a>
+						</div>
+					</div>
+
+					<div class="publication-card conference" data-category="conference 2025">
+						<div class="publication-header">
+							<div class="publication-type conference">Conference Presentation</div>
+							<div class="publication-year">2025</div>
+						</div>
+						<h3>Integration of Multi-Omics and Meta Data for Metabolic Modelling</h3>
+						<div class="publication-authors">
+							Sayan Das, <strong>Innocent Nyalala</strong>, Sunil Sazawal, AMANHI Tanzania
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">MOMI Consortium Convention, Gates Foundation</span>
+							<span class="venue-location">Seattle, WA, USA</span>
+						</div>
+						<p class="publication-abstract">
+							Research on integrating multi-omics data with metadata for advanced metabolic modeling 
+							in healthcare applications, presented at the Gates Foundation consortium.
+						</p>
+						<div class="publication-tags">
+							<span class="tag multi-omics">Multi-Omics</span>
+							<span class="tag metabolic">Metabolic Modeling</span>
+							<span class="tag healthcare">Healthcare</span>
+							<span class="tag gates-foundation">Gates Foundation</span>
+						</div>
+						<div class="publication-links">
+							<span class="pub-date">April 8-10, 2025</span>
+							<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="pub-link">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15,3 21,3 21,9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+								View Details
+							</a>
+						</div>
+					</div>
+
+					<div class="publication-card">
+						<div class="publication-header">
+							<div class="publication-type conference">Conference</div>
+						</div>
+						<h3>Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology</h3>
+						<div class="authors">
+							<strong>Innocent Nyalala</strong> (Presenter), Nirav Bhatt, Soumya Banerjee, Vikranth Nagaraja
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">Data Science Africa (DSA) 2025 Conference</span>
+						</div>
+						<div class="publication-meta">
+							<span class="pub-date">June 4-6, 2025</span>
+							<span class="pub-location">Ibadan, Nigeria</span>
+						</div>
+						<div class="publication-tags">
+							<span class="tag responsible-ai">Responsible AI</span>
+							<span class="tag africa">Africa</span>
+							<span class="tag ethics">Ethics</span>
+							<span class="tag manifesto">Manifesto</span>
+						</div>
+						<div class="publication-actions">
+							<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="pub-link">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15,3 21,3 21,9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+								View Details
+							</a>
+							<button class="citation-btn" data-citation="Nyalala, I., Bhatt, N., Banerjee, S., & Nagaraja, V. (2025). Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology. Data Science Africa Conference, Ibadan, Nigeria.">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+									<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+								</svg>
+								Copy Citation
+							</button>
+						</div>
+					</div>
+
+					<!-- 2024 Publications -->
+					<div class="year-section">
+						<div class="year-header">
+							<h2>2024</h2>
+							<div class="year-stats">
+								<span class="stat">3 Journal Articles</span>
+								<span class="stat">High Impact Journals</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="publication-card journal" data-category="journal 2024 agriculture">
+						<div class="publication-header">
+							<div class="publication-type journal">Journal Article</div>
+							<div class="publication-year">2024</div>
+						</div>
+						<h3>A salient feature establishment tactic for cassava disease recognition</h3>
+						<div class="publication-authors">
+							Jiayu Zhang, Baohua Zhang, Zixuan Chen, <strong>Innocent Nyalala</strong>, Kunjie Chen, Junfeng Gao
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">Artificial Intelligence in Agriculture</span>
+							<span class="impact-factor">IF: 8.2</span>
+							<span class="doi-badge">DOI: 10.1016/j.aiia.2024.11.004</span>
+						</div>
+						<p class="publication-abstract">
+							Novel feature establishment tactics for improving cassava disease recognition accuracy using 
+							advanced machine learning and computer vision techniques.
+						</p>
+						<div class="publication-tags">
+							<span class="tag agriculture">Agriculture</span>
+							<span class="tag feature-extraction">Feature Extraction</span>
+							<span class="tag disease-recognition">Disease Recognition</span>
+							<span class="tag high-impact">High Impact</span>
+						</div>
+						<div class="publication-links">
+							<a href="https://doi.org/10.1016/j.aiia.2024.11.004" target="_blank" class="pub-link doi">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15,3 21,3 21,9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+								View Paper
+							</a>
+							<button class="pub-link cite-btn" data-citation="zhang2024salient">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+									<rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+								</svg>
+								Cite
+							</button>
+							<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" class="pub-link scholar">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+								</svg>
+								Scholar
+							</a>
+						</div>
+					</div>
+
+					<div class="publication-card journal" data-category="journal 2024 poultry">
+						<div class="publication-header">
+							<div class="publication-type journal">Journal Article</div>
+							<div class="publication-year">2024</div>
+						</div>
+						<h3>Online chicken carcass volume estimation using depth imaging and 3-D reconstruction</h3>
+						<div class="publication-authors">
+							<strong>Innocent Nyalala</strong>, Zhang Jiayu, Chen Zixuan, Chen Junlong, Kunjie Chen
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">Poultry Science</span>
+							<span class="impact-factor">IF: 3.8</span>
+							<span class="doi-badge">DOI: 10.1016/j.psj.2024.104232</span>
+						</div>
+						<p class="publication-abstract">
+							Advanced 3D reconstruction techniques for real-time chicken carcass volume estimation, 
+							enhancing food processing efficiency and quality control in poultry industry.
+						</p>
+						<div class="publication-tags">
+							<span class="tag reconstruction-3d">3D Reconstruction</span>
+							<span class="tag poultry">Poultry Science</span>
+							<span class="tag depth-imaging">Depth Imaging</span>
+							<span class="tag food-processing">Food Processing</span>
+						</div>
+						<div class="publication-links">
+							<a href="https://doi.org/10.1016/j.psj.2024.104232" target="_blank" class="pub-link doi">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15,3 21,3 21,9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+								View Paper
+							</a>
+							<button class="pub-link cite-btn" data-citation="nyalala2024chicken">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+									<rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+								</svg>
+								Cite
+							</button>
+							<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" class="pub-link scholar">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+								</svg>
+								Scholar
+							</a>
+						</div>
+					</div>
+
+					<div class="publication-card journal" data-category="journal 2024 agriculture">
+						<div class="publication-header">
+							<div class="publication-type journal">Journal Article</div>
+							<div class="publication-year">2024</div>
+						</div>
+						<h3>MAIANet: Signal modulation in cassava leaf disease classification</h3>
+						<div class="publication-authors">
+							Jiayu Zhang, Baohua Zhang, Chao Qi, <strong>Innocent Nyalala</strong>, Peter Mecha, Kunjie Chen, Junfeng Gao
+						</div>
+						<div class="publication-venue">
+							<span class="venue-name">Computers and Electronics in Agriculture</span>
+							<span class="impact-factor">IF: 7.7</span>
+							<span class="doi-badge">DOI: 10.1016/j.compag.2024.109351</span>
+						</div>
+						<p class="publication-abstract">
+							MAIANet framework for signal modulation in cassava leaf disease classification, 
+							improving diagnostic accuracy through advanced neural network architectures.
+						</p>
+						<div class="publication-tags">
+							<span class="tag neural-networks">Neural Networks</span>
+							<span class="tag signal-modulation">Signal Modulation</span>
+							<span class="tag cassava">Cassava</span>
+							<span class="tag classification">Classification</span>
+						</div>
+						<div class="publication-links">
+							<a href="https://doi.org/10.1016/j.compag.2024.109351" target="_blank" class="pub-link doi">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15,3 21,3 21,9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+								View Paper
+							</a>
+							<button class="pub-link cite-btn" data-citation="zhang2024maianet">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+									<rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+								</svg>
+								Cite
+							</button>
+							<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" class="pub-link scholar">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+								</svg>
+								Scholar
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- No Results Message -->
+				<div id="noPublications" class="no-results" style="display: none;">
+					<div class="no-results-content">
+						<div class="no-results-icon">📚</div>
+						<h3>No publications found</h3>
+						<p>Try adjusting your search terms or filters.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- External Links -->
+		<section class="external-links">
+			<div class="container">
+				<h2>Research Profiles</h2>
+				<div class="profiles-grid">
+					<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" class="profile-card">
+						<div class="profile-icon scholar">
+							<svg width="50" height="50" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+							</svg>
+						</div>
+						<h3>Google Scholar</h3>
+						<p>Complete publication list with citation metrics and h-index tracking</p>
+						<div class="profile-stats">
+							<span class="stat-badge">830+ Citations</span>
+							<span class="stat-badge">h-index: 13</span>
+						</div>
+					</a>
+
+					<a href="https://www.researchgate.net/profile/Innocent-Nyalala" target="_blank" class="profile-card">
+						<div class="profile-icon researchgate">
+							<svg width="50" height="50" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M19.586 0c-.818 0-1.508.19-2.073.565-.563.377-.97.936-1.213 1.68-.242.744-.364 1.627-.364 2.647 0 1.098.122 2.05.364 2.854.243.804.65 1.402 1.213 1.795.565.394 1.255.59 2.073.59.818 0 1.508-.196 2.073-.59.563-.393.97-.991 1.213-1.795.242-.804.364-1.756.364-2.854 0-1.02-.122-1.903-.364-2.647-.243-.744-.65-1.303-1.213-1.68C21.094.19 20.404 0 19.586 0z"/>
+							</svg>
+						</div>
+						<h3>ResearchGate</h3>
+						<p>Research network with full-text papers and collaboration opportunities</p>
+						<div class="profile-stats">
+							<span class="stat-badge">Research Network</span>
+							<span class="stat-badge">Full Papers</span>
+						</div>
+					</a>
+
+					<a href="https://orcid.org/0000-0002-7969-437X" target="_blank" class="profile-card">
+						<div class="profile-icon orcid">
+							<svg width="50" height="50" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947 0 .525-.422.947-.947.947-.525 0-.947-.422-.947-.947 0-.516.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-1.816 5.016-5.525 5.016h-3.719V7.416zm1.444 1.303v7.444h2.297c2.359 0 3.588-1.303 3.588-3.722 0-2.063-1.225-3.722-3.588-3.722h-2.297z"/>
+							</svg>
+						</div>
+						<h3>ORCID</h3>
+						<p>Persistent digital identifier for researchers and scholarly works</p>
+						<div class="profile-stats">
+							<span class="stat-badge">0000-0002-7969-437X</span>
+							<span class="stat-badge">Verified ID</span>
+						</div>
+					</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<ModernFooter />
+</Layout>
+
+<style>
+	.publications-page {
+		padding-top: 90px;
+	}
+
+	.publications-hero {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+		color: white;
+		padding: 5rem 0;
+		text-align: center;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.publications-hero::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="academic" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="12.5" cy="12.5" r="1" fill="white" opacity="0.1"/><rect x="8" y="8" width="9" height="12" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23academic)"/></svg>');
+		opacity: 0.2;
+	}
+
+	.hero-content {
+		max-width: 900px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 1;
+	}
+
+	.hero-icon {
+		color: white;
+		margin-bottom: 2rem;
+		animation: float 4s ease-in-out infinite, glow 3s ease-in-out infinite alternate;
+		filter: drop-shadow(0 10px 30px rgba(102, 126, 234, 0.4));
+	}
+
+	@keyframes float {
+		0%, 100% { transform: translateY(0px) rotate(0deg); }
+		50% { transform: translateY(-15px) rotate(2deg); }
+	}
+
+	@keyframes glow {
+		0% { filter: drop-shadow(0 10px 30px rgba(102, 126, 234, 0.4)); }
+		100% { filter: drop-shadow(0 20px 50px rgba(240, 147, 251, 0.6)); }
+	}
+
+	.hero-content h1 {
+		font-size: 4rem;
+		font-weight: 800;
+		margin-bottom: 1.5rem;
+		background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+		letter-spacing: -0.02em;
+	}
+
+	.hero-description {
+		font-size: 1.3rem;
+		opacity: 0.95;
+		line-height: 1.7;
+		text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		font-weight: 400;
+		letter-spacing: 0.01em;
+		margin-bottom: 3rem;
+	}
+
+	.research-metrics {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+		gap: 1.5rem;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.metric-card {
+		background: rgba(255, 255, 255, 0.15);
+		backdrop-filter: blur(20px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 1.5rem;
+		padding: 2rem 1.5rem;
+		text-align: center;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.metric-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+		transition: left 0.6s;
+	}
+
+	.metric-card:hover::before {
+		left: 100%;
+	}
+
+	.metric-card:hover {
+		transform: translateY(-8px) scale(1.05);
+		background: rgba(255, 255, 255, 0.25);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+	}
+
+	.metric-icon {
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
+		display: block;
+		filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+	}
+
+	.metric-number {
+		display: block;
+		font-size: 2.5rem;
+		font-weight: 800;
+		margin-bottom: 0.5rem;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+	}
+
+	.metric-label {
+		font-size: 1rem;
+		font-weight: 600;
+		opacity: 0.9;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	.publications-filter {
+		padding: 3rem 0;
+		background: var(--bg-primary);
+		border-bottom: 1px solid var(--border-color);
+	}
+
+	.filter-controls {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		align-items: center;
+	}
+
+	.search-box {
+		position: relative;
+		max-width: 500px;
+		width: 100%;
+	}
+
+	.search-box input {
+		width: 100%;
+		padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+		border: 2px solid var(--border-color);
+		border-radius: 1rem;
+		font-size: 1.1rem;
+		background: var(--bg-secondary);
+		color: var(--text-primary);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 4px 12px var(--shadow-light);
+	}
+
+	.search-box input:focus {
+		outline: none;
+		border-color: var(--accent-blue);
+		box-shadow: 0 0 0 4px rgba(var(--accent-blue-rgb), 0.1), 0 8px 25px var(--shadow-medium);
+		transform: translateY(-2px);
+	}
+
+	.search-icon {
+		position: absolute;
+		left: 1.25rem;
+		top: 50%;
+		transform: translateY(-50%);
+		color: var(--text-muted);
+		transition: color 0.3s ease;
+	}
+
+	.search-box input:focus + .search-icon {
+		color: var(--accent-blue);
+	}
+
+	.filter-tabs {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.filter-tab {
+		padding: 1rem 2rem;
+		border: 2px solid var(--border-color);
+		background: var(--bg-secondary);
+		color: var(--text-secondary);
+		border-radius: 50px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+		box-shadow: 0 4px 12px var(--shadow-light);
+	}
+
+	.filter-tab::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+		transition: left 0.5s;
+	}
+
+	.filter-tab:hover::before {
+		left: 100%;
+	}
+
+	.filter-tab:hover,
+	.filter-tab.active {
+		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
+		color: white;
+		border-color: var(--accent-blue);
+		transform: translateY(-3px);
+		box-shadow: 0 12px 30px rgba(var(--accent-blue-rgb), 0.4);
+	}
+
+	.publications-list {
+		padding: 5rem 0;
+		background: var(--bg-primary);
+	}
+
+	.publications-timeline {
+		max-width: 900px;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.publications-timeline::before {
+		content: '';
+		position: absolute;
+		left: 30px;
+		top: 0;
+		bottom: 0;
+		width: 3px;
+		background: linear-gradient(180deg, var(--accent-blue) 0%, var(--accent-green) 50%, #f093fb 100%);
+		border-radius: 2px;
+	}
+
+	.year-section {
+		position: relative;
+		margin: 4rem 0 2rem;
+		padding-left: 80px;
+	}
+
+	.year-section::before {
+		content: '';
+		position: absolute;
+		left: 21px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 18px;
+		height: 18px;
+		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
+		border-radius: 50%;
+		border: 4px solid var(--bg-primary);
+		box-shadow: 0 4px 12px rgba(var(--accent-blue-rgb), 0.3);
+	}
+
+	.year-header {
+		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+		border-radius: 1.5rem;
+		padding: 2rem;
+		box-shadow: 0 8px 25px var(--shadow-light);
+		border: 1px solid var(--border-color);
+	}
+
+	.year-header h2 {
+		font-size: 2.5rem;
+		font-weight: 800;
+		color: var(--accent-blue);
+		margin-bottom: 1rem;
+		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.year-stats {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.year-stats .stat {
+		background: var(--accent-blue);
+		color: white;
+		padding: 0.5rem 1rem;
+		border-radius: 50px;
+		font-size: 0.875rem;
+		font-weight: 600;
+		box-shadow: 0 4px 12px rgba(var(--accent-blue-rgb), 0.3);
+	}
+
+	.publication-poster {
+		width: 100%;
+		margin-bottom: 1.5rem;
+		border-radius: 1rem;
+		overflow: hidden;
+		box-shadow: 0 8px 25px var(--shadow-medium);
+		transition: transform 0.3s ease;
+	}
+
+	.publication-poster:hover {
+		transform: scale(1.02);
+	}
+
+	.poster-image {
+		width: 100%;
+		height: auto;
+		display: block;
+		object-fit: cover;
+		max-height: 600px;
+	}
+
+	.publication-card {
+		position: relative;
+		margin: 2rem 0;
+		padding-left: 80px;
+		background: var(--bg-secondary);
+		border-radius: 1.5rem;
+		padding: 2.5rem;
+		box-shadow: 0 8px 25px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.publication-card::before {
+		content: '';
+		position: absolute;
+		left: 24px;
+		top: 2rem;
+		width: 12px;
+		height: 12px;
+		background: var(--accent-green);
+		border-radius: 50%;
+		border: 3px solid var(--bg-primary);
+		box-shadow: 0 4px 8px rgba(5, 150, 105, 0.3);
+	}
+
+	.publication-card.featured::before {
+		background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+		width: 16px;
+		height: 16px;
+		left: 22px;
+		box-shadow: 0 6px 15px rgba(251, 191, 36, 0.4);
+	}
+
+	.publication-card.award::before {
+		background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+		width: 16px;
+		height: 16px;
+		left: 22px;
+		box-shadow: 0 6px 15px rgba(220, 38, 38, 0.4);
+	}
+
+	.publication-card:hover {
+		transform: translateY(-8px) translateX(8px);
+		box-shadow: 0 20px 50px var(--shadow-medium);
+		border-color: var(--accent-blue);
+	}
+
+	.publication-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1.5rem;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.publication-type {
+		padding: 0.75rem 1.5rem;
+		border-radius: 50px;
+		font-size: 0.875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	.publication-type.journal {
+		background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+		color: white;
+	}
+
+	.publication-type.conference {
+		background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+		color: white;
+	}
+
+	.publication-year {
+		font-weight: 700;
+		color: var(--text-primary);
+		font-size: 1.1rem;
+	}
+
+	.publication-status {
+		padding: 0.5rem 1rem;
+		border-radius: 50px;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	.publication-status.new {
+		background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+		color: white;
+		animation: pulse 2s infinite;
+	}
+
+	.publication-status.invited {
+		background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+		color: white;
+	}
+
+	.publication-status.award {
+		background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+		color: white;
+		animation: shimmer 3s ease-in-out infinite;
+	}
+
+	@keyframes shimmer {
+		0%, 100% { box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3); }
+		50% { box-shadow: 0 8px 25px rgba(251, 191, 36, 0.6); }
+	}
+
+	.publication-card h3 {
+		font-size: 1.4rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 1rem;
+		line-height: 1.3;
+		letter-spacing: -0.01em;
+	}
+
+	.publication-authors {
+		color: var(--text-secondary);
+		margin-bottom: 1rem;
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
+
+	.publication-authors strong {
+		color: var(--accent-blue);
+		font-weight: 700;
+	}
+
+	.publication-venue {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.venue-name {
+		font-weight: 700;
+		color: var(--text-primary);
+		font-style: italic;
+		font-size: 1.05rem;
+	}
+
+	.impact-factor {
+		background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+		color: white;
+		padding: 0.4rem 0.8rem;
+		border-radius: 50px;
+		font-size: 0.8rem;
+		font-weight: 700;
+		box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+	}
+
+	.venue-location {
+		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
+		color: white;
+		padding: 0.4rem 0.8rem;
+		border-radius: 50px;
+		font-size: 0.8rem;
+		font-weight: 700;
+		box-shadow: 0 4px 12px rgba(var(--accent-blue-rgb), 0.3);
+	}
+
+	.doi-badge {
+		background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+		color: white;
+		padding: 0.4rem 0.8rem;
+		border-radius: 50px;
+		font-size: 0.75rem;
+		font-weight: 600;
+		font-family: 'Monaco', 'Menlo', monospace;
+		box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+	}
+
+	.publication-abstract {
+		color: var(--text-secondary);
+		line-height: 1.7;
+		margin-bottom: 1.5rem;
+		font-size: 1rem;
+		letter-spacing: 0.01em;
+	}
+
+	.publication-achievements {
+		background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+		border: 2px solid #fbbf24;
+		border-radius: 1rem;
+		padding: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.achievement {
+		color: #92400e;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+		font-size: 0.9rem;
+	}
+
+	.achievement:last-child {
+		margin-bottom: 0;
+	}
+
+	.publication-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-bottom: 2rem;
+	}
+
+	.tag {
+		padding: 0.5rem 1rem;
+		border-radius: 50px;
+		font-size: 0.8rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		transition: all 0.3s ease;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.tag:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	}
+
+	.tag.agriculture { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
+	.tag.signal-processing { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; }
+	.tag.disease-detection { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+	.tag.cassava { background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; }
+	.tag.feature-extraction { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; }
+	.tag.disease-recognition { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; }
+	.tag.high-impact { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; }
+	.tag.reconstruction-3d { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; }
+	.tag.poultry { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; }
+	.tag.depth-imaging { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: white; }
+	.tag.food-processing { background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%); color: white; }
+	.tag.neural-networks { background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%); color: white; }
+	.tag.signal-modulation { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: white; }
+	.tag.classification { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: white; }
+	.tag.responsible-ai { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; }
+	.tag.africa { background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; }
+	.tag.frameworks { background: linear-gradient(135deg, #64748b 0%, #475569 100%); color: white; }
+	.tag.award { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; }
+	.tag.innovation { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: white; }
+	.tag.digital-economy { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; }
+	.tag.public-service { background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; }
+	.tag.invited { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; }
+	.tag.ethics { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; }
+	.tag.manifesto { background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); color: white; }
+	.tag.multi-omics { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); color: white; }
+	.tag.metabolic { background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%); color: white; }
+	.tag.healthcare { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+	.tag.gates-foundation { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; }
+
+	.publication-links {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.pub-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		border-radius: 50px;
+		text-decoration: none;
+		font-size: 0.9rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		border: none;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	.pub-link.doi {
+		background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+		color: white;
+	}
+
+	.pub-link.doi:hover {
+		background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+	}
+
+	.pub-link.cite-btn {
+		background: linear-gradient(135deg, var(--accent-blue) 0%, #1d4ed8 100%);
+		color: white;
+	}
+
+	.pub-link.cite-btn:hover {
+		background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 25px rgba(var(--accent-blue-rgb), 0.4);
+	}
+
+	.pub-link.scholar {
+		background: linear-gradient(135deg, #059669 0%, #047857 100%);
+		color: white;
+	}
+
+	.pub-link.scholar:hover {
+		background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+	}
+
+	.pub-date {
+		background: var(--bg-tertiary);
+		color: var(--text-secondary);
+		padding: 0.5rem 1rem;
+		border-radius: 50px;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+
+	.external-links {
+		padding: 5rem 0;
+		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+	}
+
+	.external-links h2 {
+		text-align: center;
+		font-size: 2.5rem;
+		font-weight: 800;
+		color: var(--accent-blue);
+		margin-bottom: 3rem;
+		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.profiles-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+		gap: 2rem;
+	}
+
+	.profile-card {
+		background: var(--bg-primary);
+		border-radius: 1.5rem;
+		padding: 2.5rem;
+		text-align: center;
+		box-shadow: 0 8px 25px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		text-decoration: none;
+		color: inherit;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.profile-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+		transition: left 0.6s;
+	}
+
+	.profile-card:hover::before {
+		left: 100%;
+	}
+
+	.profile-card:hover {
+		transform: translateY(-8px) scale(1.02);
+		box-shadow: 0 20px 50px var(--shadow-medium);
+	}
+
+	.profile-icon {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 1.5rem;
+		transition: all 0.3s ease;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+	}
+
+	.profile-icon.scholar {
+		background: linear-gradient(135deg, #4285f4 0%, #1a73e8 100%);
+		color: white;
+	}
+
+	.profile-icon.researchgate {
+		background: linear-gradient(135deg, #00ccbb 0%, #00a699 100%);
+		color: white;
+	}
+
+	.profile-icon.orcid {
+		background: linear-gradient(135deg, #a6ce39 0%, #8bc34a 100%);
+		color: white;
+	}
+
+	.profile-card:hover .profile-icon {
+		transform: scale(1.1) rotate(5deg);
+	}
+
+	.profile-card h3 {
+		font-size: 1.4rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 1rem;
+	}
+
+	.profile-card p {
+		color: var(--text-secondary);
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+		font-size: 0.95rem;
+	}
+
+	.profile-stats {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.stat-badge {
+		background: var(--bg-tertiary);
+		color: var(--text-secondary);
+		padding: 0.4rem 1rem;
+		border-radius: 50px;
+		font-size: 0.8rem;
+		font-weight: 600;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.no-results {
+		text-align: center;
+		padding: 4rem 2rem;
+		background: var(--bg-secondary);
+		border-radius: 1.5rem;
+		margin: 2rem 0;
+	}
+
+	.no-results-icon {
+		font-size: 4rem;
+		margin-bottom: 1rem;
+		opacity: 0.5;
+	}
+
+	.no-results h3 {
+		font-size: 1.5rem;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.no-results p {
+		color: var(--text-secondary);
+	}
+
+	@media (max-width: 768px) {
+		.hero-content h1 {
+			font-size: 2.8rem;
+		}
+
+		.research-metrics {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.filter-controls {
+			align-items: stretch;
+		}
+
+		.filter-tabs {
+			flex-direction: column;
+		}
+
+		.publication-header {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.5rem;
+		}
+
+		.publication-venue {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.5rem;
+		}
+
+		.publication-links {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.publications-timeline::before {
+			left: 20px;
+		}
+
+		.year-section {
+			padding-left: 60px;
+		}
+
+		.year-section::before {
+			left: 14px;
+		}
+
+		.publication-card {
+			padding-left: 60px;
+		}
+
+		.publication-card::before {
+			left: 16px;
+		}
+
+		.publication-card.featured::before,
+		.publication-card.award::before {
+			left: 14px;
+		}
+	}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const searchInput = document.getElementById('publicationSearch');
+		const filterTabs = document.querySelectorAll('.filter-tab');
+		const publicationCards = document.querySelectorAll('.publication-card');
+		const noResults = document.getElementById('noPublications');
+
+		let currentFilter = 'all';
+
+		// Search functionality
+		searchInput?.addEventListener('input', function() {
+			filterPublications();
+		});
+
+		// Filter functionality
+		filterTabs.forEach(tab => {
+			tab.addEventListener('click', function() {
+				filterTabs.forEach(t => t.classList.remove('active'));
+				this.classList.add('active');
+				currentFilter = this.dataset.filter || 'all';
+				filterPublications();
+			});
+		});
+
+		// Citation functionality
+		document.querySelectorAll('.cite-btn').forEach(btn => {
+			btn.addEventListener('click', function() {
+				const citationId = this.dataset.citation;
+				showCitation(citationId);
+			});
+		});
+
+		function filterPublications() {
+			const searchTerm = searchInput?.value.toLowerCase() || '';
+			let visibleCount = 0;
+
+			publicationCards.forEach(card => {
+				const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
+				const authors = card.querySelector('.publication-authors')?.textContent.toLowerCase() || '';
+				const abstract = card.querySelector('.publication-abstract')?.textContent.toLowerCase() || '';
+				const category = card.dataset.category || '';
+				
+				const matchesSearch = title.includes(searchTerm) || authors.includes(searchTerm) || abstract.includes(searchTerm);
+				const matchesFilter = currentFilter === 'all' || category.includes(currentFilter);
+
+				if (matchesSearch && matchesFilter) {
+					card.style.display = 'block';
+					visibleCount++;
+				} else {
+					card.style.display = 'none';
+				}
+			});
+
+			// Show/hide no results message
+			if (noResults) {
+				noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+			}
+		}
+
+		function showCitation(citationId) {
+			const citations = {
+				'zhang2025rectifying': `Zhang, J., Zhang, B., Nyalala, I., Mecha, P., Chen, J., Chen, K., & Gao, J. (2025). Rectifying the extremely weakened signals for cassava leaf disease detection. Computers and Electronics in Agriculture. https://doi.org/10.1016/j.compag.2025.110107`,
+				'zhang2024salient': `Zhang, J., Zhang, B., Chen, Z., Nyalala, I., Chen, K., & Gao, J. (2024). A salient feature establishment tactic for cassava disease recognition. Artificial Intelligence in Agriculture. https://doi.org/10.1016/j.aiia.2024.11.004`,
+				'nyalala2024chicken': `Nyalala, I., Zhang, J., Chen, Z., Chen, J., & Chen, K. (2024). Online chicken carcass volume estimation using depth imaging and 3-D reconstruction. Poultry Science. https://doi.org/10.1016/j.psj.2024.104232`,
+				'zhang2024maianet': `Zhang, J., Zhang, B., Qi, C., Nyalala, I., Mecha, P., Chen, K., & Gao, J. (2024). MAIANet: Signal modulation in cassava leaf disease classification. Computers and Electronics in Agriculture. https://doi.org/10.1016/j.compag.2024.109351`
+			};
+
+			if (citations[citationId]) {
+				navigator.clipboard.writeText(citations[citationId]).then(() => {
+					// Create and show success notification
+					const notification = document.createElement('div');
+					notification.textContent = 'Citation copied to clipboard!';
+					notification.style.cssText = `
+						position: fixed;
+						top: 20px;
+						right: 20px;
+						background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+						color: white;
+						padding: 1rem 2rem;
+						border-radius: 50px;
+						font-weight: 600;
+						z-index: 10000;
+						box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+						animation: slideIn 0.3s ease;
+					`;
+					document.body.appendChild(notification);
+					
+					setTimeout(() => {
+						notification.remove();
+					}, 3000);
+				}).catch(() => {
+					alert(`Citation:\n\n${citations[citationId]}`);
+				});
+			}
+		}
+	});
+</script>
+
+<style>
+	@keyframes slideIn {
+		from {
+			opacity: 0;
+			transform: translateX(100px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+</style>

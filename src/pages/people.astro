@@ -1,0 +1,1185 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+---
+
+<Layout 
+	title="People - SAAIL Lab"
+	description="Meet the team at SAAIL Lab - our principal investigator, current students, collaborators, and alumni driving AI innovation for sustainable agriculture and intelligent livelihoods."
+>
+	<ModernHeader />
+	
+	<main class="people-page">
+		<!-- Hero Section -->
+		<section class="people-hero">
+			<div class="container">
+				<div class="hero-content">
+					<h1>Our Team</h1>
+					<p class="hero-description">
+						Meet the researchers, students, and collaborators driving innovation at SAAIL Lab, 
+						working together to create transformative AI solutions for East Africa.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Main Content -->
+		<section class="people-content">
+			<div class="container">
+				<div class="people-layout">
+					<!-- Sidebar Navigation -->
+					<aside class="people-sidebar">
+						<nav class="sidebar-nav">
+							<button class="nav-item active" data-section="director">Principal Investigator</button>
+							<button class="nav-item" data-section="current">Current Team</button>
+							<button class="nav-item" data-section="phd">PhD Students</button>
+							<button class="nav-item" data-section="mtech-zanzibar">MTech - Zanzibar</button>
+							<button class="nav-item" data-section="mtech-chennai">MTech - Chennai</button>
+							<button class="nav-item" data-section="alumni">Alumni</button>
+							<button class="nav-item" data-section="collaborators">Collaborators</button>
+						</nav>
+					</aside>
+
+					<!-- Main Content Area -->
+					<div class="people-main">
+						<!-- Principal Investigator -->
+						<div class="people-section active" id="director">
+							<h2>Principal Investigator</h2>
+							<div class="director-profile">
+								<div class="profile-card featured">
+									<div class="profile-image">
+										<picture>
+											<source srcset="/images/people/profile.webp" type="image/webp">
+											<img src="/images/people/profile-optimized.jpg" alt="Dr. Innocent Nyalala" class="profile-photo" width="120" height="120" loading="eager">
+										</picture>
+									</div>
+									<div class="profile-content">
+										<div class="profile-header">
+											<h3>Innocent Nyalala</h3>
+											<p class="profile-title">Assistant Professor & Founding Principal Investigator</p>
+											<p class="profile-department">School of Engineering and Sciences<br>IIT Madras Zanzibar</p>
+										</div>
+										
+										<div class="contact-info">
+											<div class="contact-item">
+												<strong>Email:</strong> 
+												<a href="mailto:innocent@iitmz.ac.in">innocent@iitmz.ac.in</a>
+											</div>
+											<div class="contact-item">
+												<strong>Personal Website:</strong> 
+												<a href="https://inyalala.github.io" target="_blank">inyalala.github.io</a>
+											</div>
+										</div>
+
+										<div class="profile-bio">
+											<h4>Biography</h4>
+											<p>
+												Innocent Nyalala is an Assistant Professor at IIT Madras Zanzibar and the Founding Principal Investigator of the SAAIL Lab.
+												He received his PhD in Agricultural Electrification & Automation from Nanjing Agricultural University in 2019.
+												His research interests include AI for sustainable agriculture, medical imaging, responsible AI frameworks,
+												and contextually-aware AI solutions for East Africa. Innocent has published 22+ research articles
+												with 830+ citations and maintains active collaborations with leading universities across Australia, USA, UK, and China.
+											</p>
+										</div>
+
+										<div class="profile-links">
+											<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" class="profile-link">
+												<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+													<path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+												</svg>
+												Google Scholar
+											</a>
+											<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="profile-link">
+												<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+													<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+												</svg>
+												LinkedIn
+											</a>
+											<a href="https://www.researchgate.net/profile/Innocent-Nyalala" target="_blank" class="profile-link">
+												<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+													<path d="M19.586 0c-.818 0-1.508.19-2.073.565-.563.377-.97.936-1.213 1.68-.242.744-.364 1.627-.364 2.647 0 1.098.122 2.05.364 2.854.243.804.65 1.402 1.213 1.795.565.394 1.255.59 2.073.59.818 0 1.508-.196 2.073-.59.563-.393.97-.991 1.213-1.795.242-.804.364-1.756.364-2.854 0-1.02-.122-1.903-.364-2.647-.243-.744-.65-1.303-1.213-1.68C21.094.19 20.404 0 19.586 0z"/>
+												</svg>
+												ResearchGate
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Current Team -->
+						<div class="people-section" id="current">
+							<h2>Current Team</h2>
+							<div class="section-overview">
+								<p>Our dynamic research team consists of our Principal Investigator and dedicated MTech students working on cutting-edge AI research projects across agriculture, healthcare, and assistive technologies.</p>
+							</div>
+							
+							<!-- Principal Investigator in Current Team -->
+							<div class="team-leader-section">
+								<h3>Principal Investigator</h3>
+								<div class="leader-card-compact">
+									<div class="leader-image">
+										<picture>
+											<source srcset="/images/people/profile.webp" type="image/webp">
+											<img src="/images/people/profile-optimized.jpg" alt="Dr. Innocent Nyalala" class="leader-photo" width="120" height="120" loading="eager">
+										</picture>
+									</div>
+									<div class="leader-info">
+										<h4>Innocent Nyalala</h4>
+										<p class="leader-title">Assistant Professor & Founding Principal Investigator</p>
+										<p class="leader-expertise">AI for Agriculture • Medical Imaging • Responsible AI</p>
+										<div class="leader-links">
+											<a href="https://inyalala.github.io" target="_blank" class="leader-link">Portfolio</a>
+											<a href="mailto:innocent@iitmz.ac.in" class="leader-link">Email</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- PhD Students Section -->
+							<div class="team-subsection">
+								<h3>PhD Students</h3>
+								<div class="opportunity-notice">
+									<div class="opportunity-icon">🎓</div>
+									<div class="opportunity-text">
+										<h4>PhD Position Available</h4>
+										<p>Cotutelle PhD Program with Deakin University - Agentic AI Framework for Agricultural Technologies</p>
+										<a href="https://ge.iitm.ac.in/iitmdu/project/an-agentic-artificial-intelligence-framework-for-agricultural-technologies" target="_blank" class="opportunity-link">Apply Now</a>
+									</div>
+								</div>
+							</div>
+
+							<!-- MTech Students Section -->
+							<div class="team-subsection">
+								<h3>MTech Students</h3>
+								<div class="students-grid">
+									<div class="student-card">
+										<div class="student-avatar patrick">
+											<svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#1e40af"/>
+												<circle cx="50" cy="35" r="15" fill="white"/>
+												<path d="M25 75 Q50 60 75 75 L75 85 Q50 70 25 85 Z" fill="white"/>
+												<text x="50" y="95" text-anchor="middle" fill="white" font-size="12" font-weight="bold">PN</text>
+											</svg>
+										</div>
+										<div class="student-info">
+											<h4><a href="https://www.linkedin.com/in/patrick-ndowo/" target="_blank">Patrick Ndowo</a></h4>
+											<p class="student-location">IIT Madras Zanzibar</p>
+											<p class="student-project">Deep Learning for Zanzibar Cloves Quality Grading</p>
+											<div class="student-tags">
+												<span class="tag">Agriculture AI</span>
+												<span class="tag">Computer Vision</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="student-card">
+										<div class="student-avatar twamaa">
+											<svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#dc2626"/>
+												<circle cx="50" cy="35" r="15" fill="white"/>
+												<path d="M25 75 Q50 60 75 75 L75 85 Q50 70 25 85 Z" fill="white"/>
+												<text x="50" y="95" text-anchor="middle" fill="white" font-size="12" font-weight="bold">TM</text>
+											</svg>
+										</div>
+										<div class="student-info">
+											<h4><a href="https://www.linkedin.com/in/twamaa-makame-1b2349197/" target="_blank">Twamaa Makame</a></h4>
+											<p class="student-location">IIT Madras Zanzibar</p>
+											<p class="student-project">Placental Weight & Volume Estimation from 2D Ultrasound</p>
+											<div class="student-tags">
+												<span class="tag">Medical Imaging</span>
+												<span class="tag">Healthcare AI</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="student-card">
+										<div class="student-avatar shivam">
+											<svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#7c3aed"/>
+												<circle cx="50" cy="35" r="15" fill="white"/>
+												<path d="M25 75 Q50 60 75 75 L75 85 Q50 70 25 85 Z" fill="white"/>
+												<text x="50" y="95" text-anchor="middle" fill="white" font-size="12" font-weight="bold">SV</text>
+											</svg>
+										</div>
+										<div class="student-info">
+											<h4><a href="https://www.linkedin.com/in/shivam-vyas-a98a72153/" target="_blank">Shivam Vyas</a></h4>
+											<p class="student-location">IIT Madras Zanzibar</p>
+											<p class="student-project">E-Vision: Assistive Application for Visually Impaired</p>
+											<div class="student-tags">
+												<span class="tag">Assistive Tech</span>
+												<span class="tag">Edge AI</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="student-card">
+										<div class="student-avatar michael">
+											<svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#059669"/>
+												<circle cx="50" cy="35" r="15" fill="white"/>
+												<path d="M25 75 Q50 60 75 75 L75 85 Q50 70 25 85 Z" fill="white"/>
+												<text x="50" y="95" text-anchor="middle" fill="white" font-size="12" font-weight="bold">MD</text>
+											</svg>
+										</div>
+										<div class="student-info">
+											<h4>Michael Duen</h4>
+											<p class="student-location">IIT Madras Chennai (Co-guided)</p>
+											<p class="student-project">AI Research Project in Machine Learning Applications</p>
+											<div class="student-tags">
+												<span class="tag">AI Research</span>
+												<span class="tag">Co-supervision</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- PhD Students -->
+						<div class="people-section" id="phd">
+							<h2>PhD Students</h2>
+							<div class="section-overview">
+								<p>We offer PhD opportunities through our Cotutelle program with international universities, providing students with global research exposure and collaboration opportunities.</p>
+							</div>
+							
+							<div class="people-grid">
+								<div class="person-card opportunity">
+									<div class="person-image">
+										<div class="opportunity-avatar">
+											<svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#fbbf24"/>
+												<path d="M30 40 L50 25 L70 40 L65 45 L50 35 L35 45 Z" fill="white"/>
+												<rect x="45" y="35" width="10" height="25" fill="white"/>
+												<circle cx="50" cy="65" r="8" fill="white"/>
+											</svg>
+										</div>
+									</div>
+									<div class="person-info">
+										<h4>PhD Position Available</h4>
+										<p class="person-role">Cotutelle PhD Program with Deakin University</p>
+										<p class="person-project">Agentic AI Framework for Agricultural Technologies</p>
+										<div class="person-tags">
+											<span class="tag">PhD Opportunity</span>
+											<span class="tag">International</span>
+											<span class="tag">Funded</span>
+										</div>
+										<div class="person-actions">
+											<a href="https://ge.iitm.ac.in/iitmdu/project/an-agentic-artificial-intelligence-framework-for-agricultural-technologies" target="_blank" class="apply-btn">Apply Now</a>
+											<a href="/contact" class="apply-btn secondary">Ask Questions</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- MTech Zanzibar -->
+						<div class="people-section" id="mtech-zanzibar">
+							<h2>MTech Students - IIT Madras Zanzibar</h2>
+							<div class="section-overview">
+								<p>Our MTech students at IIT Madras Zanzibar are conducting cutting-edge research in AI for agriculture, healthcare, and assistive technologies.</p>
+							</div>
+							
+							<div class="people-grid">
+								<div class="person-card">
+									<div class="person-image">
+										<div class="student-avatar patrick">
+											<svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#1e40af"/>
+												<circle cx="50" cy="35" r="15" fill="white"/>
+												<path d="M25 75 Q50 60 75 75 L75 85 Q50 70 25 85 Z" fill="white"/>
+											</svg>
+										</div>
+									</div>
+									<div class="person-info">
+										<h4><a href="https://www.linkedin.com/in/patrick-ndowo/" target="_blank">Mr. Patrick Ndowo</a></h4>
+										<p class="person-role">MTech Student</p>
+										<p class="person-project">Deep Learning for Fine-Grained Quality Grading of Zanzibar Cloves</p>
+										<div class="person-tags">
+											<span class="tag">Deep Learning</span>
+											<span class="tag">Agriculture AI</span>
+											<span class="tag">Computer Vision</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="person-card">
+									<div class="person-image">
+										<div class="student-avatar twamaa">
+											<svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#dc2626"/>
+												<circle cx="50" cy="35" r="15" fill="white"/>
+												<path d="M25 75 Q50 60 75 75 L75 85 Q50 70 25 85 Z" fill="white"/>
+											</svg>
+										</div>
+									</div>
+									<div class="person-info">
+										<h4><a href="https://www.linkedin.com/in/twamaa-makame-1b2349197/" target="_blank">Ms. Twamaa Makame</a></h4>
+										<p class="person-role">MTech Student</p>
+										<p class="person-project">Placental Weight & Volume Estimation from 2D Ultrasound</p>
+										<div class="person-tags">
+											<span class="tag">Medical Imaging</span>
+											<span class="tag">Healthcare AI</span>
+											<span class="tag">Machine Learning</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="person-card">
+									<div class="person-image">
+										<div class="student-avatar shivam">
+											<svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#7c3aed"/>
+												<circle cx="50" cy="35" r="15" fill="white"/>
+												<path d="M25 75 Q50 60 75 75 L75 85 Q50 70 25 85 Z" fill="white"/>
+											</svg>
+										</div>
+									</div>
+									<div class="person-info">
+										<h4><a href="https://www.linkedin.com/in/shivam-vyas-a98a72153/" target="_blank">Mr. Shivam Vyas</a></h4>
+										<p class="person-role">MTech Student</p>
+										<p class="person-project">E-Vision: Intelligent Assistive Application for Visually Impaired</p>
+										<div class="person-tags">
+											<span class="tag">Assistive Technology</span>
+											<span class="tag">Edge AI</span>
+											<span class="tag">Computer Vision</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- MTech Chennai -->
+						<div class="people-section" id="mtech-chennai">
+							<h2>MTech Students - IIT Madras Chennai</h2>
+							<div class="section-overview">
+								<p>Co-guided MTech students at IIT Madras Chennai working on AI research projects in collaboration with SAAIL Lab.</p>
+							</div>
+							
+							<div class="people-grid">
+								<div class="person-card">
+									<div class="person-image">
+										<div class="student-avatar michael">
+											<svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#059669"/>
+												<circle cx="50" cy="35" r="15" fill="white"/>
+												<path d="M25 75 Q50 60 75 75 L75 85 Q50 70 25 85 Z" fill="white"/>
+											</svg>
+										</div>
+									</div>
+									<div class="person-info">
+										<h4>Mr. Michael Duen</h4>
+										<p class="person-role">MTech Student (Co-guided)</p>
+										<p class="person-project">Co-guided MTech Research Project in AI applications</p>
+										<div class="person-tags">
+											<span class="tag">AI Research</span>
+											<span class="tag">Co-supervision</span>
+											<span class="tag">Machine Learning</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Alumni -->
+						<div class="people-section" id="alumni">
+							<h2>Alumni</h2>
+							<div class="section-overview">
+								<p>Our graduated students who have successfully completed their research projects and moved on to advance their careers in AI and technology.</p>
+							</div>
+							
+							<div class="people-grid">
+								<div class="person-card alumni">
+									<div class="person-image">
+										<div class="student-avatar alumni">
+											<svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+												<circle cx="50" cy="50" r="50" fill="#059669"/>
+												<circle cx="50" cy="35" r="15" fill="white"/>
+												<path d="M25 75 Q50 60 75 75 L75 85 Q50 70 25 85 Z" fill="white"/>
+												<path d="M35 25 L50 15 L65 25 L60 30 L50 25 L40 30 Z" fill="#fbbf24"/>
+											</svg>
+										</div>
+									</div>
+									<div class="person-info">
+										<h4>Mr. Makame Mohammed Haji</h4>
+										<p class="person-role">MTech Graduate (July 2025)</p>
+										<p class="person-project">Explainable Machine Learning Models for Prediction of Preterm Birth Using Metabolomics Data</p>
+										<div class="person-tags">
+											<span class="tag">Explainable AI</span>
+											<span class="tag">Medical AI</span>
+											<span class="tag">Metabolomics</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Collaborators -->
+						<div class="people-section" id="collaborators">
+							<h2>Key Collaborators</h2>
+							<div class="section-overview">
+								<p>Our international research collaborators from leading universities worldwide, driving innovation through global partnerships.</p>
+							</div>
+							
+							<div class="collaborators-grid">
+								<div class="collaborator-card">
+									<div class="collaborator-flag">🇦🇺</div>
+									<div class="collaborator-info">
+										<h4><a href="https://www.deakin.edu.au/about-deakin/people/sunil-aryal" target="_blank">Prof. Sunil Aryal</a></h4>
+										<p class="collaborator-affiliation">Deakin University, Australia</p>
+										<p class="collaborator-role">Cotutelle PhD Program - AI/IoT in Agriculture</p>
+									</div>
+								</div>
+
+								<div class="collaborator-card">
+									<div class="collaborator-flag">🇦🇺</div>
+									<div class="collaborator-info">
+										<h4><a href="https://experts.deakin.edu.au/67447-kallol-krishna-karmakar" target="_blank">Dr. Kallol Krishna Karmakar</a></h4>
+										<p class="collaborator-affiliation">Deakin University, Australia</p>
+										<p class="collaborator-role">Co-supervisor - Agentic AI Framework for Agricultural Technologies</p>
+									</div>
+								</div>
+
+								<div class="collaborator-card">
+									<div class="collaborator-flag">🇬🇧</div>
+									<div class="collaborator-info">
+										<h4><a href="https://www.cl.cam.ac.uk/~sb2333/" target="_blank">Dr. Soumya Banerjee</a></h4>
+										<p class="collaborator-affiliation">University of Cambridge, UK</p>
+										<p class="collaborator-role">Responsible AI for Africa Research</p>
+									</div>
+								</div>
+
+								<div class="collaborator-card">
+									<div class="collaborator-flag">🇺🇸</div>
+									<div class="collaborator-info">
+										<h4><a href="https://www.earth.columbia.edu/users/profile/sathish-r-s" target="_blank">Dr. Sathish R. S.</a></h4>
+										<p class="collaborator-affiliation">Columbia University, USA</p>
+										<p class="collaborator-role">AI-driven Air Quality Monitoring</p>
+									</div>
+								</div>
+
+								<div class="collaborator-card">
+									<div class="collaborator-flag">🇹🇿</div>
+									<div class="collaborator-info">
+										<h4><a href="https://www.iitmz.ac.in/faculty/nirav-bhatt" target="_blank">Prof. Nirav Bhatt</a></h4>
+										<p class="collaborator-affiliation">IIT Madras Zanzibar</p>
+										<p class="collaborator-role">Ethical AI Frameworks</p>
+									</div>
+								</div>
+
+								<div class="collaborator-card">
+									<div class="collaborator-flag">🇬🇧</div>
+									<div class="collaborator-info">
+										<h4><a href="https://www.salford.ac.uk/our-staff/vikranth-nagaraja" target="_blank">Dr. Vikranth Nagaraja</a></h4>
+										<p class="collaborator-affiliation">University of Salford, UK</p>
+										<p class="collaborator-role">Responsible AI Development</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<ModernFooter />
+</Layout>
+
+<style>
+	.people-page {
+		padding-top: 90px;
+	}
+
+	.people-hero {
+		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+		padding: 4rem 0;
+		text-align: center;
+	}
+
+	.hero-content h1 {
+		font-size: 3rem;
+		font-weight: 700;
+		color: var(--accent-blue);
+		margin-bottom: 1.5rem;
+	}
+
+	.hero-description {
+		font-size: 1.25rem;
+		color: var(--text-secondary);
+		max-width: 800px;
+		margin: 0 auto;
+		line-height: 1.7;
+	}
+
+	.people-content {
+		padding: 5rem 0;
+		background: var(--bg-primary);
+	}
+
+	.people-layout {
+		display: grid;
+		grid-template-columns: 250px 1fr;
+		gap: 3rem;
+	}
+
+	.people-sidebar {
+		position: sticky;
+		top: 120px;
+		height: fit-content;
+	}
+
+	.sidebar-nav {
+		background: var(--bg-secondary);
+		border-radius: 1rem;
+		padding: 1rem;
+		border: 1px solid var(--border-color);
+	}
+
+	.nav-item {
+		display: block;
+		width: 100%;
+		padding: 0.75rem 1rem;
+		text-align: left;
+		background: none;
+		border: none;
+		color: var(--text-secondary);
+		font-weight: 500;
+		border-radius: 0.5rem;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		margin-bottom: 0.5rem;
+	}
+
+	.nav-item:hover,
+	.nav-item.active {
+		background: var(--accent-blue);
+		color: white;
+	}
+
+	.people-main {
+		min-height: 600px;
+	}
+
+	.people-section {
+		display: none;
+	}
+
+	.people-section.active {
+		display: block;
+	}
+
+	.people-section h2 {
+		font-size: 2rem;
+		font-weight: 700;
+		color: var(--accent-blue);
+		margin-bottom: 2rem;
+	}
+
+	.section-overview {
+		background: var(--bg-secondary);
+		padding: 1.5rem;
+		border-radius: 1rem;
+		margin-bottom: 2rem;
+		border-left: 4px solid var(--accent-blue);
+	}
+
+	.section-overview p {
+		color: var(--text-secondary);
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	/* Director Profile */
+	.director-profile {
+		max-width: 800px;
+	}
+
+	.profile-card {
+		background: var(--bg-secondary);
+		border-radius: 1.5rem;
+		padding: 2.5rem;
+		box-shadow: 0 8px 24px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	.profile-card.featured {
+		border: 2px solid var(--accent-blue);
+	}
+
+	.profile-image {
+		flex-shrink: 0;
+	}
+
+	.profile-photo {
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 4px solid var(--accent-blue);
+	}
+
+	.profile-content {
+		flex: 1;
+	}
+
+	.profile-header h3 {
+		font-size: 1.75rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.profile-title {
+		font-size: 1.125rem;
+		color: var(--accent-green);
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+	}
+
+	.profile-department {
+		color: var(--text-secondary);
+		margin-bottom: 1.5rem;
+		line-height: 1.5;
+	}
+
+	.contact-info {
+		margin-bottom: 1.5rem;
+	}
+
+	.contact-item {
+		margin-bottom: 0.5rem;
+		color: var(--text-secondary);
+		font-size: 0.875rem;
+	}
+
+	.contact-item a {
+		color: var(--accent-blue);
+		text-decoration: none;
+	}
+
+	.contact-item a:hover {
+		text-decoration: underline;
+	}
+
+	.profile-bio h4 {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 0.75rem;
+	}
+
+	.profile-bio p {
+		color: var(--text-secondary);
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+		font-size: 0.875rem;
+	}
+
+	.profile-links {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.profile-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		background: var(--accent-blue);
+		color: white;
+		text-decoration: none;
+		border-radius: 0.5rem;
+		font-weight: 500;
+		font-size: 0.875rem;
+		transition: all 0.3s ease;
+	}
+
+	.profile-link:hover {
+		background: var(--accent-green);
+		transform: translateY(-2px);
+	}
+
+	/* Current Team Layout */
+	.team-leader-section {
+		margin-bottom: 3rem;
+	}
+
+	.team-leader-section h3 {
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 1.5rem;
+		border-bottom: 2px solid var(--accent-blue);
+		padding-bottom: 0.5rem;
+	}
+
+	.leader-card-compact {
+		background: var(--bg-secondary);
+		border-radius: 1rem;
+		padding: 1.5rem;
+		box-shadow: 0 4px 12px var(--shadow-light);
+		border: 2px solid var(--accent-blue);
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+	}
+
+	.leader-image {
+		flex-shrink: 0;
+	}
+
+	.leader-photo {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 3px solid var(--accent-blue);
+	}
+
+	.leader-info h4 {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 0.25rem;
+	}
+
+	.leader-title {
+		color: var(--accent-green);
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+		font-size: 0.875rem;
+	}
+
+	.leader-expertise {
+		color: var(--text-secondary);
+		margin-bottom: 1rem;
+		font-size: 0.875rem;
+	}
+
+	.leader-links {
+		display: flex;
+		gap: 0.75rem;
+	}
+
+	.leader-link {
+		padding: 0.5rem 1rem;
+		background: var(--accent-blue);
+		color: white;
+		text-decoration: none;
+		border-radius: 0.5rem;
+		font-weight: 500;
+		font-size: 0.875rem;
+		transition: all 0.3s ease;
+	}
+
+	.leader-link:hover {
+		background: var(--accent-green);
+		transform: translateY(-1px);
+	}
+
+	.team-subsection {
+		margin-bottom: 3rem;
+	}
+
+	.team-subsection h3 {
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 1.5rem;
+		border-bottom: 2px solid var(--accent-blue);
+		padding-bottom: 0.5rem;
+	}
+
+	.opportunity-notice {
+		background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+		border: 2px solid var(--accent-green);
+		border-radius: 1rem;
+		padding: 1.5rem;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.opportunity-icon {
+		font-size: 2rem;
+		animation: bounce 2s infinite;
+	}
+
+	@keyframes bounce {
+		0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+		40% { transform: translateY(-10px); }
+		60% { transform: translateY(-5px); }
+	}
+
+	.opportunity-text h4 {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.opportunity-text p {
+		color: var(--text-secondary);
+		margin-bottom: 1rem;
+		font-size: 0.875rem;
+	}
+
+	.opportunity-link {
+		background: var(--accent-green);
+		color: white;
+		padding: 0.5rem 1rem;
+		border-radius: 0.5rem;
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 0.875rem;
+		transition: all 0.3s ease;
+	}
+
+	.opportunity-link:hover {
+		background: #047857;
+		transform: translateY(-2px);
+	}
+
+	/* Students Grid */
+	.students-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.student-card {
+		background: var(--bg-secondary);
+		border-radius: 1rem;
+		padding: 1.5rem;
+		box-shadow: 0 4px 12px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s ease;
+		text-align: center;
+	}
+
+	.student-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 20px var(--shadow-medium);
+	}
+
+	.student-avatar {
+		margin: 0 auto 1rem;
+		transition: transform 0.3s ease;
+	}
+
+	.student-card:hover .student-avatar {
+		transform: scale(1.1);
+	}
+
+	.student-info h4 {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 0.25rem;
+	}
+
+	.student-info h4 a {
+		color: var(--text-primary);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.student-info h4 a:hover {
+		color: var(--accent-blue);
+	}
+
+	.student-location {
+		color: var(--accent-green);
+		font-weight: 500;
+		margin-bottom: 0.75rem;
+		font-size: 0.875rem;
+	}
+
+	.student-project {
+		color: var(--text-secondary);
+		font-size: 0.875rem;
+		line-height: 1.5;
+		margin-bottom: 1rem;
+	}
+
+	.student-tags {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.tag {
+		padding: 0.25rem 0.75rem;
+		background: var(--accent-blue);
+		color: white;
+		border-radius: 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 500;
+	}
+
+	/* People Grid */
+	.people-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+	}
+
+	.person-card {
+		background: var(--bg-secondary);
+		border-radius: 1rem;
+		padding: 1.5rem;
+		box-shadow: 0 4px 12px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s ease;
+		text-align: center;
+	}
+
+	.person-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 20px var(--shadow-medium);
+	}
+
+	.person-card.alumni {
+		opacity: 0.8;
+		border: 2px dashed var(--border-color);
+	}
+
+	.person-card.opportunity {
+		border: 2px solid var(--accent-green);
+		background: linear-gradient(135deg, var(--bg-secondary) 0%, #f0fdf4 100%);
+	}
+
+	.person-image {
+		margin-bottom: 1rem;
+	}
+
+	.opportunity-avatar {
+		margin: 0 auto;
+	}
+
+	.person-info h4 {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.person-info h4 a {
+		color: var(--text-primary);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.person-info h4 a:hover {
+		color: var(--accent-blue);
+	}
+
+	.person-role {
+		color: var(--accent-green);
+		font-weight: 500;
+		margin-bottom: 0.75rem;
+	}
+
+	.person-project {
+		color: var(--text-secondary);
+		font-size: 0.875rem;
+		line-height: 1.5;
+		margin-bottom: 1rem;
+	}
+
+	.person-tags {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		justify-content: center;
+		margin-bottom: 1rem;
+	}
+
+	.person-actions {
+		margin-top: 1rem;
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.apply-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.5rem 1rem;
+		background: var(--accent-green);
+		color: white;
+		text-decoration: none;
+		border-radius: 0.5rem;
+		font-weight: 500;
+		font-size: 0.875rem;
+		transition: all 0.3s ease;
+	}
+
+	.apply-btn:hover {
+		background: #047857;
+		transform: translateY(-2px);
+	}
+
+	.apply-btn.secondary {
+		background: var(--bg-primary);
+		color: var(--accent-green);
+		border: 1px solid var(--accent-green);
+	}
+
+	.apply-btn.secondary:hover {
+		background: var(--accent-green);
+		color: white;
+	}
+
+	/* Collaborators */
+	.collaborators-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.collaborator-card {
+		background: var(--bg-secondary);
+		border-radius: 1rem;
+		padding: 1.5rem;
+		box-shadow: 0 2px 8px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s ease;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.collaborator-card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px var(--shadow-medium);
+	}
+
+	.collaborator-flag {
+		font-size: 2rem;
+		flex-shrink: 0;
+	}
+
+	.collaborator-info h4 {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.collaborator-info h4 a {
+		color: var(--text-primary);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.collaborator-info h4 a:hover {
+		color: var(--accent-blue);
+	}
+
+	.collaborator-affiliation {
+		color: var(--accent-green);
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		font-size: 0.875rem;
+	}
+
+	.collaborator-role {
+		color: var(--text-secondary);
+		font-size: 0.875rem;
+		line-height: 1.5;
+	}
+
+	@media (max-width: 1024px) {
+		.people-layout {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.people-sidebar {
+			position: static;
+		}
+
+		.sidebar-nav {
+			display: flex;
+			overflow-x: auto;
+			gap: 0.5rem;
+			padding: 1rem;
+		}
+
+		.nav-item {
+			white-space: nowrap;
+			margin-bottom: 0;
+		}
+
+		.profile-card {
+			flex-direction: column;
+			text-align: center;
+		}
+
+		.leader-card-compact {
+			flex-direction: column;
+			text-align: center;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.hero-content h1 {
+			font-size: 2.5rem;
+		}
+
+		.people-grid,
+		.collaborators-grid,
+		.students-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.profile-links,
+		.leader-links {
+			justify-content: center;
+		}
+	}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const navItems = document.querySelectorAll('.nav-item');
+		const sections = document.querySelectorAll('.people-section');
+
+		// Sidebar navigation
+		navItems.forEach(item => {
+			item.addEventListener('click', function() {
+				const targetSection = this.dataset.section;
+
+				// Update active nav item
+				navItems.forEach(nav => nav.classList.remove('active'));
+				this.classList.add('active');
+
+				// Show target section
+				sections.forEach(section => {
+					section.classList.remove('active');
+					if (section.id === targetSection) {
+						section.classList.add('active');
+					}
+				});
+			});
+		});
+
+		// Handle direct navigation from URL hash
+		const hash = window.location.hash.substring(1);
+		if (hash) {
+			const targetNav = document.querySelector(`[data-section="${hash}"]`);
+			if (targetNav) {
+				targetNav.click();
+			}
+		}
+	});
+</script>
