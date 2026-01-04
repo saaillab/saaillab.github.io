@@ -1,0 +1,905 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+
+const teamMembers = [
+	{
+		id: '1',
+		name: 'Dr. Innocent Nyalala',
+		role: 'Assistant Professor & Founding Principal Investigator',
+		category: 'director',
+		location: 'IIT Madras, Zanzibar',
+		email: 'innocent@iitmz.ac.in',
+		linkedin_url: 'https://www.linkedin.com/in/innocentnyalala/',
+		scholar_url: 'https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en',
+		personal_website: 'https://inyalala.github.io',
+		researchgate_url: null,
+		photo_url: '/images/people/profile-optimized.jpg',
+		bio: 'Dr. Innocent Nyalala is an Assistant Professor at IIT Madras Zanzibar and the Founding Principal Investigator of SAAIL Lab. His research focuses on developing transformative AI solutions for sustainable agriculture and intelligent livelihoods in East Africa.',
+		research_interests: 'AI for Agriculture, Computer Vision, Deep Learning, Responsible AI, Medical Imaging',
+		is_featured: true,
+		display_order: 1,
+		status: 'active',
+		country_flag: '🇹🇿',
+		affiliation: 'IIT Madras Zanzibar'
+	},
+	{
+		id: '2',
+		name: 'Patrick Ndowo',
+		role: 'MTech Student',
+		category: 'mtech-zanzibar',
+		location: 'IIT Madras, Zanzibar',
+		email: null,
+		linkedin_url: 'https://www.linkedin.com/in/patrick-ndowo/',
+		scholar_url: null,
+		personal_website: null,
+		researchgate_url: null,
+		photo_url: '/images/people/image copy.png',
+		bio: null,
+		research_interests: 'Deep Learning for Zanzibar Cloves Quality Grading',
+		is_featured: false,
+		display_order: 2,
+		status: 'active',
+		country_flag: '🇹🇿',
+		affiliation: 'IIT Madras Zanzibar'
+	},
+	{
+		id: '3',
+		name: 'Twamaa Makame',
+		role: 'MTech Student',
+		category: 'mtech-zanzibar',
+		location: 'IIT Madras, Zanzibar',
+		email: null,
+		linkedin_url: 'https://www.linkedin.com/in/twamaa-makame-1b2349197/',
+		scholar_url: null,
+		personal_website: null,
+		researchgate_url: null,
+		photo_url: '/images/people/image copy.png',
+		bio: null,
+		research_interests: 'Placental Weight & Volume Estimation from 2D Ultrasound',
+		is_featured: false,
+		display_order: 3,
+		status: 'active',
+		country_flag: '🇹🇿',
+		affiliation: 'IIT Madras Zanzibar'
+	},
+	{
+		id: '4',
+		name: 'Shivam Vyas',
+		role: 'MTech Student',
+		category: 'mtech-chennai',
+		location: 'IIT Madras, Chennai',
+		email: null,
+		linkedin_url: 'https://www.linkedin.com/in/shivam-vyas-a98a72153/',
+		scholar_url: null,
+		personal_website: null,
+		researchgate_url: null,
+		photo_url: '/images/people/image copy.png',
+		bio: null,
+		research_interests: 'E-Vision: Assistive Application for Visually Impaired',
+		is_featured: false,
+		display_order: 4,
+		status: 'active',
+		country_flag: '��🇳',
+		affiliation: 'IIT Madras Chennai'
+	}
+];
+
+const collaborators = [];
+
+const alumni = [];
+---
+
+<Layout
+	title="People - SAAIL Lab"
+	description="Meet the team at SAAIL Lab - our principal investigator, current students, collaborators, and alumni driving AI innovation for sustainable agriculture and intelligent livelihoods."
+>
+	<ModernHeader />
+
+	<main class="people-page">
+		<section class="people-hero">
+			<div class="container">
+				<div class="hero-content">
+					<h1>Our Team</h1>
+					<p class="hero-description">
+						Meet the researchers, students, and collaborators driving innovation at SAAIL Lab
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="mission-section">
+			<div class="container">
+				<h2 class="section-title">Our Story</h2>
+
+				<div class="accordion">
+					<div class="accordion-item">
+						<button class="accordion-header">
+							<span>Our Mission</span>
+							<span class="accordion-icon">+</span>
+						</button>
+						<div class="accordion-content">
+							<p>To pioneer transformative, ethical, and contextually-aware Artificial Intelligence solutions that address critical challenges in sustainable agriculture and intelligent livelihoods across East Africa, while fostering local innovation capacity and advancing global AI research.</p>
+						</div>
+					</div>
+
+					<div class="accordion-item">
+						<button class="accordion-header">
+							<span>Our Vision</span>
+							<span class="accordion-icon">+</span>
+						</button>
+						<div class="accordion-content">
+							<p>To be a leading research hub for Responsible AI innovation in Africa, recognized globally for developing cutting-edge AI technologies that enhance food security, improve farmer livelihoods, and contribute to sustainable development goals while maintaining the highest ethical standards.</p>
+						</div>
+					</div>
+
+					<div class="accordion-item">
+						<button class="accordion-header">
+							<span>Our Values</span>
+							<span class="accordion-icon">+</span>
+						</button>
+						<div class="accordion-content">
+							<h4>We are Human</h4>
+							<p>We lead with empathy, integrity, and respect. Our work is grounded in trust, both within our team and with the communities we serve. We believe in open, honest collaboration where every voice matters.</p>
+
+							<h4>We are Collaborative</h4>
+							<p>We thrive on diverse perspectives. Across roles, backgrounds, and geographies, we work together toward a common vision. Our strength lies in our global partnerships and our ability to co-create thoughtful, inclusive solutions.</p>
+
+							<h4>We are Curious</h4>
+							<p>We ask bold questions and challenge assumptions. Through research and learning, we push the boundaries of AI knowledge. A mindset of continual growth fuels our inclusive culture.</p>
+
+							<h4>We Champion Excellence</h4>
+							<p>From law and policy to data science and ethics, our team brings deep expertise to everything we do. We foster a culture of trust and autonomy, where people are empowered to lead, take initiative, and deliver impact.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="team-section">
+			<div class="container">
+				<h2 class="section-title">Meet the Team</h2>
+
+				<nav class="people-nav">
+					<button class="nav-btn active" data-category="all">All Team</button>
+					<button class="nav-btn" data-category="director">Leadership</button>
+					<button class="nav-btn" data-category="students">Students</button>
+					<button class="nav-btn" data-category="collaborator">Collaborators</button>
+					<button class="nav-btn" data-category="alumni">Alumni</button>
+				</nav>
+
+				<div id="team-grid" class="team-grid">
+					{teamMembers.map(member => (
+						<div class="team-card" data-id={member.id} data-category={member.category}>
+							<div class="card-image-wrapper">
+								<img src={member.photo_url} alt={member.name} class="card-image" loading="lazy" />
+							</div>
+							<div class="card-info">
+								<h3 class="card-name">{member.name}</h3>
+								<p class="card-role">{member.role}</p>
+							</div>
+						</div>
+					))}
+					{collaborators.map(collab => (
+						<div class="team-card collaborator-card" data-id={collab.id} data-category="collaborator" style="display: none;">
+							<div class="card-image-wrapper">
+								<img src={collab.photo_url} alt={collab.name} class="card-image" loading="lazy" />
+							</div>
+							<div class="card-info">
+								<h3 class="card-name">{collab.name}</h3>
+								<p class="card-role">{collab.role}</p>
+								<p class="card-research">{collab.institution}</p>
+							</div>
+						</div>
+					))}
+					{alumni.map(alum => (
+						<div class="team-card alumni-card" data-id={alum.id} data-category="alumni" style="display: none;">
+							<div class="card-image-wrapper">
+								<img src={alum.photo_url} alt={alum.name} class="card-image" loading="lazy" />
+							</div>
+							<div class="card-info">
+								<h3 class="card-name">{alum.name}</h3>
+								<p class="card-role">{alum.current_position}</p>
+								<p class="card-research">Graduated {alum.graduation_year}</p>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<div id="profile-modal" class="modal">
+			<div class="modal-overlay"></div>
+			<div class="modal-content">
+				<button class="modal-close">&times;</button>
+				<div class="modal-body">
+					<div class="modal-header">
+						<div class="modal-image-container">
+							<img src="" alt="" class="modal-image" />
+						</div>
+						<div class="modal-title-section">
+							<h2 class="modal-name"></h2>
+							<p class="modal-role"></p>
+							<p class="modal-location"></p>
+						</div>
+					</div>
+					<div class="modal-bio"></div>
+					<div class="modal-research"></div>
+					<div class="modal-links"></div>
+				</div>
+			</div>
+		</div>
+
+		<script define:vars={{ teamMembers, collaborators, alumni }}>
+			const allMembers = [...teamMembers, ...collaborators, ...alumni];
+
+			document.querySelectorAll('.accordion-header').forEach(header => {
+				header.addEventListener('click', () => {
+					const item = header.parentElement;
+					const wasOpen = item.classList.contains('active');
+
+					document.querySelectorAll('.accordion-item').forEach(i => {
+						i.classList.remove('active');
+					});
+
+					if (!wasOpen) {
+						item.classList.add('active');
+					}
+				});
+			});
+
+			document.querySelectorAll('.nav-btn').forEach(btn => {
+				btn.addEventListener('click', () => {
+					document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+					btn.classList.add('active');
+					const category = btn.getAttribute('data-category');
+					filterTeam(category);
+				});
+			});
+
+			function filterTeam(category) {
+				const cards = document.querySelectorAll('.team-card');
+				cards.forEach(card => {
+					const cardCategory = card.getAttribute('data-category');
+
+					if (category === 'all') {
+						card.style.display = 'block';
+					} else if (category === 'students') {
+						if (cardCategory === 'mtech-zanzibar' || cardCategory === 'mtech-chennai') {
+							card.style.display = 'block';
+						} else {
+							card.style.display = 'none';
+						}
+					} else {
+						if (cardCategory === category) {
+							card.style.display = 'block';
+						} else {
+							card.style.display = 'none';
+						}
+					}
+				});
+			}
+
+			document.querySelectorAll('.team-card').forEach(card => {
+				card.addEventListener('click', () => {
+					const memberId = card.getAttribute('data-id');
+					const member = allMembers.find(m => m.id === memberId);
+					if (member) openModal(member);
+				});
+			});
+
+			function openModal(member) {
+				const modal = document.getElementById('profile-modal');
+				if (!modal) return;
+
+				const modalImage = modal.querySelector('.modal-image');
+				const modalName = modal.querySelector('.modal-name');
+				const modalRole = modal.querySelector('.modal-role');
+				const modalLocation = modal.querySelector('.modal-location');
+				const modalBio = modal.querySelector('.modal-bio');
+				const modalResearch = modal.querySelector('.modal-research');
+				const modalLinks = modal.querySelector('.modal-links');
+
+				if (modalImage) modalImage.src = member.photo_url;
+				if (modalImage) modalImage.alt = member.name;
+				if (modalName) modalName.textContent = member.name;
+				if (modalRole) modalRole.textContent = member.role;
+				if (modalLocation) modalLocation.textContent = member.location || member.affiliation || '';
+
+				if (modalBio) {
+					modalBio.innerHTML = member.bio
+						? `<h3>Biography</h3><p>${member.bio}</p>`
+						: '';
+				}
+
+				if (modalResearch) {
+					modalResearch.innerHTML = member.research_interests
+						? `<h3>Research Focus</h3><p>${member.research_interests}</p>`
+						: '';
+				}
+
+				const links = [];
+				if (member.linkedin_url) links.push({ url: member.linkedin_url, label: 'LinkedIn' });
+				if (member.scholar_url) links.push({ url: member.scholar_url, label: 'Google Scholar' });
+				if (member.personal_website) links.push({ url: member.personal_website, label: 'Website' });
+				if (member.email) links.push({ url: `mailto:${member.email}`, label: 'Email' });
+
+				if (modalLinks) {
+					modalLinks.innerHTML = links.map(link => `
+						<a href="${link.url}" target="${link.url.startsWith('mailto:') ? '_self' : '_blank'}" rel="noopener noreferrer" class="modal-link">
+							${link.label}
+						</a>
+					`).join('');
+				}
+
+				modal.classList.add('active');
+				document.body.style.overflow = 'hidden';
+			}
+
+			function closeModal() {
+				const modal = document.getElementById('profile-modal');
+				if (modal) {
+					modal.classList.remove('active');
+					document.body.style.overflow = '';
+				}
+			}
+
+			const modal = document.getElementById('profile-modal');
+			const closeBtn = modal?.querySelector('.modal-close');
+			const overlay = modal?.querySelector('.modal-overlay');
+
+			closeBtn?.addEventListener('click', closeModal);
+			overlay?.addEventListener('click', closeModal);
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape') closeModal();
+			});
+		</script>
+	</main>
+
+	<ModernFooter />
+
+	<style>
+	:root {
+		--modal-bg: rgba(0, 0, 0, 0.9);
+		--card-transition: all 0.3s ease;
+	}
+
+	.people-page {
+		padding-top: 90px;
+		min-height: 100vh;
+		background: var(--bg-primary);
+	}
+
+	.people-hero {
+		background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+		padding: 5rem 0 4rem;
+		text-align: center;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.people-hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+			radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 1;
+	}
+
+	.hero-content h1 {
+		font-size: 3.5rem;
+		font-weight: 800;
+		background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		margin-bottom: 1.5rem;
+		letter-spacing: -0.02em;
+	}
+
+	.hero-description {
+		font-size: 1.25rem;
+		color: #cbd5e1;
+		max-width: 600px;
+		margin: 0 auto;
+		line-height: 1.7;
+	}
+
+	.mission-section {
+		padding: 5rem 0;
+		background: var(--bg-secondary);
+	}
+
+	.section-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.accordion {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+	.accordion-item {
+		background: var(--bg-primary);
+		border-radius: 0.5rem;
+		margin-bottom: 1rem;
+		overflow: hidden;
+		border: 1px solid var(--border-color);
+	}
+
+	.accordion-header {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1.5rem 2rem;
+		background: none;
+		border: none;
+		color: var(--text-primary);
+		font-size: 1.125rem;
+		font-weight: 600;
+		cursor: pointer;
+		text-align: left;
+		transition: background 0.3s ease;
+	}
+
+	.accordion-header:hover {
+		background: var(--bg-tertiary);
+	}
+
+	.accordion-icon {
+		font-size: 1.5rem;
+		font-weight: 300;
+		transition: transform 0.3s ease;
+		color: var(--text-secondary);
+	}
+
+	.accordion-item.active .accordion-icon {
+		transform: rotate(45deg);
+	}
+
+	.accordion-content {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.3s ease, padding 0.3s ease;
+		padding: 0 2rem;
+		color: var(--text-primary);
+		line-height: 1.7;
+	}
+
+	.accordion-item.active .accordion-content {
+		max-height: 1000px;
+		padding: 0 2rem 1.5rem;
+	}
+
+	.accordion-content h4 {
+		color: var(--text-primary);
+		font-size: 1rem;
+		font-weight: 600;
+		margin-top: 1rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.accordion-content h4:first-child {
+		margin-top: 0;
+	}
+
+	.accordion-content p {
+		margin-bottom: 0.75rem;
+		color: var(--text-secondary);
+	}
+
+	.team-section {
+		padding: 5rem 0;
+		background: var(--bg-primary);
+	}
+
+	.people-nav {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		margin-bottom: 3rem;
+		flex-wrap: wrap;
+	}
+
+	.nav-btn {
+		padding: 0.75rem 1.5rem;
+		background: var(--bg-secondary);
+		border: 2px solid var(--border-color);
+		border-radius: 2rem;
+		color: var(--text-secondary);
+		font-weight: 600;
+		cursor: pointer;
+		transition: var(--card-transition);
+		font-size: 0.95rem;
+	}
+
+	.nav-btn:hover {
+		border-color: #1e3a8a;
+		color: #1e3a8a;
+		transform: translateY(-2px);
+	}
+
+	.nav-btn.active {
+		background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+		border-color: #1e3a8a;
+		color: white;
+	}
+
+	.team-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 2rem;
+	}
+
+	.team-card {
+		background: var(--bg-secondary);
+		border-radius: 0.75rem;
+		overflow: hidden;
+		cursor: pointer;
+		transition: var(--card-transition);
+		border: 1px solid var(--border-color);
+	}
+
+	.team-card:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+		border-color: #1e3a8a;
+	}
+
+	.collaborator-card,
+	.alumni-card {
+		background: var(--bg-secondary);
+		border-radius: 0.5rem;
+		padding: 1rem;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		border: 1px solid var(--border-color);
+		transition: var(--card-transition);
+	}
+
+	.collaborator-card:hover,
+	.alumni-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+		border-color: #1e3a8a;
+	}
+
+	.collaborator-card .card-image-wrapper,
+	.alumni-card .card-image-wrapper {
+		width: 70px;
+		height: 70px;
+		min-width: 70px;
+		border-radius: 0.5rem;
+		overflow: hidden;
+		background: #f3f4f6;
+		padding-top: 0;
+		position: relative;
+	}
+
+	.collaborator-card .card-image,
+	.alumni-card .card-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		position: static;
+	}
+
+	.collaborator-card .card-info,
+	.alumni-card .card-info {
+		padding: 0;
+		flex: 1;
+	}
+
+	.collaborator-card .card-name,
+	.alumni-card .card-name {
+		font-size: 0.95rem;
+		margin-bottom: 0.25rem;
+	}
+
+	.collaborator-card .card-role,
+	.alumni-card .card-role {
+		font-size: 0.85rem;
+		margin-bottom: 0.25rem;
+	}
+
+	.collaborator-card .card-research,
+	.alumni-card .card-research {
+		font-size: 0.8rem;
+	}
+
+	.card-image-wrapper {
+		position: relative;
+		width: 100%;
+		padding-top: 100%;
+		overflow: hidden;
+		background: #f3f4f6;
+	}
+
+	.card-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: grayscale(100%);
+		transition: var(--card-transition);
+	}
+
+	.team-card:hover .card-image {
+		filter: grayscale(0%);
+		transform: scale(1.05);
+	}
+
+	.card-info {
+		padding: 1.5rem;
+	}
+
+	.card-name {
+		font-size: 1.125rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.card-role {
+		font-size: 0.95rem;
+		color: #1e3a8a;
+		font-weight: 600;
+		margin-bottom: 0.75rem;
+	}
+
+	.card-research {
+		font-size: 0.875rem;
+		color: var(--text-secondary);
+		line-height: 1.5;
+	}
+
+	.modal {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 10000;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+	}
+
+	.modal.active {
+		display: flex;
+	}
+
+	.modal-overlay {
+		position: absolute;
+		inset: 0;
+		background: var(--modal-bg);
+		backdrop-filter: blur(10px);
+	}
+
+	.modal-content {
+		position: relative;
+		background: var(--bg-secondary);
+		border-radius: 1.5rem;
+		max-width: 700px;
+		width: 100%;
+		max-height: 90vh;
+		overflow-y: auto;
+		box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+		border: 2px solid var(--border-color);
+		z-index: 1;
+	}
+
+	.modal-close {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: rgba(0, 0, 0, 0.5);
+		color: white;
+		border: none;
+		font-size: 1.5rem;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: var(--card-transition);
+		z-index: 10;
+	}
+
+	.modal-close:hover {
+		background: #1e3a8a;
+		transform: rotate(90deg);
+	}
+
+	.modal-body {
+		padding: 2rem;
+	}
+
+	.modal-header {
+		display: flex;
+		gap: 2rem;
+		margin-bottom: 2rem;
+		align-items: flex-start;
+	}
+
+	.modal-image-container {
+		flex-shrink: 0;
+	}
+
+	.modal-image {
+		width: 150px;
+		height: 150px;
+		border-radius: 0.75rem;
+		object-fit: cover;
+		border: 3px solid #1e3a8a;
+	}
+
+	.modal-title-section {
+		flex: 1;
+	}
+
+	.modal-name {
+		font-size: 2rem;
+		font-weight: 800;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.modal-role {
+		font-size: 1.125rem;
+		color: #1e3a8a;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+	}
+
+	.modal-location {
+		color: var(--text-secondary);
+		font-size: 0.95rem;
+	}
+
+	.modal-bio,
+	.modal-research {
+		margin-bottom: 1.5rem;
+	}
+
+	.modal-bio h3,
+	.modal-research h3 {
+		font-size: 1.125rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 0.75rem;
+	}
+
+	.modal-bio p,
+	.modal-research p {
+		color: var(--text-secondary);
+		line-height: 1.7;
+		font-size: 0.95rem;
+	}
+
+	.modal-links {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.modal-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.25rem;
+		background: #1e3a8a;
+		color: white;
+		text-decoration: none;
+		border-radius: 0.5rem;
+		font-weight: 600;
+		font-size: 0.9rem;
+		transition: var(--card-transition);
+	}
+
+	.modal-link:hover {
+		background: #3b82f6;
+		transform: translateY(-2px);
+	}
+
+	@media (max-width: 768px) {
+		.people-page {
+			padding-top: 80px;
+		}
+
+		.people-hero {
+			padding: 3rem 0 2rem;
+		}
+
+		.hero-content h1 {
+			font-size: 2.5rem;
+		}
+
+		.mission-section {
+			padding: 3rem 0;
+		}
+
+		.section-title {
+			font-size: 2rem;
+		}
+
+		.accordion-header {
+			padding: 1.25rem 1.5rem;
+			font-size: 1rem;
+		}
+
+		.accordion-content {
+			padding: 0 1.5rem;
+		}
+
+		.accordion-item.active .accordion-content {
+			padding: 0 1.5rem 1.25rem;
+		}
+
+		.team-section {
+			padding: 3rem 0;
+		}
+
+		.team-grid {
+			grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+			gap: 1.5rem;
+		}
+
+		.modal {
+			padding: 1rem;
+		}
+
+		.modal-header {
+			flex-direction: column;
+			text-align: center;
+			align-items: center;
+		}
+
+		.modal-body {
+			padding: 1.5rem;
+		}
+
+		.modal-name {
+			font-size: 1.5rem;
+		}
+
+		.modal-image {
+			width: 120px;
+			height: 120px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.hero-content h1 {
+			font-size: 2rem;
+		}
+
+		.team-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.modal-content {
+			border-radius: 1rem;
+		}
+	}
+</style>
+</Layout>

@@ -1,0 +1,507 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+---
+
+<Layout 
+	title="Research - SAAIL Lab"
+	description="Explore our cutting-edge research in AI for sustainable agriculture, intelligent healthcare, and responsible AI frameworks at SAAIL Lab, IIT Madras Zanzibar."
+>
+	<ModernHeader />
+	
+	<main class="research-page">
+		<!-- Hero Section -->
+		<section class="research-hero">
+			<div class="container">
+				<div class="hero-content">
+					<h1>Research Areas</h1>
+					<p class="hero-description">
+						Our research focuses on three transformative areas that address critical challenges 
+						in East Africa and beyond, pioneering ethical AI solutions for sustainable development.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Research Areas Section -->
+		<section id="areas" class="research-areas">
+			<div class="container">
+				<div class="areas-grid">
+					<div class="research-area primary">
+						<div class="area-image">
+							<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+								<defs>
+									<linearGradient id="agGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+										<stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3" />
+										<stop offset="100%" style="stop-color:#059669;stop-opacity:0.5" />
+									</linearGradient>
+								</defs>
+								<rect width="1200" height="600" fill="#f0fdf4"/>
+								<circle cx="900" cy="150" r="200" fill="url(#agGrad)"/>
+								<circle cx="300" cy="450" r="150" fill="url(#agGrad)"/>
+								<text x="600" y="300" font-size="120" text-anchor="middle" fill="#059669">🌾</text>
+								<text x="600" y="380" font-size="36" text-anchor="middle" fill="#064e3b" font-weight="600">Smart Agriculture Technology</text>
+							</svg>
+						</div>
+						<div class="area-header">
+							<div class="area-icon">🌾</div>
+							<h2>AI for Sustainable Agriculture & Food Systems</h2>
+						</div>
+						<p class="area-description">
+							Developing AI solutions to revolutionize agriculture through precision crop management, 
+							agricultural data ecosystems, and supply chain innovation.
+						</p>
+						<div class="area-topics">
+							<div class="topic-tag">Precision Crop Management</div>
+							<div class="topic-tag">Agricultural Data Ecosystems</div>
+							<div class="topic-tag">Supply Chain Innovation</div>
+							<div class="topic-tag">International PhD Programs</div>
+						</div>
+						<div class="area-projects">
+							<h4>Current Projects</h4>
+							<ul>
+								<li><a href="/projects#cloves">Deep Learning for Zanzibar Cloves Quality Grading</a></li>
+								<li><a href="/projects#data-ecosystems">Agricultural Data Ecosystems Development</a></li>
+								<li><a href="/projects#blockchain">Blockchain for Spice Supply Chain</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="research-area secondary">
+						<div class="area-image">
+							<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+								<defs>
+									<linearGradient id="hcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+										<stop offset="0%" style="stop-color:#ef4444;stop-opacity:0.3" />
+										<stop offset="100%" style="stop-color:#dc2626;stop-opacity:0.5" />
+									</linearGradient>
+								</defs>
+								<rect width="1200" height="600" fill="#fef2f2"/>
+								<circle cx="900" cy="150" r="200" fill="url(#hcGrad)"/>
+								<circle cx="300" cy="450" r="150" fill="url(#hcGrad)"/>
+								<text x="600" y="300" font-size="120" text-anchor="middle" fill="#dc2626">🏥</text>
+								<text x="600" y="380" font-size="36" text-anchor="middle" fill="#991b1b" font-weight="600">Medical Technology Healthcare</text>
+							</svg>
+						</div>
+						<div class="area-header">
+							<div class="area-icon">🏥</div>
+							<h2>AI for Intelligent & Healthy Livelihoods</h2>
+						</div>
+						<p class="area-description">
+							Leveraging AI expertise for healthcare informatics, assistive technologies, 
+							and environmental monitoring to improve quality of life.
+						</p>
+						<div class="area-topics">
+							<div class="topic-tag">Medical Image Analysis</div>
+							<div class="topic-tag">Assistive Technologies</div>
+							<div class="topic-tag">Environmental AI</div>
+							<div class="topic-tag">Healthcare Informatics</div>
+						</div>
+						<div class="area-projects">
+							<h4>Current Projects</h4>
+							<ul>
+								<li><a href="/projects#placental">Placental Weight & Volume Estimation</a></li>
+								<li><a href="/projects#evision">E-Vision: Assistive Technology for Visually Impaired</a></li>
+								<li><a href="/projects#air-quality">AI-Driven Air Quality Monitoring</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="research-area tertiary">
+						<div class="area-image">
+							<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+								<defs>
+									<linearGradient id="ethGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+										<stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.3" />
+										<stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0.5" />
+									</linearGradient>
+								</defs>
+								<rect width="1200" height="600" fill="#faf5ff"/>
+								<circle cx="900" cy="150" r="200" fill="url(#ethGrad)"/>
+								<circle cx="300" cy="450" r="150" fill="url(#ethGrad)"/>
+								<text x="600" y="300" font-size="120" text-anchor="middle" fill="#7c3aed">⚖️</text>
+								<text x="600" y="380" font-size="36" text-anchor="middle" fill="#5b21b6" font-weight="600">AI Ethics & Collaboration</text>
+							</svg>
+						</div>
+						<div class="area-header">
+							<div class="area-icon">⚖️</div>
+							<h2>Responsible AI Innovation & Ethical Frameworks</h2>
+						</div>
+						<p class="area-description">
+							Developing ethical AI frameworks specifically designed for African contexts, 
+							ensuring responsible and contextually-aware AI development.
+						</p>
+						<div class="area-topics">
+							<div class="topic-tag">Ethical AI for Africa</div>
+							<div class="topic-tag">Context-Aware Frameworks</div>
+							<div class="topic-tag">CARA-FMs Development</div>
+							<div class="topic-tag">Responsible Innovation</div>
+						</div>
+						<div class="area-projects">
+							<h4>Current Projects</h4>
+							<ul>
+								<li><a href="/projects#cara-fm">CARA-FMs Framework Development</a></li>
+								<li><a href="/projects#prime-directives">Prime Directives for Responsible AI</a></li>
+								<li><a href="/projects#ethical-frameworks">Ethical AI Frameworks for Africa</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<ModernFooter />
+</Layout>
+
+<style>
+	.research-page {
+		padding-top: 90px;
+	}
+
+	.research-hero {
+		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+		padding: 4rem 0;
+		text-align: center;
+	}
+
+	.hero-content h1 {
+		font-size: 3rem;
+		font-weight: 700;
+		color: var(--accent-blue);
+		margin-bottom: 1.5rem;
+	}
+
+	.hero-description {
+		font-size: 1.25rem;
+		color: var(--text-secondary);
+		max-width: 800px;
+		margin: 0 auto;
+		line-height: 1.7;
+	}
+
+	.research-areas {
+		padding: 5rem 0;
+		background: var(--bg-primary);
+	}
+
+	.areas-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 3rem;
+	}
+
+	.research-area {
+		background: var(--bg-secondary);
+		border-radius: 1.5rem;
+		padding: 3rem;
+		border-left: 6px solid;
+		transition: all 0.3s ease;
+	}
+
+	.research-area.primary {
+		border-left-color: var(--accent-green);
+	}
+
+	.research-area.secondary {
+		border-left-color: #dc2626;
+	}
+
+	.research-area.tertiary {
+		border-left-color: #7c3aed;
+	}
+
+	.area-image {
+		width: 100%;
+		height: 200px;
+		margin-bottom: 1.5rem;
+		border-radius: 1rem;
+		overflow: hidden;
+	}
+
+	.area-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+
+	.research-area:hover .area-image img {
+		transform: scale(1.05);
+	}
+
+	.research-area:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 32px var(--shadow-medium);
+	}
+
+	.area-header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.area-icon {
+		font-size: 3rem;
+	}
+
+	.area-header h2 {
+		font-size: 1.75rem;
+		font-weight: 700;
+		color: var(--text-primary);
+	}
+
+	.area-description {
+		font-size: 1.125rem;
+		color: var(--text-secondary);
+		line-height: 1.7;
+		margin-bottom: 2rem;
+	}
+
+	.area-topics {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-bottom: 2rem;
+	}
+
+	.topic-tag {
+		background: var(--accent-blue);
+		color: white;
+		padding: 0.5rem 1rem;
+		border-radius: 0.75rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	.area-projects h4 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 1rem;
+	}
+
+	.area-projects ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	.area-projects li {
+		margin-bottom: 0.75rem;
+	}
+
+	.area-projects a {
+		color: var(--accent-blue);
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.3s ease;
+	}
+
+	.area-projects a:hover {
+		color: var(--accent-green);
+		text-decoration: underline;
+	}
+
+	.collaborations {
+		padding: 5rem 0;
+		background: var(--bg-secondary);
+	}
+
+	.section-title {
+		text-align: center;
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: var(--accent-blue);
+		margin-bottom: 1rem;
+	}
+
+	.section-description {
+		text-align: center;
+		font-size: 1.125rem;
+		color: var(--text-secondary);
+		max-width: 800px;
+		margin: 0 auto 3rem;
+		line-height: 1.7;
+	}
+
+	.collaborations-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		gap: 2rem;
+	}
+
+	.collaboration-card {
+		background: var(--bg-primary);
+		border-radius: 1.5rem;
+		padding: 2rem;
+		text-align: center;
+		box-shadow: 0 4px 12px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s ease;
+	}
+
+	.collaboration-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 20px var(--shadow-medium);
+	}
+
+	.collab-flag {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+
+	.collaboration-card h3 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.collab-location {
+		color: var(--text-muted);
+		font-weight: 500;
+		margin-bottom: 1rem;
+	}
+
+	.collab-project {
+		color: var(--text-secondary);
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+		font-size: 0.875rem;
+	}
+
+	.collab-details {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.collab-status,
+	.collab-type {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.collab-status.active {
+		background: #dcfce7;
+		color: #166534;
+	}
+
+	.collab-status.initiating {
+		background: #fef3c7;
+		color: #d97706;
+	}
+
+	.collab-status.ongoing {
+		background: #e0f2fe;
+		color: #0369a1;
+	}
+
+	.collab-type {
+		background: var(--bg-tertiary);
+		color: var(--text-secondary);
+	}
+
+	@media (max-width: 768px) {
+		.research-page {
+			padding-top: 80px;
+		}
+
+		.research-hero {
+			padding: 3rem 0;
+		}
+
+		.hero-content h1 {
+			font-size: 2.5rem;
+		}
+
+		.hero-description {
+			font-size: 1rem;
+		}
+
+		.research-areas {
+			padding: 3rem 0;
+		}
+
+		.research-area {
+			padding: 2rem 1.5rem;
+		}
+
+		.area-header {
+			flex-direction: column;
+			text-align: center;
+			gap: 0.75rem;
+		}
+
+		.area-header h2 {
+			font-size: 1.5rem;
+		}
+
+		.area-description {
+			font-size: 1rem;
+		}
+
+		.area-topics {
+			justify-content: center;
+		}
+
+		.area-image {
+			height: 160px;
+		}
+
+		.collaborations-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.research-page {
+			padding-top: 70px;
+		}
+
+		.research-hero {
+			padding: 2rem 0;
+		}
+
+		.hero-content h1 {
+			font-size: 2rem;
+		}
+
+		.hero-description {
+			font-size: 0.9375rem;
+		}
+
+		.research-areas {
+			padding: 2.5rem 0;
+		}
+
+		.research-area {
+			padding: 1.5rem 1rem;
+		}
+
+		.area-header h2 {
+			font-size: 1.25rem;
+		}
+
+		.area-description {
+			font-size: 0.9375rem;
+		}
+
+		.area-image {
+			height: 140px;
+		}
+
+		.topic-tag {
+			font-size: 0.8125rem;
+			padding: 0.375rem 0.75rem;
+		}
+	}
+</style>

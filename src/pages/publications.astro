@@ -1,0 +1,1618 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+---
+
+<Layout
+	title="Publications - SAAIL Lab"
+	description="Explore our research publications, academic papers, and scholarly contributions in AI for agriculture, healthcare, and responsible AI at SAAIL Lab, IIT Madras Zanzibar."
+>
+	<ModernHeader />
+
+	<main class="publications-page">
+		<section class="publications-hero">
+			<div class="container">
+				<div class="hero-content">
+					<h1>Research Output</h1>
+					<p class="hero-description">
+						Our research advances AI for agriculture, healthcare, and digital sovereignty across East Africa and the Global South.
+					</p>
+
+					<div class="research-metrics">
+						<div class="metric-card">
+							<span class="metric-number">25</span>
+							<span class="metric-label">Publications</span>
+						</div>
+						<div class="metric-card">
+							<span class="metric-number">994</span>
+							<span class="metric-label">Citations</span>
+						</div>
+						<div class="metric-card">
+							<span class="metric-number">14</span>
+							<span class="metric-label">h-index</span>
+						</div>
+						<div class="metric-card">
+							<span class="metric-number">15</span>
+							<span class="metric-label">i10-index</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="publications-list">
+			<div class="container">
+				<!-- Filter and Search Controls -->
+				<div class="filter-controls">
+					<div class="search-bar">
+						<svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+							<circle cx="11" cy="11" r="8" stroke-width="2"/>
+							<path d="M21 21L16.65 16.65" stroke-width="2" stroke-linecap="round"/>
+						</svg>
+						<input
+							type="text"
+							id="search-input"
+							placeholder="Search publications by title, author, or keywords..."
+							aria-label="Search publications"
+						/>
+					</div>
+
+					<div class="filter-row">
+						<div class="filter-group">
+							<label for="type-filter">Type:</label>
+							<select id="type-filter" aria-label="Filter by publication type">
+								<option value="all">All Types</option>
+								<option value="journal">Journal Articles</option>
+								<option value="conference">Conferences</option>
+								<option value="invited">Invited Talks</option>
+							</select>
+						</div>
+
+						<div class="filter-group">
+							<label for="year-filter">Year:</label>
+							<select id="year-filter" aria-label="Filter by year">
+								<option value="all">All Years</option>
+								<option value="2026">2026</option>
+								<option value="2025">2025</option>
+							</select>
+						</div>
+
+						<div class="filter-group">
+							<label for="topic-filter">Topic:</label>
+							<select id="topic-filter" aria-label="Filter by topic">
+								<option value="all">All Topics</option>
+								<option value="AI Sovereignty">AI Sovereignty</option>
+								<option value="Digital Sovereignty">Digital Sovereignty</option>
+								<option value="Responsible AI">Responsible AI</option>
+								<option value="Agriculture">Agriculture</option>
+								<option value="Healthcare">Healthcare</option>
+								<option value="Medical Imaging">Medical Imaging</option>
+								<option value="Deep Learning">Deep Learning</option>
+								<option value="Policy">Policy</option>
+								<option value="Global South">Global South</option>
+								<option value="Foundation Models">Foundation Models</option>
+							</select>
+						</div>
+
+						<button id="reset-filters" class="reset-btn" aria-label="Reset all filters">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+								<path d="M21 3v5h-5"/>
+								<path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+								<path d="M3 21v-5h5"/>
+							</svg>
+							Reset
+						</button>
+					</div>
+
+					<div class="action-row">
+						<div class="view-toggle">
+							<button id="list-view-btn" class="view-btn active" aria-label="List view">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<line x1="8" y1="6" x2="21" y2="6"/>
+									<line x1="8" y1="12" x2="21" y2="12"/>
+									<line x1="8" y1="18" x2="21" y2="18"/>
+									<line x1="3" y1="6" x2="3.01" y2="6"/>
+									<line x1="3" y1="12" x2="3.01" y2="12"/>
+									<line x1="3" y1="18" x2="3.01" y2="18"/>
+								</svg>
+								List
+							</button>
+							<button id="grid-view-btn" class="view-btn" aria-label="Grid view">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<rect x="3" y="3" width="7" height="7"/>
+									<rect x="14" y="3" width="7" height="7"/>
+									<rect x="14" y="14" width="7" height="7"/>
+									<rect x="3" y="14" width="7" height="7"/>
+								</svg>
+								Grid
+							</button>
+						</div>
+
+						<div class="export-actions">
+							<button id="export-bibtex" class="export-btn" aria-label="Export all as BibTeX">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+									<polyline points="7 10 12 15 17 10"/>
+									<line x1="12" y1="15" x2="12" y2="3"/>
+								</svg>
+								Export BibTeX
+							</button>
+							<button id="export-apa" class="export-btn" aria-label="Export all as APA">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+									<polyline points="7 10 12 15 17 10"/>
+									<line x1="12" y1="15" x2="12" y2="3"/>
+								</svg>
+								Export APA
+							</button>
+						</div>
+					</div>
+
+					<div id="results-count" class="results-count"></div>
+				</div>
+
+				<div id="publications-container" class="year-section">
+					<div class="year-header">
+						<h2>2025-2026</h2>
+						<div class="year-stats">
+							<span class="stat">3 Journal Articles</span>
+							<span class="stat">5 Conferences</span>
+							<span class="stat">2 Invited Talks</span>
+						</div>
+					</div>
+
+					<!-- January 2026 -->
+					<div class="publication-item">
+						<div class="publication-poster">
+							<div class="poster-placeholder document">
+								<svg width="100%" height="100%" viewBox="0 0 200 200">
+									<rect width="200" height="200" fill="url(#docGradient1)"/>
+									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
+									<line x1="65" y1="60" x2="135" y2="60" stroke="#3b82f6" stroke-width="3"/>
+									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
+									<defs>
+										<linearGradient id="docGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+											<stop offset="0%" style="stop-color:#f97316"/>
+											<stop offset="100%" style="stop-color:#ea580c"/>
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge conference">Conference</span>
+								<span class="badge ranking">AAAI A*</span>
+								<span class="badge year">January 2026</span>
+							</div>
+							<h3>AI Sovereignty in the Global South: Power, Dependency, and Strategic Futures</h3>
+							<p class="venue">
+								<a href="https://aaai.org/conference/aaai/" target="_blank" rel="noopener">AAAI 2026 Conference</a> - Workshop Empowering Global South AI
+							</p>
+							<p class="abstract">
+								Analyzes structural power asymmetries in AI development across the Global South, proposing multipolar policy frameworks involving the African Union, ASEAN, and South-South cooperation to counter digital dependency on foreign platforms.
+							</p>
+							<div class="tags">
+								<span class="tag">AI Sovereignty</span>
+								<span class="tag">Policy</span>
+								<span class="tag">Global South</span>
+							</div>
+							<div class="links">
+								<button class="link cite" data-citation="sovereignty2026">Cite</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- November 2025 -->
+					<div class="publication-item">
+						<div class="publication-poster">
+							<div class="poster-placeholder document">
+								<svg width="100%" height="100%" viewBox="0 0 200 200">
+									<rect width="200" height="200" fill="url(#docGradient2)"/>
+									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
+									<line x1="65" y1="60" x2="135" y2="60" stroke="#6366f1" stroke-width="3"/>
+									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
+									<defs>
+										<linearGradient id="docGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+											<stop offset="0%" style="stop-color:#6366f1"/>
+											<stop offset="100%" style="stop-color:#4f46e5"/>
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge conference">Conference</span>
+								<span class="badge ranking">NeurIPS A*</span>
+								<span class="badge year">November 2025</span>
+							</div>
+							<h3>Digital Sovereignty or Digital Serfdom? AI Strategies, Geopolitics, and the Quest for an Equitable Global South</h3>
+							<p class="venue">
+								<a href="https://eurips.cc/" target="_blank" rel="noopener">EurIPS 2025 Conference</a> - Workshop on Private AI Governance
+							</p>
+							<p class="abstract">
+								Examines whether Global South countries are advancing toward digital sovereignty or drifting into digital serfdom. Uses a seven-dimensional framework and four case studies (Singapore, Vietnam, Kenya, and Syria) to reveal asymmetries in computing, talent, and regulation.
+							</p>
+							<div class="tags">
+								<span class="tag">Digital Sovereignty</span>
+								<span class="tag">AI Policy</span>
+								<span class="tag">Global South</span>
+							</div>
+							<div class="links">
+								<button class="link cite" data-citation="serfdom2025">Cite</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- October 2025 -->
+					<div class="publication-item">
+						<div class="publication-poster">
+							<div class="poster-placeholder document">
+								<svg width="100%" height="100%" viewBox="0 0 200 200">
+									<rect width="200" height="200" fill="url(#docGradient3)"/>
+									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
+									<line x1="65" y1="60" x2="135" y2="60" stroke="#10b981" stroke-width="3"/>
+									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
+									<defs>
+										<linearGradient id="docGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+											<stop offset="0%" style="stop-color:#10b981"/>
+											<stop offset="100%" style="stop-color:#059669"/>
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge journal">Journal</span>
+								<span class="badge impact">IF: 7.5</span>
+								<span class="badge year">October 14, 2025</span>
+							</div>
+							<h3>BAFNet: Deep contour-aware features for colorectal polyps segmentation</h3>
+							<p class="venue">
+								<a href="https://www.sciencedirect.com/journal/expert-systems-with-applications" target="_blank" rel="noopener">Expert Systems with Applications</a>, October 2025
+							</p>
+							<p class="abstract">
+								Introduces a boundary-aware feature fusion neural network for improved colorectal polyp segmentation through gating mechanisms that select high-quality contour features and enhance semantic accuracy.
+							</p>
+							<div class="tags">
+								<span class="tag">Healthcare</span>
+								<span class="tag">Medical Imaging</span>
+								<span class="tag">Deep Learning</span>
+							</div>
+							<div class="links">
+								<button class="link cite" data-citation="bafnet2025">Cite</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- August 2025 - DLI Award Winner -->
+					<div class="publication-item featured">
+						<div class="publication-poster">
+							<img src="/images/posters/dli-cara-fm-poster.jpg" alt="CARA-FMs Framework Poster" />
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge conference">Conference</span>
+								<span class="badge award">🏆 Best Poster Award</span>
+								<span class="badge year">August 20, 2025</span>
+							</div>
+							<h3>CARA-FMs: A Framework for Context-Aware and Responsible AI in East Africa</h3>
+							<p class="venue">
+								<a href="https://deeplearningindaba.com/2025/" target="_blank" rel="noopener">Deep Learning Indaba 2025</a>
+							</p>
+							<p class="abstract">
+								Presented theoretical framework for culturally attuned foundation models for East African agriculture.
+								Winner, Best Poster Award (Publication & Dataset Category).
+							</p>
+							<div class="publication-meta">
+								<span class="meta-item">📍 Kigali, Rwanda</span>
+								<span class="meta-item">📅 August 16-23, 2025</span>
+							</div>
+							<div class="tags">
+								<span class="tag">Responsible AI</span>
+								<span class="tag">Africa</span>
+								<span class="tag">Framework</span>
+							</div>
+							<div class="links">
+								<button class="link cite" data-citation="dli2025">Cite</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- August 2025 - Foundation Models -->
+					<div class="publication-item">
+						<div class="publication-poster">
+							<div class="poster-placeholder document">
+								<svg width="100%" height="100%" viewBox="0 0 200 200">
+									<rect width="200" height="200" fill="url(#docGradient4)"/>
+									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
+									<line x1="65" y1="60" x2="135" y2="60" stroke="#14b8a6" stroke-width="3"/>
+									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
+									<defs>
+										<linearGradient id="docGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+											<stop offset="0%" style="stop-color:#14b8a6"/>
+											<stop offset="100%" style="stop-color:#0d9488"/>
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge conference">Conference</span>
+								<span class="badge year">August 21, 2025</span>
+							</div>
+							<h3>Towards Culturally Attuned and Resource-Aware Foundation Models for East African Agriculture: A theoretical framework and research agenda</h3>
+							<p class="venue">
+								<a href="https://deeplearningindaba.com/2025/" target="_blank" rel="noopener">Deep Learning Indaba (DLI) 2025 Conference</a> - Responsible AI Workshop
+							</p>
+							<p class="abstract">
+								Oral presentation on theoretical framework for culturally attuned foundation models for East African agriculture. To be published in PMLR Conference Proceedings (Tentatively January 2026).
+							</p>
+							<div class="tags">
+								<span class="tag">Foundation Models</span>
+								<span class="tag">Agriculture</span>
+								<span class="tag">East Africa</span>
+							</div>
+							<div class="links">
+								<button class="link cite" data-citation="foundation2025">Cite</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- June 2025 - DSA -->
+					<div class="publication-item">
+						<div class="publication-poster">
+							<img src="/images/posters/research-poster.png" alt="Responsible AI Africa" />
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge conference">Conference</span>
+								<span class="badge year">June 5-6, 2025</span>
+							</div>
+							<h3>Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology</h3>
+							<p class="venue">
+								<a href="https://www.datascienceafrica.org/" target="_blank" rel="noopener">Data Science Africa (DSA) 2025</a>, Ibadan University, Nigeria
+							</p>
+							<p class="abstract">
+								We present a holistic framework for developing inclusive, ethical, and sustainable AI that addresses Africa's unique cultural, social, and economic contexts. We emphasize participatory design, data equity, and local empowerment to ensure AI benefits all African communities.
+							</p>
+							<div class="tags">
+								<span class="tag">Responsible AI</span>
+								<span class="tag">Ethics</span>
+								<span class="tag">Africa</span>
+							</div>
+							<div class="links">
+								<button class="link cite" data-citation="manifesto2025">Cite</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- May 2025 - Cassava -->
+					<div class="publication-item">
+						<div class="publication-poster">
+							<div class="poster-placeholder document">
+								<svg width="100%" height="100%" viewBox="0 0 200 200">
+									<rect width="200" height="200" fill="url(#docGradient5)"/>
+									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
+									<line x1="65" y1="60" x2="135" y2="60" stroke="#22c55e" stroke-width="3"/>
+									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
+									<defs>
+										<linearGradient id="docGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+											<stop offset="0%" style="stop-color:#22c55e"/>
+											<stop offset="100%" style="stop-color:#16a34a"/>
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge journal">Journal</span>
+								<span class="badge impact">IF: 8.9</span>
+								<span class="badge year">May 1, 2025</span>
+							</div>
+							<h3>Rectifying the extremely weakened signals for cassava leaf disease detection</h3>
+							<p class="authors">Zhang Jiayu, Baohua Zhang, <strong>Innocent Nyalala</strong>, Peter Mecha, Junlong Chen, Kunjie Chen, Junfeng Gao</p>
+							<p class="venue">
+								<a href="https://www.sciencedirect.com/journal/computers-and-electronics-in-agriculture" target="_blank" rel="noopener">Computers and Electronics in Agriculture</a>, Volume 232, 2025
+							</p>
+							<p class="abstract">
+								Developed an artificial intelligence approach to accurately detect cassava leaf diseases by enhancing weak signal patterns in agricultural imaging.
+							</p>
+							<div class="tags">
+								<span class="tag">Agriculture</span>
+								<span class="tag">Disease Detection</span>
+								<span class="tag">Cassava</span>
+							</div>
+							<div class="links">
+								<a href="https://doi.org/10.1016/j.compag.2025.110107" target="_blank" class="link">DOI</a>
+								<button class="link cite" data-citation="cassava2025">Cite</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- 2025 - Clove -->
+					<div class="publication-item">
+						<div class="publication-poster">
+							<div class="poster-placeholder document">
+								<svg width="100%" height="100%" viewBox="0 0 200 200">
+									<rect width="200" height="200" fill="url(#docGradient6)"/>
+									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
+									<line x1="65" y1="60" x2="135" y2="60" stroke="#3b82f6" stroke-width="3"/>
+									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
+									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
+									<defs>
+										<linearGradient id="docGradient6" x1="0%" y1="0%" x2="100%" y2="100%">
+											<stop offset="0%" style="stop-color:#3b82f6"/>
+											<stop offset="100%" style="stop-color:#1d4ed8"/>
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge conference">Conference</span>
+								<span class="badge year">2025</span>
+							</div>
+							<h3>From Art to Algorithms: Co-Designing AI for Clove Grading with Zanzibar's Indigenous Experts</h3>
+							<p class="venue">
+								<a href="https://dl.acm.org/conference/africhi" target="_blank" rel="noopener">AFRICHI ACM Conference 2025</a>
+							</p>
+							<p class="abstract">
+								Proposes a socio-technical approach to modernizing Zanzibar's clove grading system. Validates a segmentation-first deep learning architecture, achieving 99.0% accuracy, while advocating for co-design with Indigenous experts to develop a low-cost mobile tool that fosters transparency and trust.
+							</p>
+							<div class="tags">
+								<span class="tag">Co-Design</span>
+								<span class="tag">Agriculture</span>
+								<span class="tag">Indigenous Knowledge</span>
+								<span class="tag">Zanzibar</span>
+							</div>
+							<div class="links">
+								<button class="link cite" data-citation="clove2025">Cite</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Invited Talks -->
+					<div class="publication-item invited">
+						<div class="publication-poster">
+							<div class="poster-placeholder talk">
+								<svg width="100%" height="100%" viewBox="0 0 200 200">
+									<rect width="200" height="200" fill="url(#talkGradient)"/>
+									<text x="100" y="100" text-anchor="middle" fill="white" font-size="60" font-weight="bold">🎤</text>
+									<defs>
+										<linearGradient id="talkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+											<stop offset="0%" style="stop-color:#06b6d4"/>
+											<stop offset="100%" style="stop-color:#0891b2"/>
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge invited">Invited Talk</span>
+								<span class="badge year">September 11, 2025</span>
+							</div>
+							<h3>Computing at the Edge of Possibility: Building Agricultural AI for Resource Constrained East Africa</h3>
+							<p class="venue"><strong>NPTEL CRC 302 Studio, IIT Madras Chennai</strong></p>
+							<p class="abstract">
+								Faculty talk on developing agricultural AI solutions for resource-constrained environments in East Africa.
+							</p>
+							<div class="tags">
+								<span class="tag">Agriculture</span>
+								<span class="tag">Edge Computing</span>
+								<span class="tag">East Africa</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="publication-item invited">
+						<div class="publication-poster">
+							<div class="poster-placeholder talk">
+								<svg width="100%" height="100%" viewBox="0 0 200 200">
+									<rect width="200" height="200" fill="url(#talkGradient2)"/>
+									<text x="100" y="100" text-anchor="middle" fill="white" font-size="60" font-weight="bold">💬</text>
+									<defs>
+										<linearGradient id="talkGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+											<stop offset="0%" style="stop-color:#8b5cf6"/>
+											<stop offset="100%" style="stop-color:#6d28d9"/>
+										</linearGradient>
+									</defs>
+								</svg>
+							</div>
+						</div>
+						<div class="publication-content">
+							<div class="publication-badges">
+								<span class="badge invited">Invited Talk</span>
+								<span class="badge year">August 27, 2025</span>
+							</div>
+							<h3>How can Innovation Modernize the Public Service Delivery and Create Inclusive Digital Economy</h3>
+							<p class="venue"><strong>4th ZRCP Joint Annual Conference, Zanzibar</strong></p>
+							<p class="abstract">
+								A talk on innovation's role in modernizing public service delivery and fostering an inclusive digital economy.
+							</p>
+							<div class="tags">
+								<span class="tag">Innovation</span>
+								<span class="tag">Digital Economy</span>
+								<span class="tag">Public Service</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- No Results Message -->
+				<div id="no-results" class="no-results" style="display: none;">
+					<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="11" cy="11" r="8"/>
+						<path d="M21 21L16.65 16.65"/>
+						<line x1="11" y1="8" x2="11" y2="14"/>
+						<line x1="11" y1="16" x2="11.01" y2="16"/>
+					</svg>
+					<h3>No publications found</h3>
+					<p>Try adjusting your search or filters</p>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<ModernFooter />
+
+	<div id="citation-modal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h3>Cite this work</h3>
+			<div class="citation-tabs">
+				<button class="tab-btn active" data-format="bibtex">BibTeX</button>
+				<button class="tab-btn" data-format="apa">APA</button>
+			</div>
+			<div class="citation-text-container">
+				<pre id="citation-text"></pre>
+			</div>
+			<button id="copy-citation" class="copy-btn">Copy to Clipboard</button>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.publications-page {
+		min-height: 100vh;
+	}
+
+	.publications-hero {
+		background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+		color: white;
+		padding: 5rem 0 3rem;
+		text-align: center;
+	}
+
+	.hero-content h1 {
+		font-size: 3.5rem;
+		font-weight: 800;
+		margin-bottom: 1rem;
+	}
+
+	.hero-description {
+		font-size: 1.25rem;
+		max-width: 800px;
+		margin: 0 auto 3rem;
+		opacity: 0.95;
+		line-height: 1.6;
+	}
+
+	.research-metrics {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+		gap: 2rem;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.metric-card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.metric-number {
+		font-size: 3rem;
+		font-weight: 800;
+		line-height: 1;
+		background: linear-gradient(135deg, #fbbf24, #f59e0b);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.metric-label {
+		font-size: 1rem;
+		opacity: 0.9;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 600;
+	}
+
+	.publications-list {
+		padding: 4rem 0;
+		background: #f9fafb;
+	}
+
+	.filter-controls {
+		background: white;
+		border-radius: 1rem;
+		padding: 2rem;
+		margin-bottom: 3rem;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+	}
+
+	.search-bar {
+		position: relative;
+		margin-bottom: 1.5rem;
+	}
+
+	.search-icon {
+		position: absolute;
+		left: 1rem;
+		top: 50%;
+		transform: translateY(-50%);
+		color: #94a3b8;
+	}
+
+	#search-input {
+		width: 100%;
+		padding: 0.875rem 1rem 0.875rem 3rem;
+		border: 2px solid #e2e8f0;
+		border-radius: 0.75rem;
+		font-size: 1rem;
+		transition: all 0.3s;
+	}
+
+	#search-input:focus {
+		outline: none;
+		border-color: #3b82f6;
+		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+	}
+
+	.filter-row {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.filter-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.filter-group label {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: #475569;
+	}
+
+	.filter-group select {
+		padding: 0.625rem 0.875rem;
+		border: 2px solid #e2e8f0;
+		border-radius: 0.5rem;
+		font-size: 0.875rem;
+		cursor: pointer;
+		transition: all 0.3s;
+	}
+
+	.filter-group select:focus {
+		outline: none;
+		border-color: #3b82f6;
+		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+	}
+
+	.reset-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.625rem 1rem;
+		background: #f1f5f9;
+		border: 2px solid #e2e8f0;
+		border-radius: 0.5rem;
+		color: #475569;
+		font-weight: 600;
+		font-size: 0.875rem;
+		cursor: pointer;
+		transition: all 0.3s;
+		align-self: flex-end;
+	}
+
+	.reset-btn:hover {
+		background: #e2e8f0;
+		color: #1e293b;
+	}
+
+	.action-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid #e2e8f0;
+	}
+
+	.view-toggle {
+		display: flex;
+		gap: 0.5rem;
+		background: #f1f5f9;
+		padding: 0.25rem;
+		border-radius: 0.5rem;
+	}
+
+	.view-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		background: transparent;
+		border: none;
+		border-radius: 0.375rem;
+		color: #64748b;
+		font-weight: 600;
+		font-size: 0.875rem;
+		cursor: pointer;
+		transition: all 0.3s;
+	}
+
+	.view-btn.active {
+		background: white;
+		color: #3b82f6;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.export-actions {
+		display: flex;
+		gap: 0.75rem;
+	}
+
+	.export-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.625rem 1rem;
+		background: linear-gradient(135deg, #10b981, #059669);
+		border: none;
+		border-radius: 0.5rem;
+		color: white;
+		font-weight: 600;
+		font-size: 0.875rem;
+		cursor: pointer;
+		transition: all 0.3s;
+	}
+
+	.export-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+	}
+
+	.results-count {
+		margin-top: 1rem;
+		padding: 0.75rem 1rem;
+		background: #eff6ff;
+		border-left: 4px solid #3b82f6;
+		border-radius: 0.5rem;
+		color: #1e40af;
+		font-weight: 600;
+		font-size: 0.875rem;
+	}
+
+	.no-results {
+		text-align: center;
+		padding: 4rem 2rem;
+		color: #64748b;
+	}
+
+	.no-results svg {
+		margin: 0 auto 1.5rem;
+		color: #cbd5e1;
+	}
+
+	.no-results h3 {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #475569;
+		margin-bottom: 0.5rem;
+	}
+
+	.no-results p {
+		font-size: 1rem;
+		margin: 0;
+	}
+
+	.publications-container-grid .publication-item {
+		grid-template-columns: 1fr;
+		max-width: 450px;
+	}
+
+	.publications-container-grid .publication-poster {
+		min-height: 250px;
+	}
+
+	.publications-container-grid .publication-content {
+		padding: 1.5rem;
+	}
+
+	.publications-container-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+		gap: 2rem;
+	}
+
+	.publications-container-grid .year-header,
+	.publications-container-grid .year-stats {
+		grid-column: 1 / -1;
+	}
+
+	.year-section {
+		margin-bottom: 3rem;
+	}
+
+	.year-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 3rem;
+		padding-bottom: 1rem;
+		border-bottom: 3px solid #3b82f6;
+	}
+
+	.year-header h2 {
+		font-size: 3rem;
+		font-weight: 800;
+		color: #1e293b;
+	}
+
+	.year-stats {
+		display: flex;
+		gap: 1.5rem;
+	}
+
+	.stat {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: #64748b;
+		padding: 0.5rem 1rem;
+		background: white;
+		border-radius: 0.5rem;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	}
+
+	.publication-item {
+		background: white;
+		border-radius: 1rem;
+		margin-bottom: 2rem;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+		display: grid;
+		grid-template-columns: 300px 1fr;
+		gap: 2rem;
+		overflow: hidden;
+		transition: all 0.3s ease;
+	}
+
+	.publication-item:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+	}
+
+	.publication-item.featured {
+		border: 3px solid #fbbf24;
+	}
+
+	.publication-item.invited {
+		border-left: 4px solid #8b5cf6;
+	}
+
+	.publication-poster {
+		width: 100%;
+		height: 100%;
+		min-height: 300px;
+		overflow: hidden;
+		background: #f1f5f9;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.publication-poster img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.poster-placeholder {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.publication-content {
+		padding: 2rem 2rem 2rem 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.publication-badges {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.badge {
+		padding: 0.375rem 0.875rem;
+		border-radius: 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.badge.conference {
+		background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+		color: white;
+	}
+
+	.badge.journal {
+		background: linear-gradient(135deg, #10b981, #059669);
+		color: white;
+	}
+
+	.badge.invited {
+		background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+		color: white;
+	}
+
+	.badge.award {
+		background: linear-gradient(135deg, #fbbf24, #f59e0b);
+		color: white;
+	}
+
+	.badge.impact {
+		background: linear-gradient(135deg, #ef4444, #dc2626);
+		color: white;
+		font-weight: 700;
+	}
+
+	.badge.ranking {
+		background: linear-gradient(135deg, #f97316, #ea580c);
+		color: white;
+		font-weight: 700;
+	}
+
+	.badge.year {
+		background: #e2e8f0;
+		color: #475569;
+	}
+
+	.publication-content h3 {
+		font-size: 1.375rem;
+		font-weight: 700;
+		color: #1e293b;
+		line-height: 1.4;
+		margin: 0;
+	}
+
+	.authors {
+		color: #64748b;
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	.venue {
+		color: #3b82f6;
+		font-size: 1rem;
+		margin: 0;
+	}
+
+	.venue a {
+		color: #3b82f6;
+		text-decoration: none;
+		font-weight: 600;
+		transition: color 0.3s ease;
+	}
+
+	.venue a:hover {
+		color: #1d4ed8;
+		text-decoration: underline;
+	}
+
+	.abstract {
+		color: #475569;
+		line-height: 1.7;
+		font-size: 0.9375rem;
+		margin: 0;
+	}
+
+	.publication-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.meta-item {
+		color: #64748b;
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.tag {
+		padding: 0.25rem 0.75rem;
+		background: #f1f5f9;
+		color: #475569;
+		border-radius: 0.375rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+	}
+
+	.links {
+		display: flex;
+		gap: 0.75rem;
+		margin-top: auto;
+	}
+
+	.link {
+		padding: 0.5rem 1rem;
+		border-radius: 0.5rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+		text-decoration: none;
+		transition: all 0.3s ease;
+		border: none;
+		cursor: pointer;
+		background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+		color: white;
+	}
+
+	.link:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+	}
+
+	.link.cite {
+		background: linear-gradient(135deg, #64748b, #475569);
+	}
+
+	.link.cite:hover {
+		box-shadow: 0 4px 12px rgba(100, 116, 139, 0.4);
+	}
+
+	.modal {
+		display: none;
+		position: fixed;
+		z-index: 1000;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.7);
+		animation: fadeIn 0.3s;
+	}
+
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	.modal-content {
+		background: white;
+		margin: 5% auto;
+		padding: 2.5rem;
+		border-radius: 1rem;
+		width: 90%;
+		max-width: 700px;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+		animation: slideDown 0.3s;
+	}
+
+	@keyframes slideDown {
+		from { transform: translateY(-50px); opacity: 0; }
+		to { transform: translateY(0); opacity: 1; }
+	}
+
+	.modal-content h3 {
+		color: #1e293b;
+		font-size: 1.75rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.close {
+		color: #94a3b8;
+		float: right;
+		font-size: 2rem;
+		font-weight: bold;
+		line-height: 1;
+		cursor: pointer;
+		transition: color 0.3s;
+	}
+
+	.close:hover {
+		color: #1e293b;
+	}
+
+	.citation-tabs {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+		border-bottom: 2px solid #e2e8f0;
+	}
+
+	.tab-btn {
+		padding: 0.75rem 1.5rem;
+		background: none;
+		border: none;
+		font-size: 1rem;
+		font-weight: 600;
+		color: #64748b;
+		cursor: pointer;
+		border-bottom: 3px solid transparent;
+		transition: all 0.3s;
+	}
+
+	.tab-btn.active {
+		color: #3b82f6;
+		border-bottom-color: #3b82f6;
+	}
+
+	.citation-text-container {
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.5rem;
+		padding: 1.5rem;
+		margin-bottom: 1.5rem;
+		max-height: 400px;
+		overflow-y: auto;
+	}
+
+	#citation-text {
+		font-family: 'Monaco', 'Courier New', monospace;
+		font-size: 0.875rem;
+		color: #1e293b;
+		margin: 0;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+
+	.copy-btn {
+		width: 100%;
+		padding: 0.875rem;
+		background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+		color: white;
+		border: none;
+		border-radius: 0.5rem;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s;
+	}
+
+	.copy-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+	}
+
+	.copy-btn:active {
+		transform: translateY(0);
+	}
+
+	@media (max-width: 1024px) {
+		.publication-item {
+			grid-template-columns: 250px 1fr;
+			gap: 1.5rem;
+		}
+	}
+
+	@media (max-width: 1024px) {
+		.publications-container-grid {
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		}
+	}
+
+	@media (max-width: 768px) {
+		.hero-content h1 {
+			font-size: 2.5rem;
+		}
+
+		.hero-description {
+			font-size: 1rem;
+		}
+
+		.research-metrics {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1.5rem;
+		}
+
+		.metric-number {
+			font-size: 2rem;
+		}
+
+		.filter-controls {
+			padding: 1.5rem;
+		}
+
+		.filter-row {
+			grid-template-columns: 1fr;
+		}
+
+		.reset-btn {
+			align-self: stretch;
+		}
+
+		.action-row {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.view-toggle,
+		.export-actions {
+			width: 100%;
+			justify-content: center;
+		}
+
+		.export-btn {
+			flex: 1;
+		}
+
+		.year-header {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1rem;
+		}
+
+		.year-stats {
+			flex-direction: column;
+			gap: 0.5rem;
+			width: 100%;
+		}
+
+		.stat {
+			width: 100%;
+		}
+
+		.publication-item {
+			grid-template-columns: 1fr;
+			gap: 0;
+		}
+
+		.publication-poster {
+			min-height: 200px;
+		}
+
+		.publication-content {
+			padding: 1.5rem;
+		}
+
+		.publication-content h3 {
+			font-size: 1.125rem;
+		}
+
+		.publications-container-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.publications-container-grid .publication-item {
+			max-width: 100%;
+		}
+
+		.modal-content {
+			width: 95%;
+			margin: 10% auto;
+			padding: 1.5rem;
+		}
+	}
+</style>
+
+<script>
+	const citations = {
+		sovereignty2026: {
+			bibtex: `@inproceedings{nyalala2026sovereignty,
+  title={AI Sovereignty in the Global South: Power, Dependency, and Strategic Futures},
+  author={Nyalala, Innocent},
+  booktitle={AAAI 2026 Conference - Workshop Empowering Global South AI},
+  year={2026},
+  month={January}
+}`,
+			apa: `Nyalala, I. (2026, January). AI Sovereignty in the Global South: Power, Dependency, and Strategic Futures. In AAAI 2026 Conference - Workshop Empowering Global South AI.`
+		},
+		serfdom2025: {
+			bibtex: `@inproceedings{nyalala2025serfdom,
+  title={Digital Sovereignty or Digital Serfdom? AI Strategies, Geopolitics, and the Quest for an Equitable Global South},
+  author={Nyalala, Innocent},
+  booktitle={EurIPS 2025 Conference - Workshop on Private AI Governance},
+  year={2025},
+  month={November}
+}`,
+			apa: `Nyalala, I. (2025, November). Digital Sovereignty or Digital Serfdom? AI Strategies, Geopolitics, and the Quest for an Equitable Global South. In EurIPS 2025 Conference - Workshop on Private AI Governance.`
+		},
+		bafnet2025: {
+			bibtex: `@article{nyalala2025bafnet,
+  title={BAFNet: Deep contour-aware features for colorectal polyps segmentation},
+  author={Nyalala, Innocent and others},
+  journal={Expert Systems with Applications},
+  year={2025},
+  month={October},
+  day={14},
+  publisher={Elsevier}
+}`,
+			apa: `Nyalala, I., et al. (2025, October 14). BAFNet: Deep contour-aware features for colorectal polyps segmentation. Expert Systems with Applications. Elsevier.`
+		},
+		dli2025: {
+			bibtex: `@inproceedings{nyalala2025cara,
+  title={CARA-FMs: A Framework for Context-Aware and Responsible AI in East Africa},
+  author={Nyalala, Innocent},
+  booktitle={Deep Learning Indaba 2025},
+  year={2025},
+  month={August},
+  day={20},
+  address={Kigali, Rwanda},
+  note={Best Poster Award (Publication \\& Dataset Category)}
+}`,
+			apa: `Nyalala, I. (2025, August 20). CARA-FMs: A Framework for Context-Aware and Responsible AI in East Africa. In Deep Learning Indaba 2025. Kigali, Rwanda. (Best Poster Award)`
+		},
+		foundation2025: {
+			bibtex: `@inproceedings{nyalala2025foundation,
+  title={Towards Culturally Attuned and Resource-Aware Foundation Models for East African Agriculture: A theoretical framework and research agenda},
+  author={Nyalala, Innocent},
+  booktitle={Deep Learning Indaba (DLI) 2025 Conference - Responsible AI Workshop},
+  year={2025},
+  month={August},
+  day={21},
+  note={To be published in PMLR Conference Proceedings, January 2026}
+}`,
+			apa: `Nyalala, I. (2025, August 21). Towards Culturally Attuned and Resource-Aware Foundation Models for East African Agriculture: A theoretical framework and research agenda. In Deep Learning Indaba (DLI) 2025 Conference - Responsible AI Workshop. (To be published in PMLR, January 2026)`
+		},
+		manifesto2025: {
+			bibtex: `@inproceedings{nyalala2025manifesto,
+  title={Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology},
+  author={Nyalala, Innocent and others},
+  booktitle={Data Science Africa (DSA) 2025},
+  address={Ibadan University, Nigeria},
+  year={2025},
+  month={June},
+  day={5-6}
+}`,
+			apa: `Nyalala, I., et al. (2025, June 5-6). Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology. In Data Science Africa (DSA) 2025, Ibadan University, Nigeria.`
+		},
+		cassava2025: {
+			bibtex: `@article{zhang2025cassava,
+  title={Rectifying the extremely weakened signals for cassava leaf disease detection},
+  author={Zhang, Jiayu and Zhang, Baohua and Nyalala, Innocent and Mecha, Peter and Chen, Junlong and Chen, Kunjie and Gao, Junfeng},
+  journal={Computers and Electronics in Agriculture},
+  volume={232},
+  year={2025},
+  month={May},
+  day={1},
+  doi={10.1016/j.compag.2025.110107},
+  publisher={Elsevier}
+}`,
+			apa: `Zhang, J., Zhang, B., Nyalala, I., Mecha, P., Chen, J., Chen, K., & Gao, J. (2025, May 1). Rectifying the extremely weakened signals for cassava leaf disease detection. Computers and Electronics in Agriculture, 232. https://doi.org/10.1016/j.compag.2025.110107`
+		},
+		clove2025: {
+			bibtex: `@inproceedings{nyalala2025clove,
+  title={From Art to Algorithms: Co-Designing AI for Clove Grading with Zanzibar's Indigenous Experts},
+  author={Nyalala, Innocent and others},
+  booktitle={AFRICHI ACM Conference 2025},
+  year={2025}
+}`,
+			apa: `Nyalala, I., et al. (2025). From Art to Algorithms: Co-Designing AI for Clove Grading with Zanzibar's Indigenous Experts. In AFRICHI ACM Conference 2025.`
+		}
+	};
+
+	const modal = document.getElementById('citation-modal');
+	const closeBtn = document.querySelector('.close');
+	const citationText = document.getElementById('citation-text');
+	const copyBtn = document.getElementById('copy-citation');
+	const tabBtns = document.querySelectorAll('.tab-btn');
+
+	let currentCitation = '';
+	let currentFormat = 'bibtex';
+
+	document.querySelectorAll('.cite').forEach(btn => {
+		btn.addEventListener('click', function() {
+			currentCitation = this.dataset.citation;
+			currentFormat = 'bibtex';
+			updateCitation();
+			modal.style.display = 'block';
+		});
+	});
+
+	closeBtn.addEventListener('click', () => {
+		modal.style.display = 'none';
+	});
+
+	window.addEventListener('click', (e) => {
+		if (e.target === modal) {
+			modal.style.display = 'none';
+		}
+	});
+
+	tabBtns.forEach(btn => {
+		btn.addEventListener('click', function() {
+			tabBtns.forEach(b => b.classList.remove('active'));
+			this.classList.add('active');
+			currentFormat = this.dataset.format;
+			updateCitation();
+		});
+	});
+
+	copyBtn.addEventListener('click', () => {
+		navigator.clipboard.writeText(citationText.textContent);
+		const originalText = copyBtn.textContent;
+		copyBtn.textContent = 'Copied!';
+		setTimeout(() => {
+			copyBtn.textContent = originalText;
+		}, 2000);
+	});
+
+	function updateCitation() {
+		if (citations[currentCitation]) {
+			citationText.textContent = citations[currentCitation][currentFormat];
+			tabBtns.forEach(btn => {
+				btn.classList.toggle('active', btn.dataset.format === currentFormat);
+			});
+		}
+	}
+
+	// Filter and Search Functionality
+	const searchInput = document.getElementById('search-input');
+	const typeFilter = document.getElementById('type-filter');
+	const yearFilter = document.getElementById('year-filter');
+	const topicFilter = document.getElementById('topic-filter');
+	const resetBtn = document.getElementById('reset-filters');
+	const listViewBtn = document.getElementById('list-view-btn');
+	const gridViewBtn = document.getElementById('grid-view-btn');
+	const exportBibtexBtn = document.getElementById('export-bibtex');
+	const exportApaBtn = document.getElementById('export-apa');
+	const publicationsContainer = document.getElementById('publications-container');
+	const resultsCount = document.getElementById('results-count');
+	const noResults = document.getElementById('no-results');
+
+	const publications = Array.from(document.querySelectorAll('.publication-item'));
+
+	function filterPublications() {
+		const searchTerm = searchInput.value.toLowerCase();
+		const selectedType = typeFilter.value;
+		const selectedYear = yearFilter.value;
+		const selectedTopic = topicFilter.value;
+
+		let visibleCount = 0;
+
+		publications.forEach(pub => {
+			const title = pub.querySelector('h3')?.textContent.toLowerCase() || '';
+			const abstract = pub.querySelector('.abstract')?.textContent.toLowerCase() || '';
+			const authors = pub.querySelector('.authors')?.textContent.toLowerCase() || '';
+			const venue = pub.querySelector('.venue')?.textContent.toLowerCase() || '';
+			const badges = Array.from(pub.querySelectorAll('.badge')).map(b => b.textContent.toLowerCase());
+			const tags = Array.from(pub.querySelectorAll('.tag')).map(t => t.textContent);
+			const yearBadge = pub.querySelector('.badge.year')?.textContent || '';
+
+			const matchesSearch = searchTerm === '' ||
+				title.includes(searchTerm) ||
+				abstract.includes(searchTerm) ||
+				authors.includes(searchTerm) ||
+				venue.includes(searchTerm);
+
+			const matchesType = selectedType === 'all' || badges.includes(selectedType);
+
+			const matchesYear = selectedYear === 'all' || yearBadge.includes(selectedYear);
+
+			const matchesTopic = selectedTopic === 'all' || tags.includes(selectedTopic);
+
+			if (matchesSearch && matchesType && matchesYear && matchesTopic) {
+				pub.style.display = '';
+				visibleCount++;
+			} else {
+				pub.style.display = 'none';
+			}
+		});
+
+		if (visibleCount === 0) {
+			publicationsContainer.style.display = 'none';
+			noResults.style.display = 'block';
+			resultsCount.textContent = 'No publications match your criteria';
+		} else {
+			publicationsContainer.style.display = '';
+			noResults.style.display = 'none';
+			resultsCount.textContent = `Showing ${visibleCount} of ${publications.length} publications`;
+		}
+	}
+
+	searchInput.addEventListener('input', filterPublications);
+	typeFilter.addEventListener('change', filterPublications);
+	yearFilter.addEventListener('change', filterPublications);
+	topicFilter.addEventListener('change', filterPublications);
+
+	resetBtn.addEventListener('click', () => {
+		searchInput.value = '';
+		typeFilter.value = 'all';
+		yearFilter.value = 'all';
+		topicFilter.value = 'all';
+		filterPublications();
+	});
+
+	// View Toggle
+	listViewBtn.addEventListener('click', () => {
+		publicationsContainer.classList.remove('publications-container-grid');
+		listViewBtn.classList.add('active');
+		gridViewBtn.classList.remove('active');
+	});
+
+	gridViewBtn.addEventListener('click', () => {
+		publicationsContainer.classList.add('publications-container-grid');
+		gridViewBtn.classList.add('active');
+		listViewBtn.classList.remove('active');
+	});
+
+	// Export Functions
+	function getVisiblePublications() {
+		return publications.filter(pub => pub.style.display !== 'none');
+	}
+
+	function extractCitationKey(pub) {
+		const citeBtn = pub.querySelector('.cite');
+		return citeBtn ? citeBtn.dataset.citation : null;
+	}
+
+	function exportCitations(format) {
+		const visiblePubs = getVisiblePublications();
+		let exportText = '';
+
+		visiblePubs.forEach(pub => {
+			const key = extractCitationKey(pub);
+			if (key && citations[key]) {
+				exportText += citations[key][format] + '\n\n';
+			}
+		});
+
+		if (exportText) {
+			const blob = new Blob([exportText], { type: 'text/plain' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `saail-lab-publications-${format}.${format === 'bibtex' ? 'bib' : 'txt'}`;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+		}
+	}
+
+	exportBibtexBtn.addEventListener('click', () => exportCitations('bibtex'));
+	exportApaBtn.addEventListener('click', () => exportCitations('apa'));
+
+	// Initial filter to show results count
+	filterPublications();
+</script>

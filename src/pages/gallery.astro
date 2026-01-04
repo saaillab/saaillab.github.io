@@ -1,0 +1,772 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+
+const galleryCategories = {
+	posters: {
+		title: 'Conference Posters',
+		items: [
+			{
+				src: '/images/posters/dli-cara-fm-poster.jpg',
+				title: 'CARA-FMs Framework',
+				description: 'Deep Learning Indaba 2025 - Kigali, Rwanda',
+				date: 'August 2025'
+			},
+			{
+				src: '/images/posters/research-poster.png',
+				title: 'Responsible AI Frameworks',
+				description: 'Data Science Africa 2025 - Nigeria',
+				date: 'June 2025'
+			}
+		]
+	},
+	conferences: {
+		title: 'Conference Photos',
+		items: [
+			{
+				src: '/images/gallery/image-1.jpg',
+				title: 'Deep Learning Indaba',
+				description: 'Attending DLI conference sessions',
+				date: '2025'
+			},
+			{
+				src: '/images/gallery/image-2.jpg',
+				title: 'Networking Session',
+				description: 'Meeting with fellow researchers',
+				date: '2025'
+			},
+			{
+				src: '/images/gallery/image-3.jpg',
+				title: 'Poster Presentation',
+				description: 'Presenting research findings',
+				date: '2025'
+			}
+		]
+	},
+	lab: {
+		title: 'Lab Activities',
+		items: []
+	},
+	meetings: {
+		title: 'Team Meetings',
+		items: []
+	},
+	fieldwork: {
+		title: 'Field Research',
+		items: []
+	}
+};
+---
+
+<Layout 
+	title="Gallery - SAAIL Lab"
+	description="Explore photos and visual content from SAAIL Lab at IIT Madras Zanzibar. Research activities, lab facilities, team events, and collaborative projects."
+>
+	<ModernHeader />
+	
+	<main class="gallery-page">
+		<!-- Hero Section -->
+		<section class="gallery-hero">
+			<div class="container">
+				<div class="hero-content">
+					<div class="hero-icon">
+						<div class="professional-icon">
+							<svg width="80" height="80" viewBox="0 0 120 120" fill="none">
+								<!-- Outer ring -->
+								<circle cx="60" cy="60" r="55" stroke="url(#heroGradient)" stroke-width="3" fill="none" opacity="0.3"/>
+								<circle cx="60" cy="60" r="45" stroke="url(#heroGradient)" stroke-width="2" fill="none" opacity="0.5"/>
+								
+								<!-- Camera body -->
+								<rect x="35" y="40" width="50" height="35" rx="8" fill="url(#heroGradient)" opacity="0.9"/>
+								<rect x="30" y="35" width="60" height="45" rx="10" stroke="url(#heroGradient)" stroke-width="2" fill="none"/>
+								
+								<!-- Lens -->
+								<circle cx="60" cy="57" r="12" fill="white" opacity="0.9"/>
+								<circle cx="60" cy="57" r="8" stroke="url(#heroGradient)" stroke-width="2" fill="none"/>
+								<circle cx="60" cy="57" r="4" fill="url(#heroGradient)"/>
+								
+								<!-- Flash -->
+								<rect x="45" y="30" width="8" height="6" rx="2" fill="white" opacity="0.8"/>
+								
+								<!-- Viewfinder -->
+								<rect x="70" y="30" width="6" height="4" rx="1" fill="white" opacity="0.6"/>
+								
+								<!-- Decorative elements -->
+								<circle cx="25" cy="25" r="2" fill="url(#heroGradient)" opacity="0.4"/>
+								<circle cx="95" cy="35" r="1.5" fill="url(#heroGradient)" opacity="0.3"/>
+								<circle cx="20" cy="95" r="1" fill="url(#heroGradient)" opacity="0.5"/>
+								<circle cx="100" cy="85" r="2.5" fill="url(#heroGradient)" opacity="0.2"/>
+								
+								<!-- Gradient definitions -->
+								<defs>
+									<linearGradient id="heroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+										<stop offset="0%" style="stop-color:#667eea"/>
+										<stop offset="50%" style="stop-color:#764ba2"/>
+										<stop offset="100%" style="stop-color:#f093fb"/>
+									</linearGradient>
+								</defs>
+							</svg>
+						</div>
+					</div>
+					<h1>Research Gallery</h1>
+					<p class="hero-description">
+						Explore our research journey through conference presentations, publications, 
+						lab activities, and collaborative achievements.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Gallery Content -->
+		<section class="gallery-content">
+			<div class="container">
+				<!-- Filter Tabs -->
+				<div class="gallery-filters">
+					<button class="filter-btn active" data-filter="posters">Conference Posters</button>
+					<button class="filter-btn" data-filter="conferences">Conference Photos</button>
+					<button class="filter-btn" data-filter="lab">Lab Activities</button>
+					<button class="filter-btn" data-filter="meetings">Team Meetings</button>
+					<button class="filter-btn" data-filter="fieldwork">Field Research</button>
+				</div>
+
+				<!-- Photo Grids for each category -->
+				{Object.entries(galleryCategories).map(([categoryKey, category]) => (
+					<div class="category-section" data-category={categoryKey} style={categoryKey !== 'posters' ? 'display: none;' : ''}>
+						<h2 class="category-title">{category.title}</h2>
+						{category.items.length > 0 ? (
+							<div class="photo-grid">
+								{category.items.map((item) => (
+									<div class="photo-item" data-src={item.src} data-title={item.title} data-description={item.description}>
+										<div class="photo-card">
+											<img src={item.src} alt={item.title} loading="lazy" />
+											<div class="photo-overlay">
+												<div class="zoom-icon">
+													<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+														<circle cx="11" cy="11" r="8"></circle>
+														<path d="M21 21l-4.35-4.35"></path>
+														<line x1="11" y1="8" x2="11" y2="14"></line>
+														<line x1="8" y1="11" x2="14" y2="11"></line>
+													</svg>
+												</div>
+											</div>
+										</div>
+										<div class="photo-info">
+											<h3>{item.title}</h3>
+											<p>{item.description}</p>
+											{item.date && <span class="photo-date">{item.date}</span>}
+										</div>
+									</div>
+								))}
+							</div>
+						) : (
+							<div class="empty-state">
+								<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+									<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+									<circle cx="8.5" cy="8.5" r="1.5"></circle>
+									<polyline points="21 15 16 10 5 21"></polyline>
+								</svg>
+								<h3>No photos yet</h3>
+								<p>Photos for this category will appear here</p>
+							</div>
+						)}
+					</div>
+				))}
+
+				<!-- Upload Section -->
+				<div class="upload-section">
+					<div class="upload-card">
+						<div class="upload-icon">
+							<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2h8"></path>
+								<path d="M17 6l5 5-5 5"></path>
+								<path d="M7 11h10"></path>
+							</svg>
+						</div>
+						<h3>Share Your Research Moments</h3>
+						<p>Have photos from SAAIL Lab events, research activities, or collaborative projects? We'd love to feature them in our gallery!</p>
+						<a href="/contact" class="btn btn-primary">Submit Photos</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Poster Modal -->
+		<div class="poster-modal" id="posterModal">
+			<div class="modal-backdrop"></div>
+			<div class="modal-content">
+				<button class="modal-close" id="modalClose">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<line x1="18" y1="6" x2="6" y2="18"></line>
+						<line x1="6" y1="6" x2="18" y2="18"></line>
+					</svg>
+				</button>
+				<img id="modalImage" src="" alt="" class="modal-image">
+			</div>
+		</div>
+	</main>
+
+	<ModernFooter />
+</Layout>
+
+<style>
+	.gallery-page {
+		padding-top: 90px;
+	}
+
+	.gallery-hero {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+		color: white;
+		padding: 5rem 0;
+		text-align: center;
+		position: relative;
+		overflow: hidden;
+		box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.1);
+	}
+
+	.gallery-hero::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="camera" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23camera)"/></svg>');
+		opacity: 0.3;
+	}
+
+	.hero-content {
+		max-width: 800px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 1;
+	}
+
+	.hero-icon {
+		color: white;
+		margin-bottom: 2rem;
+		animation: float 3s ease-in-out infinite, glow 4s ease-in-out infinite alternate;
+	}
+
+	.professional-icon {
+		filter: drop-shadow(0 10px 30px rgba(102, 126, 234, 0.4));
+		transition: all 0.3s ease;
+	}
+
+	.hero-content:hover .professional-icon {
+		transform: scale(1.05);
+		filter: drop-shadow(0 15px 40px rgba(102, 126, 234, 0.6));
+	}
+
+	@keyframes float {
+		0%, 100% { transform: translateY(0px); }
+		50% { transform: translateY(-10px); }
+	}
+
+	@keyframes glow {
+		0% { filter: drop-shadow(0 10px 30px rgba(102, 126, 234, 0.4)); }
+		100% { filter: drop-shadow(0 15px 50px rgba(118, 75, 162, 0.6)); }
+	}
+
+	.hero-content h1 {
+		font-size: 3.5rem;
+		font-weight: 800;
+		margin-bottom: 1.5rem;
+		text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+		background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.hero-description {
+		font-size: 1.25rem;
+		opacity: 0.9;
+		line-height: 1.7;
+		text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		font-weight: 400;
+		letter-spacing: 0.02em;
+	}
+
+	.gallery-content {
+		padding: 5rem 0;
+		background: var(--bg-primary);
+	}
+
+	.gallery-filters {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		margin-bottom: 4rem;
+		flex-wrap: wrap;
+	}
+
+	.filter-btn {
+		padding: 1rem 2rem;
+		background: var(--bg-secondary);
+		color: var(--text-secondary);
+		border: 2px solid var(--border-color);
+		border-radius: 50px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.filter-btn::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+		transition: left 0.5s;
+	}
+
+	.filter-btn:hover::before {
+		left: 100%;
+	}
+
+	.filter-btn:hover,
+	.filter-btn.active {
+		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
+		color: white;
+		border-color: var(--accent-blue);
+		transform: translateY(-2px);
+		box-shadow: 0 8px 25px rgba(var(--accent-blue-rgb), 0.3);
+	}
+
+	.category-section {
+		margin-bottom: 3rem;
+		animation: fadeIn 0.5s ease;
+	}
+
+	.category-title {
+		font-size: 2rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 2rem;
+		text-align: center;
+	}
+
+	.photo-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 2rem;
+		margin-bottom: 3rem;
+	}
+
+	.photo-item {
+		cursor: pointer;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.photo-card {
+		background: var(--bg-secondary);
+		border-radius: 1rem;
+		overflow: hidden;
+		box-shadow: 0 4px 20px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		aspect-ratio: 4/3;
+	}
+
+	.photo-card img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.photo-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(135deg, rgba(30, 58, 138, 0.9) 0%, rgba(59, 130, 246, 0.9) 100%);
+		color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		backdrop-filter: blur(10px);
+	}
+
+	.photo-item:hover .photo-overlay {
+		opacity: 1;
+	}
+
+	.photo-item:hover .photo-card {
+		transform: translateY(-8px);
+		box-shadow: 0 12px 40px var(--shadow-medium);
+	}
+
+	.photo-item:hover .photo-card img {
+		transform: scale(1.1);
+	}
+
+	.zoom-icon {
+		animation: pulse 2s infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% { transform: scale(1); }
+		50% { transform: scale(1.1); }
+	}
+
+	.photo-info {
+		padding: 1.5rem;
+		background: var(--bg-secondary);
+		border-radius: 0 0 1rem 1rem;
+		margin-top: -1rem;
+	}
+
+	.photo-info h3 {
+		font-size: 1.125rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.photo-info p {
+		font-size: 0.875rem;
+		color: var(--text-secondary);
+		line-height: 1.5;
+		margin-bottom: 0.5rem;
+	}
+
+	.photo-date {
+		display: inline-block;
+		font-size: 0.75rem;
+		color: var(--accent-blue);
+		font-weight: 600;
+		padding: 0.25rem 0.75rem;
+		background: rgba(59, 130, 246, 0.1);
+		border-radius: 50px;
+	}
+
+	.empty-state {
+		text-align: center;
+		padding: 5rem 2rem;
+		color: var(--text-secondary);
+	}
+
+	.empty-state svg {
+		margin-bottom: 1.5rem;
+		opacity: 0.3;
+	}
+
+	.empty-state h3 {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
+	}
+
+	.empty-state p {
+		font-size: 1rem;
+		opacity: 0.7;
+	}
+
+	.upload-section {
+		margin-top: 4rem;
+		text-align: center;
+	}
+
+	.upload-card {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: white;
+		padding: 4rem;
+		border-radius: 2rem;
+		max-width: 700px;
+		margin: 0 auto;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.upload-card::before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		left: -50%;
+		width: 200%;
+		height: 200%;
+		background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+		animation: rotate 20s linear infinite;
+	}
+
+	@keyframes rotate {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+
+	.upload-icon {
+		color: white;
+		margin-bottom: 2rem;
+		position: relative;
+		z-index: 1;
+	}
+
+	.upload-card h3 {
+		font-size: 2rem;
+		font-weight: 700;
+		margin-bottom: 1rem;
+		position: relative;
+		z-index: 1;
+	}
+
+	.upload-card p {
+		font-size: 1.125rem;
+		opacity: 0.95;
+		margin-bottom: 2rem;
+		line-height: 1.6;
+		position: relative;
+		z-index: 1;
+	}
+
+	.upload-card .btn {
+		background: white;
+		color: #667eea;
+		font-weight: 700;
+		padding: 1rem 2rem;
+		border-radius: 50px;
+		position: relative;
+		z-index: 1;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+	}
+
+	.upload-card .btn:hover {
+		background: var(--bg-secondary);
+		transform: translateY(-3px);
+		box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+	}
+
+	/* Poster Modal */
+	.poster-modal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 9999;
+		display: none;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		overflow: auto;
+		overflow: auto;
+	}
+
+	.poster-modal.active {
+		display: flex;
+	}
+
+	.modal-backdrop {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, 0.9);
+		backdrop-filter: blur(20px);
+		animation: fadeIn 0.3s ease;
+	}
+
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	.modal-content {
+		position: relative;
+		width: auto;
+		height: auto;
+		max-width: none;
+		max-height: none;
+		max-width: none;
+		max-height: none;
+		animation: zoomIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		margin: 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: calc(100vh - 4rem);
+		margin: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+		padding: 4rem;
+	}
+
+	@keyframes zoomIn {
+		from { 
+			opacity: 0;
+			transform: scale(0.8);
+		}
+		to { 
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	.modal-image {
+		width: auto;
+		height: auto;
+		max-width: calc(100vw - 4rem);
+		max-height: none;
+		max-width: 90vw;
+		max-height: none;
+		border-radius: 1rem;
+		box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+		display: block;
+		display: block;
+	}
+
+	.modal-close {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		width: 50px;
+		height: 50px;
+		background: rgba(255, 255, 255, 0.9);
+		color: #333;
+		border: none;
+		border-radius: 50%;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+		backdrop-filter: blur(10px);
+		z-index: 10000;
+	}
+
+	.modal-close:hover {
+		background: white;
+		transform: scale(1.1);
+	}
+
+	@media (max-width: 768px) {
+		.hero-content h1 {
+			font-size: 2.5rem;
+		}
+
+		.photo-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.gallery-filters {
+			gap: 0.5rem;
+		}
+
+		.filter-btn {
+			padding: 0.75rem 1.5rem;
+			font-size: 0.875rem;
+		}
+
+		.category-title {
+			font-size: 1.5rem;
+		}
+
+		.modal-close {
+			top: 10px;
+			right: 10px;
+			width: 40px;
+			height: 40px;
+		}
+
+		.modal-content {
+			padding: 1rem;
+		}
+
+		.modal-image {
+			max-width: 95vw;
+		}
+	}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const filterBtns = document.querySelectorAll('.filter-btn');
+		const categorySections = document.querySelectorAll('.category-section');
+		const photoItems = document.querySelectorAll('.photo-item');
+		const posterModal = document.getElementById('posterModal');
+		const modalImage = document.getElementById('modalImage');
+		const modalClose = document.getElementById('modalClose');
+		const modalBackdrop = document.querySelector('.modal-backdrop');
+
+		// Filter functionality - switch between category sections
+		filterBtns.forEach(btn => {
+			btn.addEventListener('click', function() {
+				const filter = this.dataset.filter;
+
+				// Update active button
+				filterBtns.forEach(b => b.classList.remove('active'));
+				this.classList.add('active');
+
+				// Show/hide category sections
+				categorySections.forEach(section => {
+					if (section.dataset.category === filter) {
+						section.style.display = 'block';
+					} else {
+						section.style.display = 'none';
+					}
+				});
+			});
+		});
+
+		// Photo click to open lightbox
+		photoItems.forEach(item => {
+			item.addEventListener('click', function() {
+				const imageSrc = this.dataset.src;
+				if (imageSrc) {
+					modalImage.src = imageSrc;
+					modalImage.alt = this.dataset.title || '';
+					posterModal.classList.add('active');
+					document.body.style.overflow = 'hidden';
+				}
+			});
+		});
+
+		// Close modal
+		function closeModal() {
+			posterModal.classList.remove('active');
+			document.body.style.overflow = 'auto';
+		}
+
+		modalClose?.addEventListener('click', closeModal);
+		modalBackdrop?.addEventListener('click', closeModal);
+
+		// Close modal with Escape key
+		document.addEventListener('keydown', function(e) {
+			if (e.key === 'Escape' && posterModal.classList.contains('active')) {
+				closeModal();
+			}
+		});
+
+		// Prevent modal close when clicking on image
+		modalImage?.addEventListener('click', function(e) {
+			e.stopPropagation();
+		});
+	});
+</script>
+
+<style>
+	@keyframes slideInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>

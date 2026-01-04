@@ -1,0 +1,628 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+---
+
+<Layout 
+	title="GitHub - SAAIL Lab"
+	description="Explore SAAIL Lab's open-source code repositories, research implementations, and collaborative projects on GitHub for AI in agriculture and healthcare."
+>
+	<ModernHeader />
+	
+	<main class="github-page">
+		<!-- Hero Section -->
+		<section class="github-hero">
+			<div class="container">
+				<div class="hero-content">
+					<div class="hero-icon">
+						<svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+						</svg>
+					</div>
+					<h1>GitHub Repositories</h1>
+					<p class="hero-description">
+						Explore our open-source code, research implementations, and collaborative projects. 
+						Contribute to our AI for agriculture and healthcare initiatives.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Repository Stats -->
+		<section class="repo-stats">
+			<div class="container">
+				<div class="stats-grid">
+					<div class="stat-card">
+						<div class="stat-icon">📦</div>
+						<div class="stat-number">15+</div>
+						<div class="stat-label">Repositories</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-icon">⭐</div>
+						<div class="stat-number">50+</div>
+						<div class="stat-label">Stars</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-icon">🍴</div>
+						<div class="stat-number">25+</div>
+						<div class="stat-label">Forks</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-icon">🔓</div>
+						<div class="stat-number">Open</div>
+						<div class="stat-label">Source</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Featured Repositories -->
+		<section class="featured-repos">
+			<div class="container">
+				<h2 class="section-title">Featured Repositories</h2>
+				<div class="repos-grid">
+					<div class="repo-card featured">
+						<div class="repo-header">
+							<div class="repo-icon">🌾</div>
+							<div class="repo-meta">
+								<h3>agricultural-ai-toolkit</h3>
+								<p class="repo-description">
+									Comprehensive Python toolkit for agricultural AI applications including crop analysis, 
+									quality assessment, and precision farming tools.
+								</p>
+							</div>
+						</div>
+						<div class="repo-stats">
+							<span class="repo-language">Python</span>
+							<span class="repo-stars">⭐ 12</span>
+							<span class="repo-forks">🍴 5</span>
+						</div>
+						<div class="repo-topics">
+							<span class="topic">agriculture</span>
+							<span class="topic">machine-learning</span>
+							<span class="topic">computer-vision</span>
+							<span class="topic">python</span>
+						</div>
+						<div class="repo-actions">
+							<a href="https://github.com/saaillab/agricultural-ai-toolkit" target="_blank" class="repo-btn primary">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+								</svg>
+								View Repository
+							</a>
+							<button class="repo-btn secondary">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+									<rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+								</svg>
+								Clone
+							</button>
+						</div>
+					</div>
+
+					<div class="repo-card">
+						<div class="repo-header">
+							<div class="repo-icon">🏥</div>
+							<div class="repo-meta">
+								<h3>placental-imaging-ai</h3>
+								<p class="repo-description">
+									AI-powered medical image analysis tools for placental weight and volume estimation 
+									from 2D ultrasound images.
+								</p>
+							</div>
+						</div>
+						<div class="repo-stats">
+							<span class="repo-language">Python</span>
+							<span class="repo-stars">⭐ 8</span>
+							<span class="repo-forks">🍴 3</span>
+						</div>
+						<div class="repo-topics">
+							<span class="topic">medical-imaging</span>
+							<span class="topic">healthcare</span>
+							<span class="topic">deep-learning</span>
+							<span class="topic">ultrasound</span>
+						</div>
+						<div class="repo-actions">
+							<a href="https://github.com/saaillab/placental-imaging-ai" target="_blank" class="repo-btn primary">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+								</svg>
+								View Repository
+							</a>
+							<button class="repo-btn secondary">Clone</button>
+						</div>
+					</div>
+
+					<div class="repo-card">
+						<div class="repo-header">
+							<div class="repo-icon">👁️</div>
+							<div class="repo-meta">
+								<h3>e-vision-assistive</h3>
+								<p class="repo-description">
+									Edge AI framework for assistive technologies, specifically designed for 
+									visually impaired individuals with low-latency processing.
+								</p>
+							</div>
+						</div>
+						<div class="repo-stats">
+							<span class="repo-language">Python</span>
+							<span class="repo-stars">⭐ 6</span>
+							<span class="repo-forks">🍴 2</span>
+						</div>
+						<div class="repo-topics">
+							<span class="topic">assistive-technology</span>
+							<span class="topic">edge-ai</span>
+							<span class="topic">accessibility</span>
+							<span class="topic">computer-vision</span>
+						</div>
+						<div class="repo-actions">
+							<a href="https://github.com/saaillab/e-vision-assistive" target="_blank" class="repo-btn primary">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+								</svg>
+								View Repository
+							</a>
+							<button class="repo-btn secondary">Clone</button>
+						</div>
+					</div>
+
+					<div class="repo-card">
+						<div class="repo-header">
+							<div class="repo-icon">🔗</div>
+							<div class="repo-meta">
+								<h3>blockchain-spice-supply</h3>
+								<p class="repo-description">
+									Blockchain implementation for Zanzibar spice supply chain traceability 
+									and transparency enhancement.
+								</p>
+							</div>
+						</div>
+						<div class="repo-stats">
+							<span class="repo-language">JavaScript</span>
+							<span class="repo-stars">⭐ 4</span>
+							<span class="repo-forks">🍴 1</span>
+						</div>
+						<div class="repo-topics">
+							<span class="topic">blockchain</span>
+							<span class="topic">supply-chain</span>
+							<span class="topic">traceability</span>
+							<span class="topic">zanzibar</span>
+						</div>
+						<div class="repo-actions">
+							<a href="https://github.com/saaillab/blockchain-spice-supply" target="_blank" class="repo-btn primary">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+								</svg>
+								View Repository
+							</a>
+							<button class="repo-btn secondary">Clone</button>
+						</div>
+					</div>
+
+					<div class="repo-card">
+						<div class="repo-header">
+							<div class="repo-icon">🌐</div>
+							<div class="repo-meta">
+								<h3>saaillab.github.io</h3>
+								<p class="repo-description">
+									Source code for the SAAIL Lab website built with Astro, showcasing our research, 
+									team, and projects.
+								</p>
+							</div>
+						</div>
+						<div class="repo-stats">
+							<span class="repo-language">Astro</span>
+							<span class="repo-stars">⭐ 3</span>
+							<span class="repo-forks">🍴 1</span>
+						</div>
+						<div class="repo-topics">
+							<span class="topic">website</span>
+							<span class="topic">astro</span>
+							<span class="topic">research-lab</span>
+							<span class="topic">academic</span>
+						</div>
+						<div class="repo-actions">
+							<a href="https://github.com/saaillab/saaillab.github.io" target="_blank" class="repo-btn primary">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+								</svg>
+								View Repository
+							</a>
+							<button class="repo-btn secondary">Clone</button>
+						</div>
+					</div>
+
+					<div class="repo-card">
+						<div class="repo-header">
+							<div class="repo-icon">⚖️</div>
+							<div class="repo-meta">
+								<h3>cara-fm-framework</h3>
+								<p class="repo-description">
+									Context-Aware Responsible AI Framework Models for East Africa - 
+									ethical AI development guidelines and implementation.
+								</p>
+							</div>
+						</div>
+						<div class="repo-stats">
+							<span class="repo-language">Python</span>
+							<span class="repo-stars">⭐ 15</span>
+							<span class="repo-forks">🍴 7</span>
+						</div>
+						<div class="repo-topics">
+							<span class="topic">responsible-ai</span>
+							<span class="topic">ethics</span>
+							<span class="topic">africa</span>
+							<span class="topic">framework</span>
+						</div>
+						<div class="repo-actions">
+							<a href="https://github.com/saaillab/cara-fm-framework" target="_blank" class="repo-btn primary">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.30 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+								</svg>
+								View Repository
+							</a>
+							<button class="repo-btn secondary">Clone</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- All Repositories Link -->
+				<div class="all-repos-cta">
+					<a href="https://github.com/saaillab" target="_blank" class="btn btn-primary">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.30 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+						</svg>
+						View All Repositories
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Contribution Guidelines -->
+		<section class="contribution-guidelines">
+			<div class="container">
+				<h2>Contributing to Our Research</h2>
+				<div class="guidelines-grid">
+					<div class="guideline-card">
+						<div class="guideline-icon">🤝</div>
+						<h3>How to Contribute</h3>
+						<ul>
+							<li>Fork the repository you're interested in</li>
+							<li>Create a feature branch for your changes</li>
+							<li>Submit a pull request with detailed description</li>
+							<li>Follow our coding standards and documentation</li>
+						</ul>
+					</div>
+					<div class="guideline-card">
+						<div class="guideline-icon">📋</div>
+						<h3>Contribution Areas</h3>
+						<ul>
+							<li>Bug fixes and performance improvements</li>
+							<li>New features and algorithm implementations</li>
+							<li>Documentation and examples</li>
+							<li>Dataset contributions and validation</li>
+						</ul>
+					</div>
+					<div class="guideline-card">
+						<div class="guideline-icon">🎯</div>
+						<h3>Research Focus</h3>
+						<ul>
+							<li>AI for sustainable agriculture</li>
+							<li>Medical imaging and healthcare AI</li>
+							<li>Assistive technologies and accessibility</li>
+							<li>Responsible AI frameworks</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<ModernFooter />
+</Layout>
+
+<style>
+	.github-page {
+		padding-top: 90px;
+	}
+
+	.github-hero {
+		background: linear-gradient(135deg, #24292e 0%, #1a1e22 100%);
+		color: white;
+		padding: 4rem 0;
+		text-align: center;
+	}
+
+	.hero-content {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.hero-icon {
+		color: white;
+		margin-bottom: 2rem;
+	}
+
+	.hero-content h1 {
+		font-size: 3rem;
+		font-weight: 700;
+		margin-bottom: 1.5rem;
+	}
+
+	.hero-description {
+		font-size: 1.25rem;
+		opacity: 0.9;
+		line-height: 1.7;
+	}
+
+	.repo-stats {
+		padding: 3rem 0;
+		background: var(--bg-primary);
+	}
+
+	.stats-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+		gap: 2rem;
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.stat-card {
+		background: var(--bg-secondary);
+		border-radius: 1rem;
+		padding: 2rem;
+		text-align: center;
+		box-shadow: 0 4px 12px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s ease;
+	}
+
+	.stat-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 20px var(--shadow-medium);
+	}
+
+	.stat-icon {
+		font-size: 2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.stat-number {
+		display: block;
+		font-size: 1.75rem;
+		font-weight: 700;
+		color: var(--accent-blue);
+		margin-bottom: 0.25rem;
+	}
+
+	.stat-label {
+		font-size: 0.875rem;
+		color: var(--text-secondary);
+		font-weight: 500;
+	}
+
+	.featured-repos {
+		padding: 5rem 0;
+		background: var(--bg-primary);
+	}
+
+	.section-title {
+		text-align: center;
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: var(--accent-blue);
+		margin-bottom: 3rem;
+	}
+
+	.repos-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+		gap: 2rem;
+		margin-bottom: 3rem;
+	}
+
+	.repo-card {
+		background: var(--bg-secondary);
+		border-radius: 1.5rem;
+		padding: 2rem;
+		box-shadow: 0 4px 12px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s ease;
+	}
+
+	.repo-card.featured {
+		border: 2px solid var(--accent-blue);
+		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+	}
+
+	.repo-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 24px var(--shadow-medium);
+	}
+
+	.repo-header {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.repo-icon {
+		font-size: 2rem;
+		flex-shrink: 0;
+	}
+
+	.repo-meta h3 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 0.75rem;
+		font-family: 'Monaco', 'Menlo', monospace;
+	}
+
+	.repo-description {
+		color: var(--text-secondary);
+		line-height: 1.6;
+		font-size: 0.875rem;
+	}
+
+	.repo-stats {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.repo-language,
+	.repo-stars,
+	.repo-forks {
+		font-size: 0.875rem;
+		color: var(--text-muted);
+		font-weight: 500;
+	}
+
+	.repo-topics {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		margin-bottom: 1.5rem;
+	}
+
+	.topic {
+		padding: 0.25rem 0.75rem;
+		background: var(--accent-blue);
+		color: white;
+		border-radius: 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 500;
+	}
+
+	.repo-actions {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.repo-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		border-radius: 0.75rem;
+		text-decoration: none;
+		font-weight: 500;
+		transition: all 0.3s ease;
+		border: 2px solid transparent;
+	}
+
+	.repo-btn.primary {
+		background: #24292e;
+		color: white;
+	}
+
+	.repo-btn.primary:hover {
+		background: #1a1e22;
+		transform: translateY(-2px);
+	}
+
+	.repo-btn.secondary {
+		background: var(--bg-primary);
+		color: var(--text-primary);
+		border-color: var(--border-color);
+	}
+
+	.repo-btn.secondary:hover {
+		background: var(--bg-tertiary);
+		transform: translateY(-2px);
+	}
+
+	.all-repos-cta {
+		text-align: center;
+	}
+
+	.contribution-guidelines {
+		padding: 5rem 0;
+		background: var(--bg-secondary);
+	}
+
+	.contribution-guidelines h2 {
+		text-align: center;
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: var(--accent-blue);
+		margin-bottom: 3rem;
+	}
+
+	.guidelines-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+	}
+
+	.guideline-card {
+		background: var(--bg-primary);
+		border-radius: 1.5rem;
+		padding: 2rem;
+		box-shadow: 0 4px 12px var(--shadow-light);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s ease;
+	}
+
+	.guideline-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 20px var(--shadow-medium);
+	}
+
+	.guideline-icon {
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.guideline-card h3 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: 1rem;
+	}
+
+	.guideline-card ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	.guideline-card li {
+		color: var(--text-secondary);
+		margin-bottom: 0.75rem;
+		padding-left: 1.5rem;
+		position: relative;
+		line-height: 1.5;
+	}
+
+	.guideline-card li::before {
+		content: '→';
+		position: absolute;
+		left: 0;
+		color: var(--accent-blue);
+		font-weight: 600;
+	}
+
+	@media (max-width: 768px) {
+		.hero-content h1 {
+			font-size: 2.5rem;
+		}
+
+		.repos-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.repo-actions {
+			flex-direction: column;
+		}
+
+		.stats-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>
