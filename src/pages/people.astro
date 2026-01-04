@@ -516,6 +516,50 @@ const alumni = [
 		--card-transition: all 0.3s ease;
 	}
 
+
+	/* --- INITIALS AVATAR STYLE --- */
+    .initials-avatar {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        background: #3b82f6; /* Fallback color */
+        position: absolute;
+        top: 0; left: 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    /* Specific adjustment for Logo Images in Grid */
+    .logo-wrapper {
+        background: white !important; /* Logos usually need white bg */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+    
+    .logo-image {
+        position: relative !important; /* Override absolute positioning for logos */
+        filter: grayscale(0%) !important;
+        object-fit: contain !important; /* Keep aspect ratio of logo */
+        transform: none !important;
+    }
+
+    /* Modal specific styles for Avatar */
+    .modal-avatar-size {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 0.75rem;
+        font-size: 3rem;
+        border: 3px solid #1e3a8a;
+    }
+
+
 	.people-page {
 		padding-top: 90px;
 		min-height: 100vh;
