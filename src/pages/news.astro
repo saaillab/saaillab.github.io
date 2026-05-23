@@ -4,825 +4,783 @@ import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
 ---
 
-<Layout 
+<Layout
 	title="News - SAAIL Lab"
-	description="Stay updated with the latest news, announcements, and achievements from SAAIL Lab at IIT Madras Zanzibar. Research breakthroughs, publications, and lab updates."
+	description="Stay updated with the latest news, announcements, and achievements from SAAIL Lab at IIT Madras Zanzibar."
 >
 	<ModernHeader />
-	
+
 	<main class="news-page">
-		<!-- Hero Section -->
+
+		<!-- Hero -->
 		<section class="news-hero">
+			<div class="hero-bg"></div>
 			<div class="container">
-				<div class="hero-content">
-					<h1>Latest News & Updates</h1>
-					<p class="hero-description">
-						Stay informed about our latest research breakthroughs, publications, 
-						collaborations, and achievements at SAAIL Lab.
-					</p>
-				</div>
+				<p class="hero-eyebrow">SAAIL Lab · IIT Madras Zanzibar</p>
+				<h1>News <span class="amp">&</span> Updates</h1>
+				<p class="hero-sub">Research breakthroughs, publications, awards, and milestones from our lab.</p>
 			</div>
 		</section>
 
-		<!-- News Timeline -->
-		<section class="news-timeline">
+		<!-- Filters -->
+		<div class="filter-bar-wrap">
 			<div class="container">
-				<div class="timeline">
-					<!-- 2025 News -->
-					<div class="timeline-year">
-						<h2>2025</h2>
-					</div>
+				<div class="filter-bar" role="tablist">
+					<button class="filter-pill active" data-filter="all">All</button>
+					<button class="filter-pill" data-filter="publication">Publications</button>
+					<button class="filter-pill" data-filter="award">Awards</button>
+					<button class="filter-pill" data-filter="talk">Talks</button>
+					<button class="filter-pill" data-filter="lab">Lab</button>
+				</div>
+			</div>
+		</div>
 
-					<div class="news-item featured">
-						<div class="news-date">
-							<span class="month">Dec</span>
-							<span class="day">09</span>
-							<span class="year">2025</span>
-						</div>
-						<div class="news-content">
-							<div class="news-category milestone">Editorial Board</div>
-							<h3>Appointed as Editorial Board Member - Discover Artificial Intelligence</h3>
-							<p>
-								Honored to join the editorial board of Discover Artificial Intelligence, a
-								Springer Nature open access journal advancing AI research and innovation. This appointment
-								recognizes contributions to the AI research community and commitment to advancing the field.
-							</p>
-							<div class="news-tags">
-								<span class="tag">Editorial Board</span>
-								<span class="tag">Academic Service</span>
-								<span class="tag">Springer Nature</span>
-							</div>
-							<div class="news-actions">
-								<a href="https://link.springer.com/journal/44163/editorial-board" target="_blank" class="news-link">View Editorial Board</a>
-							</div>
-						</div>
-					</div>
+		<!-- Feed -->
+		<section class="news-feed">
+			<div class="container">
 
-					<div class="news-item featured">
-						<div class="news-date">
-							<span class="month">Aug</span>
-							<span class="day">27</span>
-							<span class="year">2025</span>
+				<!-- Featured — most recent big story -->
+				<article class="story-card story-card--hero" data-category="publication"
+					data-title="10 New Papers Accepted — AAIAC 2026, DSA 2026, CVPR 2026 & ICLR 2026"
+					data-date="May 2026"
+					data-body="SAAIL Lab has had a landmark month with 10 papers accepted across four prestigious venues. At AAIAC 2026 (Dar es Salaam, July 22–23): 5 papers covering EAC AI Strategy, fraud detection, solar irradiance forecasting, cyber defence for African 5G networks, and insurgency prediction in the Sahel. At DSA 2026 (Makerere University, Kampala, July 23–24): 3 papers including an oral presentation on DCGAN failure under data scarcity and two poster presentations on cassava disease detection. Additionally, CLOVES-4603 was accepted at the 7th CV4A Workshop @ CVPR 2026 (May 2026), and a paper on Unifying Perspectives on Learning Biases was accepted at the ICLR 2026 Workshop on Trustworthy AI-Interpretability (March 2026)."
+					data-tags="AAIAC 2026,DSA 2026,CVPR 2026,ICLR 2026,Publications"
+					data-link="/publications">
+					<div class="hero-card-inner">
+						<div class="story-meta">
+							<span class="story-badge story-badge--publication">Publications</span>
+							<span class="story-date">May 2026</span>
 						</div>
-						<div class="news-content">
-							<div class="news-category conference">Invited Talk</div>
-							<h3>ZRCP 4th Joint Annual Conference</h3>
-							<p>
-								Invited presentation: "How Can Innovation Modernize Public Service Delivery and Create an Inclusive Digital Economy" 
-								at the ZRCP 4th Joint Annual Conference in Zanzibar, Tanzania.
-							</p>
-							<div class="news-tags">
-								<span class="tag">Invited Talk</span>
-								<span class="tag">Digital Economy</span>
-								<span class="tag">Innovation</span>
-							</div>
-							<div class="news-actions">
-								<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="news-link">View Details</a>
-							</div>
+						<h2>10 Papers Accepted — AAIAC 2026, DSA 2026, CVPR 2026 & ICLR 2026</h2>
+						<p class="story-preview">A landmark month for SAAIL Lab. Five papers at AAIAC 2026 in Dar es Salaam, three at DSA 2026 in Kampala (including an oral), one at CV4A@CVPR 2026, and one at ICLR 2026 Workshop.</p>
+						<div class="story-footer">
+							<button class="read-btn read-btn--light" data-action="open">Read full story →</button>
 						</div>
 					</div>
+				</article>
 
-					<div class="news-item">
-						<div class="news-date">
-							<span class="month">Aug</span>
-							<span class="day">22</span>
-							<span class="year">2025</span>
-						</div>
-						<div class="news-content">
-							<div class="news-category conference">Presentation</div>
-							<h3>Oral Presentation at Responsible AI Workshop</h3>
-							<p>
-								Presented CARA-FMs research at the Responsible AI Workshop, Deep Learning Indaba 2025 
-								in Kigali, Rwanda, showcasing our framework for context-aware AI in East Africa.
-							</p>
-							<div class="news-tags">
-								<span class="tag">Oral Presentation</span>
-								<span class="tag">Responsible AI</span>
-								<span class="tag">Deep Learning Indaba</span>
-							</div>
-							<div class="news-actions">
-								<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="news-link">View Presentation</a>
-							</div>
-						</div>
-					</div>
+				<!-- Grid -->
+				<div class="stories-grid" id="stories-grid">
 
-					<div class="news-item">
-						<div class="news-date">
-							<span class="month">Aug</span>
-							<span class="day">20</span>
-							<span class="year">2025</span>
+					<!-- Dec 2025 — Editorial Board (LinkedIn exists) -->
+					<article class="story-card" data-category="lab"
+						data-title="Appointed to Editorial Board — Discover Artificial Intelligence"
+						data-date="9 Dec 2025"
+						data-body="Innocent Nyalala has been appointed as Editorial Board Member of Discover Artificial Intelligence, a Springer Nature open-access journal that publishes original research across all areas of artificial intelligence. This appointment recognises his contributions to responsible AI and AI for agriculture."
+						data-tags="Editorial Board,Springer Nature,Academic Service"
+						data-link="https://link.springer.com/journal/44163/editorial-board"
+						data-link-label="View Editorial Board"
+						data-external="true">
+						<div class="story-meta">
+							<span class="story-badge story-badge--lab">Editorial Board</span>
+							<span class="story-date">9 Dec 2025</span>
 						</div>
-						<div class="news-content">
-							<div class="news-category milestone">Award</div>
-							<h3>Best Poster Award - Deep Learning Indaba 2025</h3>
-							<p>
-								Won Best Poster Award in Publication & Dataset Category at Deep Learning Indaba 2025, 
-								Kigali, Rwanda for the CARA-FMs framework research.
-							</p>
-							<div class="news-tags">
-								<span class="tag">Best Poster</span>
-								<span class="tag">Award</span>
-								<span class="tag">Deep Learning Indaba</span>
-							</div>
-							<div class="news-actions">
-								<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="news-link">View Award</a>
-							</div>
+						<h3>Appointed to Editorial Board — Discover Artificial Intelligence</h3>
+						<p class="story-preview">Innocent Nyalala joins the editorial board of Discover Artificial Intelligence (Springer Nature).</p>
+						<div class="story-footer">
+							<a href="https://link.springer.com/journal/44163/editorial-board" target="_blank" rel="noopener" class="read-btn">View Editorial Board ↗</a>
 						</div>
-					</div>
+					</article>
 
-					<div class="news-item">
-						<div class="news-date">
-							<span class="month">Aug</span>
-							<span class="day">17</span>
-							<span class="year">2025</span>
+					<!-- Aug 2025 — Best Poster Award (LinkedIn) -->
+					<article class="story-card story-card--award" data-category="award"
+						data-title="Best Poster Award — Deep Learning Indaba 2025"
+						data-date="20 Aug 2025"
+						data-body="SAAIL Lab won the Best Poster Award in the Publication & Dataset Category at Deep Learning Indaba 2025, Kigali, Rwanda (August 16–23). The award was for the CARA-FMs framework: Context-Aware and Responsible AI for East African Agriculture."
+						data-tags="Best Poster,Award,Deep Learning Indaba,Kigali"
+						data-link="https://www.linkedin.com/in/innocentnyalala/"
+						data-link-label="View on LinkedIn"
+						data-external="true"
+						data-linkedin="true">
+						<div class="story-meta">
+							<span class="story-badge story-badge--award">🏆 Award</span>
+							<span class="story-date">20 Aug 2025</span>
 						</div>
-						<div class="news-content">
-							<div class="news-category conference">Conference Publication</div>
-							<h3>CARA-FMs Framework Accepted at Deep Learning Indaba 2025</h3>
-							<p>
-								Context-Aware and Responsible AI Framework for East Africa accepted at Deep Learning Indaba 2025, 
-								Kigali, Rwanda. This framework addresses ethical AI development for African contexts.
-							</p>
-							<div class="news-tags">
-								<span class="tag">CARA-FMs</span>
-								<span class="tag">Conference</span>
-								<span class="tag">Responsible AI</span>
-							</div>
-							<div class="news-actions">
-								<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" class="news-link">View Details</a>
-							</div>
+						<h3>Best Poster Award — Deep Learning Indaba 2025</h3>
+						<p class="story-preview">CARA-FMs framework wins Best Poster in Publication & Dataset Category at DLI 2025, Kigali, Rwanda.</p>
+						<div class="story-footer">
+							<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" rel="noopener" class="read-btn linkedin-btn">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+								View on LinkedIn
+							</a>
 						</div>
-					</div>
+					</article>
 
-					<div class="news-item">
-						<div class="news-date">
-							<span class="month">Aug</span>
-							<span class="day">15</span>
-							<span class="year">2025</span>
+					<!-- Aug 2025 — Oral Presentation DLI (LinkedIn) -->
+					<article class="story-card" data-category="talk"
+						data-title="Oral Presentation at Responsible AI Workshop — DLI 2025"
+						data-date="22 Aug 2025"
+						data-body="Innocent Nyalala delivered an oral presentation at the Responsible AI Workshop during Deep Learning Indaba 2025 in Kigali, Rwanda. The presentation introduced the theoretical framework for culturally attuned and resource-aware foundation models for East African agriculture."
+						data-tags="Oral Presentation,Responsible AI,DLI 2025"
+						data-link="https://www.linkedin.com/in/innocentnyalala/"
+						data-link-label="View on LinkedIn"
+						data-external="true"
+						data-linkedin="true">
+						<div class="story-meta">
+							<span class="story-badge story-badge--talk">Presentation</span>
+							<span class="story-date">22 Aug 2025</span>
 						</div>
-						<div class="news-content">
-							<div class="news-category research">Research Milestone</div>
-							<h3>SAAIL Lab Research Impact Grows</h3>
-							<p>
-								Lab publications reach 22+ papers with 830+ citations, establishing strong research presence 
-								in AI for agriculture and healthcare with growing international recognition.
-							</p>
-							<div class="news-tags">
-								<span class="tag">Research Impact</span>
-								<span class="tag">Publications</span>
-								<span class="tag">Citations</span>
-							</div>
-							<div class="news-actions">
-								<a href="/publications" class="news-link">View Publications</a>
-							</div>
+						<h3>Oral Presentation — Responsible AI Workshop, DLI 2025</h3>
+						<p class="story-preview">Presented CARA-FMs and culturally attuned foundation model framework at the Responsible AI Workshop, Deep Learning Indaba 2025.</p>
+						<div class="story-footer">
+							<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" rel="noopener" class="read-btn linkedin-btn">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+								View on LinkedIn
+							</a>
 						</div>
-					</div>
+					</article>
 
-					<div class="news-item">
-						<div class="news-date">
-							<span class="month">Aug</span>
-							<span class="day">10</span>
-							<span class="year">2025</span>
+					<!-- Aug 2025 — ZRCP Talk (LinkedIn) -->
+					<article class="story-card" data-category="talk"
+						data-title="Invited Talk — ZRCP 4th Joint Annual Conference"
+						data-date="27 Aug 2025"
+						data-body="Innocent Nyalala delivered an invited talk titled 'How Can Innovation Modernize Public Service Delivery and Create an Inclusive Digital Economy' at the ZRCP 4th Joint Annual Conference in Zanzibar."
+						data-tags="Invited Talk,Digital Economy,Zanzibar,Innovation"
+						data-link="https://www.linkedin.com/in/innocentnyalala/"
+						data-link-label="View on LinkedIn"
+						data-external="true"
+						data-linkedin="true">
+						<div class="story-meta">
+							<span class="story-badge story-badge--talk">Invited Talk</span>
+							<span class="story-date">27 Aug 2025</span>
 						</div>
-						<div class="news-content">
-							<div class="news-category team">Team Growth</div>
-							<h3>MTech Students Present Research Progress</h3>
-							<p>
-								Patrick Ndowo, Twamaa Makame, and Shivam Vyas present significant progress in their 
-								respective AI research projects in agriculture, healthcare, and assistive technologies.
-							</p>
-							<div class="news-tags">
-								<span class="tag">Student Progress</span>
-								<span class="tag">Team Growth</span>
-								<span class="tag">Research</span>
-							</div>
-							<div class="news-actions">
-								<a href="/people#current" class="news-link">Meet the Team</a>
-							</div>
+						<h3>Invited Talk — ZRCP 4th Joint Annual Conference</h3>
+						<p class="story-preview">"How Can Innovation Modernize Public Service Delivery and Create an Inclusive Digital Economy" — Zanzibar.</p>
+						<div class="story-footer">
+							<a href="https://www.linkedin.com/in/innocentnyalala/" target="_blank" rel="noopener" class="read-btn linkedin-btn">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+								View on LinkedIn
+							</a>
 						</div>
-					</div>
+					</article>
 
-					<!-- 2024 News -->
-					<div class="timeline-year">
-						<h2>2024</h2>
-					</div>
+					<!-- Aug 2025 — CARA-FMs publication (internal) -->
+					<article class="story-card" data-category="publication"
+						data-title="CARA-FMs Accepted at Deep Learning Indaba 2025"
+						data-date="17 Aug 2025"
+						data-body="Context-Aware and Responsible AI Framework for East Africa (CARA-FMs) was accepted at Deep Learning Indaba 2025 in Kigali, Rwanda. The framework proposes culturally attuned foundation models for East African agricultural contexts, won Best Poster Award in Publication & Dataset Category."
+						data-tags="CARA-FMs,Conference,DLI 2025,Responsible AI,Best Poster"
+						data-link="/publications">
+						<div class="story-meta">
+							<span class="story-badge story-badge--publication">Publication</span>
+							<span class="story-date">17 Aug 2025</span>
+						</div>
+						<h3>CARA-FMs Accepted at Deep Learning Indaba 2025</h3>
+						<p class="story-preview">Context-Aware and Responsible AI Framework for East Africa accepted and awarded Best Poster at DLI 2025, Kigali.</p>
+						<div class="story-footer">
+							<button class="read-btn" data-action="open">Read full story →</button>
+						</div>
+					</article>
 
-					<div class="news-item">
-						<div class="news-date">
-							<span class="month">Dec</span>
-							<span class="day">15</span>
-							<span class="year">2024</span>
+					<!-- Aug 2025 — MTech Progress (internal) -->
+					<article class="story-card" data-category="lab"
+						data-title="MTech Students Present Research Progress"
+						data-date="10 Aug 2025"
+						data-body="Patrick Ndowo, Twamaa Makame, and Shivam Vyas presented significant progress in their MTech research projects. Patrick's work focuses on AI for cassava disease detection in East Africa. Twamaa is working on assistive technologies. Shivam is investigating AI for precision agriculture. All three projects are on track for conference submissions."
+						data-tags="Students,MTech,Research Progress,Team"
+						data-link="/people">
+						<div class="story-meta">
+							<span class="story-badge story-badge--lab">Lab</span>
+							<span class="story-date">10 Aug 2025</span>
 						</div>
-						<div class="news-content">
-							<div class="news-category milestone">Lab Foundation</div>
-							<h3>SAAIL Lab Research Initiatives Begin</h3>
-							<p>
-								Initial research planning and project development begins for the Sustainable AI for Agriculture & Intelligent Livelihoods 
-								Laboratory at IIT Madras Zanzibar.
-							</p>
-							<div class="news-tags">
-								<span class="tag">Lab Foundation</span>
-								<span class="tag">Research Planning</span>
-								<span class="tag">AI Agriculture</span>
-							</div>
-							<div class="news-actions">
-								<a href="/research" class="news-link">View Research</a>
-							</div>
+						<h3>MTech Students Present Research Progress</h3>
+						<p class="story-preview">Patrick Ndowo, Twamaa Makame, and Shivam Vyas present milestones across agriculture AI, assistive tech, and precision farming projects.</p>
+						<div class="story-footer">
+							<button class="read-btn" data-action="open">Read more →</button>
 						</div>
-					</div>
+					</article>
 
-					<div class="news-item">
-						<div class="news-date">
-							<span class="month">Nov</span>
-							<span class="day">20</span>
-							<span class="year">2024</span>
+					<!-- Oct 2024 — Nyalala joins (external profile) -->
+					<article class="story-card story-card--milestone" data-category="lab"
+						data-title="Innocent Nyalala Joins IIT Madras Zanzibar"
+						data-date="1 Oct 2024"
+						data-body="Dr. Innocent Nyalala begins his appointment as Assistant Professor at IIT Madras Zanzibar, bringing over a decade of expertise in AI for precision agriculture, computer vision, and responsible AI for the African context. His arrival marks the founding of SAAIL Lab."
+						data-tags="New Appointment,IIT Madras,Lab Foundation"
+						data-link="https://inyalala.github.io"
+						data-link-label="View Profile"
+						data-external="true">
+						<div class="story-meta">
+							<span class="story-badge story-badge--milestone">Milestone</span>
+							<span class="story-date">1 Oct 2024</span>
 						</div>
-						<div class="news-content">
-							<div class="news-category team">Team Building</div>
-							<h3>First MTech Students Join Research Projects</h3>
-							<p>
-								Patrick Ndowo, Twamaa Makame, and Shivam Vyas begin their MTech research projects 
-								in AI for agriculture, healthcare, and assistive technologies.
-							</p>
-							<div class="news-tags">
-								<span class="tag">Student Recruitment</span>
-								<span class="tag">Team Building</span>
-								<span class="tag">MTech Projects</span>
-							</div>
-							<div class="news-actions">
-								<a href="/people#current" class="news-link">Meet Students</a>
-							</div>
+						<h3>Innocent Nyalala Joins IIT Madras Zanzibar</h3>
+						<p class="story-preview">Dr. Innocent Nyalala begins as Assistant Professor, founding SAAIL Lab at IIT Madras Zanzibar campus.</p>
+						<div class="story-footer">
+							<a href="https://inyalala.github.io" target="_blank" rel="noopener" class="read-btn">View Profile ↗</a>
 						</div>
-					</div>
+					</article>
 
-					<div class="news-item featured">
-						<div class="news-date">
-							<span class="month">Oct</span>
-							<span class="day">01</span>
-							<span class="year">2024</span>
+					<!-- Nov 2024 — First students (internal) -->
+					<article class="story-card" data-category="lab"
+						data-title="First MTech Students Join SAAIL Lab"
+						data-date="20 Nov 2024"
+						data-body="Patrick Ndowo, Twamaa Makame, and Shivam Vyas become the first MTech students to join SAAIL Lab. Patrick will focus on AI for cassava disease detection in East African field conditions. Twamaa will work on assistive AI technologies. Shivam will investigate precision agriculture. The lab is now fully operational."
+						data-tags="Students,MTech,Team Building,Lab"
+						data-link="/people">
+						<div class="story-meta">
+							<span class="story-badge story-badge--lab">Lab</span>
+							<span class="story-date">20 Nov 2024</span>
 						</div>
-						<div class="news-content">
-							<div class="news-category milestone">Career Milestone</div>
-							<h3>Innocent Nyalala Joins IIT Madras Zanzibar</h3>
-							<p>
-								Innocent Nyalala begins his appointment as Assistant Professor at IIT Madras Zanzibar,
-								bringing expertise in AI for agriculture and establishing the foundation for SAAIL Lab.
-							</p>
-							<div class="news-tags">
-								<span class="tag">Career Milestone</span>
-								<span class="tag">IIT Madras</span>
-								<span class="tag">New Appointment</span>
-							</div>
-							<div class="news-actions">
-								<a href="https://inyalala.github.io" target="_blank" class="news-link">View Profile</a>
-							</div>
+						<h3>First MTech Students Join SAAIL Lab</h3>
+						<p class="story-preview">Patrick Ndowo, Twamaa Makame, and Shivam Vyas are the inaugural research students of SAAIL Lab.</p>
+						<div class="story-footer">
+							<button class="read-btn" data-action="open">Read more →</button>
 						</div>
-					</div>
+					</article>
 
 				</div>
 
-					<!-- 2024 News -->
+				<div id="no-stories" class="no-stories" style="display:none">
+					<p>No stories in this category yet.</p>
+				</div>
 
 			</div>
 		</section>
 
-		<!-- Upcoming Events -->
-		<section class="upcoming-events">
+		<!-- Stay connected -->
+		<section class="stay-connected">
 			<div class="container">
-				<h2>Upcoming Events</h2>
-				<div class="events-grid">
-					<div class="event-card">
-						<div class="event-date">
-							<span class="event-month">Sep</span>
-							<span class="event-day">15</span>
-						</div>
-						<div class="event-info">
-							<h3>Research Seminar: AI for Agriculture</h3>
-							<p>Dr. Nyalala will present latest findings on AI applications in precision agriculture</p>
-							<div class="event-details">
-								<span class="event-time">2:00 PM - 3:30 PM</span>
-								<span class="event-location">IIT Madras Zanzibar</span>
-							</div>
-						</div>
-					</div>
-
-					<div class="event-card">
-						<div class="event-date">
-							<span class="event-month">Oct</span>
-							<span class="event-day">10</span>
-						</div>
-						<div class="event-info">
-							<h3>International Conference Presentation</h3>
-							<p>Presenting research on responsible AI frameworks at international conference</p>
-							<div class="event-details">
-								<span class="event-time">Virtual Presentation</span>
-								<span class="event-location">Online</span>
-							</div>
-						</div>
-					</div>
-
-					<div class="event-card">
-						<div class="event-date">
-							<span class="event-month">Nov</span>
-							<span class="event-day">05</span>
-						</div>
-						<div class="event-info">
-							<h3>PhD Application Deadline</h3>
-							<p>Final deadline for PhD applications in Agentic AI Framework for Agricultural Technologies</p>
-							<div class="event-details">
-								<span class="event-time">11:59 PM</span>
-								<span class="event-location">Online Application</span>
-							</div>
-						</div>
-					</div>
+				<div class="connected-grid">
+					<a href="/publications" class="connected-card">
+						<div class="connected-icon">📄</div>
+						<h3>Publications</h3>
+						<p>Browse all 17 papers with BibTeX & APA export</p>
+						<span class="connected-arrow">→</span>
+					</a>
+					<a href="/research" class="connected-card">
+						<div class="connected-icon">🔬</div>
+						<h3>Research</h3>
+						<p>Our three core research thrusts and active projects</p>
+						<span class="connected-arrow">→</span>
+					</a>
+					<a href="/people" class="connected-card">
+						<div class="connected-icon">👥</div>
+						<h3>People</h3>
+						<p>Meet the PI, students, and collaborators</p>
+						<span class="connected-arrow">→</span>
+					</a>
+					<a href="/hiring" class="connected-card">
+						<div class="connected-icon">🎓</div>
+						<h3>Join Us</h3>
+						<p>PhD and MTech openings at SAAIL Lab</p>
+						<span class="connected-arrow">→</span>
+					</a>
 				</div>
 			</div>
 		</section>
 
-		<!-- Newsletter Signup -->
-		<section class="newsletter">
-			<div class="container">
-				<div class="newsletter-content">
-					<h2>Stay Updated</h2>
-					<p>
-						Subscribe to receive the latest news, research updates, and announcements 
-						from SAAIL Lab directly in your inbox.
-					</p>
-					<div class="newsletter-form">
-						<div class="form-group">
-							<input type="email" placeholder="Enter your email address" class="email-input">
-							<button class="subscribe-btn">Subscribe</button>
-						</div>
-						<p class="newsletter-note">
-							We respect your privacy. Unsubscribe at any time.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
 	</main>
+
+	<!-- Story modal -->
+	<div id="story-modal" class="modal" role="dialog" aria-modal="true" aria-label="Full story">
+		<div class="modal-backdrop"></div>
+		<div class="modal-card">
+			<button class="modal-close" id="modal-close" aria-label="Close">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
+			<p class="modal-date" id="modal-date"></p>
+			<span class="modal-badge" id="modal-badge"></span>
+			<h2 class="modal-title" id="modal-title"></h2>
+			<div class="modal-body" id="modal-body"></div>
+			<div class="modal-tags" id="modal-tags"></div>
+			<div class="modal-actions" id="modal-actions"></div>
+		</div>
+	</div>
 
 	<ModernFooter />
 </Layout>
 
 <style>
-	.news-page {
-		padding-top: 90px;
-	}
+	/* ── Page shell ── */
+	.news-page { padding-top: 88px; }
 
+	/* ── Hero ── */
 	.news-hero {
-		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-		padding: 4rem 0;
+		position: relative;
+		padding: 5rem 0 4rem;
+		overflow: hidden;
 		text-align: center;
 	}
-
-	.hero-content h1 {
-		font-size: 3rem;
-		font-weight: 700;
-		color: var(--accent-blue);
-		margin-bottom: 1.5rem;
+	.hero-bg {
+		position: absolute; inset: 0;
+		background: linear-gradient(160deg, #0f172a 0%, #1e3a8a 55%, #064e3b 100%);
+		z-index: 0;
 	}
-
-	.hero-description {
-		font-size: 1.25rem;
-		color: var(--text-secondary);
-		max-width: 800px;
-		margin: 0 auto;
-		line-height: 1.7;
-	}
-
-	.news-timeline {
-		padding: 5rem 0;
-		background: var(--bg-primary);
-	}
-
-	.timeline {
-		position: relative;
-		max-width: 800px;
-		margin: 0 auto;
-	}
-
-	.timeline::before {
-		content: '';
-		position: absolute;
-		left: 30px;
-		top: 0;
-		bottom: 0;
-		width: 2px;
-		background: var(--border-color);
-	}
-
-	.timeline-year {
-		position: relative;
-		margin: 3rem 0 2rem;
-		padding-left: 80px;
-	}
-
-	.timeline-year h2 {
-		font-size: 2rem;
-		font-weight: 700;
-		color: var(--accent-blue);
-		background: var(--bg-primary);
-		padding: 0.5rem 1rem;
-		border-radius: 0.5rem;
-		display: inline-block;
-	}
-
-	.timeline-year::before {
-		content: '';
-		position: absolute;
-		left: 24px;
-		top: 50%;
-		transform: translateY(-50%);
-		width: 14px;
-		height: 14px;
-		background: var(--accent-blue);
-		border-radius: 50%;
-		border: 3px solid var(--bg-primary);
-	}
-
-	.news-item {
-		position: relative;
-		margin-bottom: 3rem;
-		padding-left: 80px;
-		display: flex;
-		gap: 2rem;
-	}
-
-	.news-item::before {
-		content: '';
-		position: absolute;
-		left: 26px;
-		top: 1rem;
-		width: 8px;
-		height: 8px;
-		background: var(--accent-green);
-		border-radius: 50%;
-		border: 2px solid var(--bg-primary);
-	}
-
-	.news-item.featured::before {
-		background: var(--accent-blue);
-		width: 12px;
-		height: 12px;
-		left: 24px;
-	}
-
-	.news-date {
-		flex-shrink: 0;
-		text-align: center;
-		background: var(--bg-secondary);
-		border-radius: 0.75rem;
-		padding: 1rem;
-		border: 1px solid var(--border-color);
-		width: 70px;
-		height: fit-content;
-		box-shadow: 0 2px 8px var(--shadow-light);
-	}
-
-	.news-date .month {
-		display: block;
-		font-size: 0.8rem;
+	.news-hero .container { position: relative; z-index: 1; }
+	.hero-eyebrow {
+		font-size: 0.8125rem;
 		font-weight: 600;
-		color: var(--accent-blue);
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
-		letter-spacing: 0.1em;
-	}
-
-	.news-date .day {
-		display: block;
-		font-size: 1.75rem;
-		font-weight: 700;
-		color: var(--text-primary);
-		margin: 0.25rem 0;
-	}
-
-	.news-date .year {
-		display: block;
-		font-size: 0.75rem;
-		color: var(--text-muted);
-		font-weight: 500;
-	}
-
-	.news-content {
-		flex: 1;
-		background: var(--bg-secondary);
-		border-radius: 1rem;
-		padding: 2rem;
-		box-shadow: 0 4px 12px var(--shadow-light);
-		border: 1px solid var(--border-color);
-		transition: all 0.3s ease;
-	}
-
-	.news-item.featured .news-content {
-		border: 2px solid var(--accent-blue);
-		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-	}
-
-	.news-content:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 8px 20px var(--shadow-medium);
-	}
-
-	.news-category {
-		display: inline-block;
-		padding: 0.5rem 1rem;
-		border-radius: 0.5rem;
-		font-size: 0.875rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
+		color: rgba(255,255,255,0.55);
 		margin-bottom: 1rem;
 	}
-
-	.news-category.breakthrough { background: #dcfce7; color: #166534; }
-	.news-category.graduation { background: #fef3c7; color: #d97706; }
-	.news-category.conference { background: #e0f2fe; color: #0369a1; }
-	.news-category.milestone { background: #f3e8ff; color: #7c3aed; }
-	.news-category.collaboration { background: #fef2f2; color: #dc2626; }
-	.news-category.team { background: #ecfdf5; color: #059669; }
-	.news-category.opportunity { background: #fff7ed; color: #ea580c; }
-	.news-category.research { background: #f1f5f9; color: #475569; }
-
-	.news-content h3 {
-		font-size: 1.25rem;
-		font-weight: 600;
-		color: var(--text-primary);
+	.news-hero h1 {
+		font-size: clamp(2.5rem, 6vw, 4.5rem);
+		font-weight: 800;
+		color: #fff;
+		letter-spacing: -0.02em;
 		margin-bottom: 1rem;
-		line-height: 1.3;
+		line-height: 1.1;
+	}
+	.amp { color: #34d399; }
+	.hero-sub {
+		font-size: 1.125rem;
+		color: rgba(255,255,255,0.65);
+		max-width: 520px;
+		margin: 0 auto;
+		line-height: 1.65;
 	}
 
-	.news-content p {
-		color: var(--text-secondary);
-		line-height: 1.7;
-		margin-bottom: 1.5rem;
+	/* ── Filter bar ── */
+	.filter-bar-wrap {
+		position: sticky;
+		top: 68px;
+		z-index: 40;
+		background: rgba(249,250,251,0.92);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-bottom: 1px solid #e5e7eb;
+		padding: 0.75rem 0;
 	}
-
-	.news-tags {
+	.filter-bar {
 		display: flex;
 		gap: 0.5rem;
 		flex-wrap: wrap;
-		margin-bottom: 1.5rem;
 	}
-
-	.tag {
-		padding: 0.25rem 0.75rem;
-		background: var(--bg-tertiary);
-		color: var(--text-secondary);
-		border-radius: 0.5rem;
-		font-size: 0.75rem;
-		font-weight: 500;
-	}
-
-	.news-actions {
-		display: flex;
-		gap: 1rem;
-	}
-
-	.news-link {
-		color: var(--accent-blue);
-		text-decoration: none;
-		font-weight: 500;
+	.filter-pill {
+		padding: 0.4375rem 1rem;
+		border-radius: 999px;
 		font-size: 0.875rem;
-		transition: color 0.3s ease;
+		font-weight: 600;
+		border: 1.5px solid #e5e7eb;
+		background: #fff;
+		color: #64748b;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+	.filter-pill:hover { border-color: #1e3a8a; color: #1e3a8a; }
+	.filter-pill.active {
+		background: #1e3a8a;
+		border-color: #1e3a8a;
+		color: #fff;
 	}
 
-	.news-link:hover {
-		color: var(--accent-green);
-		text-decoration: underline;
-	}
+	/* ── Feed ── */
+	.news-feed { padding: 3rem 0 5rem; background: #f8fafc; }
 
-	.upcoming-events {
-		padding: 5rem 0;
-		background: var(--bg-secondary);
+	/* ── Hero card ── */
+	.story-card--hero {
+		background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
+		border-radius: 20px;
+		padding: 2.5rem;
+		margin-bottom: 2rem;
+		color: #fff;
+		cursor: pointer;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+		box-shadow: 0 8px 32px rgba(30,58,138,0.25);
 	}
-
-	.upcoming-events h2 {
-		text-align: center;
-		font-size: 2.5rem;
-		font-weight: 700;
-		color: var(--accent-blue);
-		margin-bottom: 3rem;
-	}
-
-	.events-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 2rem;
-	}
-
-	.event-card {
-		background: var(--bg-primary);
-		border-radius: 1rem;
-		padding: 1.5rem;
-		box-shadow: 0 4px 12px var(--shadow-light);
-		border: 1px solid var(--border-color);
-		display: flex;
-		gap: 1rem;
-		transition: all 0.3s ease;
-	}
-
-	.event-card:hover {
+	.story-card--hero:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 8px 20px var(--shadow-medium);
+		box-shadow: 0 16px 48px rgba(30,58,138,0.35);
 	}
-
-	.event-date {
-		text-align: center;
-		background: var(--accent-blue);
-		color: white;
-		border-radius: 0.75rem;
-		padding: 1rem;
-		width: 70px;
-		height: fit-content;
-		box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
-	}
-
-	.event-month {
-		display: block;
-		font-size: 0.8rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-	}
-
-	.event-day {
-		display: block;
-		font-size: 1.75rem;
+	.story-card--hero .story-date { color: rgba(255,255,255,0.65); }
+	.story-card--hero h2 {
+		font-size: clamp(1.375rem, 3vw, 1.875rem);
 		font-weight: 700;
-		margin-top: 0.25rem;
+		letter-spacing: -0.01em;
+		line-height: 1.25;
+		margin: 0.75rem 0;
+		color: #fff;
+	}
+	.story-card--hero .story-preview {
+		color: rgba(255,255,255,0.75);
+		font-size: 1rem;
+		line-height: 1.65;
+		margin-bottom: 1.5rem;
+		max-width: 680px;
+	}
+	.read-btn--light {
+		background: rgba(255,255,255,0.15) !important;
+		color: #fff !important;
+		border: 1.5px solid rgba(255,255,255,0.3) !important;
+	}
+	.read-btn--light:hover {
+		background: rgba(255,255,255,0.25) !important;
 	}
 
-	.event-info {
-		flex: 1;
+	/* ── Grid ── */
+	.stories-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.25rem;
 	}
 
-	.event-info h3 {
-		font-size: 1.125rem;
-		font-weight: 600;
-		color: var(--text-primary);
-		margin-bottom: 0.75rem;
-	}
-
-	.event-info p {
-		color: var(--text-secondary);
-		line-height: 1.6;
-		margin-bottom: 1rem;
-		font-size: 0.875rem;
-	}
-
-	.event-details {
+	/* ── Card ── */
+	.story-card {
+		background: #fff;
+		border-radius: 16px;
+		padding: 1.5rem;
+		box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 		display: flex;
 		flex-direction: column;
-		gap: 0.25rem;
+		gap: 0.625rem;
+		transition: transform 0.22s ease, box-shadow 0.22s ease;
+		opacity: 0;
+		transform: translateY(16px);
 	}
-
-	.event-time,
-	.event-location {
-		font-size: 0.875rem;
-		color: var(--text-muted);
+	.story-card.visible {
+		opacity: 1;
+		transform: translateY(0);
+		transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.22s ease;
 	}
-
-	.newsletter {
-		padding: 5rem 0;
-		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
-		color: white;
+	.story-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 12px 32px rgba(0,0,0,0.1);
 	}
+	.story-card--award { border-top: 3px solid #f59e0b; }
+	.story-card--milestone { border-top: 3px solid #8b5cf6; }
 
-	.newsletter-content {
-		text-align: center;
-		max-width: 600px;
-		margin: 0 auto;
-	}
-
-	.newsletter-content h2 {
-		font-size: 2rem;
-		font-weight: 700;
-		margin-bottom: 1rem;
-	}
-
-	.newsletter-content > p {
-		font-size: 1.125rem;
-		opacity: 0.9;
-		margin-bottom: 2rem;
-		line-height: 1.7;
-	}
-
-	.newsletter-form {
-		max-width: 400px;
-		margin: 0 auto;
-	}
-
-	.form-group {
+	.story-meta {
 		display: flex;
+		align-items: center;
+		justify-content: space-between;
 		gap: 0.5rem;
-		margin-bottom: 1rem;
+		flex-wrap: wrap;
+	}
+	.story-date {
+		font-size: 0.8125rem;
+		color: #94a3b8;
+		font-weight: 500;
 	}
 
-	.email-input {
-		flex: 1;
-		padding: 1rem;
-		border: none;
-		border-radius: 0.75rem;
+	/* Badges */
+	.story-badge {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		padding: 0.25rem 0.625rem;
+		border-radius: 999px;
+	}
+	.story-badge--publication { background: #dbeafe; color: #1d4ed8; }
+	.story-badge--award       { background: #fef3c7; color: #b45309; }
+	.story-badge--talk        { background: #d1fae5; color: #065f46; }
+	.story-badge--lab         { background: #ede9fe; color: #6d28d9; }
+	.story-badge--milestone   { background: #f3e8ff; color: #7c3aed; }
+
+	.story-card h3 {
 		font-size: 1rem;
-		background: rgba(255, 255, 255, 0.9);
-		color: var(--text-primary);
-	}
-
-	.email-input:focus {
-		outline: none;
-		background: white;
-	}
-
-	.subscribe-btn {
-		padding: 1rem 1.5rem;
-		background: var(--accent-green);
-		color: white;
-		border: none;
-		border-radius: 0.75rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-	}
-
-	.subscribe-btn:hover {
-		background: #047857;
-		transform: translateY(-2px);
-	}
-
-	.newsletter-note {
-		font-size: 0.875rem;
-		opacity: 0.8;
+		font-weight: 700;
+		color: #0f172a;
+		line-height: 1.35;
 		margin: 0;
 	}
+	.story-preview {
+		font-size: 0.875rem;
+		color: #64748b;
+		line-height: 1.6;
+		flex: 1;
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.story-footer { margin-top: auto; padding-top: 0.75rem; }
 
-	@media (max-width: 768px) {
-		.hero-content h1 {
-			font-size: 2.5rem;
-		}
+	/* CTA buttons */
+	.read-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: #1d4ed8;
+		background: #eff6ff;
+		border: none;
+		border-radius: 8px;
+		padding: 0.4375rem 0.875rem;
+		cursor: pointer;
+		text-decoration: none;
+		transition: background 0.18s ease, color 0.18s ease;
+	}
+	.read-btn:hover { background: #dbeafe; color: #1e40af; }
+	.linkedin-btn {
+		background: #f0f9ff;
+		color: #0369a1;
+	}
+	.linkedin-btn:hover { background: #e0f2fe; color: #075985; }
 
-		.timeline::before {
-			left: 20px;
-		}
+	/* ── No results ── */
+	.no-stories {
+		text-align: center;
+		padding: 4rem 2rem;
+		color: #94a3b8;
+		font-size: 1rem;
+	}
 
-		.timeline-year {
-			padding-left: 60px;
-		}
+	/* ── Stay connected ── */
+	.stay-connected {
+		padding: 5rem 0;
+		background: #fff;
+		border-top: 1px solid #f1f5f9;
+	}
+	.connected-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1.25rem;
+	}
+	.connected-card {
+		background: #f8fafc;
+		border-radius: 16px;
+		padding: 1.75rem 1.5rem;
+		text-decoration: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		border: 1.5px solid #f1f5f9;
+		transition: all 0.22s ease;
+		position: relative;
+	}
+	.connected-card:hover {
+		background: #eff6ff;
+		border-color: #bfdbfe;
+		transform: translateY(-3px);
+		box-shadow: 0 8px 24px rgba(30,58,138,0.1);
+	}
+	.connected-icon { font-size: 1.75rem; }
+	.connected-card h3 { font-size: 1rem; font-weight: 700; color: #0f172a; margin: 0; }
+	.connected-card p { font-size: 0.8125rem; color: #64748b; margin: 0; line-height: 1.5; }
+	.connected-arrow {
+		position: absolute;
+		top: 1.5rem; right: 1.5rem;
+		font-size: 1.25rem;
+		color: #cbd5e1;
+		transition: color 0.2s, transform 0.2s;
+	}
+	.connected-card:hover .connected-arrow { color: #1d4ed8; transform: translateX(3px); }
 
-		.timeline-year::before {
-			left: 14px;
-		}
+	/* ── Modal ── */
+	.modal {
+		display: none;
+		position: fixed; inset: 0;
+		z-index: 200;
+		align-items: center;
+		justify-content: center;
+	}
+	.modal.open { display: flex; }
+	.modal-backdrop {
+		position: absolute; inset: 0;
+		background: rgba(15,23,42,0.6);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		animation: fadeIn 0.2s ease;
+	}
+	.modal-card {
+		position: relative;
+		background: #fff;
+		border-radius: 20px;
+		padding: 2.5rem;
+		max-width: 640px;
+		width: calc(100% - 2rem);
+		max-height: 80vh;
+		overflow-y: auto;
+		z-index: 1;
+		box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+		animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+	@keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+	@keyframes slideUp { from { opacity:0; transform:translateY(24px) } to { opacity:1; transform:translateY(0) } }
 
-		.news-item {
-			padding-left: 60px;
-			flex-direction: column;
-			gap: 1rem;
-		}
+	.modal-close {
+		position: absolute; top: 1.25rem; right: 1.25rem;
+		background: #f1f5f9;
+		border: none;
+		border-radius: 50%;
+		width: 36px; height: 36px;
+		display: flex; align-items: center; justify-content: center;
+		cursor: pointer;
+		color: #64748b;
+		transition: all 0.18s ease;
+	}
+	.modal-close:hover { background: #e2e8f0; color: #0f172a; }
+	.modal-date { font-size: 0.8125rem; color: #94a3b8; font-weight: 500; margin-bottom: 0.5rem; }
+	.modal-badge {
+		display: inline-block;
+		font-size: 0.6875rem; font-weight: 700;
+		letter-spacing: 0.06em; text-transform: uppercase;
+		padding: 0.25rem 0.625rem;
+		border-radius: 999px;
+		margin-bottom: 1rem;
+	}
+	.modal-title {
+		font-size: 1.375rem; font-weight: 800;
+		color: #0f172a; line-height: 1.3;
+		margin-bottom: 1.25rem;
+		letter-spacing: -0.01em;
+	}
+	.modal-body {
+		font-size: 0.9375rem; color: #475569;
+		line-height: 1.75;
+		margin-bottom: 1.5rem;
+		white-space: pre-line;
+	}
+	.modal-tags {
+		display: flex; flex-wrap: wrap; gap: 0.5rem;
+		margin-bottom: 1.5rem;
+	}
+	.modal-tag {
+		background: #f1f5f9; color: #475569;
+		font-size: 0.75rem; font-weight: 500;
+		padding: 0.25rem 0.75rem; border-radius: 999px;
+	}
+	.modal-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+	.modal-action-btn {
+		display: inline-flex; align-items: center; gap: 0.375rem;
+		padding: 0.625rem 1.25rem;
+		border-radius: 10px; font-size: 0.875rem; font-weight: 600;
+		text-decoration: none; transition: all 0.18s ease;
+	}
+	.modal-action-primary {
+		background: #1e3a8a; color: #fff;
+	}
+	.modal-action-primary:hover { background: #1e40af; }
+	.modal-action-secondary {
+		background: #f1f5f9; color: #1e3a8a;
+	}
+	.modal-action-secondary:hover { background: #e2e8f0; }
 
-		.news-item::before {
-			left: 16px;
-		}
-
-		.news-item.featured::before {
-			left: 14px;
-		}
-
-		.news-date {
-			width: 100%;
-			max-width: 120px;
-		}
-
-		.events-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.form-group {
-			flex-direction: column;
-		}
+	/* ── Responsive ── */
+	@media (max-width: 1024px) {
+		.stories-grid { grid-template-columns: repeat(2, 1fr); }
+		.connected-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+	@media (max-width: 640px) {
+		.stories-grid { grid-template-columns: 1fr; }
+		.connected-grid { grid-template-columns: 1fr 1fr; }
+		.story-card--hero { padding: 1.75rem; }
+		.modal-card { padding: 1.75rem; }
+		.filter-bar-wrap { top: 60px; }
 	}
 </style>
 
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
-		// Newsletter subscription
-		const subscribeBtn = document.querySelector('.subscribe-btn');
-		const emailInput = document.querySelector('.email-input');
+	// ── Filter ──
+	const pills = document.querySelectorAll('.filter-pill');
+	const cards = document.querySelectorAll('.story-card');
+	const noStories = document.getElementById('no-stories');
 
-		subscribeBtn?.addEventListener('click', function() {
-			const email = emailInput?.value;
-			if (email && email.includes('@')) {
-				alert('Thank you for subscribing! We\'ll keep you updated with the latest news from SAAIL Lab.');
-				emailInput.value = '';
-			} else {
-				alert('Please enter a valid email address.');
-			}
-		});
-
-		// Enter key for newsletter
-		emailInput?.addEventListener('keypress', function(e) {
-			if (e.key === 'Enter') {
-				subscribeBtn?.click();
-			}
+	pills.forEach(pill => {
+		pill.addEventListener('click', () => {
+			pills.forEach(p => p.classList.remove('active'));
+			pill.classList.add('active');
+			const f = pill.dataset.filter;
+			let visible = 0;
+			cards.forEach(card => {
+				const match = f === 'all' || card.dataset.category === f;
+				(card as HTMLElement).style.display = match ? '' : 'none';
+				if (match) visible++;
+			});
+			noStories!.style.display = visible === 0 ? 'block' : 'none';
 		});
 	});
+
+	// ── Scroll-reveal ──
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(e => {
+			if (e.isIntersecting) {
+				e.target.classList.add('visible');
+				observer.unobserve(e.target);
+			}
+		});
+	}, { threshold: 0.08 });
+
+	cards.forEach((card, i) => {
+		(card as HTMLElement).style.transitionDelay = `${i * 50}ms`;
+		observer.observe(card);
+	});
+
+	// ── Modal ──
+	const modal = document.getElementById('story-modal')!;
+	const backdrop = modal.querySelector('.modal-backdrop')!;
+	const closeBtn = document.getElementById('modal-close')!;
+
+	function openModal(card: Element) {
+		const title   = card.getAttribute('data-title') || '';
+		const date    = card.getAttribute('data-date') || '';
+		const body    = card.getAttribute('data-body') || '';
+		const tags    = (card.getAttribute('data-tags') || '').split(',').filter(Boolean);
+		const link    = card.getAttribute('data-link') || '';
+		const label   = card.getAttribute('data-link-label') || 'View';
+		const ext     = card.getAttribute('data-external') === 'true';
+		const cat     = card.dataset.category || '';
+
+		const badgeClasses: Record<string, string> = {
+			publication: 'story-badge--publication',
+			award:       'story-badge--award',
+			talk:        'story-badge--talk',
+			lab:         'story-badge--lab',
+			milestone:   'story-badge--milestone',
+		};
+		const badgeLabels: Record<string, string> = {
+			publication: 'Publication',
+			award:       'Award',
+			talk:        'Talk',
+			lab:         'Lab',
+			milestone:   'Milestone',
+		};
+
+		document.getElementById('modal-date')!.textContent = date;
+		const badge = document.getElementById('modal-badge')!;
+		badge.textContent = badgeLabels[cat] || cat;
+		badge.className = `modal-badge story-badge ${badgeClasses[cat] || ''}`;
+		document.getElementById('modal-title')!.textContent = title;
+		document.getElementById('modal-body')!.textContent = body;
+
+		const tagsEl = document.getElementById('modal-tags')!;
+		tagsEl.innerHTML = tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+
+		const actionsEl = document.getElementById('modal-actions')!;
+		actionsEl.innerHTML = '';
+		if (link) {
+			const a = document.createElement('a');
+			a.href = link;
+			a.textContent = label;
+			a.className = 'modal-action-btn modal-action-primary';
+			if (ext) { a.target = '_blank'; a.rel = 'noopener'; a.textContent += ' ↗'; }
+			actionsEl.appendChild(a);
+		}
+		const closeLink = document.createElement('button');
+		closeLink.textContent = 'Close';
+		closeLink.className = 'modal-action-btn modal-action-secondary';
+		closeLink.addEventListener('click', closeModal);
+		actionsEl.appendChild(closeLink);
+
+		modal.classList.add('open');
+		document.body.style.overflow = 'hidden';
+	}
+
+	function closeModal() {
+		modal.classList.remove('open');
+		document.body.style.overflow = '';
+	}
+
+	// Attach open trigger to cards with data-action="open" buttons
+	document.querySelectorAll('[data-action="open"]').forEach(btn => {
+		btn.addEventListener('click', (e) => {
+			const card = (e.currentTarget as Element).closest('.story-card')!;
+			openModal(card);
+		});
+	});
+
+	// Hero card click
+	const heroCard = document.querySelector('.story-card--hero');
+	heroCard?.addEventListener('click', (e) => {
+		if ((e.target as Element).tagName !== 'A') openModal(heroCard);
+	});
+
+	closeBtn.addEventListener('click', closeModal);
+	backdrop.addEventListener('click', closeModal);
+	document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
