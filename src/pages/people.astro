@@ -337,36 +337,6 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 			</div>
 		</section>
 
-		<!-- ══════════ FEATURED PI ══════════ -->
-		<section class="pi-section">
-			<div class="container">
-				<div class="pi-card" data-member-id="1">
-					<div class="pi-photo-wrap">
-						<img src={director.photo_url} alt={director.name} class="pi-photo" />
-						<div class="pi-badge-pill">Principal Investigator</div>
-					</div>
-					<div class="pi-content">
-						<span class="pi-eyebrow">Lab Director</span>
-						<h2 class="pi-name">{director.name}</h2>
-						<p class="pi-role">{director.role}</p>
-						<p class="pi-location">{director.country_flag} {director.affiliation} · <a href={`mailto:${director.email}`} class="pi-email-link">{director.email}</a></p>
-						<p class="pi-bio">{director.bio}</p>
-						<div class="pi-interests">
-							{director.research_interests.map(tag => (
-								<span class="interest-pill">{tag}</span>
-							))}
-						</div>
-						<div class="pi-links">
-							{director.linkedin_url && <a href={director.linkedin_url} target="_blank" rel="noopener" class="social-btn btn-linkedin" onclick="event.stopPropagation()"><span class="btn-icon">in</span>LinkedIn</a>}
-							{director.scholar_url && <a href={director.scholar_url} target="_blank" rel="noopener" class="social-btn btn-scholar" onclick="event.stopPropagation()"><span class="btn-icon">G</span>Google Scholar</a>}
-							{director.personal_website && <a href={director.personal_website} target="_blank" rel="noopener" class="social-btn btn-web" onclick="event.stopPropagation()"><span class="btn-icon">↗</span>Website</a>}
-							{director.email && <a href={`mailto:${director.email}`} class="social-btn btn-email" onclick="event.stopPropagation()"><span class="btn-icon">✉</span>Email</a>}
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
 		<!-- ══════════ TEAM ══════════ -->
 		<section class="team-section">
 			<div class="container">
@@ -377,11 +347,50 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 
 				<nav class="filter-nav" role="navigation" aria-label="Team filter">
 					<button class="filter-btn active" data-filter="all">All Members</button>
+					<button class="filter-btn" data-filter="leadership">Leadership</button>
 					<button class="filter-btn" data-filter="zanzibar">🇹🇿 Zanzibar</button>
 					<button class="filter-btn" data-filter="chennai">🇮🇳 Chennai</button>
 					<button class="filter-btn" data-filter="collaborators">Collaborators</button>
 					<button class="filter-btn" data-filter="alumni">Alumni</button>
 				</nav>
+
+				<!-- Leadership -->
+				<div class="campus-group" data-group="leadership">
+					<div class="campus-divider">
+						<div class="divider-line"></div>
+						<div class="divider-content">
+							<span class="divider-flag">⭐</span>
+							<span class="divider-name">Leadership</span>
+						</div>
+						<div class="divider-line"></div>
+					</div>
+					<div class="member-grid">
+						<div class="member-card member-card--pi" data-member-id={director.id} style="--delay:0s" role="button" tabindex="0" aria-label={`View ${director.name}'s profile`}>
+							<div class="card-photo-area">
+								<img src={director.photo_url} alt={director.name} class="card-img" loading="lazy"
+									onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+								<div class="card-initials-avatar" style="display:none">{getInitials(director.name)}</div>
+								<div class="card-hover-overlay">
+									<p class="overlay-label">Research Focus</p>
+									{director.research_interests.slice(0,3).map(tag => (
+										<span class="overlay-tag">{tag}</span>
+									))}
+									<span class="overlay-cta">View Profile →</span>
+								</div>
+							</div>
+							<div class="card-body">
+								<h4 class="card-name">{director.name}</h4>
+								<p class="card-role">{director.role}</p>
+								<div class="card-footer-row">
+									<span class="card-flag">{director.country_flag}</span>
+									<div class="card-quick-links">
+										{director.linkedin_url && <a href={director.linkedin_url} target="_blank" rel="noopener" class="quick-link ql-li" onclick="event.stopPropagation()" title="LinkedIn">in</a>}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
 				<!-- Zanzibar Campus -->
 				<div class="campus-group" data-group="zanzibar">
@@ -606,6 +615,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		];
 
 		// ── Filter nav ──
+		const showOnAll = new Set(['leadership', 'zanzibar', 'chennai']);
 		document.querySelectorAll('.filter-btn').forEach(btn => {
 			btn.addEventListener('click', () => {
 				document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -613,11 +623,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 				const f = btn.getAttribute('data-filter');
 				document.querySelectorAll('.campus-group').forEach(g => {
 					const gn = g.getAttribute('data-group');
-					if (f === 'all') {
-						g.style.display = (gn === 'collaborators' || gn === 'alumni') ? 'none' : 'block';
-					} else {
-						g.style.display = gn === f ? 'block' : 'none';
-					}
+					g.style.display = (f === 'all' ? showOnAll.has(gn) : gn === f) ? 'block' : 'none';
 				});
 			});
 		});
@@ -1143,6 +1149,11 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		outline-offset: 2px;
 	}
 
+	.member-card--pi {
+		border-color: rgba(16,185,129,.35);
+	}
+	.member-card--pi:hover { border-color: var(--emerald); }
+
 	/* Card photo */
 	.card-photo-area {
 		position: relative;
@@ -1562,7 +1573,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		width: 100%;
 	}
 
-	.modal-social-btn {
+	:global(.modal-social-btn) {
 		display: flex;
 		align-items: center;
 		gap: .625rem;
@@ -1575,9 +1586,9 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		color: #fff;
 		border: none;
 	}
-	.modal-social-btn:hover { transform: translateX(4px); filter: brightness(1.12); }
+	:global(.modal-social-btn:hover) { transform: translateX(4px); filter: brightness(1.12); }
 
-	.msb-icon {
+	:global(.msb-icon) {
 		width: 26px;
 		height: 26px;
 		border-radius: .375rem;
@@ -1591,15 +1602,14 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		letter-spacing: -.02em;
 	}
 
-	.msb-label { font-size: .83rem; }
+	:global(.msb-label) { font-size: .83rem; }
 
-	.ms-linkedin { background: #0077b5; }
-	.ms-scholar  { background: #4285f4; }
-	.ms-orcid    { background: #7ab648; }
-	.ms-rgate    { background: #00ccbb; color: #0f172a; }
-	.ms-rgate .msb-icon { background: rgba(0,0,0,.15); color: #0f172a; }
-	.ms-web      { background: #334155; }
-	.ms-email    { background: #e67e22; }
+	:global(.ms-linkedin) { background: #0077b5; }
+	:global(.ms-scholar)  { background: #4285f4; }
+	:global(.ms-orcid)    { background: #7ab648; }
+	:global(.ms-rgate)    { background: #00a09d; }
+	:global(.ms-web)      { background: #334155; }
+	:global(.ms-email)    { background: #e67e22; }
 
 	/* Right info column */
 	.modal-info-col {
@@ -1633,36 +1643,37 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		color: var(--muted);
 	}
 
-	.modal-section-label {
+	:global(.modal-section-label) {
 		font-size: .72rem;
 		font-weight: 800;
 		text-transform: uppercase;
 		letter-spacing: .1em;
-		color: var(--muted);
+		color: #64748b;
 		margin-bottom: .625rem;
 	}
 
-	.modal-bio-text {
+	:global(.modal-bio-text) {
 		font-size: .95rem;
-		color: var(--text);
+		color: #1e293b;
 		line-height: 1.85;
+		margin: 0;
 	}
 
-	.modal-tags-wrap {
+	:global(.modal-tags-wrap) {
 		display: flex;
 		flex-wrap: wrap;
 		gap: .5rem;
 		margin-top: .25rem;
 	}
 
-	.modal-tag {
+	:global(.modal-tag) {
 		display: inline-block;
-		padding: .4rem 1rem;
-		background: linear-gradient(135deg, #eff6ff, #f0fdf4);
-		color: var(--blue);
-		border: 1px solid #dbeafe;
+		padding: .375rem .875rem;
+		background: #f1f5f9;
+		color: #1e3a8a;
+		border: 1px solid #cbd5e1;
 		border-radius: 2rem;
-		font-size: .82rem;
+		font-size: .8rem;
 		font-weight: 600;
 		white-space: nowrap;
 	}
