@@ -642,24 +642,26 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 			const modal = document.getElementById('profile-modal');
 			if (!modal) return;
 
-			// Photo
+			// Photo — always show initials first, swap to photo once fully loaded
 			const photo = document.getElementById('modal-photo-el');
 			const initials = document.getElementById('modal-initials-el');
 			if (photo && initials) {
+				photo.style.display = 'none';
+				photo.src = '';
+				initials.textContent = getInitials(m.name);
+				initials.style.display = 'flex';
+
 				if (m.photo_url) {
-					photo.src = m.photo_url;
 					photo.alt = m.name;
-					photo.style.display = 'block';
-					initials.style.display = 'none';
+					photo.onload = () => {
+						photo.style.display = 'block';
+						initials.style.display = 'none';
+					};
 					photo.onerror = () => {
 						photo.style.display = 'none';
-						initials.textContent = getInitials(m.name);
 						initials.style.display = 'flex';
 					};
-				} else {
-					photo.style.display = 'none';
-					initials.textContent = getInitials(m.name);
-					initials.style.display = 'flex';
+					photo.src = m.photo_url;
 				}
 			}
 
@@ -1564,37 +1566,40 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		display: flex;
 		align-items: center;
 		gap: .625rem;
-		padding: .6rem .875rem;
+		padding: .625rem .875rem;
 		border-radius: .625rem;
 		text-decoration: none;
-		font-size: .82rem;
-		font-weight: 600;
+		font-size: .83rem;
+		font-weight: 700;
 		transition: all .2s ease;
 		color: #fff;
+		border: none;
 	}
-	.modal-social-btn:hover { transform: translateX(4px); filter: brightness(1.15); }
+	.modal-social-btn:hover { transform: translateX(4px); filter: brightness(1.12); }
 
 	.msb-icon {
 		width: 26px;
 		height: 26px;
 		border-radius: .375rem;
-		background: rgba(255,255,255,.15);
+		background: rgba(0,0,0,.2);
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: .75rem;
+		font-size: .72rem;
 		font-weight: 900;
 		flex-shrink: 0;
+		letter-spacing: -.02em;
 	}
 
-	.msb-label { font-size: .82rem; }
+	.msb-label { font-size: .83rem; }
 
-	.ms-linkedin { background: rgba(0,119,181,.3); border: 1px solid rgba(0,119,181,.5); }
-	.ms-scholar  { background: rgba(66,133,244,.3); border: 1px solid rgba(66,133,244,.5); }
-	.ms-orcid    { background: rgba(166,206,57,.3);  border: 1px solid rgba(166,206,57,.5); }
-	.ms-rgate    { background: rgba(64,186,155,.3);  border: 1px solid rgba(64,186,155,.5); }
-	.ms-web      { background: rgba(255,255,255,.1);  border: 1px solid rgba(255,255,255,.15); }
-	.ms-email    { background: rgba(245,158,11,.2);   border: 1px solid rgba(245,158,11,.3); }
+	.ms-linkedin { background: #0077b5; }
+	.ms-scholar  { background: #4285f4; }
+	.ms-orcid    { background: #7ab648; }
+	.ms-rgate    { background: #00ccbb; color: #0f172a; }
+	.ms-rgate .msb-icon { background: rgba(0,0,0,.15); color: #0f172a; }
+	.ms-web      { background: #334155; }
+	.ms-email    { background: #e67e22; }
 
 	/* Right info column */
 	.modal-info-col {
@@ -1647,9 +1652,11 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		display: flex;
 		flex-wrap: wrap;
 		gap: .5rem;
+		margin-top: .25rem;
 	}
 
 	.modal-tag {
+		display: inline-block;
 		padding: .4rem 1rem;
 		background: linear-gradient(135deg, #eff6ff, #f0fdf4);
 		color: var(--blue);
@@ -1657,6 +1664,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		border-radius: 2rem;
 		font-size: .82rem;
 		font-weight: 600;
+		white-space: nowrap;
 	}
 
 	/* ── RESPONSIVE ── */
