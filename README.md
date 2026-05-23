@@ -175,7 +175,7 @@ We welcome collaborations with:
 - **NGOs & Development Organizations** - Community-focused AI applications
 
 ### Contact Information
-- **📧 Email**: innocent@iitmz.ac.in
+- **📧 Email**: saail_lab@iitmz.ac.in
 - **🏛️ Address**: IIT Madras Zanzibar, Bweleo, Zanzibar, Tanzania
 - **🌐 Website**: [saaillab.github.io](https://saaillab.github.io)
 - **👨‍🔬 Principal Investigator**: [Dr. Innocent Nyalala](https://inyalala.github.io)
