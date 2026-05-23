@@ -380,6 +380,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 						<div class="member-card member-card--pi" data-member-id={director.id} style="--delay:0s" role="button" tabindex="0" aria-label={`View ${director.name}'s profile`}>
 							<div class="card-photo-area">
 								<img src={director.photo_url} alt={director.name} class="card-img" loading="lazy"
+									style="object-position: 50% 0%"
 									onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
 								<div class="card-initials-avatar" style="display:none">{getInitials(director.name)}</div>
 								<div class="card-hover-overlay">
@@ -424,6 +425,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 										alt={m.name}
 										class="card-img"
 										loading="lazy"
+										style={`object-position: ${m.photo_position || '50% 10%'}`}
 										onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
 									/>
 									<div class="card-initials-avatar" style="display:none">{getInitials(m.name)}</div>
@@ -438,6 +440,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 								<div class="card-body">
 									<h4 class="card-name">{m.name}</h4>
 									<p class="card-role">{m.role}</p>
+									{m.since && <p class="card-since">Since {m.since}</p>}
 									<div class="card-footer-row">
 										<span class="card-flag">{m.country_flag}</span>
 										<div class="card-quick-links">
@@ -470,6 +473,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 										alt={m.name}
 										class="card-img"
 										loading="lazy"
+										style={`object-position: ${m.photo_position || '50% 10%'}`}
 										onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
 									/>
 									<div class="card-initials-avatar" style="display:none">{getInitials(m.name)}</div>
@@ -484,6 +488,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 								<div class="card-body">
 									<h4 class="card-name">{m.name}</h4>
 									<p class="card-role">{m.role}</p>
+									{m.since && <p class="card-since">Since {m.since}</p>}
 									<div class="card-footer-row">
 										<span class="card-flag">{m.country_flag}</span>
 										<div class="card-quick-links">
@@ -1200,9 +1205,16 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		object-position: 50% 12%;
 		filter: grayscale(100%);
 		transition: filter .4s ease, transform .4s ease;
+	}
+
+	.card-since {
+		font-size: .72rem;
+		color: var(--muted);
+		font-weight: 500;
+		margin-bottom: .75rem;
+		margin-top: -.5rem;
 	}
 
 	.member-card:hover .card-img {
