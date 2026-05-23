@@ -19,6 +19,12 @@ import ModernFooter from '../components/ModernFooter.astro';
 			<div class="ticker-content">
 				<div class="ticker-items">
 					<div class="ticker-item">
+						<span>🎉 CLOVES-4603 Accepted at CVPR 2026 — Clove Quality Grading with Deep Models</span>
+					</div>
+					<div class="ticker-item">
+						<span>🎉 Paper Accepted at ICLR 2026 Workshop — Trustworthy AI-Interpretability</span>
+					</div>
+					<div class="ticker-item">
 						<span>Best Poster Award at Deep Learning Indaba 2025 - CARA-FMs Framework</span>
 					</div>
 					<div class="ticker-item">
@@ -26,13 +32,16 @@ import ModernFooter from '../components/ModernFooter.astro';
 					</div>
 					<div class="ticker-item">
 						<span>New Publication: AI Sovereignty in the Global South (AAAI 2026)</span>
-					</div>
-					<div class="ticker-item">
-						<span>Research Impact: 994+ Citations in AI for Agriculture</span>
 					</div>
 				</div>
 				<div class="ticker-items" aria-hidden="true">
 					<div class="ticker-item">
+						<span>🎉 CLOVES-4603 Accepted at CVPR 2026 — Clove Quality Grading with Deep Models</span>
+					</div>
+					<div class="ticker-item">
+						<span>🎉 Paper Accepted at ICLR 2026 Workshop — Trustworthy AI-Interpretability</span>
+					</div>
+					<div class="ticker-item">
 						<span>Best Poster Award at Deep Learning Indaba 2025 - CARA-FMs Framework</span>
 					</div>
 					<div class="ticker-item">
@@ -40,9 +49,6 @@ import ModernFooter from '../components/ModernFooter.astro';
 					</div>
 					<div class="ticker-item">
 						<span>New Publication: AI Sovereignty in the Global South (AAAI 2026)</span>
-					</div>
-					<div class="ticker-item">
-						<span>Research Impact: 994+ Citations in AI for Agriculture</span>
 					</div>
 				</div>
 			</div>
@@ -76,12 +82,12 @@ import ModernFooter from '../components/ModernFooter.astro';
 							<span class="stat-label">Active Projects</span>
 						</div>
 						<div class="stat-item">
-							<span class="stat-number" data-target="22">0</span><span class="stat-suffix">+</span>
+							<span class="stat-number" data-target="14">0</span><span class="stat-suffix">+</span>
 							<span class="stat-label">Publications</span>
 						</div>
 						<div class="stat-item">
-							<span class="stat-number" data-target="994">0</span><span class="stat-suffix">+</span>
-							<span class="stat-label">Citations</span>
+							<span class="stat-number" data-target="2">0</span><span class="stat-suffix"></span>
+							<span class="stat-label">Top-tier Conferences</span>
 						</div>
 					</div>
 					<div class="hero-actions">
@@ -118,6 +124,22 @@ import ModernFooter from '../components/ModernFooter.astro';
 		<div class="container">
 			<h2 class="section-title">Recent News and Publications</h2>
 			<div class="highlights-grid">
+				<div class="highlight-card highlight-card--new">
+					<div class="highlight-category highlight-category--hot">CVPR 2026</div>
+					<h3>CLOVES-4603: Benchmarking Classical Texture Features and Fine-Tuned Deep Models for Clove Quality Grading</h3>
+					<p>I Nyalala, P Vincent — Accepted at Computer Vision and Pattern Recognition (CVPR 2026), the premier computer vision venue.</p>
+					<div class="highlight-date">2026</div>
+					<a href="/publications" class="highlight-link">View Publication →</a>
+				</div>
+
+				<div class="highlight-card highlight-card--new">
+					<div class="highlight-category highlight-category--hot">ICLR 2026 Workshop</div>
+					<h3>Unifying Perspectives on Learning Biases: A Data-Centric Intervention for Holistic Fairness, Robustness, and Generalization</h3>
+					<p>P Vincent, I Nyalala — Accepted at ICLR 2026 Workshop on Principled Design for Trustworthy AI-Interpretability.</p>
+					<div class="highlight-date">2026</div>
+					<a href="/publications" class="highlight-link">View Publication →</a>
+				</div>
+
 				<div class="highlight-card">
 					<div class="highlight-category">Editorial Board</div>
 					<h3>Appointed as Editorial Board Member - Discover Artificial Intelligence</h3>
@@ -170,9 +192,9 @@ import ModernFooter from '../components/ModernFooter.astro';
 
 				<div class="highlight-card">
 					<div class="highlight-category">Research Milestone</div>
-					<h3>SAAIL Lab Research Impact Grows</h3>
-					<p>Lab publications reach 22+ papers with 830+ citations, establishing strong research presence in AI for agriculture</p>
-					<div class="highlight-date">August 15, 2025</div>
+					<h3>SAAIL Lab Reaches 14 Publications</h3>
+					<p>Lab publications now at 14 papers across top AI venues including AAAI 2026 and DSA 2026, establishing a strong research presence in AI for agriculture and the Global South.</p>
+					<div class="highlight-date">May 2026</div>
 					<a href="/publications" class="highlight-link">
 						View Publications →
 					</a>
@@ -503,6 +525,15 @@ import ModernFooter from '../components/ModernFooter.astro';
 		box-shadow: 0 8px 20px var(--shadow-medium);
 	}
 
+	.highlight-card--new {
+		border-color: #059669;
+		box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+	}
+
+	.highlight-card--new:hover {
+		box-shadow: 0 8px 24px rgba(5, 150, 105, 0.25);
+	}
+
 	.highlight-category {
 		background: #1e3a8a;
 		color: white;
@@ -514,6 +545,10 @@ import ModernFooter from '../components/ModernFooter.astro';
 		letter-spacing: 0.05em;
 		display: inline-block;
 		margin-bottom: 1rem;
+	}
+
+	.highlight-category--hot {
+		background: linear-gradient(135deg, #059669 0%, #047857 100%);
 	}
 
 	.highlight-card h3 {
