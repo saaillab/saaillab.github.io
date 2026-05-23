@@ -3,7 +3,11 @@
     "allow": [
       "Bash(git add *)",
       "Bash(git push *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(git commit *)",
+      "Bash(git filter-branch *)",
+      "Bash(git stash *)",
+      "Bash(FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f --msg-filter \"sed '/Co-Authored-By: Claude/d'\" -- --all)"
     ]
   }
 }
