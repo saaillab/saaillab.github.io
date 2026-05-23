@@ -9,7 +9,7 @@
 
 **Pioneering transformative, ethical, and contextually-aware Artificial Intelligence solutions for East Africa**
 
-[🌐 Visit Website](https://saaillab.github.io) • [📧 Contact Us](mailto:innocent@iitmz.ac.in) • [📚 Publications](https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en)
+[🌐 Visit Website](https://saaillab.github.io) • [📧 Contact Us](mailto:saail_lab@iitmz.ac.in) • [📚 Publications](https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en)
 
 </div>
 
