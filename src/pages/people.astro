@@ -75,29 +75,6 @@ const teamMembers = [
 		affiliation: 'IIT Madras Zanzibar'
 	},
 	{
-		id: '4',
-		name: 'Shivam Vyas',
-		role: 'MTech Student',
-		category: 'mtech-zanzibar',
-		location: 'IIT Madras, Zanzibar',
-		email: null,
-		linkedin_url: 'https://www.linkedin.com/in/shivam-vyas-a98a72153/',
-		scholar_url: null,
-		orcid_url: 'https://orcid.org/0009-0005-6467-4703',
-		researchgate_url: 'https://www.researchgate.net/profile/Shivam-Vyas-11',
-		personal_website: null,
-		photo_url: '/images/people/shivam_photo.png',
-		photo_position: '50% 10%',
-		since: '2025',
-		bio: 'Shivam is an MTech student at IIT Madras Zanzibar developing E-Vision, an assistive AI application for the visually impaired that leverages computer vision to improve accessibility and daily life navigation.',
-		research_interests: ['Assistive Technology', 'Computer Vision', 'Accessibility AI', 'Object Detection'],
-		is_featured: false,
-		display_order: 4,
-		status: 'active',
-		country_flag: '🇮🇳',
-		affiliation: 'IIT Madras Zanzibar'
-	},
-	{
 		id: '7',
 		name: 'Surabhi Gudla',
 		role: 'MTech Student',
@@ -248,7 +225,7 @@ const alumni = [
 		photo_url: '/images/people/Duen.jpg',
 		bio: 'Michael completed his MTech at IIT Madras Chennai, having engaged in a co-guided research project at SAAIL Lab, contributing to applied AI research initiatives.',
 		research_interests: ['Applied AI', 'Machine Learning', 'Research Methods'],
-		graduation_year: 'TODO: confirm exact graduation date',
+		graduation_year: 'July 2026',
 		current_position: 'MTech Graduate',
 		display_order: 3,
 		country_flag: '🇹🇿',
@@ -268,10 +245,30 @@ const alumni = [
 		photo_url: '/images/people/Patrick.jpg',
 		bio: 'Patrick completed his MTech at IIT Madras Zanzibar, researching deep learning techniques for quality assessment and grading of Zanzibar cloves — a critical export crop for the island economy.',
 		research_interests: ['Deep Learning', 'Agricultural AI', 'Quality Grading', 'Cloves Detection'],
-		graduation_year: 'TODO: confirm exact graduation date',
+		graduation_year: 'July 2026',
 		current_position: 'MTech Graduate',
 		display_order: 2,
 		country_flag: '🇹🇿',
+		affiliation: 'IIT Madras Zanzibar'
+	},
+	{
+		id: 'a4',
+		name: 'Shivam Vyas',
+		role: 'MTech Graduate',
+		category: 'alumni',
+		location: 'IIT Madras, Zanzibar',
+		linkedin_url: 'https://www.linkedin.com/in/shivam-vyas-a98a72153/',
+		scholar_url: null,
+		orcid_url: 'https://orcid.org/0009-0005-6467-4703',
+		researchgate_url: 'https://www.researchgate.net/profile/Shivam-Vyas-11',
+		personal_website: null,
+		photo_url: '/images/people/shivam_photo.png',
+		bio: 'Shivam completed his MTech at IIT Madras Zanzibar, developing E-Vision, an assistive AI application for the visually impaired that leverages computer vision to improve accessibility and daily life navigation.',
+		research_interests: ['Assistive Technology', 'Computer Vision', 'Accessibility AI', 'Object Detection'],
+		graduation_year: 'July 2026',
+		current_position: 'MTech Graduate',
+		display_order: 4,
+		country_flag: '🇮🇳',
 		affiliation: 'IIT Madras Zanzibar'
 	},
 	{
@@ -537,7 +534,18 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 						{alumni.map(a => (
 							<div class="alumni-card" data-member-id={a.id} role="button" tabindex="0">
 								<div class="alumni-top">
-									<div class="alumni-avatar">{getInitials(a.name)}</div>
+									<div class="alumni-photo-wrap">
+										{a.photo_url ? (
+											<img
+												src={a.photo_url}
+												alt={a.name}
+												class="alumni-photo"
+												loading="lazy"
+												onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+											/>
+										) : null}
+										<div class="alumni-avatar" style={a.photo_url ? 'display:none' : ''}>{getInitials(a.name)}</div>
+									</div>
 									<span class="alumni-grad-badge">{a.graduation_year}</span>
 								</div>
 								<h4 class="alumni-name">{a.name}</h4>
@@ -1184,11 +1192,12 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 	}
 	.member-card--pi:hover { border-color: var(--emerald); }
 
-	/* Card photo */
+	/* Card photo — fixed, uniform size across every card so photos never
+	   dominate the layout or vary in size between members. */
 	.card-photo-area {
 		position: relative;
 		width: 100%;
-		padding-top: 105%;
+		height: 140px;
 		background: #f1f5f9;
 		overflow: hidden;
 	}
@@ -1413,11 +1422,35 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 		margin-bottom: 1rem;
 	}
 
+	/* Same fixed 56px size for both the real photo and the initials fallback,
+	   so alumni cards are visually consistent whether or not a photo exists. */
+	.alumni-photo-wrap {
+		position: relative;
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		overflow: hidden;
+		flex-shrink: 0;
+	}
+
+	.alumni-photo {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: grayscale(100%);
+		transition: filter .4s ease, transform .4s ease;
+	}
+
+	.alumni-card:hover .alumni-photo {
+		filter: grayscale(0%);
+		transform: scale(1.06);
+	}
+
 	.alumni-avatar {
 		width: 56px;
 		height: 56px;
 		border-radius: 50%;
-		background: linear-gradient(135deg, var(--blue), var(--emerald));
+		background: linear-gradient(135deg, var(--emer2), var(--emerald));
 		display: flex;
 		align-items: center;
 		justify-content: center;
