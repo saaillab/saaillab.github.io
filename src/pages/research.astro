@@ -15,11 +15,33 @@ import ModernFooter from '../components/ModernFooter.astro';
 		<section class="research-hero">
 			<div class="container">
 				<div class="hero-content">
+					<div class="hero-badge">SAAIL Lab · IIT Madras Zanzibar</div>
 					<h1>Research Areas</h1>
 					<p class="hero-description">
-						Our research focuses on three transformative areas that address critical challenges 
-						in East Africa and beyond, pioneering ethical AI solutions for sustainable development.
+						Three transformative research thrusts tackling critical challenges in East Africa
+						— from crop intelligence and healthcare imaging to responsible AI for the Global South.
 					</p>
+					<div class="hero-stats">
+						<div class="hstat">
+							<span class="hstat-num">33+</span>
+							<span class="hstat-lbl">Publications</span>
+						</div>
+						<div class="hstat-divider"></div>
+						<div class="hstat">
+							<span class="hstat-num">1,185+</span>
+							<span class="hstat-lbl">Citations</span>
+						</div>
+						<div class="hstat-divider"></div>
+						<div class="hstat">
+							<span class="hstat-num">4</span>
+							<span class="hstat-lbl">Institutions</span>
+						</div>
+						<div class="hstat-divider"></div>
+						<div class="hstat">
+							<span class="hstat-num">6+</span>
+							<span class="hstat-lbl">Top Venues</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -29,20 +51,28 @@ import ModernFooter from '../components/ModernFooter.astro';
 			<div class="container">
 				<div class="areas-grid">
 					<div class="research-area primary">
-						<div class="area-image">
-							<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="agGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3" />
-										<stop offset="100%" style="stop-color:#059669;stop-opacity:0.5" />
-									</linearGradient>
-								</defs>
-								<rect width="1200" height="600" fill="#f0fdf4"/>
-								<circle cx="900" cy="150" r="200" fill="url(#agGrad)"/>
-								<circle cx="300" cy="450" r="150" fill="url(#agGrad)"/>
-								<text x="600" y="300" font-size="120" text-anchor="middle" fill="#059669">🌾</text>
-								<text x="600" y="380" font-size="36" text-anchor="middle" fill="#064e3b" font-weight="600">Smart Agriculture Technology</text>
-							</svg>
+						<div class="area-image area-image--agri">
+							<div class="area-image-overlay">
+								<div class="area-image-icon">
+									<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
+										<circle cx="40" cy="40" r="36" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+										<!-- Leaf -->
+										<path d="M40 60 C40 60 20 48 20 32 C20 24 28 16 40 16 C52 16 60 24 60 32 C60 48 40 60 40 60Z" fill="rgba(255,255,255,0.9)" stroke="rgba(255,255,255,1)" stroke-width="1"/>
+										<path d="M40 60 L40 32" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+										<path d="M40 44 C36 40 28 38 24 36" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/>
+										<path d="M40 38 C44 34 52 32 56 30" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/>
+									</svg>
+								</div>
+								<div class="area-image-text">
+									<div class="area-image-label">Research Area 01</div>
+									<div class="area-image-title">AI for Agriculture</div>
+									<div class="area-image-stat">
+										<span class="stat-pill">Clove Grading</span>
+										<span class="stat-pill">Computer Vision</span>
+										<span class="stat-pill">Food Systems</span>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="area-header">
 							<div class="area-icon">🌾</div>
@@ -69,20 +99,28 @@ import ModernFooter from '../components/ModernFooter.astro';
 					</div>
 
 					<div class="research-area secondary">
-						<div class="area-image">
-							<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="hcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#ef4444;stop-opacity:0.3" />
-										<stop offset="100%" style="stop-color:#dc2626;stop-opacity:0.5" />
-									</linearGradient>
-								</defs>
-								<rect width="1200" height="600" fill="#fef2f2"/>
-								<circle cx="900" cy="150" r="200" fill="url(#hcGrad)"/>
-								<circle cx="300" cy="450" r="150" fill="url(#hcGrad)"/>
-								<text x="600" y="300" font-size="120" text-anchor="middle" fill="#dc2626">🏥</text>
-								<text x="600" y="380" font-size="36" text-anchor="middle" fill="#991b1b" font-weight="600">Medical Technology Healthcare</text>
-							</svg>
+						<div class="area-image area-image--health">
+							<div class="area-image-overlay">
+								<div class="area-image-icon">
+									<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
+										<circle cx="40" cy="40" r="36" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+										<!-- Cross -->
+										<rect x="33" y="20" width="14" height="40" rx="4" fill="rgba(255,255,255,0.9)"/>
+										<rect x="20" y="33" width="40" height="14" rx="4" fill="rgba(255,255,255,0.9)"/>
+										<!-- Heartbeat line -->
+										<polyline points="8,56 16,56 20,46 24,62 30,50 34,56 46,56 50,44 54,58 60,52 64,56 72,56" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+									</svg>
+								</div>
+								<div class="area-image-text">
+									<div class="area-image-label">Research Area 02</div>
+									<div class="area-image-title">Healthcare AI</div>
+									<div class="area-image-stat">
+										<span class="stat-pill">Medical Imaging</span>
+										<span class="stat-pill">Assistive Tech</span>
+										<span class="stat-pill">Environmental</span>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="area-header">
 							<div class="area-icon">🏥</div>
@@ -109,20 +147,33 @@ import ModernFooter from '../components/ModernFooter.astro';
 					</div>
 
 					<div class="research-area tertiary">
-						<div class="area-image">
-							<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="ethGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.3" />
-										<stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0.5" />
-									</linearGradient>
-								</defs>
-								<rect width="1200" height="600" fill="#faf5ff"/>
-								<circle cx="900" cy="150" r="200" fill="url(#ethGrad)"/>
-								<circle cx="300" cy="450" r="150" fill="url(#ethGrad)"/>
-								<text x="600" y="300" font-size="120" text-anchor="middle" fill="#7c3aed">⚖️</text>
-								<text x="600" y="380" font-size="36" text-anchor="middle" fill="#5b21b6" font-weight="600">AI Ethics & Collaboration</text>
-							</svg>
+						<div class="area-image area-image--ethics">
+							<div class="area-image-overlay">
+								<div class="area-image-icon">
+									<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none">
+										<circle cx="40" cy="40" r="36" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+										<!-- Network nodes -->
+										<circle cx="40" cy="24" r="6" fill="rgba(255,255,255,0.9)"/>
+										<circle cx="22" cy="52" r="6" fill="rgba(255,255,255,0.9)"/>
+										<circle cx="58" cy="52" r="6" fill="rgba(255,255,255,0.9)"/>
+										<line x1="40" y1="30" x2="26" y2="46" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+										<line x1="40" y1="30" x2="54" y2="46" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+										<line x1="28" y1="52" x2="52" y2="52" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+										<!-- Balance beam -->
+										<line x1="40" y1="24" x2="40" y2="14" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-dasharray="2,2"/>
+										<line x1="30" y1="14" x2="50" y2="14" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+									</svg>
+								</div>
+								<div class="area-image-text">
+									<div class="area-image-label">Research Area 03</div>
+									<div class="area-image-title">Responsible AI</div>
+									<div class="area-image-stat">
+										<span class="stat-pill">CARA-FMs</span>
+										<span class="stat-pill">African AI Ethics</span>
+										<span class="stat-pill">Fairness</span>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="area-header">
 							<div class="area-icon">⚖️</div>
@@ -151,6 +202,55 @@ import ModernFooter from '../components/ModernFooter.astro';
 			</div>
 		</section>
 
+		<!-- Key Publications Section -->
+		<section class="key-pubs-section">
+			<div class="container">
+				<h2 class="section-title">Selected Publications</h2>
+				<p class="section-subtitle">Peer-reviewed work from SAAIL Lab since June 2025</p>
+				<div class="pubs-grid">
+					<div class="pub-card pub-card--agri">
+						<div class="pub-venue">CV4A @ CVPR 2026</div>
+						<h3>CLOVES-4603: Benchmarking Classical Texture Features and Fine-Tuned Deep Models for Clove Quality Grading</h3>
+						<p class="pub-authors">I. Nyalala, P. Vincent</p>
+						<div class="pub-tags">
+							<span class="ptag">Agriculture</span>
+							<span class="ptag">Computer Vision</span>
+						</div>
+					</div>
+					<div class="pub-card pub-card--ethics">
+						<div class="pub-venue">DLI 2026, Lagos · Best Poster Award</div>
+						<h3>DGS-Bench: A Benchmark for Deep Grounding and Segmentation in Agricultural Scenes</h3>
+						<p class="pub-authors">I. Nyalala</p>
+						<div class="pub-tags">
+							<span class="ptag">Benchmark</span>
+							<span class="ptag">Segmentation</span>
+						</div>
+					</div>
+					<div class="pub-card pub-card--ethics">
+						<div class="pub-venue">ICLR 2026 Workshop</div>
+						<h3>Unifying Perspectives on Learning Biases: A Data-Centric Intervention for Holistic Fairness, Robustness, and Generalization</h3>
+						<p class="pub-authors">P. Vincent, I. Nyalala</p>
+						<div class="pub-tags">
+							<span class="ptag">Responsible AI</span>
+							<span class="ptag">Fairness</span>
+						</div>
+					</div>
+					<div class="pub-card pub-card--agri">
+						<div class="pub-venue">DLI 2025, Kigali · Best Poster Award</div>
+						<h3>CARA-FMs: Context-Aware and Responsible AI Framework for Foundation Models in East Africa</h3>
+						<p class="pub-authors">I. Nyalala</p>
+						<div class="pub-tags">
+							<span class="ptag">Responsible AI</span>
+							<span class="ptag">Foundation Models</span>
+						</div>
+					</div>
+				</div>
+				<div class="pubs-cta">
+					<a href="/publications" class="btn btn-primary">View All Publications</a>
+				</div>
+			</div>
+		</section>
+
 	</main>
 
 	<ModernFooter />
@@ -167,11 +267,62 @@ import ModernFooter from '../components/ModernFooter.astro';
 		text-align: center;
 	}
 
+	.hero-badge {
+		display: inline-block;
+		background: var(--accent-blue);
+		color: white;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		padding: 0.35rem 1rem;
+		border-radius: 100px;
+		margin-bottom: 1.25rem;
+	}
+
 	.hero-content h1 {
 		font-size: 3rem;
 		font-weight: 700;
 		color: var(--accent-blue);
 		margin-bottom: 1.5rem;
+	}
+
+	.hero-stats {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 2rem;
+		margin-top: 2.5rem;
+		flex-wrap: wrap;
+	}
+
+	.hstat {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.2rem;
+	}
+
+	.hstat-num {
+		font-size: 2rem;
+		font-weight: 800;
+		color: var(--accent-blue);
+		line-height: 1;
+	}
+
+	.hstat-lbl {
+		font-size: 0.8rem;
+		font-weight: 500;
+		color: var(--text-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	.hstat-divider {
+		width: 1px;
+		height: 2.5rem;
+		background: var(--text-secondary);
+		opacity: 0.2;
 	}
 
 	.hero-description {
@@ -219,17 +370,93 @@ import ModernFooter from '../components/ModernFooter.astro';
 		margin-bottom: 1.5rem;
 		border-radius: 1rem;
 		overflow: hidden;
+		position: relative;
 	}
 
-	.area-image img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
+	.area-image--agri {
+		background: linear-gradient(135deg, #065f46 0%, #059669 40%, #10b981 100%);
+	}
+
+	.area-image--health {
+		background: linear-gradient(135deg, #7f1d1d 0%, #dc2626 40%, #f87171 100%);
+	}
+
+	.area-image--ethics {
+		background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 40%, #a78bfa 100%);
+	}
+
+	.area-image::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
+			radial-gradient(circle at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 40%);
+	}
+
+	.area-image-overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+		padding: 1.5rem 2rem;
 		transition: transform 0.3s ease;
 	}
 
-	.research-area:hover .area-image img {
-		transform: scale(1.05);
+	.research-area:hover .area-image-overlay {
+		transform: scale(1.02);
+	}
+
+	.area-image-icon {
+		flex-shrink: 0;
+		width: 80px;
+		height: 80px;
+		opacity: 0.95;
+	}
+
+	.area-image-icon svg {
+		width: 80px;
+		height: 80px;
+	}
+
+	.area-image-text {
+		flex: 1;
+		color: white;
+	}
+
+	.area-image-label {
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		opacity: 0.7;
+		margin-bottom: 0.25rem;
+	}
+
+	.area-image-title {
+		font-size: 1.6rem;
+		font-weight: 800;
+		line-height: 1.1;
+		margin-bottom: 0.75rem;
+		text-shadow: 0 1px 8px rgba(0,0,0,0.25);
+	}
+
+	.area-image-stat {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+
+	.stat-pill {
+		background: rgba(255,255,255,0.2);
+		border: 1px solid rgba(255,255,255,0.3);
+		color: white;
+		font-size: 0.72rem;
+		font-weight: 600;
+		padding: 0.2rem 0.6rem;
+		border-radius: 100px;
+		backdrop-filter: blur(4px);
 	}
 
 	.research-area:hover {
@@ -457,6 +684,29 @@ import ModernFooter from '../components/ModernFooter.astro';
 			height: 160px;
 		}
 
+		.area-image-overlay {
+			gap: 1rem;
+			padding: 1rem 1.25rem;
+		}
+
+		.area-image-icon {
+			width: 56px;
+			height: 56px;
+		}
+
+		.area-image-icon svg {
+			width: 56px;
+			height: 56px;
+		}
+
+		.area-image-title {
+			font-size: 1.2rem;
+		}
+
+		.pubs-grid {
+			grid-template-columns: 1fr;
+		}
+
 		.collaborations-grid {
 			grid-template-columns: 1fr;
 		}
@@ -503,5 +753,97 @@ import ModernFooter from '../components/ModernFooter.astro';
 			font-size: 0.8125rem;
 			padding: 0.375rem 0.75rem;
 		}
+
+		.hstat-divider {
+			display: none;
+		}
+	}
+
+	/* Key Publications */
+	.key-pubs-section {
+		padding: 5rem 0;
+		background: var(--bg-secondary);
+	}
+
+	.section-subtitle {
+		text-align: center;
+		color: var(--text-secondary);
+		margin-bottom: 3rem;
+		font-size: 1.05rem;
+	}
+
+	.pubs-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.5rem;
+		margin-bottom: 3rem;
+	}
+
+	.pub-card {
+		background: var(--bg-primary);
+		border-radius: 1rem;
+		padding: 1.75rem;
+		border-top: 4px solid;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.pub-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 24px var(--shadow-medium);
+	}
+
+	.pub-card--agri {
+		border-top-color: #059669;
+	}
+
+	.pub-card--health {
+		border-top-color: #dc2626;
+	}
+
+	.pub-card--ethics {
+		border-top-color: #7c3aed;
+	}
+
+	.pub-venue {
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent-blue);
+		margin-bottom: 0.75rem;
+	}
+
+	.pub-card h3 {
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		line-height: 1.5;
+		margin-bottom: 0.5rem;
+	}
+
+	.pub-authors {
+		font-size: 0.85rem;
+		color: var(--text-secondary);
+		margin-bottom: 0.75rem;
+		font-style: italic;
+	}
+
+	.pub-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+
+	.ptag {
+		background: var(--bg-secondary);
+		color: var(--text-secondary);
+		font-size: 0.72rem;
+		font-weight: 600;
+		padding: 0.2rem 0.6rem;
+		border-radius: 100px;
+	}
+
+	.pubs-cta {
+		text-align: center;
 	}
 </style>
