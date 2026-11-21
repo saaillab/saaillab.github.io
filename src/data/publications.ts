@@ -6,6 +6,7 @@ export interface Author {
 }
 
 export interface FigureItem {
+  title?: string;
   src: string;
   caption: string;
   alt?: string;
@@ -57,6 +58,8 @@ export interface Publication {
   seriesNumber?: number;
   teaserImage?: string;
   teaserCaption?: string;
+  teaserSummary?: string;
+  resultsSummary?: string;
   figureHeading?: string;
   figures?: FigureItem[];
   highlights?: MetricHighlight[];
@@ -104,6 +107,8 @@ export const PUBLICATIONS: Publication[] = [
     datasetUrl: 'https://github.com/saaillab/CropGuardNet#dataset-deduplication',
     teaserImage: '/images/papers/cropguardnet/architecture.png',
     teaserCaption: 'CropGuardNet pairs dual-mode LAB-CLAHE and raw RGB preprocessing with a scaled MobileNetV3-Small backbone, a three-branch dilated multi-scale feature pyramid, depthwise separable refinement, squeeze-and-excitation attention, a two-head Transformer, and species conditioning. All components fit inside 481,574 parameters (1.84 MB FP32, 63.8M FLOPs) and run in 5.00 ms per leaf image on single-thread CPU ONNX Runtime for offline smartphone field scouting.',
+    teaserSummary: 'Plant leaf disease detectors built for precision scouting are typically either restricted to single crops, inflated by near-duplicate augmented images, or too large to run offline on smallholder smartphones. CropGuardNet integrates a scaled MobileNetV3-Small backbone with a three-branch dilated multi-scale feature pyramid, depthwise separable refinement, squeeze-and-excitation attention, a two-head Transformer, and host-species conditioning within 481,574 parameters (1.84 MB FP32, 63.8M FLOPs). To eliminate data leakage before evaluation, we purge 80,238 offline-augmented copies from PlantVillage using specimen UUID grouping and 64-bit perceptual hash checks, leaving 35,420 unique images across eight crops and 38 classes. Under this deduplicated benchmark, CropGuardNet runs in 5.00 ms per leaf image on single-thread CPU ONNX Runtime, sustains 99.17% test accuracy (0.9874 F1-macro), eliminates cross-crop false positives, and explains decisions across four attribution methods.',
+    resultsSummary: 'Across seven benchmarked architectures on the 5,314-image deduplicated test split, CropGuardNet ranks first in 38-class F1-macro (0.9874) while using 3.2x to 279.1x fewer parameters than five heavier baselines and 18.1x fewer FLOPs than LeafXNet. Host-species conditioning eliminates cross-crop errors completely (Mc = 0), supports two-stage automatic crop routing at 99.79% species accuracy, and lifts minority Rice discrimination to 94.44%. On 20 held-out image corruptions, CropGuardNet retains the highest mean accuracy at 83.61% (Wilcoxon p = 0.0020 versus LeafXNet at severe noise and brightness shift), and on uncurated PlantDoc smartphone field images, guided Mode A1 lifts zero-shot accuracy from 17.58% to 40.63%-45.91% before raw RGB fine-tuning reaches 63.66%.',
     tldr: 'A 481,574-parameter (1.84 MB, 5.00 ms CPU ONNX) conditioned CNN-Transformer evaluated on 35,420 UUID- and pHash-deduplicated leaf images across 8 crops and 38 classes (99.17% accuracy, 0.9874 F1-macro), purging 80,238 duplicates and auditing four XAI families.',
     abstract: 'Crop diseases threaten food security, yet deep detectors remain single-crop, heavyweight, or opaque for edge deployment. We propose CropGuardNet, a lightweight Convolutional Neural Network (CNN) and Transformer framework on MobileNetV3-Small (α = 0.50) with 481,574 parameters, 1.84 MB FP32 weights, and 63.8M FLOPs, running at 5.00 ms (200.0 FPS) in single-thread CPU ONNX inference. It unites a dilated multi-scale feature pyramid, depthwise separable refinement, squeeze-and-excitation attention, a two-head Transformer, dual-path pooling, crop-aware conditioning, and four explainable AI (XAI) methods: Grad-CAM++, LayerCAM, LIME, and GradientSHAP. After purging 80,238 PlantVillage duplicates via specimen Universally Unique Identifier (UUID) grouping and 64-bit perceptual hash auditing, evaluation on 35,420 unique images spanning 38 classes and 8 crops (n = 5,314 test) reaches 99.17% accuracy, 0.9874 F1-macro, 0.9914 Matthews correlation coefficient (MCC), and 0.9998 AUC-ROC, leading F1-macro across seven models at 3.2x-279.1x fewer parameters than five baselines and 6.0x larger than LeafXNet at 18.1x fewer FLOPs. Top models match on 35 non-Rice classes, whereas species conditioning eliminates cross-crop errors, supports 99.79% automatic crop routing, and lifts minority Rice accuracy to 94.44%. CropGuardNet leads 20-regime corruptions at 83.61% mean accuracy (severe Wilcoxon p = 0.0020 vs. LeafXNet), 8-fold leave-one-crop-out probing (n = 7,072) at 81.22% accuracy and 0.8879 binary AUC-ROC, and XAI faithfulness with LayerCAM Deletion AUC 0.7262 and GradientSHAP Insertion AUC 0.9259. On PlantDoc field images, guided Mode A1 reaches 40.63%-45.91% zero-shot accuracy vs. 16.06%-17.58% unguided, 60.62% unmasked vs. 62.18% masked head adaptation under Mode A1-Auto (tying ResNet-50 behind LeafXNet at 63.73%), and 62.20% Enhanced or 63.66% Raw RGB accuracy after 20-epoch tuning.',
     keywords: ['plant disease detection', 'lightweight CNN', 'Vision Transformer', 'explainable AI', 'multi-crop classification', 'data deduplication', 'smart agriculture'],
@@ -131,8 +136,8 @@ export const PUBLICATIONS: Publication[] = [
     tables: [
       {
         title: 'Unified 8-Crop, 38-Class Benchmark Comparison (Test n = 5,314)',
-        caption: 'CropGuardNet ranks first in 38-class F1-Macro, Macro-Precision, and Macro-Recall and achieves the lowest FLOPs across all seven architectures.',
-        headers: ['Model', 'Params', 'Size (MB)', 'FLOPs (M)', 'Acc (%)', 'F1-Macro', 'MCC', 'CPU Lat. (ms)'],
+        caption: 'CropGuardNet ranks first in 38-class F1-Macro and achieves the lowest FLOPs across all seven architectures. *11.49 ms PyTorch / 5.00 ms ONNX Runtime CPU latency.',
+        headers: ['Model', 'Params', 'Size (MB)', 'FLOPs (M)', 'Acc (%)', 'F1-Macro', 'MCC', 'Latency (ms)'],
         rows: [
           ['VGG-16', '134,416,230', '512.76', '30,932.6', '97.95', '0.9703', '0.9787', '414.72 ± 17.82'],
           ['ResNet-50', '23,585,894', '89.97', '8,174.4', '99.13', '0.9751', '0.9910', '78.03 ± 2.38'],
@@ -140,28 +145,26 @@ export const PUBLICATIONS: Publication[] = [
           ['EfficientNet-B0', '4,056,226', '15.47', '769.2', '99.21', '0.9834', '0.9918', '30.79 ± 1.78'],
           ['MobileNetV3-Small', '1,556,806', '5.94', '111.1', '99.23', '0.9740', '0.9920', '11.38 ± 0.53'],
           ['LeafXNet', '79,782', '0.30', '1,156.6', '97.27', '0.9558', '0.9717', '22.64 ± 0.55'],
-          ['CropGuardNet (Ours)', '481,574', '1.84', '63.8', '99.17', '0.9874', '0.9914', '11.49 (PyTorch) / 5.00 (ONNX)']
+          ['CropGuardNet (Ours)', '481,574', '1.84', '63.8', '99.17', '0.9874', '0.9914', '11.49 / 5.00*']
         ]
       }
     ],
-    figureHeading: 'Calibration Reliability, Corruption Robustness & Cross-Crop Explainability',
+    figureHeading: 'Cross-Crop Explainability & Field Generalization',
     figures: [
       {
+        title: 'Cross-Crop Explainability & Attribution Faithfulness',
         src: '/images/papers/cropguardnet/fig_xai_master_8crops.png',
         caption: 'This side-by-side diagnostic matrix inspects visual explanations produced by four attribution methods (Grad-CAM++, LayerCAM, LIME, and GradientSHAP) across all eight host crops under guided Mode A1 inference. Gradient-based saliency focuses tightly on necrotic leaf spots and fungal halos instead of soil backgrounds, matching strong Deletion faithfulness (0.7262 LayerCAM AUC) and Insertion recovery (0.9259 GradientSHAP AUC).',
         alt: 'CropGuardNet XAI master comparison across 8 crops'
       },
       {
-        src: '/images/papers/cropguardnet/fig_calibration_bootstrap.png',
-        caption: 'Panel (a) plots 95% non-parametric bootstrap confidence intervals for Macro-F1 across all six deep architectures on the deduplicated test set (n = 5,221 clean leaves), showing CropGuardNet leads overall across 38 classes largely through stronger minority Rice discrimination. Panel (b) compares probability calibration (ECE, Brier score, and negative log-likelihood), confirming well-calibrated uncertainty alongside a 3.2x to 49x parameter reduction over heavier CNNs.',
-        alt: 'CropGuardNet bootstrap 95% CIs and calibration error comparison across six models'
-      },
-      {
+        title: 'Classification Accuracy Under 20 Image Corruptions',
         src: '/images/papers/cropguardnet/fig_robustness_curves.png',
         caption: 'Each panel traces classification accuracy across five progressive severity levels under Gaussian sensor noise, motion blur, extreme under/overexposure, central occlusion, and aggressive JPEG compression. Across 20 held-out corruption regimes, CropGuardNet retains the highest mean accuracy (83.61%) and avoids the steep brightness-drop and occlusion failures observed in smaller edge baselines (Wilcoxon p = 0.0020 versus LeafXNet at severe noise/brightness).',
-        alt: 'CropGuardNet robustness across 20 corruption regimes'
+        alt: 'CropGuardNet accuracy curves across 20 corruption regimes'
       },
       {
+        title: 'In-Field Transfer on Uncurated PlantDoc Imagery',
         src: '/images/papers/cropguardnet/fig_plantdoc_field_transfer.png',
         caption: 'These three panels evaluate real-world generalization to uncurated PlantDoc smartphone field images across zero-shot transfer, frozen-backbone few-shot adaptation, and full fine-tuning. Supplying known host crop species (Mode A1) eliminates cross-crop confusion and lifts zero-shot accuracy from 17.58% to 40.63%-45.91%, and unenhanced raw RGB fine-tuning reaches 63.66% accuracy because clean-background CLAHE enhancements degrade cluttered field photographs.',
         alt: 'PlantDoc field transfer evaluation'
@@ -200,6 +203,8 @@ export const PUBLICATIONS: Publication[] = [
     datasetUrl: 'https://github.com/saaillab/CLOVES-4603',
     teaserImage: '/images/papers/cloves/fig1_workflow.png',
     teaserCaption: 'This experimental protocol diagnoses hidden capture-session confounding across 4,603 single-clove images and 695 bulk batch captures graded at ZSTC warehouses in Zanzibar. After clustering near-duplicates via 64-bit difference hashing (3,455 groups), three causal tests (unseen capture-day splits, empty-background inpainting, and background-swap probes) separate genuine biological bud grading cues from sitting-specific studio artifacts.',
+    teaserSummary: 'High benchmark accuracy on agricultural image datasets can come from sitting-specific studio illumination and tray paper textures rather than plant biology when commercial grades are photographed one class at a time. We test this confound across 4,603 single-clove and 695 batch images aligned to Zanzibar State Trading Corporation (ZSTC) commercial grades across six photography days. After removing near-duplicate leakage via 64-bit difference hashing (3,455 groups), unseen capture-day splits, empty-background inpainting, and foreground-background swap probes reveal what neural networks actually rely on.',
+    resultsSummary: 'Across 17 pretrained architectures evaluated under duplicate-controlled standard splits, 16 models reach 98.1% to 99.3% macro-F1. Yet testing on unseen capture days drops mean macro-F1 from 99% down to 29%-47%, with per-grade recall spanning 1.5% to 95%. When clove buds are erased by inpainting, networks still grade empty tray backgrounds at 98.5% accuracy, and under conflict swaps they follow the swapped background in 53%-57% of images compared with 30%-33% following the clove bud. Isolating the foreground bud supports ~93% macro-F1, proving the biological signal exists once sitting confounds are excluded.',
     tldr: 'Shows that 16 of 17 neural networks reach 98.1% to 99.3% in-session test macro-F1 on clove grading yet collapse to 29% to 47% on unseen capture days, still scoring 98.5% on empty backgrounds with cloves inpainted away.',
     abstract: 'The Zanzibar State Trading Corporation (ZSTC) prices cloves (Syzygium aromaticum) by four commercial grades assigned through non-destructive visual inspection. Using an image dataset aligned with these grades (4,603 single-clove and 695 batch images), we evaluated grading models under a protocol that controls near-duplicate leakage and training differences. Sixteen of seventeen pretrained networks reached 98.1% to 99.3% test macro-F1. Because the grades were photographed in separate sittings on six capture days, we tested what the networks learned. Trained on images taken on some days and tested on days never seen in training, mean macro-F1 fell from 99% to between 29% and 47%, with recall ranging from 1.5% to 95% across held-out grade-days. Images with the bud removed by inpainting were still graded at 98.5%, whereas the bud silhouette alone reached 68%. When a clove of one grade was pasted onto the background of another, networks followed the background in 53% to 57% of cases and the clove in 30% to 33%, whereas pasting each clove back onto its own background left accuracy unchanged (97% to 98%). The bud region alone supported about 93% macro-F1, so grade information is present in the clove; trained networks combine it with a capture-specific cue that dominates when the two conflict and causes some unseen sittings to be misgraded as a whole. We describe a low-cost probe protocol for testing the measurement validity of image datasets collected one class at a time, and the collection design needed to measure clove grading accuracy without this confound.',
     keywords: ['clove grading', 'capture-session confounding', 'shortcut learning', 'measurement validity', 'data leakage', 'Zanzibar'],
@@ -219,20 +224,21 @@ export const PUBLICATIONS: Publication[] = [
     figureHeading: 'Capture-Session Confounding Diagnostics',
     figures: [
       {
+        title: 'Inpainting & Background-Swap Confound Probes',
         src: '/images/papers/cloves/fig6_confound.png',
         caption: 'When clove buds are erased via inpainting (middle row), trained networks still classify empty tray backgrounds at 98.5% accuracy by latching onto session-specific lighting and paper texture. Under foreground-background conflict swaps (bottom row), predictions follow the swapped background in 53% to 57% of images rather than the clove bud, showing why single-session class photography invalidates standard held-out test metrics.'
       }
     ],
     tables: [
       {
-        title: 'Summary of Validity Probes Exposed on Duplicate-Controlled Clove Grading (17 Networks, n = 4,603)',
-        headers: ['Evaluation Probe', 'Measured Macro-F1 / Accuracy', 'Diagnostic Interpretation'],
+        title: 'Summary of Validity Probes on Duplicate-Controlled Clove Grading (17 Networks, n = 4,603)',
+        headers: ['Evaluation Probe', 'Measured Score', 'Diagnostic Finding'],
         rows: [
-          ['Standard dHash-Grouped Split (16/17 CNN/ViT)', '98.1% - 99.3% macro-F1', 'Top models statistically indistinguishable (DenseNet-121 / Xception / ViT 99.25%)'],
-          ['Held-Out Unseen Capture Day Split', '29% - 47% macro-F1', 'Catastrophic cross-session failure despite zero duplicate overlap'],
-          ['Empty Background (Bud Removed via Inpainting)', '98.5% accuracy', 'Tray/illumination session artifacts carry almost full class signal'],
-          ['Conflict Swap (Grade A Bud on Grade B BG)', '53% - 57% follow BG · 30% - 33% follow bud', 'Session background cue overrides biological bud features under conflict'],
-          ['Isolated Clove Bud Foreground Alone', '~93% macro-F1', 'True morphological grading signal exists once background confounds are removed']
+          ['dHash-Grouped Split (16/17 Models)', '98.1% - 99.3% F1', 'DenseNet-121 / Xception / ViT reach 99.25%'],
+          ['Unseen Capture-Day Split', '29% - 47% F1', 'Cross-session collapse despite zero duplicates'],
+          ['Empty Background (Bud Inpainted)', '98.5% Acc', 'Tray lighting carries nearly full class signal'],
+          ['Conflict Swap (A Bud / B BG)', '53-57% BG · 30-33% Bud', 'Background overrides bud under conflict'],
+          ['Isolated Clove Foreground', '~93% F1', 'True bud signal emerges once BG removed']
         ]
       }
     ],
@@ -264,6 +270,7 @@ export const PUBLICATIONS: Publication[] = [
     openAccess: false,
     teaserImage: '/images/papers/govtech/itd_digital_citizenship.jpeg',
     teaserCaption: 'Five empirically grounded resistant digital citizenship practices mapped across East African hybrid regimes (Tanzania and Kenya, 2015 to 2025): creative platform repurposing, communal rights-claiming, adaptive circumvention, justice-connected activism, and Pan-African solidarity networks. Rather than framing civic agency around isolated individual privacy, the taxonomy centers Ubuntu relational ethics and Afrofeminist collective data governance in response to over 1 billion USD in annual continental surveillance expenditure and 21 national internet shutdowns across 15 states in 2024.',
+    resultsSummary: 'This comparative study traces how imported biometric systems, statutory content filtering, and election or protest internet blackouts reshaped civic mobilization across Tanzania and Kenya between 2015 and 2025. Whereas state enforcement relied on blocking over 80,000 websites in Tanzania and deploying urban camera networks in Kenya, citizen counterpublics organized collective mutual-aid circumvention, constitutional litigation against biometric ID mandates, and transnational documentation networks.',
     tldr: 'Comparative political-economy and governance analysis of AI surveillance, internet shutdowns, and Ubuntu/Afrofeminist digital citizenship resistance across Tanzania and Kenya between 2015 and 2025.',
     abstract: 'This study examines what happens to digital rights, political freedom, and citizen agency when governments deploy artificial intelligence surveillance systems and internet shutdowns across East African hybrid regimes between 2015 and 2025. Although Sub-Saharan Africa reached 29% mobile internet penetration in 2024, African governments spent over 1 billion USD annually on citizen surveillance infrastructure and imposed 21 internet shutdowns across 15 countries in 2024 alone, costing over 1.6 billion USD. Focusing on Tanzania (October 2025 election internet blackout and blocking of 80,000+ websites alongside cybercrime prosecution of journalists) and Kenya (Huawei Safe City facial recognition in Nairobi and Mombasa, constitutional litigation over biometric ID, and 2024 Finance Bill Gen Z protest disruptions), this study addresses Northern theoretical bias by grounding analysis in Ubuntu communal ethics and Afrofeminist data governance.',
     keywords: ['digital authoritarianism', 'AI surveillance', 'internet shutdowns', 'digital citizenship', 'Ubuntu ethics', 'Tanzania', 'Kenya', 'GovTech'],
@@ -281,12 +288,12 @@ export const PUBLICATIONS: Publication[] = [
     ],
     tables: [
       {
-        title: 'Comparative Digital Repression & Civic Resistance Vectors in East Africa (2015-2025)',
+        title: 'Comparative Digital Repression & Civic Resistance Vectors (2015-2025)',
         headers: ['Analytical Dimension', 'Tanzania Evidence', 'Kenya Evidence'],
         rows: [
-          ['Surveillance & Connectivity Control', 'EPOCA & Cybercrimes statutory monitoring; Oct 2025 blackout + 80,000+ sites blocked', 'Huawei Safe City cameras (Nairobi/Mombasa); 2024 Finance Bill protest disruptions'],
-          ['Legal & Institutional Arena', 'Constrained judicial review under centralized executive enforcement', 'Strategic High Court constitutional rulings on biometric digital ID (Huduma Namba)'],
-          ['Citizen Counter-Power', 'Encrypted messaging, diaspora journalism, circumvention tooling', '#RejectFinanceBill2024 digital coordination & feminist counterpublic networks']
+          ['Surveillance & Shutdowns', 'Oct 2025 blackout; 80,000+ domains', 'Urban CCTV; 2024 protest disruptions'],
+          ['Legal & Judicial Arena', 'Centralized statutory enforcement', 'High Court rulings on Huduma Namba'],
+          ['Citizen Counter-Power', 'Encrypted messaging & VPN mutual aid', 'Digital solidarity & feminist publics']
         ]
       }
     ],
@@ -318,6 +325,7 @@ export const PUBLICATIONS: Publication[] = [
     openAccess: false,
     teaserImage: '/images/papers/govtech/figure_01_taxonomy.png',
     teaserCaption: 'This structural taxonomy classifies 22 verified East African digital agriculture platforms launched between 2009 and 2026 into standalone startups versus institutionally embedded services. Only 1 of 10 venture- or donor-funded standalone startups remains operational today, whereas all 12 platforms embedded inside telecom networks, government agencies, or cooperative consortia survived by lowering customer-acquisition costs and sustaining recurring trust.',
+    resultsSummary: 'Auditing primary operational records across 22 named platforms in Kenya, Uganda, Rwanda, Tanzania, and Ethiopia exposes a decisive institutional divide in long-term continuity. Only 1 of 10 venture- or donor-funded standalone startups remains active at scale, whereas all 12 platforms embedded inside mobile network operators, public extension registries, asset-financing credit loops, or academic-nonprofit consortia remain operational.',
     tldr: 'Audits 22 named digital and AI agriculture platforms across five East African countries (2009-2026), revealing only 1 of 10 standalone startups sustains active scale compared with 12 of 12 institutionally embedded platforms.',
     abstract: 'East Africa is frequently framed as a global frontier for digital and AI-enabled agriculture, yet no systematic record tracks what actually happens to widely publicized platforms three to ten years after launch. Combining structured literature synthesis with primary evidence verification across 22 named digital agriculture platforms operating in Kenya, Uganda, Rwanda, Tanzania, and Ethiopia between 2009 and 2026, we audit operational survival against independent primary records rather than self-reported user totals. We observe a sharp institutional divergence: venture- or donor-funded standalone startups exhibit high attrition (only 1 of 10 confirmed active at scale, with documented shutdowns and severe organizational crises), whereas all 12 platforms embedded inside mobile network operators, public agricultural extension systems, asset-financing models, or sustained academic-nonprofit consortia remain active. We formulate a six-model institutional survival taxonomy alongside mandatory post-launch accountability reporting standards.',
     keywords: ['digital agriculture', 'platform failure', 'agtech sustainability', 'East Africa', 'ICT4D', 'GovTech', 'institutional economics'],
@@ -335,14 +343,14 @@ export const PUBLICATIONS: Publication[] = [
     ],
     tables: [
       {
-        title: 'Institutional Survival Breakdown Across 22 Verified East African AgTech Platforms (2009-2026)',
-        headers: ['Institutional Embedding Archetype', 'Survival Characteristic', 'Core Driver'],
+        title: 'Institutional Survival Breakdown Across 22 East African AgTech Platforms (2009-2026)',
+        headers: ['Institutional Archetype', 'Survival Status', 'Primary Sustainability Driver'],
         rows: [
-          ['Standalone Venture / Donor Startup', '1 / 10 confirmed active', 'Post-grant valley of death & low smallholder SaaS willingness-to-pay'],
-          ['Telecom-Embedded Services', 'Confirmed sustained', 'Bundled zero-rated distribution & carrier billing'],
-          ['Government Extension / Subsidy Registry', 'Confirmed sustained', 'Recurring public budget & mandatory farmer enrollment'],
-          ['Asset-Financing & Input Bundling', 'Confirmed sustained', 'Direct credit/input margin recovers digital platform cost'],
-          ['Research Consortium & Institutional Transition', 'Confirmed sustained', 'Multi-cycle grant continuity & public data integration']
+          ['Standalone Venture / Donor', '1 / 10 active', 'High SaaS customer acquisition cost'],
+          ['Telecom-Embedded Service', 'Confirmed active', 'Carrier billing & zero-rated reach'],
+          ['Government Registry', 'Confirmed active', 'Recurring public extension budget'],
+          ['Asset-Financing Bundle', 'Confirmed active', 'Input credit margin covers software'],
+          ['Consortium Transition', 'Confirmed active', 'Multi-cycle institutional ownership']
         ]
       }
     ],
@@ -387,14 +395,15 @@ export const PUBLICATIONS: Publication[] = [
       'Reconciles stark divergence between pilot-level yield/income gains (up to 25% yield; $200-$600/ha) and macro-scale stalling when credit, input markets, and cooperative trust are absent.',
       'Proposes four policy propositions centering smallholder cooperative governance, rural connectivity subsidies, and interoperable public agricultural data standards.'
     ],
+    resultsSummary: 'Integrating Technology-Organization-Environment adoption determinants with institutional voids theory across Kenya, Tanzania, and Ethiopia reconciles why isolated pilots show conditional yield gains up to 25% and income gains of $200-$600/ha yet stall at national scale when rural connectivity, credit, input markets, and cooperative trust remain missing.',
     tables: [
       {
         title: 'TOE & Institutional Voids Proposition Matrix for Sub-Saharan African Digital Agriculture',
-        headers: ['TOE Dimension', 'Observed Structural Barrier', 'Institutional Co-Evolution Policy'],
+        headers: ['TOE Dimension', 'Observed Structural Barrier', 'Co-Evolution Policy'],
         rows: [
-          ['Technological Readiness', 'High feature-phone share & English-only UI', 'Local Swahili/dialect voice UI & offline edge models'],
-          ['Organizational Governance', 'Extractive platform revenue extracting trader margins', 'Cooperative data trusts & smallholder revenue-share'],
-          ['Environmental & Credit Voids', 'AI advice unusable without fertilizer/input access', 'Bundle agronomic advisories with cooperative credit & markets']
+          ['Technical Access', 'Feature-phone & English UI limits', 'Swahili voice UI & offline edge models'],
+          ['Org Governance', 'Extractive platform revenue fees', 'Cooperative data trusts & profit share'],
+          ['Market & Credit', 'Advice fails without input access', 'Bundle advisories with co-op credit']
         ]
       }
     ],
@@ -433,6 +442,8 @@ export const PUBLICATIONS: Publication[] = [
     codeUrl: 'https://github.com/saaillab/dgs-bench',
     teaserImage: '/images/papers/dgs2026/fig1_dgs_bar.png',
     teaserCaption: 'DGS-Bench exposes an Evaluation Mirage on African smallholder field data: raw aggregate accuracy makes every tested architecture appear to gain performance when moving from balanced lab splits to natural Ugandan cassava fields (-6.00 pp negative DGS). Replacing raw accuracy with class-balanced Macro-F1 reveals the opposite trend (+8.16 pp true deployment gap), proving majority-class prevalence masks silent minority-disease collapse.',
+    teaserSummary: 'Agricultural vision models evaluated on balanced laboratory test sets often appear to improve when tested on naturally imbalanced African field data, misleading practitioners about deployment readiness. Across 40 controlled experiments spanning four architectures (ResNet-50, EfficientNet-B3, MobileNetV3-S, ViT-Small/16) and 10 random seeds on Ugandan field cassava imagery (65.8% CMD dominance), DGS-Bench exposes this artifact as an Evaluation Mirage: raw-accuracy Deployment Gap Score turns negative (-6.00 ± 2.38 pp) while Macro-F1 exposes a true +8.16 ± 2.34 pp degradation. Pixel-space GrabCut background removal and cross-dataset validation on Tomato and Rice show how majority-class skew and background clutter conceal silent minority-class failures.',
+    resultsSummary: 'Across all 40 seed-architecture runs on Ugandan field cassava data, raw accuracy appears higher in the field (-6.00 ± 2.38 pp DGS_Acc, t = -15.8, p < 1e-6), whereas balanced Macro-F1 exposes consistent deployment loss across every model (+8.16 ± 2.34 pp DGS_F1, t = 21.7, p < 1e-6), with Healthy leaf recall dropping from 52.5% to 47.7%. Background scrambling reduces accuracy by 13.6 to 21.3 percentage points across CNNs and Vision Transformers compared with less than 1.7 percentage points under brightness changes, and cross-crop replication confirms the mirage appears whenever severe imbalance coincides with moderate lab accuracy.',
     tldr: 'Demonstrates that aggregate accuracy hides catastrophic minority-disease failures under field shift in African cassava diagnostics, introducing balanced deployment-gap evaluation metrics (Best Poster Award, DLI 2026).',
     abstract: 'Agricultural AI models trained on balanced laboratory datasets routinely report moderate linear-probe accuracy (~55%), yet the same models appear to improve when evaluated on naturally imbalanced African field data. We show that this apparent improvement is an Evaluation Mirage: class imbalance inflates aggregate accuracy while minority-class performance degrades. We introduce DGS-Bench, a reproducible evaluation framework using the public Kaggle cassava disease dataset, and demonstrate the mirage across 40 independent experiments (10 random seeds x 4 pretrained architectures): raw-accuracy DGS is negative in all 40 cases (mean -6.00 +/- 2.38 pp; t = -15.8, p < 1e-6), while macro-F1 DGS is positive in all 40 (mean +8.16 +/- 2.34 pp; t = 21.7, p < 1e-6). Three additional lines of evidence strengthen the finding: (1) image-space background removal via GrabCut segmentation collapses field accuracy by 20-35 pp, confirming feature-space perturbation results with direct pixel-level evidence; (2) fine-tuning ResNet-50 (full and last-block) amplifies the mirage rather than eliminating it; and (3) cross-architecture threshold analysis reveals that the mirage onset varies from 20% to 50% dominant-class prevalence depending on architecture. Macro-AUPRC DGS is positive for all architectures (mean +8.3 pp), confirming the F1 finding; macro-AUROC DGS diverges (negative), highlighting the critical distinction between ranking and threshold-dependent metrics under imbalance. Cross-dataset validation on PlantVillage Tomato (10 classes) and Rice Leaf Disease (4 classes) confirms that the mirage requires both severe class imbalance and moderate model uncertainty; it does not appear when frozen features achieve >90% lab accuracy. All code is available on Kaggle.',
     keywords: ['DGS-Bench', 'African agricultural AI', 'cassava disease', 'balanced metrics', 'deployment gap', 'Deep Learning Indaba'],
@@ -446,16 +457,19 @@ export const PUBLICATIONS: Publication[] = [
     figureHeading: 'Empirical Perturbation & Cross-Architecture Mirage Evidence',
     figures: [
       {
+        title: 'Background Shortcut Sensitivity Under Perturbations',
         src: '/images/papers/dgs2026/fig2_perturbation.png',
         caption: 'Controlled perturbation curves isolate what visual cues drive predictions under field shift by progressively scrambling background pixels versus brightness and foliage regions. Background disruption drops performance by 13.6 to 21.3 percentage points across CNN and ViT models (whereas brightness changes shift accuracy under 1.7 pp), confirming heavy shortcut reliance on outdoor field clutter.',
         alt: 'Feature perturbation curves at severity 1.0'
       },
       {
+        title: 'Balanced Macro-F1 vs. Raw Accuracy Across 40 Runs',
         src: '/images/papers/dgs2026/fig3_balanced_dgs.png',
-        caption: 'Across 40 independent experiments spanning 10 random seeds and four architectures, paired seed distributions separate raw-accuracy Deployment Gap Score from balanced Macro-F1 Deployment Gap Score with statistical significance (p < 1e-6). Raw accuracy incorrectly rewards severe CMD dominance in field fields, whereas Macro-F1 consistently captures minority-class failures across every run.',
+        caption: 'Across 40 independent experiments spanning 10 random seeds and four architectures, paired seed distributions separate raw-accuracy Deployment Gap Score from balanced Macro-F1 Deployment Gap Score with statistical significance (p < 1e-6). Raw accuracy incorrectly rewards severe CMD dominance in field imagery, whereas Macro-F1 consistently reflects minority-class failures across every run.',
         alt: 'Balanced macro-F1 deployment gap across models'
       },
       {
+        title: 'Cross-Dataset Replication Across Crops',
         src: '/images/papers/dgs2026/fig7_cross_dataset.png',
         caption: 'Cross-dataset replication on 10-class PlantVillage Tomato and 4-class Rice Leaf Disease delineates when the evaluation mirage arises. Severe dominant-class imbalance produces false raw-accuracy gains whenever moderate lab feature uncertainty exists, whereas the distortion disappears once frozen features already exceed 90% baseline lab accuracy.',
         alt: 'Cross-dataset validation on Tomato and Rice'
@@ -470,8 +484,8 @@ export const PUBLICATIONS: Publication[] = [
     tables: [
       {
         title: 'DGS-Bench Primary Benchmark: Lab (Balanced n=400) vs. Natural Field (n=19,397, 65.8% CMD)',
-        caption: 'Raw field accuracy artificially exceeds lab accuracy across all models (negative DGS_Acc), whereas Macro-F1 exposes +6.23 to +9.67 pp degradation.',
-        headers: ['Architecture', 'Lab Acc (%)', 'Field Acc (%)', 'DGS Acc (pp)', 'Field BAcc (%)', 'Lab F1 (%)', 'Field F1 (%)', 'DGS F1 (pp)'],
+        caption: 'Accuracy and F1 metrics are in percent (%); Deployment Gap Scores (DGS) are in percentage points (pp). Raw field accuracy artificially exceeds lab accuracy across all models, whereas Macro-F1 exposes +6.23 to +9.67 pp degradation.',
+        headers: ['Architecture', 'Lab Acc', 'Field Acc', 'DGS Acc', 'Field BAcc', 'Lab F1', 'Field F1', 'DGS F1'],
         rows: [
           ['ResNet-50', '54.75', '62.80', '-8.05', '56.36', '54.71', '48.47', '+6.23'],
           ['EfficientNet-B3', '56.25', '61.93', '-5.68', '54.66', '56.10', '46.78', '+9.32'],
@@ -517,6 +531,8 @@ export const PUBLICATIONS: Publication[] = [
     datasetUrl: 'https://github.com/saaillab/CLOVES-4603',
     teaserImage: '/images/papers/cloves/cloves4603_pipeline.png',
     teaserCaption: 'Workflow of the CLOVES-4603 benchmark uniting lot-aware 70/10/20 data partitioning, handcrafted texture extraction, and deep fine-tuning across four Zanzibar clove grades. Classical GLCM+GLRLM+LBP fusion with RBF-SVM reaches 92.94% test accuracy without GPUs, whereas fine-tuned ResNet-50 reaches 99.67% on the 921-image test split. The diagram establishes an auditable five-family baseline for smallholder commodity grading.',
+    teaserSummary: 'Zanzibar produces roughly 8,000 tons of dried cloves annually, yet post-harvest commercial grading at official auction depots still relies on subjective visual inspection. CLOVES-4603 introduces an open benchmark of 4,603 standardized 224x224 RGB single-clove images spanning four official Zanzibar State Trading Corporation (ZSTC) commercial grades. Using lot-aware stratified 70/10/20 partitions across five random seeds with bootstrap confidence intervals, we compare classical handcrafted texture pipelines (HOG+SVM and fused GLCM+GLRLM+LBP with RBF-SVM), a frozen self-supervised DINOv2 linear probe, and fine-tuned ImageNet backbones alongside latency and parameter measurements.',
+    resultsSummary: 'On the 921-image held-out test set, fine-tuned ResNet-50 reaches 99.67% accuracy (99.66% macro-F1), whereas mobile-ready MobileNetV3-Large reaches 99.35% accuracy at sub-5 ms GPU inference latency. Without GPU fine-tuning, frozen DINOv2 ViT-B/14 features achieve 94.90% accuracy and CPU-only GLCM+GLRLM+LBP texture fusion with RBF-SVM achieves 92.94%, outperforming shape-gradient HOG+SVM (32.68%) by +60.26 percentage points.',
     tldr: 'Introduces CLOVES-4603, the first public 4,603-image benchmark for Zanzibar clove grading across four commercial grades, comparing classical texture pipelines (92.94%) against fine-tuned deep architectures (99.67%).',
     abstract: 'Zanzibar produces approximately 8,000 tons of dried cloves annually; however, post-harvest quality grading remains manual, inconsistent, and costly. We introduce CLOVES-4603, a dataset of 4,603 standardized 224x224 RGB images spanning four commercial grades collected at the Zanzibar State Trading Corporation facilities. Using lot-aware stratified 70/10/20 splits (5 seeds, bootstrap 95% CIs), we benchmarked classical texture pipelines (HOG+SVM and GLCM+GLRLM+LBP fusion with RBF-SVM), a frozen DINOv2 ViT-B/14 linear probe, and four fine-tuned ImageNet models. On the 921-image test set, ResNet-50 achieved 99.67% accuracy (macro F1 99.66%), and MobileNetV3-Large achieved an accuracy of 99.35%. The frozen DINOv2 probe achieved 94.90%, outperforming the texture fusion SVM at 92.94%. HOG+SVM reaches 32.68%. Accuracy, latency, and parameter trade-offs are provided for deployment. This benchmark establishes a reproducible evaluation standard for whole dried-spice grading research.',
     keywords: ['CLOVES-4603', 'clove quality grading', 'Zanzibar', 'texture features', 'deep learning', 'CVPR 2026', 'vision for agriculture'],
@@ -549,16 +565,19 @@ export const PUBLICATIONS: Publication[] = [
     figureHeading: 'Benchmark Results, Confusion Matrix & Pareto Latency Analysis',
     figures: [
       {
+        title: 'Five-Family Clove Grading Benchmark',
         src: '/images/papers/cloves/cloves4603_benchmark.png',
         caption: 'Held-out test accuracy and macro-F1 across all five model families evaluated on the 921-image CLOVES-4603 test split (5 random seeds, lot-aware 70/10/20 partitions). Fine-tuned ResNet-50 reaches 99.67% accuracy (99.66% macro-F1) and MobileNetV3-Large reaches 99.35%, whereas classical GPU-free GLCM+GLRLM+LBP fusion with RBF-SVM attains 92.94% and outperforms shape-based HOG+SVM (32.68%) by 60.26 percentage points.',
         alt: 'CLOVES-4603 classifier accuracy and F1 comparison'
       },
       {
+        title: 'Confusion Structure Across Four ZSTC Grades',
         src: '/images/papers/cloves/cloves4603_cm.png',
         caption: 'Normalized confusion matrix for fine-tuned ResNet-50 evaluated on 921 held-out Zanzibar clove images across commercial Grades 1 through 4. Nearly all samples lie along the main diagonal (99.67% overall accuracy, 99.66% macro-F1), showing clear boundary separation between golden Grade 1 buds and dark fermented Grade 4 (mpeta) cloves.',
         alt: 'ResNet-50 test confusion matrix across 4 clove grades'
       },
       {
+        title: 'Accuracy vs. Inference Latency Pareto Trade-Off',
         src: '/images/papers/cloves/cloves4603_pareto.png',
         caption: 'Pareto accuracy versus single-image inference latency profile across GPU-free texture pipelines, frozen self-supervised probes, and fine-tuned neural backbones. Lightweight MobileNetV3-Large occupies the optimal deployment knee at 99.35% accuracy and sub-5 ms latency, suiting offline mobile inspection inside rural grading depots.',
         alt: 'Accuracy versus inference latency trade-off'
@@ -734,6 +753,8 @@ export const PUBLICATIONS: Publication[] = [
     datasetUrl: 'https://github.com/saaillab/CLOVES-4603',
     teaserImage: '/images/papers/etri2026/fig1_pipeline.png',
     teaserCaption: 'Comparison between standard black box classification audited with post hoc XAI heatmaps (top) and the proposed compositional segmentation-classification architecture (bottom) on 4,603 ZSTC clove images. By isolating the clove bud via U-Net segmentation (0.9505 Dice) before ResNet-18 grading and ZSTC rule aggregation, the compositional design attains 99.45% macro-F1 alongside a guaranteed 100% Explanation Evidence Ratio (EER).',
+    teaserSummary: 'High classification accuracy in agricultural vision often hides shortcut reliance when deep models attend to warehouse tray backgrounds instead of commodity defects. Published in ETRI Journal (2026), this study benchmarks seven post hoc XAI methods across eight convolutional and Vision Transformer backbones using our Explanation Evidence Ratio (EER), which quantifies the share of saliency energy falling inside annotated clove bud masks. Comparing monolithic networks against an inherently interpretable compositional U-Net + ResNet-18 pipeline reveals sharp differences in foreground grounding, domain-shift stability, and regulatory audit readiness.',
+    resultsSummary: 'All eight monolithic networks exceed 99.48% clean macro-F1, yet their post hoc EER scores span 33.4% (DeiT Grad-CAM) to 82.4%, and replacing backgrounds collapses F1 by 53.7 percentage points (EfficientNet-B2) to 86.5 percentage points (EfficientNet-B0), with SHAP requiring up to 26.1 s per image. By segmenting the clove bud first with U-Net (0.951 Dice) before rule-based ZSTC grading, the compositional pipeline achieves 99.45% F1 with a structural 100% EER by design and earns unanimous 3/3 regulatory audit preference from certified ZSTC graders across 90 batches.',
     highlights: [
       { value: '99.45%', label: 'Compositional F1', sublabel: '100% EER by design' },
       { value: '33.4-82.4%', label: 'Post Hoc EER Range', sublabel: 'High accuracy hides shift risk' },
@@ -749,18 +770,21 @@ export const PUBLICATIONS: Publication[] = [
     figureHeading: 'Attribution Qualitative Comparison, EER Correlation & Expert Audits',
     figures: [
       {
+        title: 'Post Hoc Saliency vs. Compositional Masking Across Clove Grades',
         src: '/images/papers/etri2026/fig2_xai_comparison.png',
-        caption: 'Side-by-side visual comparison of seven post hoc explainers (Grad-CAM, Grad-CAM++, ScoreCAM, LIME, GradientSHAP, CLS-Attention, and Chefer LRP) across CNN and Vision Transformer classifiers on Commercial Grades I to IV. Even among models exceeding 99.4% clean F1, post hoc saliency frequently drifts onto empty tray background regions (33.4% EER for DeiT Grad-CAM up to 81.9% for Swin GradientSHAP), whereas compositional masking confines attribution strictly to botanical bud tissue.',
+        caption: 'Side-by-side comparison on real Zanzibar clove photographs across Commercial Grades I to IV contrasting original ground-truth masks, Grad-CAM, LIME, GradientSHAP, and compositional masks. Even among models exceeding 99.4% clean F1, post hoc saliency frequently drifts onto empty tray background regions (33.4% EER for DeiT Grad-CAM up to 81.9% for Swin GradientSHAP), whereas compositional masking restricts model evidence strictly to botanical bud tissue.',
         alt: 'ETRI 2026 XAI attribution comparison across clove grades'
       },
       {
+        title: 'Foreground EER vs. Domain-Shift Accuracy',
         src: '/images/papers/etri2026/fig3_eer_vs_robustness.png',
-        caption: 'Relationship between in-domain Explanation Evidence Ratio (EER) and macro-F1 degradation when original warehouse backgrounds are synthetically replaced. Monolithic architectures with low foreground attribution suffer sharp domain-shift collapses of 53.7 percentage points (EfficientNet-B2) to 86.5 percentage points (EfficientNet-B0), proving that high static test accuracy conceals brittle shortcut reliance.',
-        alt: 'EER vs Domain Shift robustness scatter plot'
+        caption: 'Relationship between in-domain Grad-CAM Explanation Evidence Ratio (EER) and accuracy when original warehouse backgrounds are synthetically replaced (r = 0.38, p < 0.001). Monolithic architectures with low foreground attribution suffer sharp domain-shift collapses, whereas the compositional pipeline maintains 100% EER and resists background replacement.',
+        alt: 'EER vs Domain Shift accuracy scatter plot'
       },
       {
+        title: 'Certified ZSTC Grader Regulatory Audit',
         src: '/images/papers/etri2026/fig4_expert_evaluation.png',
-        caption: 'Human regulatory audit across three certified Zanzibar State Trading Corporation (ZSTC) inspectors evaluating 90 commercial clove batches. Inspectors unanimously (3/3) preferred the compositional U-Net + ResNet-18 pipeline because its isolated bud segmentations and defect thresholds map transparently onto statutory ZSTC grading rules.',
+        caption: 'Human regulatory audit across three certified Zanzibar State Trading Corporation (ZSTC) inspectors evaluating 90 commercial clove batches. Inspectors achieved higher grade agreement (96.7%) and unanimously approved (3/3) the compositional pipeline for regulatory auditing because its segmented masks and defect percentages map directly to statutory ZSTC rules.',
         alt: 'ZSTC expert evaluation and audit approval bar chart'
       }
     ],
@@ -818,6 +842,7 @@ export const PUBLICATIONS: Publication[] = [
     datasetUrl: 'https://github.com/saaillab/zstc-clove-v1',
     teaserImage: '/images/papers/cloves/graphical_abstract.png',
     teaserCaption: 'Full experimental workflow on expert-annotated Zanzibar clove lots showing progression from ZSTC consensus labeling (kappa = 0.87 to 0.92 across four grades) through 137-feature classical models, 18 deep neural networks, and decomposed rule aggregation. Residual CNNs preserve fine surface-calyx cues (ResNet-18 reaches 94.46% single-clove accuracy), whereas decomposed lot aggregation attains 99.45% macro-F1 with traceable audit records.',
+    resultsSummary: 'Across 5,298 single-clove images partitioned by stratified 70/15/15 splits, skip-connected ResNet-18 reaches 94.46% test accuracy (94.39% precision, 94.33% macro-F1), whereas sequential VGG-16 collapses to 31.32% accuracy and 14.94% F1. Extended 18-architecture experiments achieve up to 99.71% macro-F1 on top CNNs and 99.45% macro-F1 via decomposed segmentation and ZSTC rule aggregation, while Grad-CAM inspection exposes occasional background tray cues that directly motivate segmentation-first pipelines.',
     tldr: 'Evaluates CNN feasibility on ZSTC-Clove-V1 (5,298 single-clove images across 4 ZSTC grades), finding ResNet-18 reaches 94.46% accuracy (94.33% F1) whereas unresidualized VGG-16 collapses to 31.32% (14.94% F1), motivating explainable pipelines.',
     abstract: 'Clove (Syzygium aromaticum L.) is Zanzibar\'s most economically significant export commodity, with the Zanzibar State Trading Corporation (ZSTC) defining four commercial grade tiers whose price differentials can exceed 40% between adjacent grades. Current ZSTC grading relies entirely on manual visual inspection, which is subjective, labour-intensive, and prone to inter-inspector inconsistency. We present the first comprehensive deep learning benchmark study for automated Zanzibar clove quality grading aligned with official ZSTC commercial standards. We introduce a dataset of 5,898 expert-graded clove images spanning four commercial ZSTC grades, labelled under consensus protocols by three certified ZSTC inspectors (Cohen\'s kappa = 0.92). We evaluated 18 state-of-the-art deep learning architectures spanning convolutional neural networks, vision transformers, and a classical machine learning baseline. Top convolutional models, including ResNet-50, ResNet-101, DenseNet-201, and EfficientNet-B2/B3, achieve a macro-averaged F1 score of 99.71% on the held-out test set. EfficientNet-B0 achieves 99.27% with only 5.3M parameters, representing the most practical deployment option for resource-constrained facilities. We further propose a three-stage decomposed multi-task framework integrating semantic segmentation, per-clove classification, and deterministic ZSTC rule-based aggregation, achieving 99.45% macro-F1 with human-readable audit trails traceable to official ZSTC grade thresholds. To our knowledge, this is the first machine vision benchmark study specifically addressing the commercial quality grade classification of Zanzibar cloves under ZSTC standards. Key limitations include data collection from a single harvest season and the absence of inference speed measurements on low-cost edge hardware relevant to field deployment.',
     keywords: ['ZSTC-Clove-V1', 'clove grading', 'Zanzibar', 'ResNet-18', 'East Africa', 'AI4EAC'],
@@ -837,11 +862,13 @@ export const PUBLICATIONS: Publication[] = [
     figureHeading: '18-Architecture Benchmark & Explainability Visualizations',
     figures: [
       {
+        title: '18-Architecture Macro-F1 Clove Grading Comparison',
         src: '/images/papers/cloves/figure_benchmark_f1.png',
         caption: 'Held-out macro-F1 distribution across 18 evaluated convolutional, Vision Transformer, and classical SVM models on ZSTC clove partitions. Architectures with skip or dense residual pathways sustain high discrimination (94.33% ResNet-18 single-clove macro-F1 and up to 99.71% in extended tuning), whereas plain sequential VGG-16 collapses to 14.94% macro-F1 (31.32% accuracy).',
         alt: '18-model clove benchmark F1 comparison'
       },
       {
+        title: 'Spatial Grad-CAM Attribution on ZSTC-Clove-V1',
         src: '/images/papers/cloves/figure_03_gradcam.png',
         caption: 'Spatial Grad-CAM class activation maps superimposed across commercial Grades I through IV on the ZSTC-Clove-V1 single-clove test set (n = 794). Although correctly predicted samples highlight bud heads and calyx discoloration (mpeta), peripheral tray activations visible in secondary regions directly motivated subsequent foreground-segmentation pipelines.',
         alt: 'Grad-CAM visualization on ZSTC-Clove-V1'
@@ -899,8 +926,11 @@ export const PUBLICATIONS: Publication[] = [
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'East Africa'],
     figureHeading: 'Real vs. DCGAN-Augmented Few-Shot Accuracy',
     figures: [
-      { src: '/images/papers/dsa2026/fig3_real_vs_aug.png', caption: 'Paired macro-F1 trajectory comparing real-only geometric augmentation against real + DCGAN synthetic mixtures across four classifier families at n = 25, 50, and 100 real samples per class. At n <= 50, discriminator dominance and mode collapse (lossD approaching 0.000 and lossG spiking to 44.5) inject incoherent leaf textures that consistently underperform simple real-data baselines until 100 to 200 real images per class are available.' }
+      {
+        title: 'Real-Only vs. DCGAN-Augmented Few-Shot Accuracy',
+        src: '/images/papers/dsa2026/fig3_real_vs_aug.png', caption: 'Paired macro-F1 trajectory comparing real-only geometric augmentation against real + DCGAN synthetic mixtures across four classifier families at n = 25, 50, and 100 real samples per class. At n <= 50, discriminator dominance and mode collapse (lossD approaching 0.000 and lossG spiking to 44.5) inject incoherent leaf textures that consistently underperform simple real-data baselines until 100 to 200 real images per class are available.' }
     ],
+    resultsSummary: 'Across 45 controlled runs evaluating four classifiers under 25, 50, and 100 real cassava images per class, unregularized DCGAN synthesis degrades macro-F1 by an average of 23.2 pp at n = 25, 21.2 pp at n = 50, and 10.3 pp at n = 100 relative to geometric augmentation alone. ImageNet-pretrained ResNet-50 (-35.9 pp) and EfficientNet-B3 (-32.7 pp) suffer steeper degradation than a scratch lightweight CNN (-1.9 pp) because mode-collapsed synthetic textures distort learned convolutional filters.',
     posterUrl: '/images/papers/posters/dsa2026-dcgan-poster.png',
     highlights: [
       { value: '-23.2 pp', label: 'Mean Drop (n=25)', sublabel: 'Synthetic GAN poisons training' },
@@ -968,7 +998,9 @@ export const PUBLICATIONS: Publication[] = [
     topics: ['Responsible AI', 'Agriculture', 'Benchmarking', 'East Africa'],
     figureHeading: 'Five-Dimension Representativeness Audit Scores',
     figures: [
-      { src: '/images/papers/dsa2026/fig4_audit_bars.png', caption: 'Composite 0-to-10 representativeness rubric totals showing PlantVillage scoring 4/10 overall versus 9/10 for both iCassava 2019 and iBean under Ugandan smallholder criteria. Uniform studio backgrounds in PlantVillage obscure severe geographic and domain-shift blind spots that the six-item AgriAI Bias Card makes explicit prior to rural rollout.' }
+      {
+        title: 'Composite Representativeness Audit Scores',
+        src: '/images/papers/dsa2026/fig4_audit_bars.png', caption: 'Composite 0-to-10 representativeness rubric totals showing PlantVillage scoring 4/10 overall versus 9/10 for both iCassava 2019 and iBean under Ugandan smallholder criteria. Uniform studio backgrounds in PlantVillage obscure severe geographic and domain-shift blind spots that the six-item AgriAI Bias Card makes explicit prior to rural rollout.' }
     ],
     posterUrl: '/images/papers/posters/dsa-2026-poster-auditing-representation.webp',
     highlights: [
@@ -978,18 +1010,19 @@ export const PUBLICATIONS: Publication[] = [
       { value: '6-Item', label: 'AgriAI Bias Card', sublabel: 'Deployment readiness checklist' }
     ],
     contributions: [
-      'Constructed a quantitative five-dimension representativeness rubric (0-10 points) evaluating geography, imaging environment, Gini class balance (threshold ≤ 0.10), image quality, and morphological coverage.',
+      'Constructed a quantitative five-dimension representativeness rubric (0-10 points) evaluating geography, imaging environment, Gini class balance (threshold <= 0.10), image quality, and morphological coverage.',
       'Audited three widely deployed agricultural benchmarks, documenting PlantVillage at 4/10 versus Sub-Saharan field-collected iCassava 2019 (9/10) and iBean (9/10).',
       'Introduced the six-item AgriAI Bias Card giving researchers and agronomic practitioners a standardized pre-deployment documentation protocol.'
     ],
+    resultsSummary: 'Evaluating three agricultural benchmarks on our five-dimension rubric (geography, imaging environment, Gini class balance <= 0.10, quality, and morphology) yields 4/10 for PlantVillage versus 9/10 for East African field datasets iCassava 2019 and iBean. Alongside quantitative scores, the six-item AgriAI Bias Card documents collection origin, class skew, and field suitability prior to deployment.',
     tables: [
       {
-        title: 'Five-Dimension Representativeness Audit Across Agricultural Benchmarks',
-        headers: ['Dataset', 'Collection Regime', 'Audit Score (/10)', 'Key Limitation / Strength'],
+        title: 'Five-Dimension Representativeness Audit Across Benchmarks',
+        headers: ['Dataset', 'Regime', 'Score', 'Key Audit Finding'],
         rows: [
-          ['PlantVillage (~54,306 imgs)', 'Laboratory uniform grey/black background', '4 / 10', 'High lab volume; low East African field transfer'],
-          ['iCassava 2019 (21,397 imgs)', 'Ugandan smallholder smartphones', '9 / 10', 'Ecologically valid field shift; heavy CMD skew'],
-          ['iBean (Makerere)', 'In-field Ugandan bean plots', '9 / 10', 'Authentic lighting & field occlusions']
+          ['PlantVillage (~54,306)', 'Uniform studio lab', '4 / 10', 'High volume; weak field transfer'],
+          ['iCassava 2019 (21,397)', 'Ugandan smartphones', '9 / 10', 'Field valid; strong CMD skew'],
+          ['iBean (Makerere)', 'In-field bean plots', '9 / 10', 'Authentic light & field clutter']
         ]
       }
     ],
@@ -1036,8 +1069,11 @@ export const PUBLICATIONS: Publication[] = [
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'East Africa'],
     figureHeading: 'Linear Probe vs. Full Fine-Tuning Scaling',
     figures: [
-      { src: '/images/papers/dsa2026/p1_lp_ft_lines.png', caption: 'Direct comparison between frozen linear probing and end-to-end full fine-tuning across few-shot budgets (k = 10 to 100 images per class) on Ugandan field cassava imagery. Full fine-tuning consistently outperforms linear probing by +18 to +20.3 percentage points at k = 50 because frozen natural-object features fail to separate fine foliar necrosis from cluttered soil and healthy canopy backgrounds.' }
+      {
+        title: 'Linear Probing vs. End-to-End Fine-Tuning Scaling',
+        src: '/images/papers/dsa2026/p1_lp_ft_lines.png', caption: 'Direct comparison between frozen linear probing and end-to-end full fine-tuning across few-shot budgets (k = 10 to 100 images per class) on Ugandan field cassava imagery. Full fine-tuning consistently outperforms linear probing by +18 to +20.3 percentage points at k = 50 because frozen natural-object features fail to separate fine foliar necrosis from cluttered soil and healthy canopy backgrounds.' }
     ],
+    resultsSummary: 'Across 21,397 smartphone field images spanning five cassava conditions, full fine-tuning outperforms frozen linear probing by +18 to +20.3 percentage points at k = 50 labels per class. Fine-tuned ViT-B/16 climbs from 50.6% (k = 10) to 63.6% (k = 50) and 68.8% (k = 100), gaining +28.5 percentage points over training from scratch and identifying k = 50 labels per class (250 total images) as the point before marginal accuracy returns flatten 8x.',
     posterUrl: '/images/papers/posters/dsa-2026-poster-few-shot-cassava.webp',
     highlights: [
       { value: '68.8%', label: 'ViT-B/16 (k=100)', sublabel: '+29.6 pp over scratch (39.2%)' },
@@ -1122,10 +1158,10 @@ export const PUBLICATIONS: Publication[] = [
         headers: ['Dimension', 'Ethiopia', 'Kenya', 'Rwanda'],
         rows: [
           ['Adoption Year', '2022', '2025', '2023'],
-          ['Primary Policy Focus', 'Education & Healthcare', 'Digital Infrastructure & Data', 'National Readiness & Governance'],
+          ['Policy Focus', 'Education & Health', 'Infrastructure & Data', 'National Readiness'],
           ['Cultural Grounding', 'Low', 'Low', 'Moderate'],
-          ['Regional EAC Coordination', 'None specified', 'None specified', 'Partial'],
-          ['Data Governance Formalization', 'Nascent', 'Explicit framework', 'Explicit framework']
+          ['EAC Coordination', 'None specified', 'None specified', 'Partial'],
+          ['Data Governance', 'Nascent', 'Explicit framework', 'Explicit framework']
         ]
       }
     ],
@@ -1186,12 +1222,12 @@ export const PUBLICATIONS: Publication[] = [
     tables: [
       {
         title: 'Four-Vector Structural Dependency Taxonomy & Multipolar Mitigation Levers',
-        headers: ['Dependency Vector', 'Current Global South Bottleneck', 'Recommended Sovereignty Lever'],
+        headers: ['Vector', 'Global South Bottleneck', 'Sovereignty Lever'],
         rows: [
-          ['Foundational Compute', 'Zero domestic hyperscale clusters', 'Regional federated academic HPC pools'],
-          ['Model & API Layer', 'Foreign closed-weight API lock-in', 'Open-weight regional domain adaptation'],
-          ['Data Flows', 'Uncompensated raw linguistic extraction', 'Community data trusts & benefit-sharing'],
-          ['Regulatory Design', 'Verbatim copy of external AI acts', 'Context-tuned AU/EAC-ASEAN harmonization']
+          ['Compute', 'No domestic hyperscale clusters', 'Regional federated HPC pools'],
+          ['Models & APIs', 'Closed-weight API lock-in', 'Open-weight local adaptation'],
+          ['Data Flows', 'Uncompensated data extraction', 'Community data trusts'],
+          ['Governance', 'Copied external AI statutes', 'AU/EAC-ASEAN harmonization']
         ]
       }
     ],
@@ -1241,6 +1277,7 @@ export const PUBLICATIONS: Publication[] = [
     topics: ['Healthcare', 'Medical Imaging', 'Deep Learning'],
     figures: [
       {
+        title: 'Endoscopic Polyp Contour Segmentation Results',
         src: '/images/papers/health/bafnet_results.png',
         caption: 'Side-by-side endoscopic segmentation overlays comparing raw colonoscopy frames, ground-truth clinical polyp masks, and BAFNet contour predictions across benchmark cohorts. Gated contour inhibition sharply separates mucosal background texture from flat and small colorectal polyps, sustaining 0.914 Dice (0.863 IoU) on EndoScene and 0.808 Dice on both CVC-ColonDB and ETIS.',
         alt: 'BAFNet polyp segmentation comparison'
@@ -1332,7 +1369,7 @@ export const PUBLICATIONS: Publication[] = [
         rows: [
           ['Journal & Article', 'Computers and Electronics in Agriculture (Vol. 232, 110107, 2025)'],
           ['Journal Standing', 'Elsevier Q1 Top Journal (Impact Factor 8.9)'],
-          ['Architectural Target', 'Recovers attenuated early-stage foliar lesion cues against canopy noise'],
+          ['Architectural Target', 'Recovers attenuated lesion signals from canopy clutter'],
           ['Crop & Task', 'In-field multi-class cassava leaf pathology classification']
         ]
       }
@@ -1396,10 +1433,10 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Comparative Case-Study Profiles Under the 7-Dimensional Sovereignty Matrix',
         headers: ['Country Case', 'Structural Position', 'Key Sovereignty Lesson'],
         rows: [
-          ['Singapore', 'High-capacity regional AI hub', 'Targeted state R&D co-investment + regulatory sandbox'],
-          ['Vietnam', 'Rapidly scaling talent & engineering base', 'Domestic talent retention + open-model localization'],
-          ['Kenya', 'East African innovation leader with infra constraints', 'Need for local compute & indigenous data governance'],
-          ['Syria', 'Sanctioned / conflict-constrained environment', 'Severe exclusion from global APIs, hardware & standards']
+          ['Singapore', 'High-capacity AI hub', 'State R&D co-investment & sandboxes'],
+          ['Vietnam', 'Scaling engineering base', 'Talent retention & local models'],
+          ['Kenya', 'East African hub with gaps', 'Need local compute & data trusts'],
+          ['Syria', 'Sanctioned constraints', 'Exclusion from global APIs & hardware']
         ]
       }
     ],
@@ -1454,9 +1491,9 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Socio-Technical Validation & Co-Design Findings (ACM AfriCHI 2025)',
         headers: ['Dimension', 'Baseline Observation / Finding', 'System Design Requirement'],
         rows: [
-          ['Technical Prototype', '99.0% accuracy on single-clove grading', 'Segmentation-first isolation for bulk lots'],
-          ['Quality Determiner', 'Grade 4 (mpeta) pale-brown fermentation quota', 'Visual highlight of rejected stems & mpeta'],
-          ['Stakeholder Trust', 'Price ambiguity at warehouse handoff', 'Bilingual transparent visual audit trail on phone']
+          ['Technical Prototype', '99.0% single-clove accuracy', 'Segmentation isolation for bulk lots'],
+          ['Quality Determiner', 'Grade 4 (mpeta) fermentation limit', 'Highlight stems & pale-brown mpeta'],
+          ['Stakeholder Trust', 'Price ambiguity at warehouse gate', 'Bilingual visual audit trail on phone']
         ]
       }
     ],
@@ -1574,19 +1611,22 @@ export const PUBLICATIONS: Publication[] = [
     figureHeading: '3D Reconstruction, Depth Point Clouds & Bagged Tree Regression',
     figures: [
       {
+        title: 'Kinect v2 Depth Point Clouds & 3D Meshes',
         src: '/images/papers/prior/carcass2024_3d_cloud.jpeg',
         caption: 'Segmented overhead Kinect v2 depth frames converted into calibrated 3D point clouds for moving broiler carcasses on a commercial shackle conveyor. Surface integration over the reconstructed 3D mesh yields candidate geometric volumes alongside 2D contour predictors without halting line flow.',
         alt: 'Chicken carcass depth images and 3D point clouds'
       },
       {
-        src: '/images/papers/prior/carcass2024_bagged_tree.jpeg',
-        caption: 'Scatter correlation comparing predicted poultry carcass volumes against physical reference measurements using the top-performing Bagged Tree regressor. Combining reconstructed surface integration with 2D/3D morphological features attains R^2 = 0.9988, RMSE = 5.335, and 2.125% average relative error in under 1.6 seconds per bird.',
-        alt: 'Bagged tree volume regression validation plot'
-      },
-      {
+        title: 'Conveyor Processing-Line Depth Station',
         src: '/images/papers/prior/carcass2024.jpeg',
         caption: 'Calibrated processing-line imaging rig positioning the non-contact Kinect v2 depth sensor above suspended poultry shackles under controlled illumination. The non-invasive setup eliminates physical contact contamination prior to automated size grading.',
         alt: 'Kinect v2 camera acquisition setup'
+      },
+      {
+        title: 'Bagged Tree Volumetric Regression Validation',
+        src: '/images/papers/prior/carcass2024_bagged_tree.jpeg',
+        caption: 'Scatter correlation comparing predicted poultry carcass volumes against physical reference measurements using the top-performing Bagged Tree regressor. Combining reconstructed surface integration with 2D/3D morphological features attains R^2 = 0.9988, RMSE = 5.335, and 2.125% average relative error in under 1.6 seconds per bird.',
+        alt: 'Bagged tree volume regression validation plot'
       }
     ],
     highlights: [
@@ -1605,10 +1645,10 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Online 3-D Chicken Carcass Volume Estimation Results (Poultry Science 2024)',
         headers: ['Metric', 'Measured Performance', 'Acquisition & Compute Context'],
         rows: [
-          ['Best Regression Model', 'Bagged Tree Regression', 'Trained on 2D + 3D point-cloud features'],
-          ['Coefficient of Det. (R²)', '0.9988', 'Near-perfect volumetric correspondence'],
+          ['Best Regressor', 'Bagged Tree Regression', 'Trained on 2D + 3D point-cloud cues'],
+          ['Coefficient (R²)', '0.9988', 'Near-exact volumetric correspondence'],
           ['Error Bounds', 'RMSE = 5.335 · ARE = 2.125%', 'Non-contact conveyor line grading'],
-          ['Runtime Latency', '< 1.6 seconds / carcass', 'Real-time Kinect v2 depth + reconstruction']
+          ['Latency', '< 1.6 s / carcass', 'Real-time Kinect v2 reconstruction']
         ]
       }
     ],
@@ -1743,10 +1783,10 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Taxonomic Coverage of Computer Vision Weight & Volume Pipelines (Poultry Science 2021)',
         headers: ['Poultry Commodity', 'Primary Imaging Modality', 'Typical Modeling Approach'],
         rows: [
-          ['Live Broiler Chickens', 'Overhead depth + RGB', 'Posture ellipse fitting & SVR / ANN'],
-          ['Whole Carcasses', '3D depth reconstruction', 'Point-cloud surface area & volume regression'],
-          ['Carcass Retail Cuts', 'Depth + Active Shape Model', 'Segmented cut-volume to mass SVR'],
-          ['Intact Chicken Eggs', 'Infrared depth & contour', 'Ellipsoidal volume & GPR regression']
+          ['Live Broilers', 'Overhead depth + RGB', 'Posture ellipses & SVR / ANN'],
+          ['Whole Carcasses', '3D depth reconstruction', 'Surface area & volume regression'],
+          ['Retail Cuts', 'Depth + Active Shape Model', 'Segmented cut-volume SVR'],
+          ['Intact Eggs', 'Infrared depth & contour', 'Ellipsoidal volume & GPR']
         ]
       }
     ],
@@ -1800,16 +1840,19 @@ export const PUBLICATIONS: Publication[] = [
     figureHeading: 'Occlusion Splitting Geometry & Weight/Volume Validation',
     figures: [
       {
+        title: '2D & 3D Shape Geometry Descriptors',
         src: '/images/papers/prior/tomato2021_geometry.png',
         caption: 'Quantitative 2D and 3D shape descriptor geometry extracted from depth silhouettes, spanning principal axes, radial distances, eccentricity, and surface curvature. Seven machine learning regressors trained on these orientation-invariant cues enable automated weight and volume sorting without physical scales.',
         alt: 'Geometric descriptors extracted for tomatoes'
       },
       {
+        title: 'Polygon Contour Occlusion Splitting',
         src: '/images/papers/prior/tomato2021_watershed.jpeg',
         caption: 'Cluster segmentation workflow applying polygon approximation and concave/convex contour vertices to split touching tomatoes on moving conveyor belts. Individual fruit masks preserve reliable pixel area and depth height inputs even under partial mutual occlusion.',
         alt: 'Watershed separation of touching tomatoes'
       },
       {
+        title: 'Weight & Volume Regression Validation',
         src: '/images/papers/prior/tomato2021_regression.jpeg',
         caption: 'Predicted versus experimentally measured tomato mass and water-displacement volume across held-out postharvest test sets. On single-tomato sorting validation, RBF-SVM attains R^2 = 0.982 (RMSE = 1.2683 cm^3) for volume and Bayesian regularized ANN reaches R^2 = 0.971 (RMSE = 1.468 g) for weight.',
         alt: 'Tomato weight and volume regression plots'
@@ -1882,19 +1925,22 @@ export const PUBLICATIONS: Publication[] = [
     figureHeading: 'Soil-Bin Instrumentation & Analytical vs. DEM Force Validation',
     figures: [
       {
+        title: 'Instrumented Soil-Bin Trolley Setup',
         src: '/images/papers/prior/subsoiling2021_rig.jpeg',
         caption: 'Controlled indoor soil-bin trolley configured under Taguchi experimental design with three-point hitch force transducers measuring horizontal draught and vertical soil reaction loads during deep tillage.',
         alt: 'Instrumented subsoiling soil-bin rig'
       },
       {
-        src: '/images/papers/prior/subsoiling2021_validation.png',
-        caption: 'Quantitative validation plotting analytical modified-McKyes predictions and Discrete Element Method (DEM) cutting forces against measured soil-bin dynamometer readings (p < 0.05). DEM achieves superior force fidelity (R^2 = 0.984, NRMSE = 1.936 vs. 6.008 NRMSE analytical), aligned with non-significant ANOVA residuals (p = 0.9396 horizontal, p = 0.9696 vertical).',
-        alt: 'Subsoiling draught force regression plots'
-      },
-      {
+        title: 'Measured vs. Simulated Furrow Disturbance Profiles',
         src: '/images/papers/prior/subsoiling2021_furrow.jpeg',
         caption: 'Measured post-tillage soil furrow cross-section paired directly against the simulated elastoplastic DEM particle disturbance trace. Close geometric correspondence in soil upheaval and loosened trench width validates non-destructive simulation tuning of subsoiler depth.',
         alt: 'Experimental vs DEM soil furrow disturbance profile'
+      },
+      {
+        title: 'Analytical vs. DEM Cutting-Force Validation',
+        src: '/images/papers/prior/subsoiling2021_validation.png',
+        caption: 'Quantitative validation plotting analytical modified-McKyes predictions and Discrete Element Method (DEM) cutting forces against measured soil-bin dynamometer readings (p < 0.05). DEM achieves superior force fidelity (R^2 = 0.984, NRMSE = 1.936 vs. 6.008 NRMSE analytical), aligned with non-significant ANOVA residuals (p = 0.9396 horizontal, p = 0.9696 vertical).',
+        alt: 'Subsoiling draught force regression plots'
       }
     ],
     highlights: [
@@ -1911,10 +1957,10 @@ export const PUBLICATIONS: Publication[] = [
     tables: [
       {
         title: 'Analytical vs. Discrete Element Simulation Accuracy on Soil-Bin Force Trials',
-        headers: ['Modeling Approach', 'Regression R²', 'Normalized RMSE', 'Significance / Finding'],
+        headers: ['Model Approach', 'R²', 'NRMSE', 'Key Finding'],
         rows: [
-          ['Discrete Element Method (DEM)', '0.984', '1.936', 'Captures elastoplastic soil failure (p < 0.05)'],
-          ['Analytical Model (Modified-McKyes)', '0.957', '6.008', 'Closed-form force & furrow approximation']
+          ['Discrete Element (DEM)', '0.984', '1.936', 'Elastoplastic soil failure (p < 0.05)'],
+          ['Analytical (McKyes)', '0.957', '6.008', 'Closed-form force & furrow estimate']
         ]
       }
     ],
@@ -2042,9 +2088,9 @@ export const PUBLICATIONS: Publication[] = [
         title: 'F-YOLO Architectural Modules for Selective Blossom Harvesting (Agronomy 2021)',
         headers: ['Network Component', 'Module Architecture', 'Agronomic Purpose'],
         rows: [
-          ['Input Stage', 'Cutout + Mosaic slicing', 'Robustness to dense cluster overlapping'],
-          ['Backbone', 'CSPDenseNet + feature fusion', 'Maximizes gradient flow for small early buds'],
-          ['Neck & Head', 'CSPResNeXt + multi-scale fusion', 'Truncates redundancy for mobile GPU latency']
+          ['Input Stage', 'Cutout + Mosaic slicing', 'Resilience to overlapping clusters'],
+          ['Backbone', 'CSPDenseNet + fusion', 'Preserves gradient flow for small buds'],
+          ['Neck & Head', 'CSPResNeXt + multi-scale', 'Low redundancy for mobile GPU inference']
         ]
       }
     ],
@@ -2104,12 +2150,12 @@ export const PUBLICATIONS: Publication[] = [
     tables: [
       {
         title: 'Process Optimization Scope (J. Food Processing & Preservation)',
-        headers: ['Parameter', 'Methodology / Focus'],
+        headers: ['Parameter', 'Methodology / Setting', 'Scope'],
         rows: [
-          ['Experimental Design', 'Box-Behnken Response Surface Methodology (RSM)'],
-          ['Thermal Equipment', 'Closed-loop heat pump dryer for horticultural slices'],
-          ['Controlled Factors', 'Drying air temperature, slice thickness, air velocity'],
-          ['Optimization Goals', 'Minimize specific energy consumption and preserve dried garlic quality']
+          ['Experimental Design', 'Box-Behnken RSM', 'Three thermal factors'],
+          ['Thermal Equipment', 'Closed-loop heat pump dryer', 'Horticultural slice drying'],
+          ['Controlled Factors', 'Temp, slice width, airflow', 'Operating range control'],
+          ['Optimization Goals', 'Lower specific energy use', 'Preserve color & rehydration']
         ]
       }
     ],
@@ -2175,9 +2221,9 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Welfare Sensing Modalities Synthesized in AIIA (Vol. 4, 2020)',
         headers: ['Sensing Modality', 'Captured Biological Signal', 'Primary Welfare Application'],
         rows: [
-          ['RGB Imaging', 'Texture, feather condition, swarm distribution', 'Crowding, activity indexing, behavior scoring'],
-          ['Infrared Thermal', 'Surface body temperature distribution', 'Heat stress & febrile illness screening'],
-          ['3D Depth Sensing', 'Posture geometry, gait symmetry, contour', 'Lameness detection & lighting-invariant tracking']
+          ['RGB Imaging', 'Texture, feathers, swarm density', 'Crowding & behavior scoring'],
+          ['Infrared Thermal', 'Body surface temperature', 'Heat stress & illness screening'],
+          ['3D Depth Sensing', 'Posture, gait, body contour', 'Lameness & light-invariant tracking']
         ]
       }
     ],
@@ -2240,9 +2286,9 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Exponential GPR Egg Volume Estimation Accuracy Under Occlusion (2020)',
         headers: ['Conveyor Egg Configuration', 'Segmentation Algorithm', 'RMSE (cm³)', 'R²'],
         rows: [
-          ['Single Egg (No Occlusion)', 'Morphological thresholding', '1.175', '0.984'],
-          ['Simple Multi-Egg Occlusion', 'Curvature + k-closest M-circle center', '1.080', 'Validated'],
-          ['Complex Multi-Egg Occlusion', 'Curvature + k-closest M-circle center', '1.294', 'Validated']
+          ['Single Egg (Isolated)', 'Morphological thresholding', '1.175', '0.984'],
+          ['Simple Multi-Egg', 'Curvature + M-circle center', '1.080', 'Validated'],
+          ['Complex Multi-Egg', 'Curvature + M-circle center', '1.294', 'Validated']
         ]
       }
     ],
@@ -2364,9 +2410,9 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Grain Separation & Variety Grading Pipeline (IAEJ 2020)',
         headers: ['Processing Step', 'Technique', 'Role in Postharvest Grading'],
         rows: [
-          ['1. Binary Masking', 'Adaptive thresholding & noise filtering', 'Isolates rice kernel cluster foreground'],
-          ['2. Kernel Separation', 'Distance transform + Watershed split', 'Separates touching/overlapping grains into singles'],
-          ['3. Variety Classification', 'Geometric & textural kernel features', 'Assigns rice cultivar class without manual sorting']
+          ['1. Binary Masking', 'Adaptive thresholding', 'Isolates rice cluster foreground'],
+          ['2. Kernel Separation', 'Distance transform + Watershed', 'Splits touching kernels to singles'],
+          ['3. Classification', 'Shape & texture descriptors', 'Assigns rice cultivar in-line']
         ]
       }
     ],
@@ -2430,9 +2476,9 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Early Infection Detection Timing & RBF-SVM Classification Accuracy (2019)',
         headers: ['Feature Group', 'Diagnostic Capability / Timing', 'RBF-SVM Accuracy (%)'],
         rows: [
-          ['Circle Variance & Elongation', 'Earliest significant shift at Day 4 post-challenge', 'Part of 97.5% posture model'],
-          ['Eccentricity & Walk Speed', 'Significant behavioral shift by Day 6', '97.8% (all features combined)'],
-          ['Convexity & Complexity', 'No statistically reliable early warning', 'Excluded as standalone signal']
+          ['Circle Variance & Elongation', 'Significant shift at Day 4', '97.5% posture model'],
+          ['Eccentricity & Walk Speed', 'Significant shift by Day 6', '97.8% all-feature model'],
+          ['Convexity & Complexity', 'No early warning signal', 'Excluded standalone']
         ]
       }
     ],
@@ -2483,11 +2529,13 @@ export const PUBLICATIONS: Publication[] = [
     figureHeading: 'Feature Extraction Flowchart & RBF-SVM Mass-Volume Validation',
     figures: [
       {
+        title: 'Depth Feature Extraction Pipeline',
         src: '/images/papers/prior/tomato2019_pipeline.jpeg',
         caption: 'End-to-end computer vision workflow from raw Kinect depth frames and background segmentation through orientation-aware 2D/3D descriptor extraction across five machine learning regressors (Journal of Food Engineering 2019). RBF-SVM achieves 97.06% prediction accuracy on mass using 2D features and 96.94% on volume using combined 2D + 3D descriptors.',
         alt: 'Cherry tomato feature extraction pipeline'
       },
       {
+        title: 'Allometric Mass-Volume Calibration',
         src: '/images/papers/prior/tomato2019_mass_volume.jpeg',
         caption: 'Empirical allometric power-law calibration (M = 1.312 V^0.9551) linking cherry tomato volume to fruit mass on held-out postharvest samples. The calibrated relationship transfers vision-estimated volumes directly into weight predictions at R^2 = 0.9824 (RMSE = 15.84 g) for inline density grading.',
         alt: 'Mass vs volume regression and calibration plots'
@@ -2509,9 +2557,9 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Cherry Tomato Mass & Volume Estimation Performance (J. Food Eng. 2019)',
         headers: ['Model / Relationship', 'Input Features', 'Performance Metric'],
         rows: [
-          ['RBF-SVM Regressor (Mass)', '2D geometric image descriptors', '97.06% prediction accuracy'],
-          ['RBF-SVM Regressor (Volume)', 'Combined 2D + 3D depth descriptors', '96.94% prediction accuracy'],
-          ['Allometric Power Law', 'M = 1.312 · V⁰·⁹⁵⁵¹', 'R² = 0.9824 (test RMSE = 15.84 g)']
+          ['RBF-SVM (Mass)', '2D geometric descriptors', '97.06% prediction accuracy'],
+          ['RBF-SVM (Volume)', 'Combined 2D + 3D depth cues', '96.94% prediction accuracy'],
+          ['Allometric Power Law', 'M = 1.312 · V⁰·⁹⁵⁵¹', 'R² = 0.9824 (RMSE = 15.84 g)']
         ]
       }
     ],
@@ -2706,9 +2754,9 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Automated Farrowing Tracking & Asphyxia Warning Accuracy (COMPAG 2018)',
         headers: ['Task', 'Algorithm', 'Measured Performance'],
         rows: [
-          ['Piglet Presence (0 vs 14)', 'Multi-ellipse depth fitting', '83.2% (0) · 80.1% (14) accuracy'],
-          ['Sequential Litter Count', 'Incremental ellipse tracking', 'R² = 0.918 (RMSE = 1.225 piglets)'],
-          ['Asphyxia Event Detection', 'Inter-birth interval classifier', '86.3% Acc · 92.1% Spec · 79.1% Prec · 72.3% Sens']
+          ['Piglet Presence (0 vs 14)', 'Multi-ellipse depth fitting', '83.2% (0) · 80.1% (14) Acc'],
+          ['Sequential Litter Count', 'Incremental ellipse tracking', 'R² = 0.918 (RMSE = 1.225)'],
+          ['Asphyxia Event Alert', 'Inter-birth interval model', '86.3% Acc · 92.1% Spec']
         ]
       }
     ],
@@ -2769,8 +2817,8 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Pre-Parturition Sow Activity Classification Framework (2018)',
         headers: ['Behavioral Signal', 'Physical Change Prior to Farrowing', 'Alert Purpose'],
         rows: [
-          ['Standing / Lying Ratio', 'Rapid increase in posture switches', 'Flags pre-farrowing restlessness window'],
-          ['Activity Transition Rate', 'Frequent postural reorientation', 'Prepares farrowing supervision & heating lamps']
+          ['Standing / Lying Ratio', 'Rapid posture switch increase', 'Flags pre-farrowing restlessness'],
+          ['Activity Transition Rate', 'Frequent postural reorientation', 'Triggers farrowing readiness alert']
         ]
       }
     ],
@@ -2879,9 +2927,9 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Greenhouse Telemetry & Actuation Control Loop (2016)',
         headers: ['Sensed Variable', 'Actuation Channel', 'Control Mode'],
         rows: [
-          ['Air Temp & Humidity', 'Automated ventilation fans & misting', 'Threshold hysteresis feedback'],
+          ['Air Temp & Humidity', 'Ventilation fans & misting', 'Threshold hysteresis feedback'],
           ['Soil Moisture', 'Solenoid drip irrigation valve', 'Demand-driven watering'],
-          ['Solar Irradiance', 'Motorized greenhouse shading / lighting', 'Photoperiod regulation']
+          ['Solar Irradiance', 'Motorized greenhouse shading', 'Photoperiod regulation']
         ]
       }
     ],
@@ -2934,8 +2982,8 @@ export const PUBLICATIONS: Publication[] = [
         title: 'Intelligent Energy Management Logic Summary (IJETAE 2015)',
         headers: ['Input Sensor', 'Decision Condition', 'Controlled Electrical Load'],
         rows: [
-          ['PIR Occupancy', 'Room occupancy timeout expiry', 'Cuts idle lighting & fan circuits'],
-          ['Ambient Lux Cell', 'Sufficient natural daylight threshold', 'Suppresses unnecessary artificial fixtures']
+          ['PIR Occupancy', 'Room timeout expiry', 'Cuts idle lighting & fan loads'],
+          ['Ambient Lux Cell', 'Sufficient natural daylight', 'Suppresses daytime light fixtures']
         ]
       }
     ],
