@@ -7,10 +7,10 @@ export interface Props {
 }
 
 const {
-	title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar",
-	description = "Sustainable AI for Agriculture & Intelligent Livelihoods Lab led by Dr. Innocent Nyalala at IIT Madras Zanzibar - Pioneering transformative AI solutions for East Africa",
+	title = "SAAIL Lab | IIT Madras Zanzibar",
+	description = "Sustainable AI for Agriculture & Intelligent Livelihoods Lab (SAAIL Lab) at IIT Madras Zanzibar and WSDSAI IIT Madras. Research in precision agriculture, Swahili NLP and AI safety (CultureSEEDS), responsible AI, and maternal healthcare.",
 	canonical = "https://saaillab.github.io",
-	ogImage = "https://saaillab.github.io/images/people/image.png"
+	ogImage = "https://saaillab.github.io/images/logo/saail-logo.png"
 } = Astro.props;
 ---
 
@@ -19,87 +19,72 @@ const {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href="/images/logo/saail-crest.png" />
+		<link rel="apple-touch-icon" href="/images/logo/saail-crest.png" />
 
 		<!-- Performance Optimization -->
 		<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 		<link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
-		<link rel="dns-prefetch" href="https://visitor-badge.laobi.icu" />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
-		
-		<!-- Comprehensive SEO Meta Tags -->
-		<meta name="keywords" content="Innocent Nyalala, Dr Innocent Nyalala, Assistant Professor Innocent Nyalala, IIT Madras Zanzibar, Wadhwani School Data Science AI, SAAIL Lab, CropGuardNet, CropKD-Net, DGS-Bench, CLOVES-4603, CARA-FM, sustainable agriculture AI, medical imaging AI, placental imaging, explainable AI, East Africa, Zanzibar, Tanzania, 1185 citations, h-index 15">
-		<meta name="author" content="Innocent Nyalala">
-		<meta name="citation_author" content="Innocent Nyalala">
-		<meta name="dc.creator" content="Innocent Nyalala">
-		<meta name="dc.title" content="SAAIL Lab - Sustainable AI for Agriculture & Intelligent Livelihoods">
-		<meta name="dc.subject" content="Artificial Intelligence, Machine Learning, Sustainable Agriculture, Medical Imaging, East Africa">
-		<meta name="dc.description" content={description}>
-		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-		<meta name="googlebot" content="index, follow">
-		<meta name="bingbot" content="index, follow">
-		<link rel="canonical" href={canonical}>
+
+		<!-- Academic & Research SEO -->
+		<meta name="keywords" content="SAAIL Lab, Sustainable AI for Agriculture and Intelligent Livelihoods, IIT Madras Zanzibar, WSDSAI IIT Madras, Innocent Nyalala, CropGuardNet, DGS-Bench, CLOVES-4603, ZSTC-Clove-V1, CARA-FM, ETRI Journal, CultureSEEDS, Google DeepMind, Swahili NLP, Zanzibar Swahili Corpus, CashewAI, SeaweedAI, PlacentaVision, Responsible AI, Explainable AI, East Africa AI, 1270 citations, h-index 15" />
+		<meta name="author" content="SAAIL Lab" />
+		<meta name="citation_author" content="Innocent Nyalala" />
+		<meta name="dc.creator" content="SAAIL Lab" />
+		<meta name="dc.title" content="SAAIL Lab | Sustainable AI for Agriculture and Intelligent Livelihoods" />
+		<meta name="dc.subject" content="Artificial Intelligence, Sustainable Agriculture, Swahili NLP, AI Safety, Medical Imaging, East Africa" />
+		<meta name="dc.description" content={description} />
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+		<meta name="googlebot" content="index, follow" />
+		<meta name="bingbot" content="index, follow" />
+		<link rel="canonical" href={canonical} />
 
 		<!-- Geographic and Regional SEO -->
-		<meta name="geo.region" content="TZ-15">
-		<meta name="geo.placename" content="Zanzibar, Tanzania">
-		<meta name="geo.position" content="-6.165918;39.202641">
-		<meta name="ICBM" content="-6.165918, 39.202641">
-		<meta name="coverage" content="East Africa">
-		<meta name="distribution" content="global">
-		<meta name="target" content="all">
-		<meta name="audience" content="researchers, students, academics, AI practitioners, agricultural technologists">
-
-		<!-- Academic and Research SEO -->
-		<meta name="citation_title" content="SAAIL Lab - Sustainable AI Research">
-		<meta name="citation_author_institution" content="IIT Madras Zanzibar">
-		<meta name="citation_keywords" content="artificial intelligence, machine learning, sustainable agriculture, medical imaging, East Africa">
-		<meta name="research_field" content="Computer Science, Artificial Intelligence, Agricultural Technology">
+		<meta name="geo.region" content="TZ-15" />
+		<meta name="geo.placename" content="Zanzibar, Tanzania" />
+		<meta name="geo.position" content="-6.165918;39.202641" />
+		<meta name="ICBM" content="-6.165918, 39.202641" />
+		<meta name="coverage" content="East Africa" />
+		<meta name="distribution" content="global" />
+		<meta name="target" content="all" />
+		<meta name="audience" content="researchers, students, academics, AI practitioners, agricultural technologists" />
 
 		<!-- Cross-site relationship -->
-		<link rel="author" href="https://inyalala.github.io">
-		<link rel="me" href="https://inyalala.github.io">
-		<link rel="alternate" hreflang="en" href="https://saaillab.github.io">
-		
-		<!-- Open Graph (Social Media) -->
-		<meta property="og:title" content={title}>
-		<meta property="og:description" content={description}>
-		<meta property="og:type" content="website">
-		<meta property="og:url" content={canonical}>
-		<meta property="og:site_name" content="SAAIL Lab - Innocent Nyalala">
-		<meta property="og:image" content={ogImage}>
-		<meta property="og:image:alt" content="SAAIL Lab - Sustainable AI for Agriculture & Intelligent Livelihoods">
-		<meta property="og:image:width" content="1200">
-		<meta property="og:image:height" content="630">
-		<meta property="og:locale" content="en_US">
-		<meta property="article:author" content="https://inyalala.github.io">
-		
+		<link rel="author" href="https://inyalala.github.io" />
+		<link rel="me" href="https://inyalala.github.io" />
+		<link rel="alternate" hreflang="en" href="https://saaillab.github.io" />
+
+		<!-- Open Graph -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:site_name" content="SAAIL Lab | IIT Madras Zanzibar" />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:alt" content="SAAIL Lab | Sustainable AI for Agriculture & Intelligent Livelihoods" />
+		<meta property="og:locale" content="en_US" />
+
 		<!-- Twitter Cards -->
-		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:title" content={title}>
-		<meta name="twitter:description" content={description}>
-		<meta name="twitter:image" content={ogImage}>
-		<meta name="twitter:image:alt" content="Dr. Innocent Nyalala - SAAIL Lab">
-		<meta name="twitter:creator" content="@innocentnyalala">
-		<meta name="twitter:site" content="@saaillab">
-		
-		<!-- Theme Toggle Script -->
-		<script>
-			// Check for saved theme preference or default to 'light'
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:site" content="@saaillab" />
+
+		<!-- Theme Initialization -->
+		<script is:inline>
 			const theme = localStorage.getItem('theme') || 'light';
 			document.documentElement.setAttribute('data-theme', theme);
 		</script>
-		
+
 		<title>{title}</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-		
-		<!-- Advanced Schema.org Structured Data -->
+
+		<!-- Schema.org Structured Data -->
 		<script type="application/ld+json">
 		{
 		  "@context": "https://schema.org",
@@ -108,80 +93,45 @@ const {
 		      "@type": "ResearchOrganization",
 		      "@id": "https://saaillab.github.io/#organization",
 		      "name": "SAAIL Lab",
-		      "alternateName": ["Sustainable AI for Agriculture & Intelligent Livelihoods", "SAAIL Laboratory", "Sustainable AI Lab"],
-		      "description": "Leading research laboratory pioneering transformative AI solutions for sustainable agriculture, healthcare, and intelligent livelihoods in East Africa and beyond",
+		      "alternateName": ["Sustainable AI for Agriculture & Intelligent Livelihoods", "SAAIL Laboratory"],
+		      "description": "Research laboratory at IIT Madras Zanzibar and WSDSAI IIT Madras advancing precision agriculture, Swahili NLP and AI safety (CultureSEEDS), responsible AI governance, and maternal healthcare.",
 		      "url": "https://saaillab.github.io",
 		      "logo": {
 		        "@type": "ImageObject",
-		        "url": "https://saaillab.github.io/favicon.svg"
+		        "url": "https://saaillab.github.io/images/logo/saail-crest.png"
 		      },
-		      "image": "https://saaillab.github.io/images/people/image.png",
-		      "founder": {
-		        "@id": "https://inyalala.github.io/#person"
-		      },
-		      "member": {
-		        "@id": "https://inyalala.github.io/#person"
-		      },
-		      "parentOrganization": {
-		        "@type": "EducationalOrganization",
-		        "name": "IIT Madras Zanzibar",
-		        "alternateName": ["Indian Institute of Technology Madras Zanzibar", "IITMZ"],
-		        "url": "https://www.iitmz.ac.in",
-		        "address": {
-		          "@type": "PostalAddress",
-		          "addressLocality": "Zanzibar",
-		          "addressRegion": "Zanzibar",
-		          "addressCountry": "TZ"
+		      "image": "https://saaillab.github.io/images/logo/saail-logo.png",
+		      "email": "saail_lab@iitmz.ac.in",
+		      "parentOrganization": [
+		        {
+		          "@type": "EducationalOrganization",
+		          "name": "IIT Madras Zanzibar",
+		          "url": "https://www.iitmz.ac.in"
 		        },
-		        "geo": {
-		          "@type": "GeoCoordinates",
-		          "latitude": "-6.165918",
-		          "longitude": "39.202641"
+		        {
+		          "@type": "EducationalOrganization",
+		          "name": "Wadhwani School of Data Science and AI, IIT Madras",
+		          "url": "https://wsai.iitm.ac.in"
 		        }
-		      },
+		      ],
 		      "areaServed": [
 		        {"@type": "Country", "name": "Tanzania"},
 		        {"@type": "Country", "name": "Kenya"},
-		        {"@type": "Place", "name": "East Africa"},
-		        {"@type": "Place", "name": "Africa"}
+		        {"@type": "Place", "name": "East Africa"}
 		      ],
 		      "knowsAbout": [
-		        "Artificial Intelligence",
-		        "Machine Learning",
-		        "Deep Learning",
-		        "Computer Vision",
-		        "Natural Language Processing",
-		        "Sustainable Agriculture",
-		        "Precision Agriculture",
-		        "Smart Agriculture",
-		        "Agricultural Technology",
-		        "Medical Imaging",
-		        "Healthcare Informatics",
-		        "Placental Imaging",
-		        "Assistive Technology",
-		        "Responsible AI",
-		        "Ethical AI",
-		        "AI for Development",
-		        "Blockchain Technology",
-		        "Agricultural Data Ecosystems",
-		        "Environmental Monitoring",
-		        "Air Quality Monitoring"
+		        "Sustainable Agriculture AI",
+		        "Swahili Natural Language Processing",
+		        "Multilingual AI Safety Evaluation",
+		        "Computer Vision for Commodity Grading",
+		        "Explainable and Responsible AI",
+		        "Healthcare and Placental Imaging"
 		      ],
-		      "researchField": [
-		        "Artificial Intelligence",
-		        "Computer Science",
-		        "Data Science",
-		        "Sustainable Agriculture",
-		        "Medical Imaging",
-		        "Healthcare Technology",
-		        "Responsible AI",
-		        "Agricultural Engineering"
-		      ],
-		      "keywords": "AI, machine learning, deep learning, sustainable agriculture, medical imaging, East Africa, Tanzania, Zanzibar, data science, computer vision, NLP, responsible AI, precision agriculture, smart farming, healthcare AI",
 		      "sameAs": [
+		        "https://github.com/saaillab",
 		        "https://inyalala.github.io",
 		        "https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en",
-		        "https://www.linkedin.com/in/innocentnyalala/",
+		        "https://www.linkedin.com/company/saail-lab/",
 		        "https://www.researchgate.net/profile/Innocent-Nyalala"
 		      ]
 		    },
@@ -189,180 +139,63 @@ const {
 		      "@type": "Person",
 		      "@id": "https://inyalala.github.io/#person",
 		      "name": "Innocent Nyalala",
-		      "givenName": "Innocent",
-		      "familyName": "Nyalala",
 		      "honorificPrefix": "Dr",
-		      "jobTitle": ["Assistant Professor", "Assistant Professor of Data Science and AI", "Principal Investigator", "Founding Principal Investigator"],
-		      "description": "Assistant Professor of Data Science and AI at IIT Madras Zanzibar, Principal Investigator of SAAIL Lab, specializing in AI for sustainable agriculture, medical imaging, and responsible AI frameworks for Africa",
+		      "jobTitle": "Assistant Professor & Principal Investigator, SAAIL Lab",
 		      "url": "https://inyalala.github.io",
-		      "image": "https://saaillab.github.io/images/people/image.png",
 		      "email": "innocent@iitmz.ac.in",
-		      "telephone": "+255",
 		      "affiliation": [
-		        {
-		          "@type": "EducationalOrganization",
-		          "name": "IIT Madras Zanzibar",
-		          "department": "School of Engineering and Sciences"
-		        },
-		        {
-		          "@type": "EducationalOrganization",
-		          "name": "IIT Madras Chennai",
-		          "department": "Wadhwani School of Data Science and AI"
-		        },
-		        {
-		          "@type": "ResearchOrganization",
-		          "name": "SAAIL Lab"
-		        }
+		        "Indian Institute of Technology Madras Zanzibar, Zanzibar, Tanzania",
+		        "Wadhwani School of Data Science and Artificial Intelligence, Indian Institute of Technology Madras, Chennai, India"
 		      ],
-		      "alumniOf": [
-		        {
-		          "@type": "EducationalOrganization",
-		          "name": "Nanjing Agricultural University",
-		          "location": "Nanjing, China"
-		        }
-		      ],
-		      "worksFor": {
-		        "@id": "https://saaillab.github.io/#organization"
-		      },
-		      "foundingDate": "2024",
-		      "knowsAbout": [
-		        "Artificial Intelligence",
-		        "Machine Learning",
-		        "Deep Learning",
-		        "Computer Vision",
-		        "Natural Language Processing",
-		        "Data Science",
-		        "Agricultural Technology",
-		        "Medical Imaging",
-		        "Healthcare Informatics",
-		        "Responsible AI",
-		        "Ethical AI",
-		        "Blockchain Technology",
-		        "Precision Agriculture",
-		        "Smart Agriculture",
-		        "Swahili NLP",
-		        "Speech Processing"
-		      ],
-		      "hasCredential": [
-		        {
-		          "@type": "EducationalOccupationalCredential",
-		          "credentialCategory": "Degree",
-		          "educationalLevel": "PhD",
-		          "name": "Doctor of Philosophy in Agricultural Electrification & Automation",
-		          "recognizedBy": {
-		            "@type": "EducationalOrganization",
-		            "name": "Nanjing Agricultural University"
-		          }
-		        }
-		      ],
-		      "address": {
-		        "@type": "PostalAddress",
-		        "addressLocality": "Zanzibar",
-		        "addressRegion": "Zanzibar",
-		        "addressCountry": "Tanzania"
-		      },
-		      "nationality": {
-		        "@type": "Country",
-		        "name": "Tanzania"
-		      },
 		      "sameAs": [
-		        "https://saaillab.github.io",
-		        "https://inyalala.github.io",
 		        "https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en",
-		        "https://www.linkedin.com/in/innocentnyalala/",
+		        "https://orcid.org/0000-0002-7969-437X",
 		        "https://www.researchgate.net/profile/Innocent-Nyalala",
-		        "https://orcid.org/0000-0002-7969-437X"
+		        "https://www.linkedin.com/in/innocentnyalala/"
 		      ]
 		    },
 		    {
 		      "@type": "WebSite",
 		      "@id": "https://saaillab.github.io/#website",
 		      "url": "https://saaillab.github.io",
-		      "name": "SAAIL Lab - Sustainable AI for Agriculture & Intelligent Livelihoods",
-		      "description": "Official website of SAAIL Lab led by Dr. Innocent Nyalala at IIT Madras Zanzibar",
-		      "publisher": {
-		        "@id": "https://saaillab.github.io/#organization"
-		      },
-		      "inLanguage": "en-US",
-		      "potentialAction": {
-		        "@type": "SearchAction",
-		        "target": "https://saaillab.github.io/?s={search_term_string}",
-		        "query-input": "required name=search_term_string"
-		      }
-		    },
-		    {
-		      "@type": "BreadcrumbList",
-		      "itemListElement": [
-		        {
-		          "@type": "ListItem",
-		          "position": 1,
-		          "name": "Home",
-		          "item": "https://saaillab.github.io"
-		        },
-		        {
-		          "@type": "ListItem",
-		          "position": 2,
-		          "name": "Research",
-		          "item": "https://saaillab.github.io/research"
-		        },
-		        {
-		          "@type": "ListItem",
-		          "position": 3,
-		          "name": "People",
-		          "item": "https://saaillab.github.io/people"
-		        },
-		        {
-		          "@type": "ListItem",
-		          "position": 4,
-		          "name": "Publications",
-		          "item": "https://saaillab.github.io/publications"
-		        }
-		      ]
+		      "name": "SAAIL Lab | IIT Madras Zanzibar",
+		      "publisher": {"@id": "https://saaillab.github.io/#organization"},
+		      "inLanguage": "en-US"
 		    }
 		  ]
 		}
 		</script>
-		
-		<!-- Google tag (gtag.js) -->
+
+		<!-- Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-4MEPY7MLVN"></script>
 		<script>
 		  window.dataLayer = window.dataLayer || [];
 		  function gtag(){dataLayer.push(arguments);}
 		  gtag('js', new Date());
-		
 		  gtag('config', 'G-4MEPY7MLVN');
 		</script>
 	</head>
 	<body>
 		<slot />
-		
-		<!-- Back to Top Button -->
+
 		<button id="backToTop" class="back-to-top" aria-label="Back to top">
-			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
 				<path d="M12 19V5M5 12L12 5L19 12"/>
 			</svg>
 		</button>
-		
+
 		<script>
-			// Back to top and theme functionality
 			document.addEventListener('DOMContentLoaded', function() {
 				const backToTopBtn = document.getElementById('backToTop');
-				
-				// Back to top visibility
 				window.addEventListener('scroll', function() {
-					if (window.scrollY > 300) {
+					if (window.scrollY > 320) {
 						backToTopBtn?.classList.add('visible');
 					} else {
 						backToTopBtn?.classList.remove('visible');
 					}
 				});
-				
-				// Back to top click
 				backToTopBtn?.addEventListener('click', function() {
-					window.scrollTo({
-						top: 0,
-						behavior: 'smooth'
-					});
+					window.scrollTo({ top: 0, behavior: 'smooth' });
 				});
 			});
 		</script>
@@ -371,41 +204,43 @@ const {
 
 <style is:global>
 	:root {
-		/* Light theme colors */
+		/* SAAIL Lab Editorial Palette: Botanical Forest, Warm Stone, Zanzibari Spice Amber */
 		--bg-primary: #ffffff;
-		--bg-secondary: #f8fafc;
-		--bg-tertiary: #e2e8f0;
+		--bg-secondary: #f7f7f2;
+		--bg-tertiary: #e6eae3;
 		--bg-card: #ffffff;
-		--text-primary: #0f172a;
-		--text-secondary: #475569;
-		--text-muted: #64748b;
-		--accent-primary: #0f172a;
-		--accent-secondary: #334155;
-		--accent-blue: #2563eb;
-		--accent-green: #059669;
-		--border-color: #e2e8f0;
-		--shadow-light: rgba(15, 23, 42, 0.08);
-		--shadow-medium: rgba(15, 23, 42, 0.14);
-		--accent-blue-rgb: 37, 99, 235;
+		--text-primary: #0c1a12;
+		--text-secondary: #2b3a32;
+		--text-muted: #5a6b61;
+		--accent-primary: #14532d;
+		--accent-secondary: #15803d;
+		--accent-blue: #14532d;
+		--accent-green: #15803d;
+		--accent-gold: #b45309;
+		--border-color: #dde3da;
+		--shadow-light: rgba(12, 26, 18, 0.06);
+		--shadow-medium: rgba(12, 26, 18, 0.12);
+		--accent-blue-rgb: 20, 83, 45;
+		--header-height: 74px;
 	}
 
 	[data-theme="dark"] {
-		/* Dark theme colors */
-		--bg-primary: #0f172a;
-		--bg-secondary: #1e293b;
-		--bg-tertiary: #334155;
-		--bg-card: #1e293b;
-		--text-primary: #f1f5f9;
-		--text-secondary: #cbd5e1;
-		--text-muted: #94a3b8;
-		--accent-primary: #f1f5f9;
-		--accent-secondary: #e2e8f0;
-		--accent-blue: #3b82f6;
-		--accent-green: #10b981;
-		--border-color: #334155;
-		--shadow-light: rgba(0, 0, 0, 0.3);
-		--shadow-medium: rgba(0, 0, 0, 0.4);
-		--accent-blue-rgb: 59, 130, 246;
+		--bg-primary: #08120c;
+		--bg-secondary: #0f1f16;
+		--bg-tertiary: #193023;
+		--bg-card: #0f1f16;
+		--text-primary: #edf3ef;
+		--text-secondary: #c8d6cd;
+		--text-muted: #8fa698;
+		--accent-primary: #22c55e;
+		--accent-secondary: #4ade80;
+		--accent-blue: #22c55e;
+		--accent-green: #4ade80;
+		--accent-gold: #f59e0b;
+		--border-color: #213d2c;
+		--shadow-light: rgba(0, 0, 0, 0.35);
+		--shadow-medium: rgba(0, 0, 0, 0.5);
+		--accent-blue-rgb: 34, 197, 94;
 	}
 
 	* {
@@ -423,22 +258,31 @@ const {
 
 	body {
 		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-		line-height: 1.6;
+		line-height: 1.65;
 		color: var(--text-primary);
 		background-color: var(--bg-primary);
-		transition: background-color 0.3s ease, color 0.3s ease;
+		transition: background-color 0.25s ease, color 0.25s ease;
 		overflow-x: hidden;
 		min-height: 100vh;
+	}
+
+	h1, h2, h3, h4, .font-display {
+		font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+		letter-spacing: -0.02em;
+	}
+
+	/* Ensure fixed navigation header NEVER clips the top of any page */
+	main {
+		padding-top: var(--header-height);
 	}
 
 	.container {
 		max-width: 1200px;
 		margin: 0 auto;
-		padding: 0 1rem;
+		padding: 0 1.25rem;
 		width: 100%;
 	}
 
-	/* Prevent horizontal scroll on mobile */
 	img {
 		max-width: 100%;
 		height: auto;
@@ -446,163 +290,160 @@ const {
 	}
 
 	.section {
-		padding: 5rem 0;
+		padding: 4.5rem 0;
 	}
 
 	.section-title {
-		font-size: 2.5rem;
-		font-weight: 700;
+		font-size: clamp(1.75rem, 3vw, 2.35rem);
+		font-weight: 800;
 		text-align: center;
-		margin-bottom: 3rem;
+		margin-bottom: 2.5rem;
 		color: var(--text-primary);
 	}
 
 	.section-subtitle {
-		font-size: 1.25rem;
+		font-size: 1.15rem;
 		font-weight: 500;
-		margin-bottom: 2rem;
+		margin-bottom: 1.75rem;
 		color: var(--text-secondary);
 	}
 
 	.btn {
 		display: inline-flex;
 		align-items: center;
-		padding: 0.75rem 1.5rem;
-		border-radius: 0.5rem;
+		justify-content: center;
+		gap: 0.45rem;
+		padding: 0.72rem 1.45rem;
+		border-radius: 999px;
 		text-decoration: none;
-		font-weight: 500;
-		transition: all 0.3s ease;
-		border: none;
+		font-weight: 600;
+		font-size: 0.94rem;
+		transition: all 0.2s ease;
+		border: 1px solid transparent;
 		cursor: pointer;
 	}
 
 	.btn-primary {
-		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
-		color: white;
+		background: var(--accent-primary);
+		color: #ffffff;
 		box-shadow: 0 4px 12px var(--shadow-light);
 	}
 
 	.btn-primary:hover {
+		background: var(--accent-secondary);
 		transform: translateY(-2px);
 		box-shadow: 0 8px 20px var(--shadow-medium);
 	}
 
+	[data-theme="dark"] .btn-primary {
+		color: #062111;
+	}
+
 	.btn-secondary {
 		background: var(--bg-primary);
-		color: var(--accent-blue);
-		border: 2px solid var(--accent-blue);
+		color: var(--accent-primary);
+		border: 1.5px solid var(--border-color);
 	}
 
 	.btn-secondary:hover {
-		background: var(--accent-blue);
-		color: white;
+		border-color: var(--accent-primary);
+		background: var(--bg-secondary);
 		transform: translateY(-2px);
 	}
 
 	.card {
-		background: var(--bg-primary);
+		background: var(--bg-card);
 		border-radius: 1rem;
-		padding: 2rem;
-		box-shadow: 0 4px 12px var(--shadow-light);
-		transition: all 0.3s ease;
+		padding: 1.75rem;
+		box-shadow: 0 2px 10px var(--shadow-light);
+		transition: all 0.25s ease;
 		border: 1px solid var(--border-color);
 	}
 
 	.card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 12px 24px var(--shadow-medium);
+		transform: translateY(-3px);
+		box-shadow: 0 12px 26px var(--shadow-medium);
+		border-color: rgba(20, 83, 45, 0.28);
 	}
 
-	.text-gradient {
-		background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-green) 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
+	/* Clean architectural eyebrow & page hero helpers */
+	.page-hero {
+		background: var(--bg-secondary);
+		border-bottom: 1px solid var(--border-color);
+		padding: 3.25rem 0 2.75rem;
+		text-align: center;
+	}
+
+	.page-eyebrow {
+		display: inline-block;
+		font-size: 0.76rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--accent-gold);
+		margin-bottom: 0.65rem;
+	}
+
+	.page-title {
+		font-size: clamp(2rem, 3.8vw, 2.85rem);
+		font-weight: 800;
+		color: var(--text-primary);
+		margin-bottom: 0.85rem;
+		line-height: 1.15;
+	}
+
+	.page-lead {
+		max-width: 720px;
+		margin: 0 auto;
+		font-size: 1.08rem;
+		color: var(--text-secondary);
+		line-height: 1.65;
 	}
 
 	@media (max-width: 768px) {
 		.section {
-			padding: 2.5rem 0;
+			padding: 2.75rem 0;
 		}
-
-		.section-title {
-			font-size: 1.75rem;
-			line-height: 1.3;
-			margin-bottom: 2rem;
-		}
-
-		.section-subtitle {
-			font-size: 1.125rem;
-		}
-
-		.container {
-			padding: 0 1rem;
-		}
-
-		.btn {
-			padding: 0.625rem 1.25rem;
-			font-size: 0.9375rem;
-		}
-
-		.card {
-			padding: 1.5rem;
+		.page-hero {
+			padding: 2.25rem 0 2rem;
 		}
 	}
 
-	@media (max-width: 480px) {
-		.section-title {
-			font-size: 1.5rem;
-		}
-
-		.section {
-			padding: 2rem 0;
-		}
-
-		.container {
-			padding: 0 0.875rem;
-		}
-	}
-	
 	/* Back to Top Button */
 	.back-to-top {
 		position: fixed;
-		bottom: 2rem;
-		right: 2rem;
-		width: 50px;
-		height: 50px;
-		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
-		color: white;
+		bottom: 1.75rem;
+		right: 1.75rem;
+		width: 46px;
+		height: 46px;
+		background: var(--accent-primary);
+		color: #ffffff;
 		border: none;
 		border-radius: 50%;
 		cursor: pointer;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		box-shadow: 0 4px 12px var(--shadow-light);
-		transition: all 0.3s ease;
+		box-shadow: 0 4px 14px var(--shadow-medium);
+		transition: all 0.25s ease;
 		opacity: 0;
 		visibility: hidden;
-		transform: translateY(20px);
-		z-index: 1000;
+		transform: translateY(16px);
+		z-index: 900;
 	}
-	
+
+	[data-theme="dark"] .back-to-top {
+		color: #062111;
+	}
+
 	.back-to-top.visible {
 		opacity: 1;
 		visibility: visible;
 		transform: translateY(0);
 	}
-	
+
 	.back-to-top:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 6px 16px var(--shadow-medium);
-	}
-
-	@media (max-width: 768px) {
-		.back-to-top {
-			bottom: 1rem;
-			right: 1rem;
-			width: 45px;
-			height: 45px;
-		}
+		background: var(--accent-secondary);
 	}
 </style>

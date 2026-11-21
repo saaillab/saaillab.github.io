@@ -37,11 +37,12 @@ export interface Publication {
   year: number;
   month: string;
   dateISO: string;
-  category: 'journal' | 'conference' | 'workshop' | 'preprint' | 'series';
+  category: 'journal' | 'conference' | 'workshop' | 'preprint';
   status: string;
   award?: string;
   impactFactor?: string;
   citations?: number;
+  isSaailLab?: boolean;
   openAccess?: boolean;
   doi?: string;
   paperUrl?: string;
@@ -73,80 +74,10 @@ export const AFFILIATIONS = {
   SALFORD: 'School of Science, Engineering and Environment, University of Salford, UK',
   XZUT: 'Xuzhou University of Technology, Xuzhou, China',
   LINCOLN: 'Lincoln Institute for Agri-Food Technology, University of Lincoln, UK',
+  ABERDEEN: 'Department of Computer Science, University of Aberdeen, Aberdeen, UK',
+  HNU: 'School of Information Science and Technology, Hangzhou Normal University, Hangzhou, China',
+  ZJHU: "Women's Hospital, School of Medicine, Zhejiang University, Hangzhou, China",
 };
-
-export interface CropGuardSeriesItem {
-  number: number;
-  codeName: string;
-  title: string;
-  targetVenue: string;
-  status: string;
-  slug?: string;
-  repoUrl?: string;
-  summary: string;
-  tags: string[];
-}
-
-export const CROPGUARD_SERIES: CropGuardSeriesItem[] = [
-  {
-    number: 1,
-    codeName: 'CropGuardNet',
-    title: 'CropGuardNet: A Unified Lightweight CNN-Transformer Framework with Multi-Scale Attention and Explainable AI for Cross-Crop Leaf Disease Detection',
-    targetVenue: 'Artificial Intelligence in Agriculture (Elsevier)',
-    status: 'Under Review · Project & Code Live',
-    slug: 'cropguardnet',
-    repoUrl: 'https://github.com/saaillab/CropGuardNet',
-    summary: '481,574-parameter, 1.84 MB MobileNetV3-Small + MSFP + Compact ViT + Crop-Aware Conditioning framework evaluated on 35,420 UUID- & pHash-deduplicated leaf images across 8 crops and 38 classes (99.17% Acc, 0.9874 F1-macro, 5.00 ms ONNX CPU) with four-method XAI faithfulness evaluation.',
-    tags: ['481.6K Params', '63.8M FLOPs', '5.00 ms CPU ONNX', '35,420 Unique Images', '4 XAI Families']
-  },
-  {
-    number: 2,
-    codeName: 'CropKD-Net',
-    title: 'CropKD-Net: Multi-Teacher Knowledge Distillation and Quantization-Aware Compression for Sub-150KB Cross-Crop Edge Leaf Diagnostics',
-    targetVenue: 'Computers and Electronics in Agriculture (Elsevier)',
-    status: 'Active Experiments',
-    slug: 'cropkd-net',
-    repoUrl: 'https://github.com/saaillab/CropKD-Net',
-    summary: 'Distills heterogeneous CNN and Transformer teachers into an ultra-compact student network with quantization-aware training (QAT) to bridge the INT8 activation sensitivity discovered in Paper 1, targeting sub-150 KB deployment on resource-constrained agricultural smartphones and IoT nodes.',
-    tags: ['Knowledge Distillation', 'QAT INT8', 'Sub-150 KB', 'Edge Deployment']
-  },
-  {
-    number: 3,
-    codeName: 'CropMambaNet',
-    title: 'CropMambaNet: Linear-Complexity Visual State-Space Models for High-Resolution Multi-Scale Foliar Pathology',
-    targetVenue: 'CropGuard Research Series · Paper 3',
-    status: 'Research Pipeline',
-    summary: 'Investigates selective state-space scanning for fine lesion localization across varying leaf scales without quadratic self-attention overhead.',
-    tags: ['Vision Mamba', 'State-Space Models', 'High-Res Pathology']
-  },
-  {
-    number: 4,
-    codeName: 'CropDomainNet',
-    title: 'CropDomainNet: Unsupervised Test-Time Domain Adaptation from Controlled Laboratory Archives to Unconstrained Smallholder Fields',
-    targetVenue: 'CropGuard Research Series · Paper 4',
-    status: 'Research Pipeline',
-    summary: 'Addresses the lab-to-field performance gap observed on PlantDoc and East African smartphone imagery via lightweight leaf-foreground alignment and unsupervised test-time adaptation.',
-    tags: ['Domain Adaptation', 'Lab-to-Field', 'East Africa']
-  },
-  {
-    number: 5,
-    codeName: 'CropContinual',
-    title: 'CropContinual: Replay-Efficient Class-Incremental Learning for Emerging Crop Pathogens Without Catastrophic Forgetting',
-    targetVenue: 'CropGuard Research Series · Paper 5',
-    status: 'Research Pipeline',
-    summary: 'Enables agricultural extension systems to add newly emerging crops and diseases sequentially on-device while preserving diagnostic accuracy on prior species.',
-    tags: ['Continual Learning', 'Open-World AI', 'Extension Systems']
-  },
-  {
-    number: 6,
-    codeName: 'CropGuard-Severity',
-    title: 'CropGuard-Severity: Weakly Supervised Disease Severity Quantification and Actionable Intervention Thresholds',
-    targetVenue: 'CropGuard Research Series · Paper 6',
-    status: 'Research Pipeline',
-    summary: 'Connects faithful lesion-level attribution maps and weakly supervised severity scoring to actionable agronomic spray and quarantine thresholds for smallholder advisors.',
-    tags: ['Severity Scoring', 'Weakly Supervised', 'Agronomic Decision Support']
-  }
-];
 
 export const PUBLICATIONS: Publication[] = [
   // =========================================================================
@@ -161,24 +92,28 @@ export const PUBLICATIONS: Publication[] = [
       { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
     ],
     affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'Artificial Intelligence in Agriculture (Elsevier)',
-    venueShort: 'Artificial Intelligence in Agriculture · 2026',
+    venue: 'Manuscript Under Peer Review',
+    venueShort: 'Under Review · 2026',
     venueUrl: 'https://www.sciencedirect.com/journal/artificial-intelligence-in-agriculture',
     year: 2026,
     month: 'Nov',
     dateISO: '2026-11-18',
-    category: 'series',
-    status: 'Under Review (AIIA) · Paper 1 of CropGuard Series',
+    category: 'preprint',
+    status: 'Under Peer Review',
     codeUrl: 'https://github.com/saaillab/CropGuardNet',
     datasetUrl: 'https://github.com/saaillab/CropGuardNet#dataset-deduplication',
-    seriesId: 'cropguard',
-    seriesNumber: 1,
     teaserImage: '/images/papers/cropguardnet/architecture.png',
-    teaserCaption: 'CropGuardNet unifies deterministic CLAHE-Gaussian-high-pass preprocessing, a half-width MobileNetV3-Small (α = 0.50) stem, a 3-branch dilated Multi-Scale Feature Pyramid (r ∈ {1, 2, 4}), depthwise separable refinement, SE attention, a 2-head Compact ViT, dual-path pooling, and crop-aware conditioning in 481,574 parameters (1.84 MB FP32, 63.8M FLOPs, 5.00 ms CPU ONNX).',
+    teaserCaption: 'CropGuardNet integrates CLAHE-Gaussian-high-pass preprocessing, MobileNetV3-Small (alpha = 0.50), a 3-branch dilated Multi-Scale Feature Pyramid (r in {1, 2, 4}), depthwise separable refinement, SE attention, a 1-layer 2-head Compact ViT (10,176 params), dual-path pooling, and crop-aware conditioning in 481,574 parameters (1.84 MB FP32, 63.8M FLOPs, 5.00 ms CPU ONNX).',
     tldr: 'A 481,574-parameter (1.84 MB, 5.00 ms CPU ONNX) conditioned CNN-Transformer evaluated on 35,420 UUID- and pHash-deduplicated leaf images across 8 crops and 38 classes (99.17% accuracy, 0.9874 F1-macro), purging 80,238 duplicates and auditing four XAI families.',
     abstract: 'Crop diseases threaten food security, yet deep detectors remain single-crop, heavyweight, or opaque for edge deployment. We propose CropGuardNet, a lightweight Convolutional Neural Network (CNN) and Transformer framework on MobileNetV3-Small (alpha = 0.50) with 481,574 parameters, 1.84 MB FP32 weights, and 63.8M FLOPs, running at 5.00 ms (200.0 FPS) in single-thread CPU ONNX inference. It unites a dilated multi-scale feature pyramid, depthwise separable refinement, squeeze-and-excitation attention, a two-head Transformer, dual-path pooling, crop-aware conditioning, and four explainable AI (XAI) methods: Grad-CAM++, LayerCAM, LIME, and GradientSHAP. After purging 80,238 PlantVillage duplicates via specimen Universally Unique Identifier (UUID) grouping and 64-bit perceptual hash auditing, evaluation on 35,420 unique images spanning 38 classes and 8 crops (n = 5,314 test) reaches 99.17% accuracy, 0.9874 F1-macro, 0.9914 Matthews correlation coefficient (MCC), and 0.9998 AUC-ROC, leading F1-macro across seven models at 3.2x-279.1x fewer parameters than five baselines and 6.0x larger than LeafXNet at 18.1x fewer FLOPs. Top models match on 35 non-Rice classes, whereas species conditioning eliminates cross-crop errors, supports 99.79% automatic crop routing, and lifts minority Rice accuracy to 94.44%. CropGuardNet leads 20-regime corruptions at 83.61% mean accuracy (severe Wilcoxon p = 0.0020 vs. LeafXNet), 8-fold leave-one-crop-out probing (n = 7,072) at 81.22% accuracy and 0.8879 binary AUC-ROC, and XAI faithfulness with LayerCAM Deletion AUC 0.7262 and GradientSHAP Insertion AUC 0.9259. On PlantDoc field images, guided Mode A1 reaches 40.63%-45.91% zero-shot accuracy vs. 16.06%-17.58% unguided, 60.62% unmasked vs. 62.18% masked head adaptation under Mode A1-Auto (tying ResNet-50 behind LeafXNet at 63.73%), and 62.20% Enhanced or 63.66% Raw RGB accuracy after 20-epoch tuning.',
     keywords: ['plant disease detection', 'lightweight CNN', 'Vision Transformer', 'explainable AI', 'multi-crop classification', 'data deduplication', 'smart agriculture'],
-    topics: ['CropGuard Series', 'Agriculture', 'Deep Learning', 'Computer Vision', 'Responsible AI', 'Benchmarking'],
+    topics: [
+      'Agriculture',
+      'Deep Learning',
+      'Computer Vision',
+      'Explainable AI',
+      'Benchmarking'
+    ],
     highlights: [
       { value: '481,574', label: 'Parameters', sublabel: '1.84 MB FP32 · 63.8M FLOPs' },
       { value: '5.00 ms', label: 'CPU ONNX Latency', sublabel: '200.0 FPS single-thread' },
@@ -237,70 +172,246 @@ export const PUBLICATIONS: Publication[] = [
       }
     ],
     figures: [
-      { src: '/images/papers/cropguardnet/fig08_pareto_efficiency.png', caption: 'Multi-objective Pareto efficiency frontier across trainable parameters, FLOPs, and PyTorch vs. single-thread ONNX Runtime CPU latency (5.00 ms / 200 FPS).' },
-      { src: '/images/papers/cropguardnet/fig01_dataset_distribution.png', caption: 'UUID-deduplicated 8-crop, 38-class dataset distribution (N = 35,420 unique leaf images after purging 80,238 PlantVillage duplicates).' },
-      { src: '/images/papers/cropguardnet/fig02_per_crop_grouped_bars.png', caption: 'Per-crop within-crop accuracy and open-set macro-F1 (F1_open) showing zero cross-crop leakage under CropGuardNet conditioning.' },
-      { src: '/images/papers/cropguardnet/fig_robustness_curves.png', caption: 'Accuracy degradation trajectories across 20 environmental perturbation regimes (Gaussian noise, blur, brightness shift, occlusion, JPEG).' },
-      { src: '/images/papers/cropguardnet/fig_crosscrop_loco.png', caption: '8-fold Leave-One-Crop-Out cross-species transfer (n = 7,072 balanced cohort): +13.96 pp gain over random-neck baseline (p = 0.0078).' },
-      { src: '/images/papers/cropguardnet/fig_plantdoc_field_transfer.png', caption: 'External laboratory-to-field transfer and adaptation on PlantDoc wild field images (zero-shot, few-shot head adaptation, and 20-epoch fine-tuning).' },
-      { src: '/images/papers/cropguardnet/fig_xai_deletion_insertion.png', caption: 'Quantitative XAI faithfulness curves: 20-step Deletion and Insertion trajectories relative to blur baselines and 30-image controls.' },
-      { src: '/images/papers/cropguardnet/fig_xai_master_8crops.png', caption: 'Four-method XAI visual attribution comparison (Grad-CAM++, LayerCAM, LIME, GradientSHAP) across all eight crop species.' },
-      { src: '/images/papers/cropguardnet/fig05_confusion_matrix_38class.png', caption: 'Row-normalized 38 × 38 confusion matrix on the held-out test split (n = 5,314).' },
-      { src: '/images/papers/cropguardnet/fig09_tsne_embeddings.png', caption: '2D t-SNE projection of conditioned 64-D embeddings across all 38 crop-disease classes.' }
+      { src: '/images/papers/cropguardnet/fig08_pareto_efficiency.png', caption: 'Pareto efficiency across trainable parameters, FLOPs, and PyTorch vs. single-thread CPU ONNX latency (5.00 ms / 200.0 FPS).' }
     ],
-    bibtex: `@article{nyalala2026cropguardnet,
+    isSaailLab: true,
+    bibtex: `@misc{nyalala2026cropguardnet,
   title={CropGuardNet: A Unified Lightweight CNN-Transformer Framework with Multi-Scale Attention and Explainable AI for Cross-Crop Leaf Disease Detection},
   author={Nyalala, Innocent},
-  journal={Artificial Intelligence in Agriculture},
+  howpublished={Manuscript Under Peer Review (SAAIL Lab)},
   year={2026},
-  note={Under Review; CropGuard Research Series, Paper 1},
   url={https://saaillab.github.io/papers/cropguardnet/}
 }`,
-    apa: `Nyalala, I. (2026). CropGuardNet: A Unified Lightweight CNN-Transformer Framework with Multi-Scale Attention and Explainable AI for Cross-Crop Leaf Disease Detection. Artificial Intelligence in Agriculture (Under Review). https://saaillab.github.io/papers/cropguardnet/`
+    apa: `Nyalala, I. (2026). CropGuardNet: A Unified Lightweight CNN-Transformer Framework with Multi-Scale Attention and Explainable AI for Cross-Crop Leaf Disease Detection. Manuscript Under Peer Review. https://saaillab.github.io/papers/cropguardnet/`
   },
 
   {
-    slug: 'cropkd-net',
-    repoSlug: 'CropKD-Net',
-    title: 'CropKD-Net: Multi-Teacher Knowledge Distillation and Quantization-Aware Compression for Sub-150KB Cross-Crop Edge Leaf Diagnostics',
-    shortTitle: 'CropKD-Net (Edge Knowledge Distillation)',
+    slug: 'capture-session-confounding-cloves',
+    title: 'Capture-session confounding undermines the measurement validity of deep learning clove grading: evidence from Zanzibar',
+    shortTitle: 'Capture-Session Confounding in Clove AI',
+    authors: [
+      { name: 'Patrick Vincent Ndowo', url: 'https://www.linkedin.com/in/patrick-ndowo/', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
+    ],
+    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
+    venue: 'Manuscript Under Peer Review',
+    venueShort: 'Under Review · 2026',
+    year: 2026,
+    month: 'Nov',
+    dateISO: '2026-11-05',
+    category: 'preprint',
+    status: 'Under Peer Review',
+    isSaailLab: true,
+    openAccess: false,
+    teaserImage: '/images/papers/cloves/fig1_workflow.png',
+    teaserCaption: 'Three-part experimental protocol testing capture-session confounding across 4,603 single-clove and 695 batch images, duplicate-aware 64-bit dHash grouping (3,455 groups), input mask ablation, and foreground/background swap probes.',
+    tldr: 'Shows that 16 of 17 neural networks reach 98.1% to 99.3% in-session test macro-F1 on clove grading yet collapse to 29% to 47% on unseen capture days, still scoring 98.5% on empty backgrounds with cloves inpainted away.',
+    abstract: 'The Zanzibar State Trading Corporation (ZSTC) prices cloves (Syzygium aromaticum) by four commercial grades assigned through non-destructive visual inspection. Using an image dataset aligned with these grades (4,603 single-clove and 695 batch images), we evaluated grading models under a protocol that controls near-duplicate leakage and training differences. Sixteen of seventeen pretrained networks reached 98.1% to 99.3% test macro-F1. Because the grades were photographed in separate sittings on six capture days, we tested what the networks learned. Trained on images taken on some days and tested on days never seen in training, mean macro-F1 fell from 99% to between 29% and 47%, with recall ranging from 1.5% to 95% across held-out grade-days. Images with the bud removed by inpainting were still graded at 98.5%, whereas the bud silhouette alone reached 68%. When a clove of one grade was pasted onto the background of another, networks followed the background in 53% to 57% of cases and the clove in 30% to 33%, while pasting each clove back onto its own background left accuracy unchanged (97% to 98%). The bud region alone supported about 93% macro-F1, so grade information is present in the clove; trained networks combine it with a capture-specific cue that dominates when the two conflict and causes some unseen sittings to be misgraded as a whole. We describe a low-cost probe protocol for testing the measurement validity of image datasets collected one class at a time, and the collection design needed to measure clove grading accuracy without this confound.',
+    keywords: ['clove grading', 'capture-session confounding', 'shortcut learning', 'measurement validity', 'data leakage', 'Zanzibar'],
+    topics: ['Agriculture', 'Computer Vision', 'Responsible AI', 'Benchmarking'],
+    highlights: [
+      { value: '99% to 29-47%', label: 'Cross-Day F1 Drop', 'sublabel': 'Unseen capture sittings collapse' },
+      { value: '98.5%', label: 'Empty BG Grading', 'sublabel': 'Accuracy after bud inpainting' },
+      { value: '53-57%', label: 'BG Override Rate', 'sublabel': 'Background beats clove in swaps' },
+      { value: '17 Models', label: 'Duplicate-Controlled', 'sublabel': '3,455 dHash groups + 695 batches' }
+    ],
+    contributions: [
+      'Demonstrates across 17 pretrained architectures (16 reaching 98.1%-99.3% standard F1) that single-session class acquisition creates catastrophic hidden confounding masked by standard random or dHash-grouped splits.',
+      'Quantifies extreme cross-day collapse (29% to 47% mean macro-F1, per-grade recall 1.5% to 95%) when models are tested on held-out photography days.',
+      'Proves shortcut dominance directly via bud-inpainting (98.5% accuracy with empty background) and foreground-background swaps (53%-57% background override vs. 93% isolated-clove ceiling).',
+      'Delivers a practical low-cost validity probe protocol and randomized lot collection design eliminating session confounding in agricultural vision datasets.'
+    ],
+    figures: [
+      { src: '/images/papers/cloves/fig6_confound.png', caption: 'Inpainting and background-swap diagnostic probes proving networks follow capture-session background cues (98.5% accuracy without buds; 53%-57% swap override) over isolated clove buds.' }
+    ],
+    tables: [
+      {
+        title: 'Summary of Validity Probes Exposed on Duplicate-Controlled Clove Grading (17 Networks, n = 4,603)',
+        headers: ['Evaluation Probe', 'Measured Macro-F1 / Accuracy', 'Diagnostic Interpretation'],
+        rows: [
+          ['Standard dHash-Grouped Split (16/17 CNN/ViT)', '98.1% - 99.3% macro-F1', 'Top models statistically indistinguishable (DenseNet-121 / Xception / ViT 99.25%)'],
+          ['Held-Out Unseen Capture Day Split', '29% - 47% macro-F1', 'Catastrophic cross-session failure despite zero duplicate overlap'],
+          ['Empty Background (Bud Removed via Inpainting)', '98.5% accuracy', 'Tray/illumination session artifacts carry almost full class signal'],
+          ['Conflict Swap (Grade A Bud on Grade B BG)', '53% - 57% follow BG · 30% - 33% follow bud', 'Session background cue overrides biological bud features under conflict'],
+          ['Isolated Clove Bud Foreground Alone', '~93% macro-F1', 'True morphological grading signal exists once background confounds are removed']
+        ]
+      }
+    ],
+    bibtex: `@misc{ndowo2026capture_confounding,
+  title={Capture-session confounding undermines the measurement validity of deep learning clove grading: evidence from Zanzibar},
+  author={Ndowo, Patrick Vincent and Nyalala, Innocent},
+  year={2026},
+  note={Manuscript under peer review}
+}`,
+    apa: `Ndowo, P. V., & Nyalala, I. (2026). Capture-session confounding undermines the measurement validity of deep learning clove grading: evidence from Zanzibar [Manuscript under peer review].`
+  },
+
+  {
+    slug: 'digital-authoritarianism-east-africa',
+    title: 'AI-Powered Surveillance, Internet Shutdowns, and Digital Citizenship as Resistance in East Africa: Evidence from Tanzania and Kenya',
+    shortTitle: 'AI Surveillance & Digital Citizenship in EA',
     authors: [
       { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
     ],
     affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'Computers and Electronics in Agriculture (Pipeline · CropGuard Series Paper 2)',
-    venueShort: 'CropGuard Series · Paper 2 (Active)',
+    venue: 'Manuscript Under Revision',
+    venueShort: 'Under Review · 2026',
     year: 2026,
     month: 'Nov',
-    dateISO: '2026-11-20',
-    category: 'series',
-    status: 'Active Experiments · Paper 2 of CropGuard Series',
-    codeUrl: 'https://github.com/saaillab/CropKD-Net',
-    seriesId: 'cropguard',
-    seriesNumber: 2,
-    tldr: 'Paper 2 of the CropGuard Research Series: distills multi-teacher CNN and Transformer plant pathology representations via Quantization-Aware Training (QAT) into an ultra-compact student network for sub-150 KB INT8 smartphone and microcontroller deployment.',
-    abstract: 'Paper 1 (CropGuardNet) revealed a key bottleneck for ultra-low-bit edge deployment in agricultural computer vision: while post-training static INT8 quantization collapses parity accuracy on hybrid SiLU-Transformer architectures due to asymmetric activation clipping, unfactorized tiny CNNs incur over 1.15 GFLOPs and slow sequential CPU execution. CropKD-Net addresses this gap through heterogeneous multi-teacher knowledge distillation paired with Quantization-Aware Training (QAT) on the leak-free 35,420-image, 8-crop, 38-class CropGuard benchmark. By aligning spatial lesion attention, feature-pyramid geometry, and crop-conditioned logit calibration during student optimization, CropKD-Net bridges high-accuracy multi-crop teachers with sub-150 KB INT8 ONNX execution for offline smallholder diagnostic devices.',
-    keywords: ['knowledge distillation', 'quantization-aware training', 'INT8 edge AI', 'plant disease detection', 'model compression', 'CropGuard'],
-    topics: ['CropGuard Series', 'Agriculture', 'Deep Learning', 'Edge Computing', 'Benchmarking'],
-    contributions: [
-      'Directly resolves the SiLU, LayerNorm, and attention clipping bottleneck under post-training static INT8 quantization identified in CropGuardNet.',
-      'Employs multi-teacher logit and intermediate feature distillation over the identical UUID- and 64-bit pHash-deduplicated 35,420-image multi-crop partition.',
-      'Optimizes compact depthwise student topologies with Quantization-Aware Training (QAT) for sub-150 KB INT8 ONNX deployment.'
+    dateISO: '2026-11-04',
+    category: 'preprint',
+    status: 'Under Peer Review (Revision Stage)',
+    isSaailLab: true,
+    openAccess: false,
+    tldr: 'Comparative political-economy and governance analysis of AI surveillance, internet shutdowns, and Ubuntu/Afrofeminist digital citizenship resistance across Tanzania and Kenya between 2015 and 2025.',
+    abstract: 'This study examines what happens to digital rights, political freedom, and citizen agency when governments deploy artificial intelligence surveillance systems and internet shutdowns across East African hybrid regimes between 2015 and 2025. While Sub-Saharan Africa reached 29% mobile internet penetration in 2024, African governments spent over 1 billion USD annually on citizen surveillance infrastructure and imposed 21 internet shutdowns across 15 countries in 2024 alone, costing over 1.6 billion USD. Focusing on Tanzania (October 2025 election internet blackout and blocking of 80,000+ websites alongside cybercrime prosecution of journalists) and Kenya (Huawei Safe City facial recognition in Nairobi and Mombasa, constitutional litigation over biometric ID, and 2024 Finance Bill Gen Z protest disruptions), this study addresses Northern theoretical bias by grounding analysis in Ubuntu communal ethics and Afrofeminist data governance.',
+    keywords: ['digital authoritarianism', 'AI surveillance', 'internet shutdowns', 'digital citizenship', 'Ubuntu ethics', 'Tanzania', 'Kenya', 'GovTech'],
+    topics: ['Responsible AI', 'AI Policy & GovTech', 'East Africa'],
+    highlights: [
+      { value: '$1B+ / yr', label: 'Surveillance Spend', 'sublabel': 'African citizen monitoring infra' },
+      { value: '$1.6B+', label: 'Shutdown Losses', 'sublabel': '21 blackouts across 15 states (2024)' },
+      { value: '2015-2025', label: 'Tanzania & Kenya', 'sublabel': 'Comparative hybrid regime cases' },
+      { value: 'Ubuntu', label: 'Counter-Framework', 'sublabel': 'Afrofeminist digital resistance' }
     ],
-    bibtex: `@misc{nyalala2026cropkdnet,
-  title={CropKD-Net: Multi-Teacher Knowledge Distillation and Quantization-Aware Compression for Sub-150KB Cross-Crop Edge Leaf Diagnostics},
+    contributions: [
+      'Documents concrete mechanisms linking imported biometric/facial recognition infrastructure, telecommunications control, and statutory surveillance in Tanzania and Kenya between 2015 and 2025.',
+      'Quantifies the economic and civic shock of electoral and protest blackouts, contrasting Tanzania October 2025 filtering of 80,000+ domains with Kenya Finance Bill 2024 civic disruptions.',
+      'Advances an original African theoretical lens integrating Ubuntu relational solidarity and Afrofeminist data governance to analyze VPN mobilization, youth counterpublics, and legal resistance.'
+    ],
+    tables: [
+      {
+        title: 'Comparative Digital Repression & Civic Resistance Vectors in East Africa (2015-2025)',
+        headers: ['Analytical Dimension', 'Tanzania Evidence', 'Kenya Evidence'],
+        rows: [
+          ['Surveillance & Connectivity Control', 'EPOCA & Cybercrimes statutory monitoring; Oct 2025 blackout + 80,000+ sites blocked', 'Huawei Safe City cameras (Nairobi/Mombasa); 2024 Finance Bill protest disruptions'],
+          ['Legal & Institutional Arena', 'Constrained judicial review under centralized executive enforcement', 'Strategic High Court constitutional rulings on biometric digital ID (Huduma Namba)'],
+          ['Citizen Counter-Power', 'Encrypted messaging, diaspora journalism, circumvention tooling', '#RejectFinanceBill2024 digital coordination & feminist counterpublic networks']
+        ]
+      }
+    ],
+    bibtex: `@misc{nyalala2026digital_authoritarianism,
+  title={AI-Powered Surveillance, Internet Shutdowns, and Digital Citizenship as Resistance in East Africa: Evidence from Tanzania and Kenya},
   author={Nyalala, Innocent},
   year={2026},
-  howpublished={SAAIL Lab CropGuard Research Series, Paper 2},
-  url={https://saaillab.github.io/papers/cropkd-net/}
+  note={Manuscript under peer review}
 }`,
-    apa: `Nyalala, I. (2026). CropKD-Net: Multi-Teacher Knowledge Distillation and Quantization-Aware Compression for Sub-150KB Cross-Crop Edge Leaf Diagnostics. SAAIL Lab CropGuard Research Series (Paper 2). https://saaillab.github.io/papers/cropkd-net/`
+    apa: `Nyalala, I. (2026). AI-Powered Surveillance, Internet Shutdowns, and Digital Citizenship as Resistance in East Africa: Evidence from Tanzania and Kenya [Manuscript under peer review].`
+  },
+
+  {
+    slug: 'digital-ag-platform-failure-east-africa',
+    title: 'Launched, Celebrated, Forgotten: A Critical Review of Why Digital and AI-Enabled Agriculture Platforms Fail, Stall, or Survive in East Africa',
+    shortTitle: 'Why Digital Ag Platforms Fail or Survive in EA',
+    authors: [
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
+    ],
+    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
+    venue: 'Manuscript Under Peer Review',
+    venueShort: 'Under Review · 2026',
+    year: 2026,
+    month: 'Nov',
+    dateISO: '2026-11-03',
+    category: 'preprint',
+    status: 'Under Peer Review',
+    isSaailLab: true,
+    openAccess: false,
+    teaserImage: '/images/papers/govtech/figure_01_taxonomy.png',
+    teaserCaption: 'Institutional survival taxonomy across 22 independently verified East African digital agriculture platforms (2009-2026): only 1 of 10 venture/donor standalone startups remains confirmed active, versus 12 of 12 telecom-, government-, or consortium-embedded platforms.',
+    tldr: 'Audits 22 named digital and AI agriculture platforms across five East African countries (2009-2026), revealing only 1 of 10 standalone startups sustains active scale compared with 12 of 12 institutionally embedded platforms.',
+    abstract: 'East Africa is frequently framed as a global frontier for digital and AI-enabled agriculture, yet no systematic record tracks what actually happens to widely publicized platforms three to ten years after launch. Combining structured literature synthesis with primary evidence verification across 22 named digital agriculture platforms operating in Kenya, Uganda, Rwanda, Tanzania, and Ethiopia between 2009 and 2026, we audit operational survival against independent primary records rather than self-reported user totals. We observe a sharp institutional divergence: venture- or donor-funded standalone startups exhibit high attrition (only 1 of 10 confirmed active at scale, with documented shutdowns and severe organizational crises), whereas all 12 platforms embedded inside mobile network operators, public agricultural extension systems, asset-financing models, or sustained academic-nonprofit consortia remain active. We formulate a six-model institutional survival taxonomy alongside mandatory post-launch accountability reporting standards.',
+    keywords: ['digital agriculture', 'platform failure', 'agtech sustainability', 'East Africa', 'ICT4D', 'GovTech', 'institutional economics'],
+    topics: ['Agriculture', 'Responsible AI', 'AI Policy & GovTech', 'East Africa'],
+    highlights: [
+      { value: '22 Platforms', label: 'Individually Audited', 'sublabel': 'KE · UG · RW · TZ · ET (2009-2026)' },
+      { value: '1 / 10', label: 'Standalone Startups', 'sublabel': 'Confirmed sustainably active' },
+      { value: '12 / 12', label: 'Embedded Platforms', 'sublabel': 'MNO, gov, asset-finance, consortium' },
+      { value: '6 Models', label: 'Survival Taxonomy', 'sublabel': 'Post-launch accountability standard' }
+    ],
+    contributions: [
+      'Builds the first verified longitudinal ledger of 22 named East African digital and AI agricultural platforms (2009-2026) evaluated against primary operational records rather than launch press releases.',
+      'Quantifies the institutional survival gap: 10% confirmed active survival among standalone VC/donor startups (1/10) versus 100% continuity across institutionally embedded platforms (12/12).',
+      'Documents pervasive data-transparency deficits where conflicting sources disagree on whether prominent farmer platforms remain operational, recommending funder-mandated longitudinal outcome reporting.'
+    ],
+    tables: [
+      {
+        title: 'Institutional Survival Breakdown Across 22 Verified East African AgTech Platforms (2009-2026)',
+        headers: ['Institutional Embedding Archetype', 'Survival Characteristic', 'Core Driver'],
+        rows: [
+          ['Standalone Venture / Donor Startup', '1 / 10 confirmed active', 'Post-grant valley of death & low smallholder SaaS willingness-to-pay'],
+          ['Telecom-Embedded Services', 'Confirmed sustained', 'Bundled zero-rated distribution & carrier billing'],
+          ['Government Extension / Subsidy Registry', 'Confirmed sustained', 'Recurring public budget & mandatory farmer enrollment'],
+          ['Asset-Financing & Input Bundling', 'Confirmed sustained', 'Direct credit/input margin recovers digital platform cost'],
+          ['Research Consortium & Institutional Transition', 'Confirmed sustained', 'Multi-cycle grant continuity & public data integration']
+        ]
+      }
+    ],
+    bibtex: `@misc{nyalala2026agtech_survival,
+  title={Launched, Celebrated, Forgotten: A Critical Review of Why Digital and AI-Enabled Agriculture Platforms Fail, Stall, or Survive in East Africa},
+  author={Nyalala, Innocent},
+  year={2026},
+  note={Manuscript under peer review}
+}`,
+    apa: `Nyalala, I. (2026). Launched, Celebrated, Forgotten: A Critical Review of Why Digital and AI-Enabled Agriculture Platforms Fail, Stall, or Survive in East Africa [Manuscript under peer review].`
+  },
+
+  {
+    slug: 'institutional-drivers-digital-ag-ssa',
+    title: 'Between Promise and Practice: Institutional Drivers and Barriers to Digital Transformation in Sub-Saharan African Smallholder Agriculture',
+    shortTitle: 'Institutional Barriers in SSA Digital Ag',
+    authors: [
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
+    ],
+    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
+    venue: 'Manuscript Under Peer Review',
+    venueShort: 'Under Review · 2026',
+    year: 2026,
+    month: 'Nov',
+    dateISO: '2026-11-02',
+    category: 'preprint',
+    status: 'Under Peer Review',
+    isSaailLab: true,
+    openAccess: false,
+    teaserImage: '/images/papers/govtech/figure_01_framework.png',
+    teaserCaption: 'Technology-Organization-Environment (TOE) and institutional voids synthesis connecting rural infrastructure constraints, cooperative platform governance, and conditional smallholder productivity gains across Sub-Saharan Africa.',
+    tldr: 'Synthesizes Technology-Organization-Environment (TOE) and institutional voids evidence across Kenya, Tanzania, and Ethiopia showing why isolated digital tools stall despite 25% conditional yield gains.',
+    abstract: 'Digital transformation has emerged as a central pillar of agricultural development strategy in Sub-Saharan Africa, where agriculture employs over 60% of the workforce, yet translation into sustained value for smallholder farmers operating under two hectares remains uneven. Drawing on the Technology-Organization-Environment (TOE) framework and institutional voids theory across Ethiopia, Kenya, and Tanzania, we synthesize empirical evidence on mobile advisories, AI diagnostics, and market linkages. While controlled interventions demonstrate conditional yield gains up to 25% and income gains of 200 to 600 USD per hectare, most initiatives fail to scale due to weak institutional coordination, digital literacy gaps, fragmented data ecosystems, and extractive platform incentives. Sustainable adoption requires deliberate institutional co-evolution combining connectivity policy, inclusive platform design, and cooperative farmer governance.',
+    keywords: ['digital transformation', 'smallholder agriculture', 'TOE framework', 'institutional voids', 'Sub-Saharan Africa', 'AI policy'],
+    topics: ['Agriculture', 'Responsible AI', 'AI Policy & GovTech', 'East Africa'],
+    highlights: [
+      { value: 'Up to 25%', label: 'Conditional Yield Gain', 'sublabel': 'When advisory aligns with inputs' },
+      { value: '$200-$600/ha', label: 'Documented Income Gain', 'sublabel': 'Controlled East African pilots' },
+      { value: 'TOE + Voids', label: 'Theoretical Lens', 'sublabel': 'Tech, Org & Environment synthesis' },
+      { value: 'KE · TZ · ET', label: 'Regional Scope', 'sublabel': 'Plots under 2 hectares' }
+    ],
+    contributions: [
+      'Integrates Technology-Organization-Environment (TOE) adoption determinants with institutional voids theory across smallholder farming systems in Kenya, Tanzania, and Ethiopia.',
+      'Reconciles stark divergence between pilot-level yield/income gains (up to 25% yield; $200-$600/ha) and macro-scale stalling when credit, input markets, and cooperative trust are absent.',
+      'Proposes four policy propositions centering smallholder cooperative governance, rural connectivity subsidies, and interoperable public agricultural data standards.'
+    ],
+    tables: [
+      {
+        title: 'TOE & Institutional Voids Proposition Matrix for Sub-Saharan African Digital Agriculture',
+        headers: ['TOE Dimension', 'Observed Structural Barrier', 'Institutional Co-Evolution Policy'],
+        rows: [
+          ['Technological Readiness', 'High feature-phone share & English-only UI', 'Local Swahili/dialect voice UI & offline edge models'],
+          ['Organizational Governance', 'Extractive platform revenue extracting trader margins', 'Cooperative data trusts & smallholder revenue-share'],
+          ['Environmental & Credit Voids', 'AI advice unusable without fertilizer/input access', 'Bundle agronomic advisories with cooperative credit & markets']
+        ]
+      }
+    ],
+    bibtex: `@misc{nyalala2026institutional_drivers,
+  title={Between Promise and Practice: Institutional Drivers and Barriers to Digital Transformation in Sub-Saharan African Smallholder Agriculture},
+  author={Nyalala, Innocent},
+  year={2026},
+  note={Manuscript under peer review}
+}`,
+    apa: `Nyalala, I. (2026). Between Promise and Practice: Institutional Drivers and Barriers to Digital Transformation in Sub-Saharan African Smallholder Agriculture [Manuscript under peer review].`
   },
 
   {
     slug: 'dgs-bench',
     repoSlug: 'dgs-bench',
-    title: 'DGS-Bench: Measuring the Deployment Gap in African Agricultural AI Requires Balanced Metrics — A Cassava Case Study',
+    title: 'DGS-Bench: Measuring the Deployment Gap in African Agricultural AI Requires Balanced Metrics: A Cassava Case Study',
     shortTitle: 'DGS-Bench (DLI 2026 Best Poster)',
     authors: [
       { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] },
@@ -316,28 +427,57 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2026-08-08',
     category: 'conference',
     status: 'Published · 18/114 Accepted (15.82%)',
-    award: 'Best Poster Award — Deep Learning Indaba 2026 (Lagos, Nigeria)',
+    award: 'Best Poster Award, Deep Learning Indaba 2026 (Lagos, Nigeria)',
     openAccess: true,
     doi: '10.13140/rg.2.2.12603.17448',
-    paperUrl: 'https://doi.org/10.13140/rg.2.2.12603.17448',
-    posterUrl: 'https://doi.org/10.13140/RG.2.2.21909.90088',
+    paperUrl: 'https://www.researchgate.net/publication/408017728_DGS-Bench_Measuring_the_Deployment_Gap_in_African_Agricultural_AI_Requires_Balanced_Metrics_-A_Cassava_Case_Study',
+    posterUrl: '/images/papers/posters/dgs-bench-poster-dli2026.png',
     codeUrl: 'https://github.com/saaillab/dgs-bench',
-    teaserImage: '/images/papers/posters/dli-2026-lagos-poster.webp',
-    teaserCaption: 'DGS-Bench poster presented at Deep Learning Indaba 2026, Lagos, Nigeria — Winner of the Best Poster Award (18 accepted out of 114 submissions; 15.82% acceptance rate).',
+    teaserImage: '/images/papers/posters/dgs-bench-poster-dli2026.png',
+    teaserCaption: 'Camera-ready poster awarded Best Poster at Deep Learning Indaba 2026 (Lagos, Nigeria; 18 accepted of 114 submissions). Shows how class-imbalanced field splits induce a -5.96 pp raw-accuracy evaluation mirage while macro-F1 exposes +8.19 pp true deployment degradation.',
     tldr: 'Demonstrates that aggregate accuracy hides catastrophic minority-disease failures under field shift in African cassava diagnostics, introducing balanced deployment-gap evaluation metrics (Best Poster Award, DLI 2026).',
     abstract: 'Aggregate classification accuracy on imbalanced agricultural datasets routinely hides silent failures on minority but economically devastating plant diseases. We introduce DGS-Bench, a Deployment Gap and Sensitivity Benchmark tailored for African agricultural AI, grounded in a multi-condition cassava pathology case study. Evaluating models across controlled versus real smallholder field acquisitions reveals that models boasting high top-line accuracy frequently suffer sharp drops in macro-averaged recall and per-class F1 on rare pathologies. DGS-Bench establishes a standardized evaluation protocol combining balanced per-class metrics, deployment gap quantification, and calibration checks, earning the Best Poster Award at Deep Learning Indaba 2026 (one of 18 papers accepted out of 114 submissions, 15.82% acceptance rate).',
     keywords: ['DGS-Bench', 'African agricultural AI', 'cassava disease', 'balanced metrics', 'deployment gap', 'Deep Learning Indaba'],
     topics: ['Agriculture', 'Benchmarking', 'Responsible AI', 'Cassava', 'East Africa'],
     highlights: [
-      { value: '15.82%', label: 'Acceptance Rate', sublabel: '18 of 114 submissions' },
-      { value: 'Best Poster', label: 'DLI 2026 Award', sublabel: '2nd consecutive DLI win' },
-      { value: 'Balanced', label: 'Evaluation Protocol', sublabel: 'Macro-F1 · Per-class recall' }
+      { value: '+8.19 pp', label: 'Mean Macro-F1 Gap', sublabel: 'Paired t = 10.2, p = 0.002' },
+      { value: '-5.96 pp', label: 'Raw Acc Mirage', sublabel: 'Field Acc hides minority failure' },
+      { value: '-17.0 pp', label: 'BG Perturbation Drop', sublabel: 'ViT-Small/16 loses 21.3 pp' },
+      { value: 'Best Poster', label: 'DLI 2026 Winner', sublabel: '18 / 114 accepted (15.82%)' }
     ],
     figures: [
-      { src: '/images/papers/posters/dli-2026-lagos-poster.webp', caption: 'Full DGS-Bench conference poster presented at Deep Learning Indaba 2026, Lagos.' },
-      { src: '/images/papers/posters/dli-2026-award-photo.webp', caption: 'Dr. Innocent Nyalala presenting DGS-Bench at Pan-Atlantic University, Lagos.' },
-      { src: '/images/papers/posters/dli-2026-award-graphic.webp', caption: 'IIT Madras Zanzibar official announcement recognizing the DLI 2026 Best Poster Award.' }
+      { src: '/images/papers/dgs2026/fig1_dgs_bar.png', caption: 'Lab vs. natural field accuracy across four architectures revealing negative raw-accuracy DGS mirage while macro-F1 exposes +8.19 pp mean deployment degradation.' }
     ],
+    contributions: [
+      'Defines the Deployment Gap Score (DGS) across raw accuracy, balanced accuracy, and macro-F1 to quantify lab-to-field distribution shift on imbalanced smallholder datasets.',
+      'Demonstrates an evaluation mirage across four frozen linear-probe architectures (ResNet-50, EfficientNet-B3, MobileNetV3-S, ViT-Small/16) where 65.8% CMD prevalence inflates field accuracy despite minority-class collapse (Healthy recall drops from 52.5% to 47.7%).',
+      'Establishes through seven controlled perturbations that background texture reliance (-13.6 to -21.3 pp) rather than brightness variation (<1.7 pp) dominates deployment fragility across CNNs and Vision Transformers.',
+      'Reproduces the evaluation gap across three crops and class cardinalities (Cassava 5 classes, PlantVillage Tomato 10 classes, Rice Leaf Disease 4 classes) under a reproducible 11-minute free T4 GPU benchmark.'
+    ],
+    tables: [
+      {
+        title: 'DGS-Bench Primary Benchmark: Lab (Balanced n=400) vs. Natural Field (n=19,397, 65.8% CMD)',
+        caption: 'Raw field accuracy artificially exceeds lab accuracy across all models (negative DGS_Acc), whereas Macro-F1 exposes +6.23 to +9.67 pp degradation.',
+        headers: ['Architecture', 'Lab Acc (%)', 'Field Acc (%)', 'DGS Acc (pp)', 'Field BAcc (%)', 'Lab F1 (%)', 'Field F1 (%)', 'DGS F1 (pp)'],
+        rows: [
+          ['ResNet-50', '54.75', '62.80', '-8.05', '56.36', '54.71', '48.47', '+6.23'],
+          ['EfficientNet-B3', '56.25', '61.93', '-5.68', '54.66', '56.10', '46.78', '+9.32'],
+          ['MobileNetV3-S', '54.00', '56.97', '-2.97', '53.26', '54.05', '44.37', '+9.67'],
+          ['ViT-Small/16', '57.00', '64.14', '-7.14', '57.51', '56.88', '49.37', '+7.51']
+        ]
+      },
+      {
+        title: 'Controlled Perturbation Drop (pp) on Field Features at Severity 1.0',
+        headers: ['Architecture', 'Base Field Acc (%)', 'Background Δ (pp)', 'Gaussian Noise Δ (pp)', 'Brightness Δ (pp)'],
+        rows: [
+          ['ResNet-50', '62.8', '14.3', '9.9', '-0.9'],
+          ['EfficientNet-B3', '61.9', '13.6', '9.0', '-0.5'],
+          ['MobileNetV3-S', '57.0', '18.8', '14.8', '-1.6'],
+          ['ViT-Small/16', '64.1', '21.3', '16.0', '-0.6']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{nyalala2026dgsbench,
   title={DGS-Bench: Measuring the Deployment Gap in African Agricultural AI Requires Balanced Metrics -- A Cassava Case Study},
   author={Nyalala, Innocent and Gudla, Surabhi and Vincent, Patrick},
@@ -348,7 +488,7 @@ export const PUBLICATIONS: Publication[] = [
   doi={10.13140/rg.2.2.12603.17448},
   note={Best Poster Award; 18 of 114 accepted}
 }`,
-    apa: `Nyalala, I., Gudla, S., & Vincent, P. (2026, August). DGS-Bench: Measuring the Deployment Gap in African Agricultural AI Requires Balanced Metrics — A Cassava Case Study. Deep Learning Indaba 2026, Lagos, Nigeria. https://doi.org/10.13140/rg.2.2.12603.17448`
+    apa: `Nyalala, I., Gudla, S., & Vincent, P. (2026, August). DGS-Bench: Measuring the Deployment Gap in African Agricultural AI Requires Balanced Metrics ,  A Cassava Case Study. Deep Learning Indaba 2026, Lagos, Nigeria. https://doi.org/10.13140/rg.2.2.12603.17448`
   },
 
   {
@@ -361,7 +501,7 @@ export const PUBLICATIONS: Publication[] = [
       { name: 'Patrick Vincent Ndowo', url: 'https://www.linkedin.com/in/patrick-ndowo/', affiliations: [1] }
     ],
     affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'CVPR 2026 — 7th Workshop on Vision for Agriculture (CV4A / V4A), Denver, USA',
+    venue: 'CVPR 2026 ,  7th Workshop on Vision for Agriculture (CV4A / V4A), Denver, USA',
     venueShort: 'CV4A @ CVPR 2026',
     venueUrl: 'https://cvpr.thecvf.com/Conferences/2026',
     year: 2026,
@@ -373,28 +513,41 @@ export const PUBLICATIONS: Publication[] = [
     paperUrl: 'https://openreview.net/pdf?id=V1UbAtXS4M',
     codeUrl: 'https://github.com/saaillab/CLOVES-4603',
     datasetUrl: 'https://github.com/saaillab/CLOVES-4603',
-    teaserImage: '/images/papers/posters/cvpr-cloves-2026.webp',
-    teaserCaption: 'CLOVES-4603 benchmark graphic for the 7th Workshop on Vision for Agriculture at CVPR 2026: 4,603 standardized ZSTC clove images achieving 99.67% deep learning accuracy and 92.94% classical texture-fusion SVM accuracy.',
+    teaserImage: '/images/papers/cloves/Fig4_Comprehensive_Model_Comparison.png',
+    teaserCaption: 'Five-paradigm benchmark on CLOVES-4603 (4,603 ZSTC clove images): fine-tuned ResNet-50 reaches 99.67% accuracy, frozen DINOv2 linear probe achieves 94.90%, and GPU-free GLCM+GLRLM+LBP texture fusion SVM reaches 92.94%.',
     tldr: 'Introduces CLOVES-4603, the first public 4,603-image benchmark for Zanzibar clove grading across four commercial grades, comparing classical texture pipelines (92.94%) against fine-tuned deep architectures (99.67%).',
     abstract: 'We introduce CLOVES-4603, the first public benchmark dataset for automated clove quality grading, comprising 4,603 standardized 224x224 RGB images spanning four commercial grades collected at the Zanzibar State Trading Corporation (ZSTC). We benchmark classical texture pipelines (HOG+SVM, GLCM+GLRLM+LBP fusion) against fine-tuned deep learning models including ResNet-50, MobileNetV3, and a frozen DINOv2 vision transformer. ResNet-50 achieves 99.67% accuracy on the test set, whereas texture-fusion SVM reaches 92.94%, providing a strong and deployment-friendly classical baseline. This benchmark informs real-world deployment trade-offs between accuracy, latency, and computational cost in agricultural settings where infrastructure is limited.',
     keywords: ['CLOVES-4603', 'clove quality grading', 'Zanzibar', 'texture features', 'deep learning', 'CVPR 2026', 'vision for agriculture'],
     topics: ['Agriculture', 'Computer Vision', 'Zanzibar', 'Benchmarking', 'Deep Learning'],
     highlights: [
-      { value: '4,603', label: 'Curated Images', sublabel: '4 ZSTC commercial grades' },
-      { value: '99.67%', label: 'ResNet-50 Accuracy', sublabel: '99.35% MobileNetV3-Large' },
+      { value: '4,603', label: 'Curated Images', sublabel: '224x224 RGB · 4 ZSTC grades' },
+      { value: '99.67%', label: 'ResNet-50 Acc', sublabel: '99.66% Macro-F1 (n=921 test)' },
+      { value: '94.90%', label: 'DINOv2 Probe', sublabel: 'Frozen ViT-B/14 baseline' },
       { value: '92.94%', label: 'Texture-Fusion SVM', sublabel: 'GLCM + GLRLM + LBP' }
     ],
     tables: [
       {
-        title: 'CLOVES-4603 Benchmark Accuracy Summary',
-        headers: ['Method / Architecture', 'Test Accuracy (%)', 'Deployment Profile'],
+        title: 'CLOVES-4603 Five-Paradigm Test Benchmark (n = 921 Held-Out Images)',
+        headers: ['Method / Architecture', 'Test Accuracy (%)', 'Training Mode / Features'],
         rows: [
-          ['ResNet-50 (Fine-Tuned)', '99.67%', 'Highest overall accuracy'],
-          ['MobileNetV3-Large (Fine-Tuned)', '99.35%', 'Lightweight edge-friendly CNN'],
-          ['Texture-Fusion SVM (GLCM+GLRLM+LBP)', '92.94%', 'Zero-GPU classical baseline']
+          ['ResNet-50', '99.67%', 'Fine-tuned ImageNet CNN (99.66% F1)'],
+          ['MobileNetV3-Large', '99.35%', 'Lightweight edge-deployable CNN'],
+          ['DINOv2 ViT-B/14', '94.90%', 'Frozen self-supervised linear probe'],
+          ['GLCM + GLRLM + LBP SVM', '92.94%', 'Classical 96-dim texture fusion'],
+          ['HOG + SVM', '32.68%', 'Shape-gradient classical baseline']
         ]
       }
     ],
+    contributions: [
+      'Introduces CLOVES-4603, the first open benchmark dataset of 4,603 lot-aware stratified images spanning four ISO 2254-2004 / ZSTC commercial clove quality grades collected in Zanzibar.',
+      'Establishes rigorous 5-seed evaluation protocols with bootstrap 95% confidence intervals comparing classical texture descriptors, self-supervised vision transformers, and fine-tuned CNNs.',
+      'Demonstrates that combined GLCM+GLRLM+LBP texture fusion with RBF-SVM achieves 92.94% test accuracy without GPUs, outperforming HOG+SVM (32.68%) by +60.26 percentage points.',
+      'Profiles accuracy-latency-parameter Pareto trade-offs showing MobileNetV3-Large reaches 99.35% accuracy as a mobile-ready alternative to ResNet-50 (99.67%).'
+    ],
+    figures: [
+      { src: '/images/papers/cloves/Fig1_Class_Distribution.png', caption: 'Lot-aware stratified 70/10/20 class distribution across Grades 1 to 4 (N = 4,603 ZSTC clove images).' }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{nyalala2026cloves4603,
   title={CLOVES-4603: Benchmarking Classical Texture Features and Fine-Tuned Deep Models for Clove Quality Grading},
   author={Nyalala, Innocent and Vincent, Patrick Ndowo},
@@ -424,7 +577,7 @@ export const PUBLICATIONS: Publication[] = [
     category: 'workshop',
     status: 'Accepted & Published · ICLR 2026 Workshop',
     openAccess: true,
-    citations: 1,
+    citations: 2,
     paperUrl: 'https://openreview.net/forum?id=RCEEHTbSDk',
     codeUrl: 'https://github.com/saaillab/trustworthy-ai-iclr2026',
     teaserImage: '/images/papers/posters/iclr-2026-trustworthy-ai.webp',
@@ -433,6 +586,33 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Fairness, robustness, and out-of-distribution generalization are typically studied in isolation despite sharing common roots in dataset acquisition bias, spurious shortcuts, and representational imbalance. We propose a unified data-centric framework that diagnoses and intervenes on learning biases prior to model fitting, demonstrating simultaneous gains across fairness disparities, environmental perturbations, and cross-domain transfer in resource-constrained deployments.',
     keywords: ['trustworthy AI', 'fairness', 'robustness', 'generalization', 'data-centric AI', 'ICLR 2026', 'learning biases'],
     topics: ['Responsible AI', 'Deep Learning', 'East Africa'],
+    highlights: [
+      { value: '22', label: 'Models Audited', sublabel: 'CNNs, ViTs, Decomposed' },
+      { value: '99.45%', label: 'Decomposed F1', sublabel: '100.0% EER (U-Net + ResNet-18)' },
+      { value: '97.2%', label: 'Shifted Field F1', sublabel: 'vs 31.2-45.8% monolithic' },
+      { value: '5,898', label: 'Expert-Graded Images', sublabel: '3 certified ZSTC graders' }
+    ],
+    contributions: [
+      'Formalizes procedural alignment, structuring deep learning pipelines to mirror explicit human segmentation-and-attribute grading stages.',
+      'Evaluates 22 architectures across five model families, demonstrating that high clean-set accuracy (99.71%) coincides with negligible explanation faithfulness (2.5-5.8% EER).',
+      'Exposes severe domain-shift vulnerability in monolithic black box classifiers (F1 dropping to 31.2-45.8%) compared with 97.2% retained F1 in decomposed architectures.',
+      'Unifies fairness, out-of-distribution robustness, and explainability as linked consequences of background shortcut bias.'
+    ],
+    tables: [
+      {
+        title: 'Accuracy, Explanation Evidence Ratio (EER), and Domain-Shift Resilience (ICLR 2026)',
+        headers: ['Architecture', 'Clean F1 (%)', 'EER (%)', 'Shifted F1 (%)', 'Params (M)'],
+        rows: [
+          ['U-Net + ResNet-18 (Decomposed)', '99.45', '100.0', '97.2', '13.2'],
+          ['Swin-Base (Monolithic)', '99.57', '3.7 ± 3.2', '45.8', '88.0'],
+          ['DeiT-Base (Monolithic)', '99.57', '4.2 ± 3.6', '42.1', '86.6'],
+          ['DenseNet-201 (Monolithic)', '99.71', '3.1 ± 2.8', '38.7', '20.0'],
+          ['EfficientNet-B2 (Monolithic)', '99.71', '2.8 ± 3.4', '34.5', '9.1'],
+          ['ResNet-50 (Monolithic)', '99.71', '2.5 ± 3.1', '31.2', '25.6']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{vincent2026unifying,
   title={Unifying Perspectives on Learning Biases: A Data-Centric Intervention for Holistic Fairness, Robustness, and Generalization},
   author={Vincent, Patrick Ndowo and Nyalala, Innocent},
@@ -454,7 +634,7 @@ export const PUBLICATIONS: Publication[] = [
       { name: 'Nirav Bhatt', affiliations: [1] }
     ],
     affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'Deep Learning Indaba 2025 Research Track — Proceedings of Machine Learning Research (PMLR Vol. 302, pp. 1–11, 2026)',
+    venue: 'Deep Learning Indaba 2025 Research Track ,  Proceedings of Machine Learning Research (PMLR Vol. 302, pp. 1–11, 2026)',
     venueShort: 'PMLR Vol. 302 · DLI 2025/2026',
     venueUrl: 'https://proceedings.mlr.press/v302/nyalala26a.html',
     year: 2026,
@@ -462,25 +642,55 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2026-01-20',
     category: 'conference',
     status: 'Published in PMLR Vol. 302 · Oral & Poster',
-    award: 'Best Poster Award (Publication & Dataset Category) — Deep Learning Indaba 2025, Kigali',
+    award: 'Best Poster Award (Publication & Dataset Category) ,  Deep Learning Indaba 2025, Kigali',
     openAccess: true,
     paperUrl: 'https://proceedings.mlr.press/v302/nyalala26a.html',
     codeUrl: 'https://github.com/saaillab/cara-fm',
-    teaserImage: '/images/papers/posters/CARA-POSTER.jpeg',
-    teaserCaption: 'Award-winning CARA-FM poster presented at Deep Learning Indaba 2025 in Kigali, Rwanda (published in PMLR Vol. 302, 2026) and spotlighted by AI4Africa.',
+    teaserImage: '/images/papers/posters/cara-fm-poster-dli2025.png',
+    teaserCaption: 'Best Poster presentation at Deep Learning Indaba 2025 (Kigali, Rwanda; published in PMLR Vol. 302): quantifies 5x-40x infrastructure disparities in East Africa and defines four architectural pillars plus Tiny/Lite/Edge deployment tiers.',
     tldr: 'Introduces the four-pillar CARA-FM framework (Community-Driven Data, Indigenous Knowledge Systems, Edge-First Architecture, Participatory Governance) for East African agricultural foundation models.',
     abstract: 'East African agriculture supports more than 175 million people yet faces mounting challenges from climate variability, compute scarcity, and information barriers. Current foundation models fail to address the region\'s computational constraints, linguistic diversity spanning over 200 languages, and distinct ecological knowledge systems. We present CARA-FM, a theoretical framework comprising four pillars: Community-Driven Data Architecture, Indigenous Knowledge Systems, Edge-First Model Design, and Participatory Governance. We define multi-dimensional evaluation metrics spanning technical, agronomic, and cultural criteria to guide foundation model research under severe resource constraints.',
     keywords: ['CARA-FM', 'foundation models', 'East African agriculture', 'responsible AI', 'indigenous knowledge', 'PMLR', 'Deep Learning Indaba'],
     topics: ['Foundation Models', 'Responsible AI', 'Agriculture', 'East Africa'],
     highlights: [
-      { value: 'PMLR 302', label: 'Proceedings', sublabel: 'nyalala26a (2026)' },
-      { value: 'Best Poster', label: 'DLI 2025 Award', sublabel: 'Kigali, Rwanda' },
-      { value: '4 Pillars', label: 'CARA-FM Architecture', sublabel: 'Data · Knowledge · Edge · Gov' }
+      { value: 'PMLR 302', label: 'Published Proceedings', sublabel: 'pp. 1-11 (DLI 2025 Oral)' },
+      { value: '4 Pillars', label: 'CARA-FM Architecture', sublabel: 'Data, IKS, Edge, Governance' },
+      { value: '10x-40x', label: 'Infra Resource Gap', sublabel: 'RAM & bandwidth reality' },
+      { value: '5M-50M', label: 'Edge Compression Tiers', sublabel: 'Tiny / Lite / Edge specs' }
     ],
     figures: [
-      { src: '/images/papers/posters/CARA-POSTER.jpeg', caption: 'Full CARA-FMs research poster presented at Deep Learning Indaba 2025, Kigali, Rwanda.' },
-      { src: '/images/papers/posters/cara-fm-dli-spotlight.webp', caption: 'AI4Africa Weekly Research Spotlight highlighting the CARA-FM framework.' }
+      { src: '/images/papers/posters/cara-fm-dli-spotlight.webp', caption: 'Best Poster Award recognition at Deep Learning Indaba 2025, Kigali, Rwanda (published in PMLR Vol. 302, 2026).' }
     ],
+    posterUrl: '/images/papers/posters/cara-fm-poster-dli2025.png',
+    contributions: [
+      'Quantifies concrete resource mismatches between standard foundation models (8-32 GB RAM, 50+ Mbps) and East African field realities (1-3 GB smartphones, 1.2 Mbps connectivity, intermittent power).',
+      'Formulates four interdependent design pillars: Community-Driven Data Architecture, Indigenous Knowledge Systems (IKS), Edge-First Model Design (5M-50M params), and Participatory Governance.',
+      'Defines multi-dimensional evaluation criteria balancing technical accuracy with local linguistic coverage, agrarian equity, and energy constraints.'
+    ],
+    tables: [
+      {
+        title: 'East African Edge Reality vs. Standard Foundation Model Assumptions',
+        headers: ['Resource Dimension', 'Standard FM Assumption', 'East African Field Reality', 'Gap Factor'],
+        rows: [
+          ['Model Memory (RAM)', '8 - 32 GB', '1 - 3 GB', '10x'],
+          ['Network Bandwidth', '50+ Mbps', '1.2 Mbps', '40x'],
+          ['Power Availability', 'Continuous', '4 - 8 hours/day', '6x'],
+          ['Target Device Cost', '$500+', '< $100', '5x'],
+          ['Cloud GPU Acceleration', 'Required', 'Unavailable offline', 'Inf']
+        ]
+      },
+      {
+        title: 'Proposed CARA-FM Edge-Cloud Deployment Tiers',
+        headers: ['Tier', 'Parameter / Size Budget', 'Target Hardware', 'Target Acc.', 'Primary Use Case'],
+        rows: [
+          ['CARA-Tiny', '5M params / 20 MB', 'Entry feature & low-end phones', '80%', 'Offline crop symptom screening'],
+          ['CARA-Lite', '15M params / 60 MB', 'Budget smartphones (1-2 GB RAM)', '85%', 'Multi-disease field triage'],
+          ['CARA-Edge', '50M params / 200 MB', 'Mid-range extension phones', '90%', 'Full seasonal advisory']
+        ]
+      }
+    ],
+    isSaailLab: true,
+    citations: 1,
     bibtex: `@inproceedings{nyalala2026carafm,
   title={Culturally Attuned and Resource-Aware Foundation Models for East African Agriculture: A Theoretical Framework and Research Agenda},
   author={Nyalala, Innocent and Bhatt, Nirav},
@@ -495,31 +705,118 @@ export const PUBLICATIONS: Publication[] = [
 
   {
     slug: 'clove-xai-etri2026',
-    title: 'Explainable AI for Clove Quality Grading: Benchmarking Post Hoc XAI and Compositional Interpretability Under Domain Shift',
-    shortTitle: 'Explainable AI for Clove Quality Grading (ETRI 2026)',
+    title: 'Explainable AI for clove quality grading: Benchmarking post hoc XAI and compositional interpretability under domain shift',
+    shortTitle: 'XAI for Clove Grading (ETRI Journal 2026)',
     authors: [
       { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] },
       { name: 'Patrick Vincent Ndowo', url: 'https://www.linkedin.com/in/patrick-ndowo/', affiliations: [1] }
     ],
     affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'ETRI Journal',
-    venueShort: 'ETRI Journal · 2026',
+    venue: 'ETRI Journal, Vol. 48, No. 5, pp. 911-923 (Wiley / ETRI)',
+    venueShort: 'ETRI Journal 48(5) · 2026',
     year: 2026,
-    month: 'Jun',
-    dateISO: '2026-06-01',
+    month: 'Oct',
+    dateISO: '2026-10-01',
     category: 'journal',
-    status: 'Published · Journal Article',
-    tldr: 'Benchmarks complementary post hoc XAI methods against compositional interpretability for Zanzibar clove grading under acquisition domain shift.',
-    abstract: 'High classification accuracy alone is insufficient for agricultural commodity inspection where grading directly dictates smallholder farmer income. Focusing on Zanzibar clove quality grading, we benchmark multiple post hoc attribution families alongside compositional interpretability mechanisms under realistic illumination and background domain shift, demonstrating why relying on a single visual saliency method overlooks shortcut reliance and failure modes.',
-    keywords: ['explainable AI', 'clove quality grading', 'post hoc XAI', 'compositional interpretability', 'domain shift', 'Zanzibar'],
-    topics: ['Responsible AI', 'Agriculture', 'Computer Vision', 'Zanzibar'],
-    bibtex: `@article{nyalala2026xai,
-  title={Explainable {AI} for Clove Quality Grading: Benchmarking Post Hoc {XAI} and Compositional Interpretability Under Domain Shift},
-  author={Nyalala, Innocent and Ndowo, Patrick V.},
+    status: 'Published · Q2 SCI · Vol. 48(5)',
+    tldr: 'Evaluates 7 post hoc XAI methods across 8 CNN/ViT models on 4,603 ZSTC clove images, revealing 33.4-82.4% EER attribution fragility and up to 86.5 pp shift drops, while a U-Net + ResNet-18 compositional pipeline reaches 99.45% F1 with 100% EER.',
+    abstract: 'Reliable agricultural commodity grading requires accuracy and explanations that match regulatory criteria. Using 4,603 expert-graded clove images across four Zanzibar State Trading Corporation (ZSTC) quality grades, we benchmark post hoc explainable artificial intelligence (XAI) methods including Grad-CAM, LIME, and GradientSHAP across eight CNN and Vision Transformer architectures and compare them with a compositional segmentation-classification pipeline. All eight monolithic architectures achieve 99.48% to 99.85% test F1-score, yet their Explanation Evidence Ratio (EER) varies sharply from 33.4% to 82.4%, while domain-shift F1 drops range from 6.7 to 86.5 percentage points. By isolating clove foregrounds prior to attribute grading via U-Net segmentation (Dice 0.9505) and ZSTC mpeta percentage rules, the compositional pipeline achieves 99.45% F1 with 100% EER by design and receives unanimous preference from three certified ZSTC inspectors.',
+    keywords: [
+      'explainable AI',
+      'clove quality grading',
+      'ZSTC',
+      'compositional interpretability',
+      'Explanation Evidence Ratio',
+      'domain shift',
+      'ETRI Journal'
+    ],
+    topics: [
+      'Agriculture',
+      'Explainable AI',
+      'Computer Vision',
+      'Zanzibar',
+      'Cloves'
+    ],
+    venueUrl: 'https://onlinelibrary.wiley.com/journal/22337326',
+    impactFactor: 'SCI Q2 · IF 1.6',
+    citations: 1,
+    openAccess: true,
+    doi: '10.4218/etrij.2026-0225',
+    paperUrl: 'https://doi.org/10.4218/etrij.2026-0225',
+    teaserImage: '/images/papers/etri2026/fig1_pipeline.png',
+    teaserCaption: 'Compositional vs. post hoc XAI evaluation framework on 4,603 ZSTC clove images: U-Net foreground segmentation (Dice = 0.9505) coupled with ResNet-18 attribute grading yields 99.45% macro-F1 and 100% Explanation Evidence Ratio (EER) by architectural design.',
+    highlights: [
+      { value: '99.45%', label: 'Compositional F1', sublabel: '100% EER by design' },
+      { value: '33.4-82.4%', label: 'Post Hoc EER Range', sublabel: 'High accuracy hides shift risk' },
+      { value: '86.5 pp', label: 'Max Shift F1 Drop', sublabel: 'EfficientNet-B0 on bg shift' },
+      { value: '3/3', label: 'ZSTC Expert Preference', sublabel: 'Unanimous certified graders' }
+    ],
+    contributions: [
+      'Introduced the Explanation Evidence Ratio (EER) to measure what fraction of a visual attribution heatmap actually falls inside annotated clove foreground masks rather than spurious tray background.',
+      'Benchmarked eight deep architectures (ResNet-18/50, DenseNet-121/201, EfficientNet-B0/B2, DeiT-Base, Swin-Base) across 4,603 ZSTC images, proving that >99.4% clean F1 masks severe EER spread (33.4% DeiT Grad-CAM to 81.9% Swin SHAP) and runtime bottlenecks (up to 26.1 s/image for SHAP).',
+      'Quantified background domain-shift robustness across all eight monolithic backbones, uncovering F1 collapses of 53.7 pp (EfficientNet-B2) to 86.5 pp (EfficientNet-B0) despite near-100% in-domain scores.',
+      'Built and validated a compositional U-Net (Dice 0.9505) + ResNet-18 rule-aligned grading pipeline achieving 99.45% F1, guaranteed 100% EER, and unanimous approval from three certified ZSTC clove graders.'
+    ],
+    figures: [
+      { src: '/images/papers/etri2026/fig3_eer_vs_robustness.png', caption: 'Correlation between Explanation Evidence Ratio (EER) and classification F1 retention under acquisition domain shift across eight deep architectures.' }
+    ],
+    tables: [
+      {
+        title: 'In-Domain Clove Grading Classification Benchmark (N = 4,603 Images, 4 ZSTC Grades)',
+        headers: ['Architecture', 'Params (M)', 'F1 (%)', 'Precision (%)', 'Recall (%)'],
+        rows: [
+          ['DenseNet-201', '20.0', '99.85', '99.84', '99.86'],
+          ['Swin-Base', '88.0', '99.79', '99.76', '99.81'],
+          ['DenseNet-121', '8.0', '99.76', '99.77', '99.75'],
+          ['ResNet-50', '25.6', '99.74', '99.75', '99.73'],
+          ['DeiT-Base', '86.6', '99.70', '99.70', '99.70'],
+          ['ResNet-18', '11.7', '99.58', '99.58', '99.59'],
+          ['EfficientNet-B0', '5.3', '99.53', '99.55', '99.50'],
+          ['EfficientNet-B2', '9.2', '99.48', '99.48', '99.47'],
+          ['Compositional (U-Net + ResNet-18)', '13.2', '99.45', '99.45', '99.45']
+        ]
+      },
+      {
+        title: 'Post Hoc XAI Faithfulness (EER %) & Inference Time per Image (s)',
+        headers: ['Architecture', 'Grad-CAM EER (%)', 'Grad-CAM Time (s)', 'LIME EER (%)', 'LIME Time (s)', 'SHAP EER (%)', 'SHAP Time (s)'],
+        rows: [
+          ['Swin-Base', '73.6', '0.028', '81.1', '5.8', '81.9', '26.1'],
+          ['DeiT-Base', '33.4', '0.007', '82.4', '5.3', '65.4', '24.1'],
+          ['DenseNet-121', '65.7', '0.049', '74.4', '2.0', '66.0', '5.1'],
+          ['ResNet-50', '71.2', '0.020', '71.6', '2.0', '64.5', '4.8'],
+          ['ResNet-18', '69.4', '0.009', '57.9', '1.7', '66.8', '3.2'],
+          ['DenseNet-201', '62.9', '0.089', '56.2', '2.3', '70.0', '6.8'],
+          ['EfficientNet-B2', '60.3', '0.037', '48.5', '1.9', '60.4', '4.5'],
+          ['EfficientNet-B0', '43.8', '0.029', '41.9', '1.8', '61.4', '3.7']
+        ]
+      },
+      {
+        title: 'Background Domain Shift Robustness Across Monolithic Models',
+        headers: ['Architecture', 'Original F1 (%)', 'Shifted F1 (%)', 'Drop (pp)', 'Grad-CAM EER (%)'],
+        rows: [
+          ['DenseNet-201', '99.85', '93.2', '6.7', '62.9'],
+          ['Swin-Base', '99.79', '90.7', '9.0', '73.6'],
+          ['ResNet-50', '99.74', '88.7', '11.0', '71.2'],
+          ['DenseNet-121', '99.76', '88.6', '11.1', '65.7'],
+          ['DeiT-Base', '99.70', '86.9', '12.8', '33.4'],
+          ['ResNet-18', '99.58', '65.7', '33.8', '69.4'],
+          ['EfficientNet-B2', '99.48', '45.8', '53.7', '60.3'],
+          ['EfficientNet-B0', '99.53', '13.0', '86.5', '43.8']
+        ]
+      }
+    ],
+    isSaailLab: true,
+    bibtex: `@article{nyalala2026etri_clove_xai,
+  title={Explainable AI for clove quality grading: Benchmarking post hoc XAI and compositional interpretability under domain shift},
+  author={Nyalala, Innocent and Ndowo, Patrick Vincent},
   journal={ETRI Journal},
-  year={2026}
+  volume={48},
+  number={5},
+  pages={911--923},
+  year={2026},
+  doi={10.4218/etrij.2026-0225}
 }`,
-    apa: `Nyalala, I., & Ndowo, P. V. (2026). Explainable AI for Clove Quality Grading: Benchmarking Post Hoc XAI and Compositional Interpretability Under Domain Shift. ETRI Journal.`
+    apa: `Nyalala, I., & Ndowo, P. V. (2026). Explainable AI for clove quality grading: Benchmarking post hoc XAI and compositional interpretability under domain shift. ETRI Journal, 48(5), 911-923. https://doi.org/10.4218/etrij.2026-0225`
   },
 
   {
@@ -539,16 +836,53 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2026-03-01',
     category: 'conference',
     status: 'Published · Travel Grant ($980)',
-    award: 'Competitive Travel Grant Award — EAC STI 2026, Kigali',
+    award: 'Competitive Travel Grant Award ,  EAC STI 2026, Kigali',
     openAccess: true,
     codeUrl: 'https://github.com/saaillab/zstc-clove-v1',
     datasetUrl: 'https://github.com/saaillab/zstc-clove-v1',
-    teaserImage: '/images/papers/posters/eac-sti-2026-clove-grading.webp',
-    teaserCaption: 'Presentation at the 4th EAC STI / AI4EAC Conference in Kigali, Rwanda evaluating automated clove grading across 5,298 ZSTC specimens.',
-    tldr: 'Feasibility evaluation on ZSTC-Clove-V1 (5,298 single-clove images across 4 ZSTC grades), showing ResNet-18 reaches 94.46% accuracy while VGG-16 collapses to 31.32%.',
+    teaserImage: '/images/papers/cloves/figure_benchmark_f1.png',
+    teaserCaption: 'Empirical CNN feasibility benchmark on ZSTC-Clove-V1 (5,298 single-clove images across four ZSTC grades): ResNet-18 achieves 94.46% test accuracy (94.33% macro-F1), whereas plain VGG-16 collapses to 31.32% majority-class prediction.',
+    tldr: 'Evaluates CNN feasibility on ZSTC-Clove-V1 (5,298 single-clove images across 4 ZSTC grades), finding ResNet-18 reaches 94.46% accuracy (94.33% F1) while unresidualized VGG-16 collapses to 31.32% (14.94% F1), motivating explainable pipelines.',
     abstract: 'We investigate the technical feasibility of automated clove quality grading using deep learning on ZSTC-Clove-V1, a novel dataset of 5,298 single-clove images across four official commercial grades collected at the Zanzibar State Trading Corporation (Saateni warehouse, Unguja). ResNet-18 achieves 94.46% accuracy (94.33% F1), whereas VGG-16 fails to converge at 31.32%, demonstrating sharp architectural sensitivity on fine-grained agricultural commodities and underscoring the need for trustworthy deployment.',
     keywords: ['ZSTC-Clove-V1', 'clove grading', 'Zanzibar', 'ResNet-18', 'East Africa', 'AI4EAC'],
     topics: ['Agriculture', 'Computer Vision', 'Zanzibar', 'East Africa'],
+    posterUrl: '/images/papers/posters/eac-sti-2026-clove-grading.webp',
+    highlights: [
+      { value: '94.46%', label: 'ResNet-18 Accuracy', sublabel: '94.33% Macro-F1' },
+      { value: '31.32%', label: 'VGG-16 Collapse', sublabel: '14.94% F1 (residual need)' },
+      { value: '5,298', label: 'Single-Clove Images', sublabel: '4 ZSTC grades · Saateni, Unguja' },
+      { value: '$980', label: 'EAC Travel Grant', sublabel: '4th EAC STI Conference' }
+    ],
+    contributions: [
+      'Constructed ZSTC-Clove-V1, a 5,298-image single-clove benchmark graded by certified Zanzibar State Trading Corporation (ZSTC) inspectors (Grade I: 1,455; Grade II: 1,320; Grade III: 1,398; Grade IV: 1,125) under 70/15/15 stratified splits (kappa = 0.87).',
+      'Empirically demonstrated dramatic architectural divergence on fine-grained spice surfaces: residual connections enable ResNet-18 to reach 94.46% accuracy and 94.39% precision, whereas plain VGG-16 fails to converge (31.32% accuracy, 14.94% F1).',
+      'Analyzed spatial Grad-CAM attributions showing why pure black box classifiers risk latching onto background tray cues rather than botanical bud discoloration (mpeta), directly motivating subsequent segmentation-first grading systems.'
+    ],
+    figures: [
+      { src: '/images/papers/cloves/figure_03_gradcam.png', caption: 'Grad-CAM inspection revealing sensitivity to tray background alongside bud discoloration.' }
+    ],
+    tables: [
+      {
+        title: 'CNN Architecture Feasibility Comparison on ZSTC-Clove-V1 Held-Out Test Split (n = 794)',
+        headers: ['Architecture', 'Test Accuracy (%)', 'Precision (%)', 'Recall (%)', 'Macro-F1 (%)'],
+        rows: [
+          ['ResNet-18', '94.46', '94.39', '94.34', '94.33'],
+          ['VGG-16', '31.32', '9.81', '31.32', '14.94']
+        ]
+      },
+      {
+        title: 'ZSTC-Clove-V1 Stratified Dataset Partition Across Commercial Grades (N = 5,298)',
+        headers: ['ZSTC Grade', 'Quality Tier', 'Total Images', 'Train (70%)', 'Val (15%)', 'Test (15%)'],
+        rows: [
+          ['Grade I', 'Premium Golden / Crown', '1,455', '1,019', '218', '218'],
+          ['Grade II', 'Standard Commercial', '1,320', '924', '198', '198'],
+          ['Grade III', 'Lower Faded Grade', '1,398', '979', '210', '209'],
+          ['Grade IV', 'Mpeta / Defective', '1,125', '787', '169', '169'],
+          ['Total', 'All 4 Commercial Grades', '5,298', '3,709', '795', '794']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{ndowo2026zstcclove,
   title={Deep Learning Feasibility Study for Automated Clove Quality Classification Using CNN Architectures on a Novel Zanzibar Dataset},
   author={Ndowo, Patrick Vincent and Nyalala, Innocent},
@@ -578,7 +912,7 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2026-07-23',
     category: 'workshop',
     status: 'Published · Oral Presentation',
-    award: 'Oral Presentation — Data Science Africa 2026, Kampala',
+    award: 'Oral Presentation ,  Data Science Africa 2026, Kampala',
     openAccess: true,
     teaserImage: '/images/papers/dsa2026/fig1_f1_improvement.png',
     teaserCaption: 'Macro-F1 degradation caused by DCGAN synthetic augmentation across extreme few-shot regimes (n = 25, 50, 100 real images/class): pretrained ResNet-50 drops by 35.9 pp and EfficientNet-B3 by 32.7 pp.',
@@ -587,9 +921,35 @@ export const PUBLICATIONS: Publication[] = [
     keywords: ['DCGAN', 'synthetic data', 'data scarcity', 'cassava disease', 'East Africa', 'DSA 2026'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'East Africa'],
     figures: [
-      { src: '/images/papers/dsa2026/fig1_f1_improvement.png', caption: 'Macro-F1 shift across classifier families when augmenting scarce real cassava cohorts (n = 25, 50, 100) with DCGAN outputs.' },
-      { src: '/images/papers/dsa2026/fig3_real_vs_aug.png', caption: 'Real field cassava leaves versus collapsed DCGAN-synthesized outputs showing texture artifacts.' }
+      { src: '/images/papers/dsa2026/fig3_real_vs_aug.png', caption: 'Classifier performance comparing real-only geometric augmentation against real + DCGAN augmentation across n = 25, 50, and 100 real training images per class on iCassava.' }
     ],
+    posterUrl: '/images/papers/posters/dsa2026-dcgan-poster.png',
+    highlights: [
+      { value: '-23.2 pp', label: 'Mean Drop (n=25)', sublabel: 'Synthetic GAN poisons training' },
+      { value: '-35.9 pp', label: 'ResNet-50 Drop', sublabel: 'Pretrained hierarchy damage' },
+      { value: '45 Runs', label: 'Controlled Matrix', sublabel: '3 scales x 4 backbones' },
+      { value: '100-200', label: 'Min Real Threshold', sublabel: 'Required images per class' }
+    ],
+    contributions: [
+      'Conducted 45 controlled DCGAN augmentation runs across three low-shot regimes (n = 25, 50, 100 real images/class) and four classifiers on Ugandan field cassava pathology.',
+      'Demonstrated that unregularized DCGAN augmentation reduces macro-F1 by an average of 23.2 pp at n = 25, 21.2 pp at n = 50, and 10.3 pp at n = 100 compared with geometric augmentation alone.',
+      'Identified asymmetric harm to ImageNet-pretrained backbones (-35.9 pp ResNet-50, -32.7 pp EfficientNet-B3) due to discriminator dominance and semantic mode collapse (lossD near 0.000, lossG spiking to 44.5).'
+    ],
+    tables: [
+      {
+        title: 'Macro-F1 Delta (pp) from DCGAN Augmentation vs. Geometric-Only Baseline (3 Seeds)',
+        headers: ['Classifier', 'n = 25 imgs/cls', 'n = 50 imgs/cls', 'n = 100 imgs/cls'],
+        rows: [
+          ['Lightweight CNN (scratch)', '-1.9 ± 2.2', '-4.5 ± 2.4', '+0.6 ± 2.8'],
+          ['MobileNetV3', '-22.1 ± 9.2', '-20.9 ± 2.2', '-10.1 ± 8.0'],
+          ['EfficientNet-B3', '-32.7 ± 8.1', '-22.0 ± 6.0', '+0.9 ± 0.7'],
+          ['ResNet-50', '-35.9 ± 11.8', '-37.3 ± 4.0', '-32.5 ± 9.2'],
+          ['4-Model Mean', '-23.2 ± 15.4', '-21.2 ± 13.4', '-10.3 ± 15.7']
+        ]
+      }
+    ],
+    isSaailLab: true,
+    citations: 1,
     bibtex: `@inproceedings{ndowo2026dcgan,
   title={When Synthetic Data Hurts: DCGAN Augmentation Failure Under Extreme Data Scarcity for Cassava Disease Classification in East Africa},
   author={Ndowo, Patrick and Nyalala, Innocent and Haji, Khamis},
@@ -624,16 +984,36 @@ export const PUBLICATIONS: Publication[] = [
     teaserImage: '/images/papers/dsa2026/fig1_audit_radar.png',
     teaserCaption: 'Five-dimension representativeness audit radar comparing PlantVillage, iCassava 2019, and iBean across geography, environment, class balance, image quality, and morphological diversity.',
     tldr: 'Presents a five-dimension representativeness audit of PlantVillage, iCassava 2019, and iBean alongside the six-item AgriAI Bias Card checklist for Sub-Saharan African deployment.',
-    abstract: 'Crop disease image datasets are increasingly used to build decision-support tools for smallholder farmers in Sub-Saharan Africa, yet dataset representativeness across geography, imaging environment, class balance, image quality, and morphological diversity is rarely documented systematically. We apply a quantitative five-dimension representativeness audit to PlantVillage, iCassava 2019, and iBean, quantify cross-domain transfer penalties, and introduce the AgriAI Bias Card — a six-item documentation checklist tailored to African agricultural AI.',
+    abstract: 'Crop disease image datasets are increasingly used to build decision-support tools for smallholder farmers in Sub-Saharan Africa, yet dataset representativeness across geography, imaging environment, class balance, image quality, and morphological diversity is rarely documented systematically. We apply a quantitative five-dimension representativeness audit to PlantVillage, iCassava 2019, and iBean, quantify cross-domain transfer penalties, and introduce the AgriAI Bias Card ,  a six-item documentation checklist tailored to African agricultural AI.',
     keywords: ['dataset auditing', 'AgriAI Bias Card', 'Sub-Saharan Africa', 'representativeness', 'PlantVillage', 'iCassava'],
     topics: ['Responsible AI', 'Agriculture', 'Benchmarking', 'East Africa'],
     figures: [
-      { src: '/images/papers/dsa2026/fig1_audit_radar.png', caption: 'Multi-dimensional representativeness radar across PlantVillage, iCassava 2019, and iBean.' },
-      { src: '/images/papers/dsa2026/fig2_transfer_heatmap.png', caption: 'Cross-dataset transfer accuracy matrix exposing laboratory-to-field degradation.' },
-      { src: '/images/papers/dsa2026/fig3_accuracy_penalty.png', caption: 'Quantified deployment accuracy penalty when models cross environmental acquisition boundaries.' },
-      { src: '/images/papers/dsa2026/fig4_audit_bars.png', caption: 'Component breakdown of dataset audit rubric scores.' },
-      { src: '/images/papers/posters/dsa-2026-poster-auditing-representation.webp', caption: 'Conference poster presented at DSA 2026, Makerere University, Kampala.' }
+      { src: '/images/papers/dsa2026/fig4_audit_bars.png', caption: 'Per-dimension representation audit scores comparing PlantVillage (4/10) against iCassava (9/10) and iBean (9/10), illustrating Geographic Origin and Capture Environment gaps.' }
     ],
+    posterUrl: '/images/papers/posters/dsa2026-auditing-poster.png',
+    highlights: [
+      { value: '5 Dims', label: 'Audit Rubric (0-10)', sublabel: 'Geo, Env, Balance, Quality, Morph' },
+      { value: '4 / 10', label: 'PlantVillage Score', sublabel: 'Lab background limitations' },
+      { value: '9 / 10', label: 'iCassava & iBean', sublabel: 'Field-collected in East Africa' },
+      { value: '6-Item', label: 'AgriAI Bias Card', sublabel: 'Deployment readiness checklist' }
+    ],
+    contributions: [
+      'Constructed a quantitative five-dimension representativeness rubric (0-10 points) evaluating geography, imaging environment, Gini class balance (threshold <= 0.10), image quality, and morphological coverage.',
+      'Audited three widely deployed agricultural benchmarks, documenting PlantVillage at 4/10 versus Sub-Saharan field-collected iCassava 2019 (9/10) and iBean (9/10).',
+      'Introduced the six-item AgriAI Bias Card giving researchers and agronomic practitioners a standardized pre-deployment documentation protocol.'
+    ],
+    tables: [
+      {
+        title: 'Five-Dimension Representativeness Audit Across Agricultural Benchmarks',
+        headers: ['Dataset', 'Collection Regime', 'Audit Score (/10)', 'Key Limitation / Strength'],
+        rows: [
+          ['PlantVillage (~54,306 imgs)', 'Laboratory uniform grey/black background', '4 / 10', 'High lab volume; low East African field transfer'],
+          ['iCassava 2019 (21,397 imgs)', 'Ugandan smallholder smartphones', '9 / 10', 'Ecologically valid field shift; heavy CMD skew'],
+          ['iBean (Makerere)', 'In-field Ugandan bean plots', '9 / 10', 'Authentic lighting & field occlusions']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{nyalala2026auditing,
   title={Auditing Representation in Crop Disease Benchmark Datasets Intended for Sub-Saharan African Deployment},
   author={Nyalala, Innocent and Vincent, Patrick and Haji, Khamis},
@@ -674,11 +1054,36 @@ export const PUBLICATIONS: Publication[] = [
     keywords: ['few-shot learning', 'transfer learning', 'cassava disease', 'East Africa', 'ViT-B/16', 'DSA 2026'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'East Africa'],
     figures: [
-      { src: '/images/papers/dsa2026/p1_all_backbones.png', caption: 'Few-shot classification scaling trajectories across ResNet-50, EfficientNet-B3, MobileNetV3, and ViT-B/16.' },
-      { src: '/images/papers/dsa2026/p1_lp_ft_lines.png', caption: 'Linear probing versus full end-to-end fine-tuning under k ∈ {10, 25, 50, 100} shots per class.' },
-      { src: '/images/papers/dsa2026/p1_perclass_f1.png', caption: 'Per-class F1 breakdown across the five Ugandan cassava pathology categories.' },
-      { src: '/images/papers/posters/dsa-2026-poster-few-shot-cassava.webp', caption: 'Full conference poster presented at DSA 2026, Makerere University.' }
+      { src: '/images/papers/dsa2026/p1_lp_ft_lines.png', caption: 'ViT-B/16 linear probe versus full fine-tuning accuracy scaling across k in {10, 25, 50, 100} shots per class on iCassava Uganda, highlighting the +20.3 pp adaptation gain at optimal k = 50.' }
     ],
+    posterUrl: '/images/papers/posters/dsa2026-fewshot-poster.png',
+    highlights: [
+      { value: '68.8%', label: 'ViT-B/16 (k=100)', sublabel: '+29.6 pp over scratch (39.2%)' },
+      { value: '63.6%', label: 'ViT-B/16 (k=50)', sublabel: '+28.5 pp at 250 total images' },
+      { value: 'k = 50', label: 'Optimal Field Budget', sublabel: '~2 field collection days' },
+      { value: '21,397', label: 'Field Cassava Images', sublabel: '5 disease conditions · Uganda' }
+    ],
+    contributions: [
+      'Evaluated four pretrained backbones (ViT-B/16, EfficientNet-B3, ResNet-50, MobileNetV3) under linear probing vs. full fine-tuning across k in {10, 25, 50, 100} shots/class on 21,397 Ugandan field images.',
+      'Demonstrated that full fine-tuning outperforms linear probing by +18 to +20 pp at small k, proving ImageNet features require end-to-end spatial adaptation for field cassava symptoms.',
+      'Identified Healthy leaf confusion (F1: 0.49, 25% misclassified as CBB) vs. CMD (F1: 0.77) and established k = 50 labels/class (250 images total, +0.053 pp/image marginal ROI) as the optimal collection budget.'
+    ],
+    tables: [
+      {
+        title: 'Few-Shot Top-1 Accuracy (%) on Ugandan Field Cassava (21,397-Image Pool)',
+        headers: ['Method & Adaptation', 'k = 10', 'k = 25', 'k = 50', 'k = 100'],
+        rows: [
+          ['ViT-B/16 (Full Fine-Tuning)', '50.6', '58.0', '63.6', '68.8'],
+          ['ResNet-50 (Full Fine-Tuning)', '45.5', '58.0', '62.3', '68.6'],
+          ['EfficientNet-B3 (Full Fine-Tuning)', '40.5', '52.7', '63.5', '68.4'],
+          ['MobileNetV3 (Full Fine-Tuning)', '41.3', '56.6', '62.2', '66.3'],
+          ['ViT-B/16 (Linear Probe only)', '30.0', '32.9', '43.3', '50.3'],
+          ['ResNet-50 (Linear Probe only)', '28.9', '34.1', '45.2', '49.8'],
+          ['Scratch Baseline (No Pretraining)', '26.9', '32.1', '35.1', '39.2']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{nyalala2026fewshot,
   title={Few-Shot Transfer Learning for Cassava Leaf Disease Detection Under East African Field Conditions},
   author={Nyalala, Innocent and Vincent, Patrick and Vyas, Shivam and Makame, Twamaa and Gudla, Surabhi and Haji, Khamis},
@@ -710,9 +1115,44 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.13140/rg.2.2.19812.13443',
     paperUrl: 'https://doi.org/10.13140/rg.2.2.19812.13443',
     tldr: 'Compares Ethiopia, Kenya, and Rwanda AI policies to propose culturally grounded, regionally harmonized East African AI governance rooted in Harambee and Ujamaa values.',
-    abstract: 'East African countries often mimic Western governance blueprints when crafting technology regulation, risking mismatches with communal values such as Harambee and Ujamaa and reinforcing structural dependency. This study compares the formal AI policies of Ethiopia, Kenya, and Rwanda — highlighting shared infrastructure priorities around water resources, electricity, indigenous language preservation, and South-South cooperation — and outlines a culturally sustainable roadmap for East African AI policy harmonization.',
+    abstract: 'East African countries often mimic Western governance blueprints when crafting technology regulation, risking mismatches with communal values such as Harambee and Ujamaa and reinforcing structural dependency. This study compares the formal AI policies of Ethiopia, Kenya, and Rwanda ,  highlighting shared infrastructure priorities around water resources, electricity, indigenous language preservation, and South-South cooperation ,  and outlines a culturally sustainable roadmap for East African AI policy harmonization.',
     keywords: ['AI policy', 'East Africa', 'cultural sustainability', 'AI safety', 'global governance', 'TAIS 2026'],
-    topics: ['AI Sovereignty', 'Policy', 'Responsible AI', 'East Africa'],
+    topics: [
+      'Responsible AI',
+      'AI Policy & GovTech',
+      'East Africa'
+    ],
+    teaserImage: '/images/papers/posters/tais2026-oxford-poster.png',
+    posterUrl: '/images/papers/posters/tais2026-oxford-poster.png',
+    teaserCaption: 'A2 poster presented at TAIS 2026 (Oxford Martin School, University of Oxford): comparative synthesis of Ethiopia (2022), Kenya (2025), and Rwanda (2023) AI policies proposing Harambee and Ujamaa-grounded regional coordination.',
+    highlights: [
+      { value: '3 Nations', label: 'Policy Comparison', sublabel: 'Ethiopia · Kenya · Rwanda' },
+      { value: 'Ujamaa', label: 'Communal Ethics', sublabel: 'Harambee & Ubuntu alignment' },
+      { value: 'TAIS 2026', label: 'Oxford Presentation', sublabel: 'Oxford Martin School, UK' },
+      { value: '4 Pillars', label: 'Harmonized Roadmap', sublabel: 'Compute, Water, Grid, Language' }
+    ],
+    contributions: [
+      'Audits formal national AI strategies in Ethiopia (2022), Kenya (2025), and Rwanda (2023) across focus areas, cultural grounding, data governance, and regional coordination.',
+      'Exposes shared structural omissions around electricity resilience, water footprints of compute facilities, indigenous East African language preservation, and cross-border interoperability.',
+      'Formulates an East African Community (EAC) AI harmonization blueprint anchoring technical safety governance in Harambee and Ujamaa communal stewardship values.'
+    ],
+    figures: [
+      { src: '/images/papers/posters/tais2026-oxford-poster.png', caption: 'Full A2 poster presented at the 3rd Technical AI Safety Conference (TAIS 2026), University of Oxford.' }
+    ],
+    tables: [
+      {
+        title: 'Comparative Matrix of Formal East African National AI Strategies',
+        headers: ['Dimension', 'Ethiopia', 'Kenya', 'Rwanda'],
+        rows: [
+          ['Adoption Year', '2022', '2025', '2023'],
+          ['Primary Policy Focus', 'Education & Healthcare', 'Digital Infrastructure & Data', 'National Readiness & Governance'],
+          ['Cultural Grounding', 'Low', 'Low', 'Moderate'],
+          ['Regional EAC Coordination', 'None specified', 'None specified', 'Partial'],
+          ['Data Governance Formalization', 'Nascent', 'Explicit framework', 'Explicit framework']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{mccoy2026harmonization,
   title={AI Policy Harmonization in East Africa: Cultural Sustainability in the New Technological Age},
   author={McCoy, Hope K. and Nyalala, Innocent},
@@ -750,7 +1190,35 @@ export const PUBLICATIONS: Publication[] = [
     tldr: 'Analyzes compute, talent, and regulatory dependency across the Global South and proposes multipolar South-South AI governance involving the African Union and ASEAN.',
     abstract: 'This paper examines structural power asymmetries in artificial intelligence development across the Global South, mapping dependencies across foundational compute, proprietary model APIs, data extraction, and regulatory capture. We propose multipolar policy frameworks connecting regional blocs such as the African Union and ASEAN through South-South cooperation to safeguard strategic autonomy and equitable technological futures.',
     keywords: ['AI sovereignty', 'Global South', 'AI governance', 'geopolitics', 'AAAI 2026', 'South-South cooperation'],
-    topics: ['AI Sovereignty', 'Policy', 'Global South', 'Responsible AI'],
+    topics: [
+      'Responsible AI',
+      'AI Policy & GovTech',
+      'Global South'
+    ],
+    highlights: [
+      { value: 'AAAI 2026', label: 'EGSAI Workshop', sublabel: 'Philadelphia, USA' },
+      { value: '4 Vectors', label: 'Dependency Audit', sublabel: 'Compute, APIs, Data, Policy' },
+      { value: 'AU + ASEAN', label: 'Multipolar Alliances', sublabel: 'South-South AI governance' },
+      { value: 'Shared Pool', label: 'Strategic Agenda', sublabel: 'Regional compute & datasets' }
+    ],
+    contributions: [
+      'Categorizes structural Global South AI dependency into four reinforcing asymmetries: foundational compute monopoly, proprietary model API lock-in, raw data extraction, and external regulatory capture.',
+      'Critiques single-bloc technology dependency and outlines multipolar South-South AI governance bridging the African Union (AU) and ASEAN.',
+      'Proposes regional public-interest compute pooling, shared multilingual benchmarks, and reciprocity clauses for cross-border dataset licensing.'
+    ],
+    tables: [
+      {
+        title: 'Four-Vector Structural Dependency Taxonomy & Multipolar Mitigation Levers',
+        headers: ['Dependency Vector', 'Current Global South Bottleneck', 'Recommended Sovereignty Lever'],
+        rows: [
+          ['Foundational Compute', 'Zero domestic hyperscale clusters', 'Regional federated academic HPC pools'],
+          ['Model & API Layer', 'Foreign closed-weight API lock-in', 'Open-weight regional domain adaptation'],
+          ['Data Flows', 'Uncompensated raw linguistic extraction', 'Community data trusts & benefit-sharing'],
+          ['Regulatory Design', 'Verbatim copy of external AI acts', 'Context-tuned AU/EAC-ASEAN harmonization']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{davies2026sovereignty,
   title={AI Sovereignty in the Global South: Power, Dependency, and Strategic Futures},
   author={Davies, S. and Nagaraja, V. H. and Nyalala, Innocent and Bhatt, N. and Banerjee, S.},
@@ -762,161 +1230,6 @@ export const PUBLICATIONS: Publication[] = [
     apa: `Davies, S., Nagaraja, V. H., Nyalala, I., Bhatt, N., & Banerjee, S. (2026, January). AI Sovereignty in the Global South: Power, Dependency, and Strategic Futures. AAAI 2026 Workshop on Equitable and Sustainable Global AI (EGSAI), Philadelphia.`
   },
 
-  {
-    slug: 'eac-ai-strategy-aaiac2026',
-    title: 'From Digital Consumerism to Strategic Sovereignty: Analyzing the Draft EAC Regional AI Strategy (2026)',
-    shortTitle: 'Draft EAC Regional AI Strategy Analysis (AAIAC 2026)',
-    authors: [
-      { name: 'Patrick Vincent Ndowo', url: 'https://www.linkedin.com/in/patrick-ndowo/', affiliations: [1] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
-    ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Dar es Salaam, Tanzania',
-    venueShort: 'AAIAC 2026 · Dar es Salaam',
-    year: 2026,
-    month: 'Jul',
-    dateISO: '2026-07-22',
-    category: 'conference',
-    status: 'Published · AAIAC 2026',
-    tldr: 'Evaluates the Draft East African Community Regional AI Strategy (2026) through a sovereign infrastructure lens, pinpointing gaps between policy goals and regional compute capacity.',
-    abstract: 'Critically analyzes the Draft East African Community Regional AI Strategy through a digital sovereignty lens, identifying concrete gaps between aspirational policy targets and structural constraints across compute infrastructure, cross-border data sharing, and regional AI talent retention.',
-    keywords: ['EAC AI strategy', 'digital sovereignty', 'East Africa', 'AI policy', 'AAIAC 2026'],
-    topics: ['AI Sovereignty', 'Policy', 'East Africa', 'Global South'],
-    bibtex: `@inproceedings{ndowo2026eac,
-  title={From Digital Consumerism to Strategic Sovereignty: Analyzing the Draft EAC Regional AI Strategy (2026)},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={Proceedings of the 2nd International Conference on Advancements of AI in the African Context (AAIAC 2026)},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-    apa: `Ndowo, P., & Nyalala, I. (2026, July). From Digital Consumerism to Strategic Sovereignty: Analyzing the Draft EAC Regional AI Strategy (2026). 2nd International Conference on Advancements of AI in the African Context (AAIAC 2026), Dar es Salaam, Tanzania.`
-  },
-
-  {
-    slug: 'leakage-free-fraud-aaiac2026',
-    title: 'Leakage-Free Fraud Detection in Mobile-First Banking: A PR-AUC Benchmark of XGBoost, Random Forest, and Isolation Forest for East Africa',
-    shortTitle: 'Mobile-First Banking Fraud Benchmark (AAIAC 2026)',
-    authors: [
-      { name: 'Patrick Vincent Ndowo', url: 'https://www.linkedin.com/in/patrick-ndowo/', affiliations: [1] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
-    ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Dar es Salaam, Tanzania',
-    venueShort: 'AAIAC 2026 · Dar es Salaam',
-    year: 2026,
-    month: 'Jul',
-    dateISO: '2026-07-22',
-    category: 'conference',
-    status: 'Published · AAIAC 2026',
-    tldr: 'Establishes a leakage-free PR-AUC evaluation protocol comparing XGBoost, Random Forest, and Isolation Forest for East African mobile-money fraud detection.',
-    abstract: 'Establishes a rigorous leakage-free PR-AUC benchmarking methodology for mobile-first banking fraud detection in East Africa, comparing XGBoost, Random Forest, and Isolation Forest under realistic class imbalance and temporal transaction boundaries.',
-    keywords: ['fraud detection', 'mobile banking', 'PR-AUC', 'XGBoost', 'East Africa', 'data leakage'],
-    topics: ['Fraud Detection', 'Benchmarking', 'East Africa'],
-    bibtex: `@inproceedings{ndowo2026fraud,
-  title={Leakage-Free Fraud Detection in Mobile-First Banking: A PR-AUC Benchmark of XGBoost, Random Forest, and Isolation Forest for East Africa},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={Proceedings of the 2nd International Conference on Advancements of AI in the African Context (AAIAC 2026)},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-    apa: `Ndowo, P., & Nyalala, I. (2026, July). Leakage-Free Fraud Detection in Mobile-First Banking: A PR-AUC Benchmark of XGBoost, Random Forest, and Isolation Forest for East Africa. AAIAC 2026, Dar es Salaam, Tanzania.`
-  },
-
-  {
-    slug: 'physics-informed-solar-aaiac2026',
-    title: 'A Physics-Informed Random Forest Framework for Multi-Decadal Solar Irradiance Forecasting in Tanzanian Off-Grid Mini-Grids',
-    shortTitle: 'Physics-Informed Solar Forecasting (AAIAC 2026)',
-    authors: [
-      { name: 'Patrick Vincent Ndowo', url: 'https://www.linkedin.com/in/patrick-ndowo/', affiliations: [1] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
-    ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Dar es Salaam, Tanzania',
-    venueShort: 'AAIAC 2026 · Dar es Salaam',
-    year: 2026,
-    month: 'Jul',
-    dateISO: '2026-07-22',
-    category: 'conference',
-    status: 'Published · AAIAC 2026',
-    tldr: 'Integrates clear-sky solar geometry and atmospheric constraints into Random Forest forecasting for rural Tanzanian off-grid mini-grids.',
-    abstract: 'Develops a physics-informed random forest model for long-horizon solar irradiance forecasting tailored to Tanzanian off-grid mini-grid deployments, embedding physical radiative bounds to maintain reliability under sparse ground-station measurements.',
-    keywords: ['solar irradiance', 'off-grid mini-grids', 'Tanzania', 'physics-informed ML', 'AAIAC 2026'],
-    topics: ['Solar Energy', 'East Africa', 'Deep Learning'],
-    bibtex: `@inproceedings{ndowo2026solar,
-  title={A Physics-Informed Random Forest Framework for Multi-Decadal Solar Irradiance Forecasting in Tanzanian Off-Grid Mini-Grids},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={Proceedings of the 2nd International Conference on Advancements of AI in the African Context (AAIAC 2026)},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-    apa: `Ndowo, P., & Nyalala, I. (2026, July). A Physics-Informed Random Forest Framework for Multi-Decadal Solar Irradiance Forecasting in Tanzanian Off-Grid Mini-Grids. AAIAC 2026, Dar es Salaam, Tanzania.`
-  },
-
-  {
-    slug: 'military-5g-cyber-aaiac2026',
-    title: 'Resilient Cyber Defence for African Military 5G Networks: A Multi-Stage Hybrid ML Framework for Zero-Day Detection',
-    shortTitle: 'Hybrid ML for 5G Cyber Defence (AAIAC 2026)',
-    authors: [
-      { name: 'Patrick Vincent Ndowo', url: 'https://www.linkedin.com/in/patrick-ndowo/', affiliations: [1] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
-    ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Dar es Salaam, Tanzania',
-    venueShort: 'AAIAC 2026 · Dar es Salaam',
-    year: 2026,
-    month: 'Jul',
-    dateISO: '2026-07-22',
-    category: 'conference',
-    status: 'Published · AAIAC 2026',
-    tldr: 'Combines unsupervised anomaly detection with supervised signature classification for zero-day intrusion detection in African 5G network deployments.',
-    abstract: 'Proposes a multi-stage hybrid machine learning framework for zero-day threat detection in mission-critical African 5G network environments, pairing unsupervised anomaly scoring with fast signature-based classifiers for resilient defence.',
-    keywords: ['cybersecurity', '5G networks', 'zero-day detection', 'hybrid machine learning', 'AAIAC 2026'],
-    topics: ['Cybersecurity', 'Deep Learning', 'East Africa'],
-    bibtex: `@inproceedings{ndowo2026cyber,
-  title={Resilient Cyber Defence for African Military 5G Networks: A Multi-Stage Hybrid ML Framework for Zero-Day Detection},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={Proceedings of the 2nd International Conference on Advancements of AI in the African Context (AAIAC 2026)},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-    apa: `Ndowo, P., & Nyalala, I. (2026, July). Resilient Cyber Defence for African Military 5G Networks: A Multi-Stage Hybrid ML Framework for Zero-Day Detection. AAIAC 2026, Dar es Salaam, Tanzania.`
-  },
-
-  {
-    slug: 'sahel-insurgency-aaiac2026',
-    title: 'Predicting Insurgency Hotspots in the Sahel: Leveraging GTD Data for Regional Defence Resource Allocation',
-    shortTitle: 'Sahel Insurgency Hotspot Prediction (AAIAC 2026)',
-    authors: [
-      { name: 'Patrick Vincent Ndowo', url: 'https://www.linkedin.com/in/patrick-ndowo/', affiliations: [1] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
-    ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Dar es Salaam, Tanzania',
-    venueShort: 'AAIAC 2026 · Dar es Salaam',
-    year: 2026,
-    month: 'Jul',
-    dateISO: '2026-07-22',
-    category: 'conference',
-    status: 'Published · AAIAC 2026',
-    tldr: 'Applies spatiotemporal machine learning over Global Terrorism Database (GTD) records to forecast conflict hotspots and support regional resource allocation in the Sahel.',
-    abstract: 'Uses Global Terrorism Database (GTD) records with spatiotemporal machine learning models to forecast insurgency hotspots across the Sahel region, providing an evidence-driven decision aid for humanitarian and regional defence resource allocation.',
-    keywords: ['Sahel', 'conflict forecasting', 'GTD', 'spatiotemporal ML', 'AAIAC 2026'],
-    topics: ['Policy', 'Global South', 'East Africa'],
-    bibtex: `@inproceedings{ndowo2026sahel,
-  title={Predicting Insurgency Hotspots in the Sahel: Leveraging GTD Data for Regional Defence Resource Allocation},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={Proceedings of the 2nd International Conference on Advancements of AI in the African Context (AAIAC 2026)},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-    apa: `Ndowo, P., & Nyalala, I. (2026, July). Predicting Insurgency Hotspots in the Sahel: Leveraging GTD Data for Regional Defence Resource Allocation. AAIAC 2026, Dar es Salaam, Tanzania.`
-  },
-
   // =========================================================================
   // 2025 PUBLICATIONS
   // =========================================================================
@@ -925,15 +1238,15 @@ export const PUBLICATIONS: Publication[] = [
     title: 'BAFNet: Deep contour-aware features for colorectal polyps segmentation',
     shortTitle: 'BAFNet Colorectal Polyp Segmentation (ESWA 2025)',
     authors: [
-      { name: 'Dibin Zhou', affiliations: [7] },
-      { name: 'Ni Chen', affiliations: [7] },
-      { name: 'Yueping Zhu', affiliations: [7] },
-      { name: 'Xueyan Zhang', affiliations: [7] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] },
-      { name: 'Jiayu Zhang', affiliations: [7] },
-      { name: 'Junfeng Gao', affiliations: [8] }
+      { name: 'Dibin Zhou', affiliations: [1] },
+      { name: 'Ni Chen', affiliations: [1] },
+      { name: 'Yueping Zhu', affiliations: [1] },
+      { name: 'Xueyan Zhang', affiliations: [2] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
+      { name: 'Jiayu Zhang', affiliations: [4] },
+      { name: 'Junfeng Gao', affiliations: [5] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU, AFFILIATIONS.DEAKIN, AFFILIATIONS.CAMBRIDGE, AFFILIATIONS.SALFORD, AFFILIATIONS.XZUT, AFFILIATIONS.LINCOLN],
+    affiliations: [AFFILIATIONS.HNU, AFFILIATIONS.ZJHU, AFFILIATIONS.IITMZ, AFFILIATIONS.XZUT, AFFILIATIONS.ABERDEEN],
     venue: 'Expert Systems with Applications (Elsevier)',
     venueShort: 'Expert Systems with Applications · 2025',
     venueUrl: 'https://www.sciencedirect.com/journal/expert-systems-with-applications',
@@ -941,14 +1254,39 @@ export const PUBLICATIONS: Publication[] = [
     month: 'Oct',
     dateISO: '2025-10-14',
     category: 'journal',
-    status: 'Published · IF 7.5',
-    impactFactor: '7.5',
+    status: 'Published · Vol. 299, 129998 · IF 7.5',
+    impactFactor: 'SCI Q1 · IF 7.5',
     doi: '10.1016/j.eswa.2025.129998',
     paperUrl: 'https://doi.org/10.1016/j.eswa.2025.129998',
     tldr: 'Introduces BAFNet, a boundary-aware feature fusion network with gated contour selection for accurate colorectal polyp segmentation.',
     abstract: 'Automated segmentation of colorectal polyps remains challenging due to low tissue contrast and blurred mucosal boundaries. We propose BAFNet, a boundary-aware feature fusion network incorporating gating mechanisms that selectively preserve sharp contour cues alongside multi-scale semantic representations, advancing polyp segmentation accuracy across clinical colonoscopy benchmarks.',
     keywords: ['BAFNet', 'colorectal polyps', 'medical image segmentation', 'contour-aware', 'Expert Systems with Applications'],
     topics: ['Healthcare', 'Medical Imaging', 'Deep Learning'],
+    highlights: [
+      { value: '0.914', label: 'EndoScene Dice', sublabel: '0.863 IoU · 0.905 F-measure' },
+      { value: '0.808', label: 'ColonDB & ETIS Dice', sublabel: 'Consistent generalization' },
+      { value: '5.98M', label: 'Model Parameters', sublabel: '3.59 GFLOPs footprint' },
+      { value: 'IF 7.5', label: 'Expert Syst. Appl.', sublabel: 'Elsevier Q1 Journal' }
+    ],
+    contributions: [
+      'Designed a boundary-aware gating branch integrating four Conv-BN blocks to suppress background mucosal texture and preserve sharp colorectal polyp contours.',
+      'Developed the Multi-Scale Feature Aggregation Module (MFAM) and Dynamic Global Attention Module (DGAM) to fuse encoder-decoder semantic cues across lesion scales.',
+      'Outperformed five prior colonoscopy baselines (ASCNet, MSNet, TransFuse, C2F-Net, PraNet) on CVC-ColonDB, ETIS, and EndoScene at only 5.98M parameters and 3.59 GFLOPs.'
+    ],
+    tables: [
+      {
+        title: 'BAFNet Colorectal Polyp Segmentation Performance (5.98M Params, 3.59 GFLOPs)',
+        headers: ['Benchmark Dataset', 'Dice Score', 'IoU Score', 'Weighted F-Measure'],
+        rows: [
+          ['EndoScene', '0.914', '0.863', '0.905'],
+          ['CVC-ColonDB', '0.808', '0.722', '0.782'],
+          ['ETIS-LaribPolypDB', '0.808', '0.732', '0.774']
+        ]
+      }
+    ],
+    isSaailLab: true,
+    teaserImage: '/images/papers/health/bafnet_arch.png',
+    teaserCaption: 'BAFNet couples a boundary-aware gating branch (four Conv-BN blocks) with Multi-Scale Feature Aggregation (MFAM) and Dynamic Global Attention (DGAM) to achieve 0.914 Dice on EndoScene in 5.98M parameters (3.59 GFLOPs).',
     bibtex: `@article{zhou2025bafnet,
   title={BAFNet: Deep contour-aware features for colorectal polyps segmentation},
   author={Zhou, Dibin and Chen, Ni and Zhu, Yueping and Zhang, Xueyan and Nyalala, Innocent and Zhang, Jiayu and Gao, Junfeng},
@@ -965,15 +1303,15 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Rectifying the extremely weakened signals for cassava leaf disease detection',
     shortTitle: 'Rectifying Weakened Signals for Cassava (COMPAG 2025)',
     authors: [
-      { name: 'Jiayu Zhang', affiliations: [7] },
-      { name: 'Baohua Zhang', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] },
-      { name: 'Peter Mecha', affiliations: [3] },
-      { name: 'Junlong Chen', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] },
-      { name: 'Junfeng Gao', affiliations: [8] }
+      { name: 'Jiayu Zhang', affiliations: [1] },
+      { name: 'Baohua Zhang', affiliations: [2] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3, 4] },
+      { name: 'Peter Mecha', affiliations: [2] },
+      { name: 'Junlong Chen', affiliations: [2] },
+      { name: 'Kunjie Chen', affiliations: [2] },
+      { name: 'Junfeng Gao', affiliations: [5] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU, AFFILIATIONS.DEAKIN, AFFILIATIONS.CAMBRIDGE, AFFILIATIONS.SALFORD, AFFILIATIONS.XZUT, AFFILIATIONS.LINCOLN],
+    affiliations: [AFFILIATIONS.XZUT, AFFILIATIONS.NAU, AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.ABERDEEN],
     venue: 'Computers and Electronics in Agriculture (Elsevier), Vol. 232, 110107',
     venueShort: 'Comput. Electron. Agric. · 2025',
     venueUrl: 'https://www.sciencedirect.com/journal/computers-and-electronics-in-agriculture',
@@ -981,9 +1319,9 @@ export const PUBLICATIONS: Publication[] = [
     month: 'May',
     dateISO: '2025-05-01',
     category: 'journal',
-    status: 'Published · IF 8.9',
-    impactFactor: '8.9',
-    citations: 4,
+    status: 'Published · Vol. 232, 110107 · IF 8.9',
+    impactFactor: 'SCI Q1 · IF 8.9',
+    citations: 5,
     doi: '10.1016/j.compag.2025.110107',
     paperUrl: 'https://doi.org/10.1016/j.compag.2025.110107',
     teaserImage: '/images/papers/posters/Publicaiton_compag.webp',
@@ -992,6 +1330,30 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Early-stage cassava leaf disease symptoms frequently appear as subtle, attenuated spatial signals overwhelmed by background foliage and illumination noise. We propose a weakened-signal rectification architecture published in Computers and Electronics in Agriculture (Vol. 232) that explicitly amplifies faint lesion representations prior to classification, improving diagnostic sensitivity across field cassava disease categories.',
     keywords: ['cassava leaf disease', 'weakened signals', 'deep learning', 'Computers and Electronics in Agriculture', 'precision agriculture'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'Computer Vision'],
+    highlights: [
+      { value: 'IF 8.9', label: 'COMPAG Q1 Journal', sublabel: 'Vol. 232, Article 110107' },
+      { value: 'Signal Rect.', label: 'Core Mechanism', sublabel: 'Recovers faint early lesions' },
+      { value: '5 Classes', label: 'Field Cassava Scope', sublabel: 'CBB, CBSD, CGM, CMD, Healthy' },
+      { value: 'Open Science', label: 'Published DOI', sublabel: '10.1016/j.compag.2025.110107' }
+    ],
+    contributions: [
+      'Targeted the attenuation of subtle early-stage foliar symptom signals caused by overlapping leaf canopy, complex backgrounds, and variable solar illumination in cassava fields.',
+      'Formulated neural signal rectification blocks that selectively amplify weakened disease representations while damping background leaf clutter.',
+      'Validated diagnostic gains across challenging real-field cassava leaf disease partitions published in Computers and Electronics in Agriculture (Vol. 232).'
+    ],
+    tables: [
+      {
+        title: 'Study Profile: Weakened-Signal Rectification for Field Cassava Diagnosis',
+        headers: ['Attribute', 'Specification'],
+        rows: [
+          ['Journal & Article', 'Computers and Electronics in Agriculture (Vol. 232, 110107, 2025)'],
+          ['Journal Standing', 'Elsevier Q1 Top Journal (Impact Factor 8.9)'],
+          ['Architectural Target', 'Recovers attenuated early-stage foliar lesion cues against canopy noise'],
+          ['Crop & Task', 'In-field multi-class cassava leaf pathology classification']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@article{zhang2025rectifying,
   title={Rectifying the extremely weakened signals for cassava leaf disease detection},
   author={Zhang, Jiayu and Zhang, Baohua and Nyalala, Innocent and Mecha, Peter and Chen, Junlong and Chen, Kunjie and Gao, Junfeng},
@@ -1029,7 +1391,35 @@ export const PUBLICATIONS: Publication[] = [
     tldr: 'Introduces a seven-dimensional diagnostic framework across Singapore, Vietnam, Kenya, and Syria to evaluate whether national AI strategies advance digital sovereignty or digital serfdom.',
     abstract: 'This study examines whether nations across the Global South are charting autonomous AI trajectories or drifting toward digital serfdom. Applying a seven-dimensional governance framework across four comparative case studies (Singapore, Vietnam, Kenya, and Syria), we dissect structural asymmetries in compute ownership, local talent pipelines, data sovereignty, and regulatory capacity.',
     keywords: ['digital sovereignty', 'digital serfdom', 'Global South', 'AI governance', 'Kenya', 'EurIPS 2025'],
-    topics: ['Digital Sovereignty', 'AI Sovereignty', 'Policy', 'Global South'],
+    topics: [
+      'Responsible AI',
+      'AI Policy & GovTech',
+      'Global South'
+    ],
+    highlights: [
+      { value: '7 Dims', label: 'Diagnostic Framework', sublabel: 'Compute to Talent & Law' },
+      { value: '4 Nations', label: 'Comparative Cases', sublabel: 'Singapore, Vietnam, Kenya, Syria' },
+      { value: 'NeurIPS / EurIPS', label: 'PAIG 2025 Workshop', sublabel: 'Private AI Governance' },
+      { value: 'Typology', label: 'Sovereignty Spectrum', sublabel: 'Autonomous vs. captive AI' }
+    ],
+    contributions: [
+      'Constructed a seven-dimensional diagnostic matrix distinguishing authentic digital AI sovereignty from structural digital serfdom across low- and middle-income economies.',
+      'Executed comparative national case studies across Singapore, Vietnam, Kenya, and Syria spanning compute capacity, model dependency, talent retention, and governance.',
+      'Identifies actionable policy inflection points enabling emerging AI ecosystems to build autonomous regulatory and data institutions.'
+    ],
+    tables: [
+      {
+        title: 'Comparative Case-Study Profiles Under the 7-Dimensional Sovereignty Matrix',
+        headers: ['Country Case', 'Structural Position', 'Key Sovereignty Lesson'],
+        rows: [
+          ['Singapore', 'High-capacity regional AI hub', 'Targeted state R&D co-investment + regulatory sandbox'],
+          ['Vietnam', 'Rapidly scaling talent & engineering base', 'Domestic talent retention + open-model localization'],
+          ['Kenya', 'East African innovation leader with infra constraints', 'Need for local compute & indigenous data governance'],
+          ['Syria', 'Sanctioned / conflict-constrained ecosystem', 'Severe exclusion from global APIs, hardware & standards']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{davies2025serfdom,
   title={Digital Sovereignty or Digital Serfdom? AI Strategies, Geopolitics, and the Quest for an Equitable Global South},
   author={Davies, S. and Nagaraja, V. H. and Nyalala, Innocent and Bhatt, N. and Banerjee, S.},
@@ -1063,6 +1453,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'We propose a socio-technical co-design approach to modernizing Zanzibar\'s clove grading ecosystem alongside certified Indigenous grading experts. Technically validating a segmentation-first deep learning pipeline that achieves 99.0% accuracy, we embed inspector domain heuristics, transparent grade rationales, and mobile usability into the interface to foster farmer trust.',
     keywords: ['co-design', 'HCI4D', 'clove grading', 'Zanzibar', 'AfriCHI', 'indigenous knowledge'],
     topics: ['Responsible AI', 'Agriculture', 'Zanzibar', 'East Africa'],
+    highlights: [
+      { value: '99.0%', label: 'Segmentation-First Acc', sublabel: 'Single-clove validation baseline' },
+      { value: 'Co-Design', label: 'Participatory HCI', sublabel: 'Farmers & ZSTC inspectors' },
+      { value: 'Mpeta Focus', label: 'Grade 4 Transparency', sublabel: 'Fair farmer pricing compensation' },
+      { value: 'ACM AfriCHI', label: 'Published 2025', sublabel: 'Human-centered African AI' }
+    ],
+    contributions: [
+      'Paired computer vision validation (99.0% single-clove accuracy via Enhanced U-Net segmentation-first architecture) with participatory HCI co-design involving Zanzibar farmers and ZSTC inspectors.',
+      'Identified critical socio-technical asymmetries around manual assessment of Grade 4 (mpeta) fermented cloves that erode smallholder trust.',
+      'Formulated an actionable co-design roadmap for low-cost mobile inspection tools amplifying rather than displacing indigenous grading expertise.'
+    ],
+    tables: [
+      {
+        title: 'Socio-Technical Validation & Co-Design Findings (ACM AfriCHI 2025)',
+        headers: ['Dimension', 'Baseline Observation / Finding', 'System Design Requirement'],
+        rows: [
+          ['Technical Prototype', '99.0% accuracy on single-clove grading', 'Segmentation-first isolation for bulk lots'],
+          ['Quality Determiner', 'Grade 4 (mpeta) pale-brown fermentation quota', 'Visual highlight of rejected stems & mpeta'],
+          ['Stakeholder Trust', 'Price ambiguity at warehouse handoff', 'Bilingual transparent visual audit trail on phone']
+        ]
+      }
+    ],
+    isSaailLab: true,
     bibtex: `@inproceedings{nyalala2025africhi,
   title={From Art to Algorithms: Co-Designing AI for Clove Grading with Zanzibar's Indigenous Experts},
   author={Nyalala, Innocent and Vincent, Patrick Ndowo},
@@ -1073,40 +1486,6 @@ export const PUBLICATIONS: Publication[] = [
     apa: `Nyalala, I., & Vincent, P. N. (2025). From Art to Algorithms: Co-Designing AI for Clove Grading with Zanzibar's Indigenous Experts. AfriCHI ACM Conference 2025.`
   },
 
-  {
-    slug: 'prime-directives-dsa2025',
-    title: 'Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology',
-    shortTitle: 'Prime Directives for Responsible AI (DSA 2025)',
-    authors: [
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] }
-    ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI],
-    venue: 'Data Science Africa (DSA) 2025, University of Ibadan, Nigeria',
-    venueShort: 'DSA 2025 · Ibadan, Nigeria',
-    venueUrl: 'https://www.datascienceafrica.org/',
-    year: 2025,
-    month: 'Jun',
-    dateISO: '2025-06-05',
-    category: 'conference',
-    status: 'Published · DSA 2025',
-    openAccess: true,
-    teaserImage: '/images/posters/research-poster.png',
-    teaserCaption: 'Research poster presented at Data Science Africa 2025, University of Ibadan, Nigeria.',
-    tldr: 'Establishes actionable Prime Directives for participatory design, data equity, linguistic inclusion, and local agency in African AI systems.',
-    abstract: 'We present a principled manifesto for developing inclusive, ethical, and sustainable artificial intelligence tailored to Africa\'s cultural, social, and infrastructural realities. Grounded in participatory design, data equity, and local empowerment, the Prime Directives outline concrete requirements for accountability before deploying AI in agricultural, healthcare, and civic institutions across the continent.',
-    keywords: ['responsible AI', 'African AI ethics', 'participatory design', 'data equity', 'DSA 2025'],
-    topics: ['Responsible AI', 'Policy', 'Global South', 'East Africa'],
-    bibtex: `@inproceedings{nyalala2025manifesto,
-  title={Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology},
-  author={Nyalala, Innocent},
-  booktitle={Data Science Africa (DSA) 2025},
-  address={University of Ibadan, Nigeria},
-  year={2025},
-  month={June}
-}`,
-    apa: `Nyalala, I. (2025, June). Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology. Data Science Africa (DSA) 2025, University of Ibadan, Nigeria.`
-  },
-
   // =========================================================================
   // 2024 PUBLICATIONS
   // =========================================================================
@@ -1115,14 +1494,14 @@ export const PUBLICATIONS: Publication[] = [
     title: 'A salient feature establishment tactic for cassava disease recognition',
     shortTitle: 'Salient Feature Tactic for Cassava (AIIA 2024)',
     authors: [
-      { name: 'Jiayu Zhang', affiliations: [7] },
-      { name: 'Baohua Zhang', affiliations: [3] },
-      { name: 'Zixuan Chen', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] },
-      { name: 'Kunjie Chen', affiliations: [3] },
-      { name: 'Junfeng Gao', affiliations: [8] }
+      { name: 'Jiayu Zhang', affiliations: [1] },
+      { name: 'Baohua Zhang', affiliations: [2] },
+      { name: 'Zixuan Chen', affiliations: [2] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [2] },
+      { name: 'Kunjie Chen', affiliations: [2] },
+      { name: 'Junfeng Gao', affiliations: [3] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU, AFFILIATIONS.DEAKIN, AFFILIATIONS.CAMBRIDGE, AFFILIATIONS.SALFORD, AFFILIATIONS.XZUT, AFFILIATIONS.LINCOLN],
+    affiliations: [AFFILIATIONS.XZUT, AFFILIATIONS.NAU, AFFILIATIONS.LINCOLN],
     venue: 'Artificial Intelligence in Agriculture (Elsevier), Vol. 14, pp. 115–132',
     venueShort: 'Artificial Intelligence in Agriculture · 2024',
     venueUrl: 'https://www.sciencedirect.com/journal/artificial-intelligence-in-agriculture',
@@ -1131,8 +1510,8 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2024-11-15',
     category: 'journal',
     status: 'Published · Open Access · IF 12.4',
-    impactFactor: '12.4',
-    citations: 13,
+    impactFactor: 'SCI Q1 · IF 12.4',
+    citations: 11,
     openAccess: true,
     doi: '10.1016/j.aiia.2024.11.004',
     paperUrl: 'https://doi.org/10.1016/j.aiia.2024.11.004',
@@ -1140,6 +1519,30 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Complex field backgrounds and overlapping symptoms impede accurate cassava disease classification. Published in Artificial Intelligence in Agriculture (Vol. 14, pp. 115-132), this study proposes a salient feature establishment strategy that suppresses uninformative background activations and accentuates disease-specific foliar morphology under natural field acquisition.',
     keywords: ['cassava disease recognition', 'salient features', 'Artificial Intelligence in Agriculture', 'computer vision'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'Computer Vision'],
+    highlights: [
+      { value: 'IF 12.4', label: 'AIIA Q1 Journal', sublabel: 'Vol. 14, pp. 115-132' },
+      { value: 'Semantic Loc.', label: 'Core Contribution', sublabel: 'Suppresses soil/canopy clutter' },
+      { value: '11+ Cites', label: 'Scholar Impact', sublabel: 'Open Access · 2024' },
+      { value: 'Field Robust', label: 'Complex Backgrounds', sublabel: 'Natural outdoor cassava leaves' }
+    ],
+    contributions: [
+      'Addressed object semantic localization failures where unconstrained field cassava backgrounds overwhelm disease classification logits.',
+      'Proposed a salient feature establishment module isolating localized necrotic and mosaic lesion patterns prior to classification.',
+      'Published Open Access in Artificial Intelligence in Agriculture (Vol. 14, pp. 115-132; IF 12.4).'
+    ],
+    tables: [
+      {
+        title: 'Publication & Methodological Summary (AIIA Vol. 14, 2024)',
+        headers: ['Dimension', 'Details'],
+        rows: [
+          ['Journal', 'Artificial Intelligence in Agriculture (Elsevier, IF 12.4)'],
+          ['Pages & Access', 'Vol. 14, pp. 115-132, Open Access'],
+          ['Primary Mechanism', 'Salient feature establishment suppressing background activations'],
+          ['Verified Citations', '11+ (OpenAlex / Google Scholar)']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{zhang2024salient,
   title={A salient feature establishment tactic for cassava disease recognition},
   author={Zhang, Jiayu and Zhang, Baohua and Chen, Zixuan and Nyalala, Innocent and Chen, Kunjie and Gao, Junfeng},
@@ -1158,13 +1561,13 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Online chicken carcass volume estimation using depth imaging and 3-D reconstruction',
     shortTitle: '3D Chicken Carcass Volume Estimation (Poultry Sci. 2024)',
     authors: [
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 3] },
-      { name: 'Jiayu Zhang', affiliations: [7] },
-      { name: 'Zixuan Chen', affiliations: [3] },
-      { name: 'Junlong Chen', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] }
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Jiayu Zhang', affiliations: [2] },
+      { name: 'Zixuan Chen', affiliations: [1] },
+      { name: 'Junlong Chen', affiliations: [1] },
+      { name: 'Kunjie Chen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU, AFFILIATIONS.DEAKIN, AFFILIATIONS.CAMBRIDGE, AFFILIATIONS.SALFORD, AFFILIATIONS.XZUT],
+    affiliations: [AFFILIATIONS.NAU, AFFILIATIONS.XZUT],
     venue: 'Poultry Science (Elsevier), Vol. 103, 104232',
     venueShort: 'Poultry Science · 2024',
     year: 2024,
@@ -1172,8 +1575,8 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2024-10-01',
     category: 'journal',
     status: 'Published · Open Access · IF 4.2',
-    impactFactor: '4.2',
-    citations: 10,
+    impactFactor: 'SCI Q1 · IF 4.2',
+    citations: 12,
     openAccess: true,
     doi: '10.1016/j.psj.2024.104232',
     paperUrl: 'https://doi.org/10.1016/j.psj.2024.104232',
@@ -1181,6 +1584,32 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Non-contact online volume estimation is vital for automated grading and throughput optimization in poultry processing plants. We present a depth-imaging and 3-D geometric reconstruction system evaluated under conveyor speeds, establishing strong volume-to-mass correlation without physical contact or line interruption.',
     keywords: ['3D reconstruction', 'depth imaging', 'chicken carcass', 'volume estimation', 'computer vision', 'Poultry Science'],
     topics: ['Agriculture', 'Computer Vision', '3D Reconstruction'],
+    highlights: [
+      { value: 'R² = 0.9988', label: 'Volume Estimation R²', sublabel: 'Bagged tree regression model' },
+      { value: '2.125%', label: 'Average Rel. Error', sublabel: 'RMSE = 5.335 on conveyor' },
+      { value: '< 1.6 s', label: 'Processing Time', sublabel: 'Per moving carcass on line' },
+      { value: 'Kinect v2 3D', label: 'Depth Point Clouds', sublabel: 'Surface integration volume' }
+    ],
+    contributions: [
+      'Captured moving chicken carcasses on a live production conveyor using Kinect v2 depth imaging and real-time 3D point-cloud surface reconstruction.',
+      'Extracted geometric surface-integration volume alongside 2D and 3D morphological predictors across multiple regression families.',
+      'Achieved R² = 0.9988, RMSE = 5.335, and 2.125% average relative error using Bagged Tree regression in under 1.6 seconds per carcass.'
+    ],
+    tables: [
+      {
+        title: 'Online 3-D Chicken Carcass Volume Estimation Results (Poultry Science 2024)',
+        headers: ['Metric', 'Measured Performance', 'Acquisition & Compute Context'],
+        rows: [
+          ['Best Regression Model', 'Bagged Tree Regression', 'Trained on 2D + 3D point-cloud features'],
+          ['Coefficient of Det. (R²)', '0.9988', 'Near-perfect volumetric correspondence'],
+          ['Error Bounds', 'RMSE = 5.335 · ARE = 2.125%', 'Non-contact conveyor line grading'],
+          ['Runtime Latency', '< 1.6 seconds / carcass', 'Real-time Kinect v2 depth + reconstruction']
+        ]
+      }
+    ],
+    isSaailLab: false,
+    teaserImage: '/images/papers/prior/carcass2024.jpeg',
+    teaserCaption: 'Overhead Kinect v2 depth acquisition and 3D point-cloud reconstruction of moving broiler carcasses achieving R^2 = 0.9988, RMSE = 5.335, and 2.125% average relative error in under 1.6 s per carcass.',
     bibtex: `@article{nyalala2024chicken3d,
   title={Online chicken carcass volume estimation using depth imaging and 3-D reconstruction},
   author={Nyalala, Innocent and Zhang, Jiayu and Chen, Zixuan and Chen, Junlong and Chen, Kunjie},
@@ -1198,15 +1627,15 @@ export const PUBLICATIONS: Publication[] = [
     title: 'MAIANet: Signal modulation in cassava leaf disease classification',
     shortTitle: 'MAIANet Cassava Classification (COMPAG 2024)',
     authors: [
-      { name: 'Jiayu Zhang', affiliations: [7] },
-      { name: 'Baohua Zhang', affiliations: [3] },
-      { name: 'Chao Qi', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1, 2] },
-      { name: 'Peter Mecha', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] },
-      { name: 'Junfeng Gao', affiliations: [8] }
+      { name: 'Jiayu Zhang', affiliations: [1] },
+      { name: 'Baohua Zhang', affiliations: [2] },
+      { name: 'Chao Qi', affiliations: [2] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [2] },
+      { name: 'Peter Mecha', affiliations: [2] },
+      { name: 'Kunjie Chen', affiliations: [2] },
+      { name: 'Junfeng Gao', affiliations: [3] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU, AFFILIATIONS.DEAKIN, AFFILIATIONS.CAMBRIDGE, AFFILIATIONS.SALFORD, AFFILIATIONS.XZUT, AFFILIATIONS.LINCOLN],
+    affiliations: [AFFILIATIONS.XZUT, AFFILIATIONS.NAU, AFFILIATIONS.LINCOLN],
     venue: 'Computers and Electronics in Agriculture (Elsevier), Vol. 225, 109351',
     venueShort: 'Comput. Electron. Agric. · 2024',
     year: 2024,
@@ -1214,14 +1643,38 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2024-09-01',
     category: 'journal',
     status: 'Published · IF 8.9 · 19+ Citations',
-    impactFactor: '8.9',
-    citations: 19,
+    impactFactor: 'SCI Q1 · IF 8.9',
+    citations: 20,
     doi: '10.1016/j.compag.2024.109351',
     paperUrl: 'https://doi.org/10.1016/j.compag.2024.109351',
     tldr: 'Introduces MAIANet, a signal-modulation deep architecture enhancing discriminative foliar disease channels in cassava leaf diagnosis (19+ citations).',
     abstract: 'Published in Computers and Electronics in Agriculture (Vol. 225), MAIANet incorporates multi-scale signal modulation blocks to rebalance weak symptom cues and suppress background interference across field-acquired cassava leaf images.',
     keywords: ['MAIANet', 'signal modulation', 'cassava leaf disease', 'deep learning', 'Computers and Electronics in Agriculture'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'Computer Vision'],
+    highlights: [
+      { value: 'IF 8.9', label: 'COMPAG Q1 Journal', sublabel: 'Vol. 225, Article 109351' },
+      { value: '20+ Cites', label: 'Research Impact', sublabel: 'OpenAlex / Scholar verified' },
+      { value: 'Signal Mod.', label: 'Multi-Scale Modulation', sublabel: 'Suppresses background noise' },
+      { value: 'Field Valid.', label: 'Cassava Leaf Disease', sublabel: 'Robust subtle lesion capture' }
+    ],
+    contributions: [
+      'Introduced multi-scale signal modulation blocks inside MAIANet to amplify discriminative lesion spatial frequencies while damping field foliage interference.',
+      'Improved separation between visually overlapping cassava viral and bacterial conditions under natural outdoor lighting.',
+      'Achieved 20+ citations following publication in Computers and Electronics in Agriculture (Vol. 225).'
+    ],
+    tables: [
+      {
+        title: 'MAIANet Study Profile (Computers and Electronics in Agriculture 2024)',
+        headers: ['Attribute', 'Detail'],
+        rows: [
+          ['Journal', 'Computers and Electronics in Agriculture, Vol. 225, Article 109351'],
+          ['DOI', '10.1016/j.compag.2024.109351'],
+          ['Core Architecture', 'Multi-scale signal modulation network for foliar disease cues'],
+          ['Citation Count', '20+ verified citations']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{zhang2024maianet,
   title={MAIANet: Signal modulation in cassava leaf disease classification},
   author={Zhang, Jiayu and Zhang, Baohua and Qi, Chao and Nyalala, Innocent and Mecha, Peter and Chen, Kunjie and Gao, Junfeng},
@@ -1243,14 +1696,14 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Weight and volume estimation of poultry and products based on computer vision systems: a review',
     shortTitle: 'Poultry Weight & Volume CV Review (Poultry Sci. 2021)',
     authors: [
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] },
-      { name: 'Tchalla Korohou', affiliations: [3] },
-      { name: 'Luke Nyalala', affiliations: [3] },
-      { name: 'Qi Chao', affiliations: [3] }
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Kunjie Chen', affiliations: [1] },
+      { name: 'Tchalla Korohou', affiliations: [1] },
+      { name: 'Luke Nyalala', affiliations: [1] },
+      { name: 'Qi Chao', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Poultry Science (Elsevier), Vol. 100, 101072',
     venueShort: 'Poultry Science · 2021',
     year: 2021,
@@ -1267,6 +1720,30 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'This widely cited review synthesizes computer vision, depth-imaging, and machine learning frameworks for non-contact weight and volume estimation across live poultry, carcasses, cuts, and eggs, analyzing feature extraction, occlusion handling, camera calibration, and industrial conveyor integration.',
     keywords: ['poultry science', 'computer vision', 'weight estimation', 'volume estimation', 'depth imaging', 'review'],
     topics: ['Agriculture', 'Computer Vision', '3D Reconstruction'],
+    highlights: [
+      { value: '144+ Cites', label: 'High-Impact Review', sublabel: 'Poultry Science landmark survey' },
+      { value: '4 Product Types', label: 'Scope Synthesized', sublabel: 'Live, carcasses, cuts, eggs' },
+      { value: '2D & 3D Depth', label: 'Sensing Modalities', sublabel: 'Kinect, stereo, structured light' },
+      { value: 'IF 4.2', label: 'Open Access', sublabel: 'Vol. 100, Article 101072' }
+    ],
+    contributions: [
+      'Synthesized computer vision and depth-sensing methodologies across the entire poultry value chain: live birds, whole carcasses, anatomical retail cuts, and intact eggs.',
+      'Systematically taxonomy-mapped camera calibration, occlusion segmentation, morphological feature extraction, and classical/deep regression modeling.',
+      'Established benchmark challenges in industrial line-speed throughput and ambient lighting guiding subsequent automated sorting systems.'
+    ],
+    tables: [
+      {
+        title: 'Taxonomic Coverage of Computer Vision Weight & Volume Pipelines (Poultry Science 2021)',
+        headers: ['Poultry Commodity', 'Primary Imaging Modality', 'Typical Modeling Approach'],
+        rows: [
+          ['Live Broiler Chickens', 'Overhead depth + RGB', 'Posture ellipse fitting & SVR / ANN'],
+          ['Whole Carcasses', '3D depth reconstruction', 'Point-cloud surface area & volume regression'],
+          ['Carcass Retail Cuts', 'Depth + Active Shape Model', 'Segmented cut-volume to mass SVR'],
+          ['Intact Chicken Eggs', 'Infrared depth & contour', 'Ellipsoidal volume & GPR regression']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{nyalala2021poultryreview,
   title={Weight and volume estimation of poultry and products based on computer vision systems: a review},
   author={Nyalala, Innocent and Okinda, Cedric and Chen, Kunjie and Korohou, Tchalla and Nyalala, Luke and Chao, Qi},
@@ -1284,18 +1761,18 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Weight and volume estimation of single and occluded tomatoes using machine vision',
     shortTitle: 'Occluded Tomatoes Machine Vision (IJFP 2021)',
     authors: [
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Qi Chao', affiliations: [3] },
-      { name: 'Peter Mecha', affiliations: [3] },
-      { name: 'Tchalla Korohou', affiliations: [3] },
-      { name: 'Yi Zuo', affiliations: [3] },
-      { name: 'Samuel Nyalala', affiliations: [3] },
-      { name: 'Jiayu Zhang', affiliations: [3] },
-      { name: 'Chao Liu', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] }
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Qi Chao', affiliations: [1] },
+      { name: 'Peter Mecha', affiliations: [1] },
+      { name: 'Tchalla Korohou', affiliations: [1] },
+      { name: 'Yi Zuo', affiliations: [1] },
+      { name: 'Samuel Nyalala', affiliations: [1] },
+      { name: 'Jiayu Zhang', affiliations: [1] },
+      { name: 'Chao Liu', affiliations: [1] },
+      { name: 'Kunjie Chen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'International Journal of Food Properties (Taylor & Francis), Vol. 24, pp. 818–832',
     venueShort: 'Int. J. Food Properties · 2021',
     year: 2021,
@@ -1311,6 +1788,28 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Fruit occlusion severely degrades geometric volume and mass prediction in automated sorting lines. We combine depth imaging, morphological contour reconstruction, and machine learning regression to recover accurate mass and volume estimates for both isolated and partially occluded tomatoes.',
     keywords: ['tomato volume estimation', 'occlusion handling', 'machine vision', 'depth imaging', 'postharvest'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: 'R² = 0.982', label: 'Volume (RBF-SVM)', sublabel: 'RMSE = 1.2683 cm³' },
+      { value: 'R² = 0.971', label: 'Weight (Bayesian ANN)', sublabel: 'RMSE = 1.468 g' },
+      { value: '7 Models', label: 'Regressors Tested', sublabel: 'Single & occluded fruits' },
+      { value: '46+ Cites', label: 'Food Properties J.', sublabel: 'Vol. 24, pp. 818-832' }
+    ],
+    contributions: [
+      'Solved partial tomato occlusion on moving sorting belts via polygon approximation and concave/convex contour point extraction.',
+      'Benchmarked seven regression algorithms across 2D and depth features, achieving R² = 0.971 (RMSE 1.468 g) for mass via Bayesian regularization ANN.',
+      'Reached R² = 0.982 (RMSE 1.2683 cm³) for non-destructive volume prediction using RBF-SVM across isolated and clustered fruits.'
+    ],
+    tables: [
+      {
+        title: 'Single & Partially Occluded Tomato Regression Results (2021)',
+        headers: ['Prediction Target', 'Best Model', 'R²', 'RMSE'],
+        rows: [
+          ['Fruit Volume (cm³)', 'RBF Support Vector Machine (SVM)', '0.982', '1.2683 cm³'],
+          ['Fruit Weight (g)', 'Bayesian Regularized ANN', '0.971', '1.468 g']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{nyalala2021occludedtomatoes,
   title={Weight and volume estimation of single and occluded tomatoes using machine vision},
   author={Nyalala, Innocent and Okinda, Cedric and Chao, Qi and Mecha, Peter and Korohou, Tchalla and Zuo, Yi and Nyalala, Samuel and Jiayu, Zhang and Liu, Chao and Chen, Kunjie},
@@ -1329,13 +1828,13 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Prediction of precise subsoiling based on analytical method, discrete element simulation and experimental data from soil bin',
     shortTitle: 'Precise Subsoiling & DEM Simulation (Sci. Rep. 2021)',
     authors: [
-      { name: 'Nelson Richard Makange', affiliations: [3] },
-      { name: 'Changying Ji', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Idris Idris Sunusi', affiliations: [3] },
-      { name: 'Samwel Opiyo', affiliations: [3] }
+      { name: 'Nelson Richard Makange', affiliations: [1] },
+      { name: 'Changying Ji', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Idris Idris Sunusi', affiliations: [1] },
+      { name: 'Samwel Opiyo', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Scientific Reports (Nature Portfolio)',
     venueShort: 'Scientific Reports · Nature · 2021',
     year: 2021,
@@ -1351,6 +1850,28 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Combines analytical soil mechanics, Discrete Element Method (DEM) modeling, and instrumented soil-bin experiments to predict draft forces and disturbance profiles for precision agricultural subsoiling implements.',
     keywords: ['precision subsoiling', 'DEM simulation', 'soil bin', 'Scientific Reports', 'agricultural engineering'],
     topics: ['Agriculture'],
+    highlights: [
+      { value: 'R² = 0.984', label: 'DEM Prediction R²', sublabel: 'NRMSE = 1.936 (p < 0.05)' },
+      { value: 'R² = 0.957', label: 'Analytical Model R²', sublabel: 'NRMSE = 6.008 (McKyes eq.)' },
+      { value: 'p > 0.93', label: 'ANOVA Force Agreement', sublabel: 'p = 0.9396 H / 0.9696 V' },
+      { value: 'Nat. SciRep', label: 'Nature Portfolio', sublabel: '45+ citations' }
+    ],
+    contributions: [
+      'Integrated elastoplastic soil behavior into Discrete Element Method (DEM) simulations alongside modified-McKyes and Willat-Willis analytical tillage equations.',
+      'Validated subsoiling draft forces and furrow soil disturbance profiles in controlled soil-bin trolley force-sensor trials using Taguchi design.',
+      'Proved DEM outperforms analytical approximation at R² = 0.984 (NRMSE 1.936) vs. R² = 0.957 (NRMSE 6.008) with statistically aligned ANOVA forces.'
+    ],
+    tables: [
+      {
+        title: 'Analytical vs. Discrete Element Simulation Accuracy on Soil-Bin Force Trials',
+        headers: ['Modeling Approach', 'Regression R²', 'Normalized RMSE', 'Significance / Finding'],
+        rows: [
+          ['Discrete Element Method (DEM)', '0.984', '1.936', 'Captures elastoplastic soil failure (p < 0.05)'],
+          ['Analytical Model (Modified-McKyes)', '0.957', '6.008', 'Closed-form force & furrow approximation']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{makange2021subsoiling,
   title={Prediction of precise subsoiling based on analytical method, discrete element simulation and experimental data from soil bin},
   author={Makange, Nelson Richard and Ji, Changying and Nyalala, Innocent and Sunusi, Idris Idris and Opiyo, Samwel},
@@ -1367,19 +1888,19 @@ export const PUBLICATIONS: Publication[] = [
     title: 'On-line weight estimation of broiler carcass and cuts by a computer vision system',
     shortTitle: 'Online Broiler Carcass & Cuts Weight CV (Poultry Sci. 2021)',
     authors: [
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Nelson Richard Makange', affiliations: [3] },
-      { name: 'Tchalla Korohou', affiliations: [3] },
-      { name: 'Qi Chao', affiliations: [3] },
-      { name: 'Luke Nyalala', affiliations: [3] },
-      { name: 'Jiayu Zhang', affiliations: [3] },
-      { name: 'Yi Zuo', affiliations: [3] },
-      { name: 'Khurram Yousaf', affiliations: [3] },
-      { name: 'Chao Liu', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] }
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Nelson Richard Makange', affiliations: [1] },
+      { name: 'Tchalla Korohou', affiliations: [1] },
+      { name: 'Qi Chao', affiliations: [1] },
+      { name: 'Luke Nyalala', affiliations: [1] },
+      { name: 'Jiayu Zhang', affiliations: [1] },
+      { name: 'Yi Zuo', affiliations: [1] },
+      { name: 'Khurram Yousaf', affiliations: [1] },
+      { name: 'Chao Liu', affiliations: [1] },
+      { name: 'Kunjie Chen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Poultry Science (Elsevier), Vol. 100, 101474',
     venueShort: 'Poultry Science · 2021',
     year: 2021,
@@ -1396,6 +1917,31 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Develops an online computer vision and depth feature regression pipeline capable of estimating the weights of whole broiler carcasses and commercial anatomical cuts in real time without halting conveyor lines.',
     keywords: ['broiler carcass', 'weight estimation', 'computer vision', 'depth imaging', 'Poultry Science'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: 'R² = 0.9981', label: 'Whole Carcass R²', sublabel: 'Bayesian-ANN depth regression' },
+      { value: 'R² = 0.9896', label: 'Wings Weight R²', sublabel: 'RBF-SVR on ASM cut masks' },
+      { value: '4 Retail Cuts', label: 'Active Shape Model', sublabel: 'Wings, breast, drums, head/neck' },
+      { value: '36+ Cites', label: 'Poultry Science 2021', sublabel: 'Vol. 100, Article 101474' }
+    ],
+    contributions: [
+      'Developed an Active Shape Model (ASM) automatically segmenting conveyor broiler carcasses into four anatomical commercial cuts despite ambient lighting variation.',
+      'Evaluated five regression models, achieving R² = 0.9981 for whole carcass and R² = 0.9847 for head/neck mass via Bayesian-ANN.',
+      'Achieved R² = 0.9896 (wings), 0.9352 (breast), and 0.9129 (drumsticks) using RBF-SVR on extracted depth features.'
+    ],
+    tables: [
+      {
+        title: 'Whole Broiler Carcass & Anatomical Cut Weight Estimation (Poultry Science 2021)',
+        headers: ['Carcass / Cut Target', 'Best Model', 'Test R²'],
+        rows: [
+          ['Whole Broiler Carcass', 'Bayesian Regularized ANN', '0.9981'],
+          ['Wings', 'RBF Support Vector Regression (SVR)', '0.9896'],
+          ['Head and Neck', 'Bayesian Regularized ANN', '0.9847'],
+          ['Breast', 'RBF Support Vector Regression (SVR)', '0.9352'],
+          ['Drumsticks', 'RBF Support Vector Regression (SVR)', '0.9129']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{nyalala2021broilercuts,
   title={On-line weight estimation of broiler carcass and cuts by a computer vision system},
   author={Nyalala, Innocent and Okinda, Cedric and Makange, Nelson Richard and Korohou, Tchalla and Chao, Qi and Nyalala, Luke and Jiayu, Zhang and Zuo, Yi and Yousaf, Khurram and Liu, Chao and Chen, Kunjie},
@@ -1413,11 +1959,11 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Detecting the Early Flowering Stage of Tea Chrysanthemum Using the F-YOLO Model',
     shortTitle: 'F-YOLO Tea Chrysanthemum Detection (Agronomy 2021)',
     authors: [
-      { name: 'Qi Chao', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] }
+      { name: 'Qi Chao', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Kunjie Chen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Agronomy (MDPI), Vol. 11(5), 834',
     venueShort: 'Agronomy · 2021',
     year: 2021,
@@ -1425,7 +1971,7 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2021-04-24',
     category: 'journal',
     status: 'Published · Open Access · 18+ Citations',
-    citations: 18,
+    citations: 21,
     openAccess: true,
     doi: '10.3390/agronomy11050834',
     paperUrl: 'https://doi.org/10.3390/agronomy11050834',
@@ -1433,6 +1979,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Proposes the F-YOLO object detector tailored for detecting small, occluded early-stage tea chrysanthemum blossoms under complex outdoor lighting, enabling automated harvest timing.',
     keywords: ['F-YOLO', 'object detection', 'tea chrysanthemum', 'Agronomy', 'precision agriculture'],
     topics: ['Agriculture', 'Computer Vision', 'Deep Learning'],
+    highlights: [
+      { value: 'F-YOLO', label: 'Lightweight Detector', sublabel: 'Single mobile GPU deployable' },
+      { value: 'CSP Backbones', label: 'CSPDense + CSPResNeXt', sublabel: 'Dual gradient-flow design' },
+      { value: 'Multi-Scale', label: 'Fusion Detection Head', sublabel: 'Handles occlusion & overlap' },
+      { value: '21+ Cites', label: 'Agronomy MDPI', sublabel: 'Vol. 11(5), Article 834' }
+    ],
+    contributions: [
+      'Combined cutout and mosaic input augmentation with a hybrid CSPDenseNet backbone and CSPResNeXt neck to detect early-stage tea chrysanthemum blossoms under outdoor occlusion.',
+      'Fused multi-scale detection layers to maintain gradient diversity on dense small buds under shifting solar illumination.',
+      'Demonstrated lightweight real-time inference feasible on a single mobile GPU for selective robotic chrysanthemum harvesting.'
+    ],
+    tables: [
+      {
+        title: 'F-YOLO Architectural Modules for Selective Blossom Harvesting (Agronomy 2021)',
+        headers: ['Network Component', 'Module Architecture', 'Agronomic Purpose'],
+        rows: [
+          ['Input Stage', 'Cutout + Mosaic slicing', 'Robustness to dense cluster overlapping'],
+          ['Backbone', 'CSPDenseNet + feature fusion', 'Maximizes gradient flow for small early buds'],
+          ['Neck & Head', 'CSPResNeXt + multi-scale fusion', 'Truncates redundancy for mobile GPU latency']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{chao2021fyolo,
   title={Detecting the Early Flowering Stage of Tea Chrysanthemum Using the F-YOLO Model},
   author={Chao, Qi and Nyalala, Innocent and Chen, Kunjie},
@@ -1451,15 +2020,15 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Drying process optimization of garlic slices in closed-loop heat pump drying system by Box-Behnken design',
     shortTitle: 'Closed-Loop Heat Pump Garlic Drying (JFPP 2021)',
     authors: [
-      { name: 'Haolu Liu', affiliations: [3] },
-      { name: 'Khurram Yousaf', affiliations: [3] },
-      { name: 'Zhenwei Yu', affiliations: [3] },
-      { name: 'Asad Riaz', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Muhammad Waqas Alam Chattha', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] }
+      { name: 'Haolu Liu', affiliations: [1] },
+      { name: 'Khurram Yousaf', affiliations: [1] },
+      { name: 'Zhenwei Yu', affiliations: [1] },
+      { name: 'Asad Riaz', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Muhammad Waqas Alam Chattha', affiliations: [1] },
+      { name: 'Kunjie Chen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Journal of Food Processing and Preservation (Wiley)',
     venueShort: 'J. Food Process. Preserv. · 2021',
     year: 2021,
@@ -1474,6 +2043,30 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Investigates temperature, slice thickness, and airflow trade-offs in a closed-loop heat pump drying system using Box-Behnken experimental design to optimize thermal efficiency and dried garlic quality.',
     keywords: ['heat pump drying', 'Box-Behnken design', 'postharvest processing', 'food engineering'],
     topics: ['Agriculture'],
+    highlights: [
+      { value: 'Box-Behnken', label: 'Response Surface', sublabel: '3-factor thermal optimization' },
+      { value: 'Closed-Loop', label: 'Heat Pump Dryer', sublabel: 'Energy & quality balance' },
+      { value: 'Wiley JFPP', label: 'Vol. 46(1), 2022', sublabel: 'Food Process & Preserv.' },
+      { value: '20+ Cites', label: 'Scholar Impact', sublabel: 'Postharvest engineering' }
+    ],
+    contributions: [
+      'Applied a Box-Behnken response surface experimental design to optimize closed-loop heat pump drying of garlic slices.',
+      'Quantified trade-offs across drying air temperature, slice thickness, and airflow velocity on energy efficiency and rehydration/color quality.',
+      'Provided validated operating parameters reducing thermal waste during postharvest spice and horticultural dehydration.'
+    ],
+    tables: [
+      {
+        title: 'Process Optimization Scope (J. Food Processing & Preservation)',
+        headers: ['Parameter', 'Methodology / Focus'],
+        rows: [
+          ['Experimental Design', 'Box-Behnken Response Surface Methodology (RSM)'],
+          ['Thermal Equipment', 'Closed-loop heat pump dryer for horticultural slices'],
+          ['Controlled Factors', 'Drying air temperature, slice thickness, air velocity'],
+          ['Optimization Goals', 'Minimize specific energy consumption while preserving dried garlic quality']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{liu2021garlicdrying,
   title={Drying process optimization of garlic slices in closed-loop heat pump drying system by Box-Behnken design},
   author={Liu, Haolu and Yousaf, Khurram and Yu, Zhenwei and Riaz, Asad and Nyalala, Innocent and Chattha, Muhammad Waqas Alam and Chen, Kunjie},
@@ -1492,17 +2085,17 @@ export const PUBLICATIONS: Publication[] = [
     title: 'A review on computer vision systems in monitoring of poultry: A welfare perspective',
     shortTitle: 'Computer Vision in Poultry Welfare Review (AIIA 2020)',
     authors: [
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Tchalla Korohou', affiliations: [3] },
-      { name: 'Celestine Okinda', affiliations: [3] },
-      { name: 'Jintao Wang', affiliations: [3] },
-      { name: 'Tracy Achieng', affiliations: [3] },
-      { name: 'Patrick Wamalwa', affiliations: [3] },
-      { name: 'Tai Mang', affiliations: [3] },
-      { name: 'Mingxia Shen', affiliations: [3] }
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Tchalla Korohou', affiliations: [1] },
+      { name: 'Celestine Okinda', affiliations: [1] },
+      { name: 'Jintao Wang', affiliations: [1] },
+      { name: 'Tracy Achieng', affiliations: [1] },
+      { name: 'Patrick Wamalwa', affiliations: [1] },
+      { name: 'Tai Mang', affiliations: [1] },
+      { name: 'Mingxia Shen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Artificial Intelligence in Agriculture (Elsevier), Vol. 4, pp. 184–208',
     venueShort: 'Artificial Intelligence in Agriculture · 2020',
     year: 2020,
@@ -1519,6 +2112,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Comprehensive synthesis of RGB, thermal, and depth computer vision systems for automated monitoring of poultry gait, posture, flock distribution, thermal stress, and disease indicators from an animal welfare perspective.',
     keywords: ['poultry welfare', 'computer vision', 'precision livestock farming', 'Artificial Intelligence in Agriculture'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: '242+ Cites', label: 'Top Cited Paper', sublabel: 'AIIA Vol. 4, pp. 184-208' },
+      { value: '3 Modalities', label: 'RGB, Thermal, Depth', sublabel: 'Non-intrusive sensing' },
+      { value: '2 Eras', label: 'Classical ML vs Deep', sublabel: 'Pipeline synthesis' },
+      { value: 'Welfare Indicators', label: 'Gait, Posture, Illness', sublabel: 'Continuous flock monitoring' }
+    ],
+    contributions: [
+      'Reviewed the complete evolution of automated poultry welfare monitoring from classical preprocessing/segmentation/feature selection to end-to-end deep neural networks.',
+      'Identified critical bottlenecks in commercial poultry vision: ambient lighting swings, bird-to-bird occlusion under high stocking density, and scarce annotated welfare datasets.',
+      'Reached 242+ academic citations in Artificial Intelligence in Agriculture as a foundational Precision Livestock Farming reference.'
+    ],
+    tables: [
+      {
+        title: 'Welfare Sensing Modalities Synthesized in AIIA (Vol. 4, 2020)',
+        headers: ['Sensing Modality', 'Captured Biological Signal', 'Primary Welfare Application'],
+        rows: [
+          ['RGB Imaging', 'Texture, feather condition, swarm distribution', 'Crowding, activity indexing, behavior scoring'],
+          ['Infrared Thermal', 'Surface body temperature distribution', 'Heat stress & febrile illness screening'],
+          ['3D Depth Sensing', 'Posture geometry, gait symmetry, contour', 'Lameness detection & lighting-invariant tracking']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{okinda2020poultrywelfare,
   title={A review on computer vision systems in monitoring of poultry: A welfare perspective},
   author={Okinda, Cedric and Nyalala, Innocent and Korohou, Tchalla and Okinda, Celestine and Wang, Jintao and Achieng, Tracy and Wamalwa, Patrick and Mang, Tai and Shen, Mingxia},
@@ -1537,15 +2153,15 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Egg volume estimation based on image processing and computer vision',
     shortTitle: 'Egg Volume Estimation via Computer Vision (JFE 2020)',
     authors: [
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Yuwen Sun', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Tchalla Korohou', affiliations: [3] },
-      { name: 'Samwel Opiyo', affiliations: [3] },
-      { name: 'Jintao Wang', affiliations: [3] },
-      { name: 'Mingxia Shen', affiliations: [3] }
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Yuwen Sun', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Tchalla Korohou', affiliations: [1] },
+      { name: 'Samwel Opiyo', affiliations: [1] },
+      { name: 'Jintao Wang', affiliations: [1] },
+      { name: 'Mingxia Shen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Journal of Food Engineering (Elsevier), Vol. 283, 110041',
     venueShort: 'J. Food Engineering · 2020',
     year: 2020,
@@ -1561,6 +2177,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Develops an image-processing and geometric reconstruction pipeline to measure egg dimensions and estimate exact volume rapidly and non-destructively compared against water displacement baselines.',
     keywords: ['egg volume', 'image processing', 'computer vision', 'Journal of Food Engineering'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: 'R² = 0.984', label: 'Single Egg Vol. R²', sublabel: 'Exponential GPR · RMSE 1.175 cm³' },
+      { value: '1.080 cm³', label: 'Simple Occlusion RMSE', sublabel: '1.294 cm³ complex occlusion' },
+      { value: '13 Models', label: 'Regression Benchmark', sublabel: 'Depth + k-closest M-circles' },
+      { value: '87+ Cites', label: 'J. Food Engineering', sublabel: 'Vol. 283, Article 110041' }
+    ],
+    contributions: [
+      'Solved touching multi-egg conveyor occlusions using contour curvature analysis and k-closest M-circle-center fitting.',
+      'Trained 13 regression models on extracted single- and occluded-egg depth features, identifying Exponential Gaussian Process Regression (GPR) as top performer.',
+      'Attained RMSE = 1.175 cm³ (R² = 0.984) on isolated eggs, 1.080 cm³ under simple occlusion, and 1.294 cm³ under complex occlusion.'
+    ],
+    tables: [
+      {
+        title: 'Exponential GPR Egg Volume Estimation Accuracy Under Occlusion (2020)',
+        headers: ['Conveyor Egg Configuration', 'Segmentation Algorithm', 'RMSE (cm³)', 'R²'],
+        rows: [
+          ['Single Egg (No Occlusion)', 'Morphological thresholding', '1.175', '0.984'],
+          ['Simple Multi-Egg Occlusion', 'Curvature + k-closest M-circle center', '1.080', 'Validated'],
+          ['Complex Multi-Egg Occlusion', 'Curvature + k-closest M-circle center', '1.294', 'Validated']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{okinda2020eggvolume,
   title={Egg volume estimation based on image processing and computer vision},
   author={Okinda, Cedric and Sun, Yuwen and Nyalala, Innocent and Korohou, Tchalla and Opiyo, Samwel and Wang, Jintao and Shen, Mingxia},
@@ -1579,17 +2218,17 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Wheat Grain Yield Estimation Based on Image Morphological Properties and Wheat Biomass',
     shortTitle: 'Wheat Grain Yield Estimation (J. Sensors 2020)',
     authors: [
-      { name: 'Tchalla Korohou', affiliations: [3] },
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Haikang Li', affiliations: [3] },
-      { name: 'Yifei Cao', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Lianfei Huo', affiliations: [3] },
-      { name: 'Mouloumdema Pouwedeou Potcho', affiliations: [3] },
-      { name: 'Xiang Li', affiliations: [3] },
-      { name: 'Qishuo Ding', affiliations: [3] }
+      { name: 'Tchalla Korohou', affiliations: [1] },
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Haikang Li', affiliations: [1] },
+      { name: 'Yifei Cao', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Lianfei Huo', affiliations: [1] },
+      { name: 'Mouloumdema Pouwedeou Potcho', affiliations: [1] },
+      { name: 'Xiang Li', affiliations: [1] },
+      { name: 'Qishuo Ding', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Journal of Sensors, 1571936',
     venueShort: 'Journal of Sensors · 2020',
     year: 2020,
@@ -1597,7 +2236,7 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2020-02-01',
     category: 'journal',
     status: 'Published · Open Access · 34+ Citations',
-    citations: 34,
+    citations: 36,
     openAccess: true,
     doi: '10.1155/2020/1571936',
     paperUrl: 'https://doi.org/10.1155/2020/1571936',
@@ -1605,6 +2244,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Extracts quantitative morphological ear and canopy descriptors from wheat imaging alongside biomass features to establish reliable predictive models for field wheat grain yield.',
     keywords: ['wheat yield', 'morphological features', 'computer vision', 'biomass'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: 'R² = 0.9893', label: 'Dry Yield R²', sublabel: 'RMSE = 0.0684 mm (organ mass)' },
+      { value: 'R² = 0.9779', label: 'Stem Length R²', sublabel: 'Vision perimeter R² = 0.9609' },
+      { value: '6 Models', label: 'Statistical Regressors', sublabel: 'Image morphology + biomass' },
+      { value: '36+ Cites', label: 'Journal of Sensors', sublabel: 'Open Access · Article 1571936' }
+    ],
+    contributions: [
+      'Extracted wheat stem and ear length, width, and perimeter non-destructively via computer vision at R² = 0.9609 (perimeter) and R² = 0.9779 (length).',
+      'Trained six regression models linking morphological vision descriptors and organ wet weight (stem, ear, leaves) to dry grain yield.',
+      'Demonstrated top dry grain yield prediction at R² = 0.9893 and RMSE = 0.0684 for non-destructive pre-harvest wheat phenotyping.'
+    ],
+    tables: [
+      {
+        title: 'Wheat Organ Measurement & Dry Yield Regression Performance (2020)',
+        headers: ['Measured / Predicted Variable', 'Validation Result (R² / Error)'],
+        rows: [
+          ['Computer Vision Stem Length Extraction', 'R² = 0.9779 vs. physical caliper'],
+          ['Computer Vision Stem Perimeter Extraction', 'R² = 0.9609 vs. physical reference'],
+          ['Dry Grain Yield (Linear Model on Wet Organ Mass)', 'R² = 0.9893 (RMSE = 0.0684)']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{korohou2020wheat,
   title={Wheat Grain Yield Estimation Based on Image Morphological Properties and Wheat Biomass},
   author={Korohou, Tchalla and Okinda, Cedric and Li, Haikang and Cao, Yifei and Nyalala, Innocent and Huo, Lianfei and Potcho, Mouloumdema Pouwedeou and Li, Xiang and Ding, Qishuo},
@@ -1621,13 +2283,13 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Separation of partially occluded rice kernels and variety classification based on computer vision',
     shortTitle: 'Occluded Rice Kernel Classification (IAEJ 2020)',
     authors: [
-      { name: 'Tchalla Korohou', affiliations: [3] },
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'I. Torotwa', affiliations: [3] },
-      { name: 'E. Mwangi', affiliations: [3] }
+      { name: 'Tchalla Korohou', affiliations: [1] },
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'I. Torotwa', affiliations: [1] },
+      { name: 'E. Mwangi', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'International Agricultural Engineering Journal, ISSN 0858-2114',
     venueShort: 'Int. Agric. Eng. J. · 2020',
     year: 2020,
@@ -1639,6 +2301,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Addresses touching and overlapping rice grain clusters using watershed segmentation and morphological shape classification to automate rice variety identification in post-harvest grain inspection.',
     keywords: ['rice kernels', 'occlusion segmentation', 'variety classification', 'computer vision'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: 'Watershed', label: 'Occlusion Splitting', sublabel: 'Separates touching grains' },
+      { value: 'Morphological', label: 'Variety Classifier', sublabel: 'Postharvest grain inspection' },
+      { value: 'Multi-Cultivar', label: 'Shape + Color Cues', sublabel: 'Automated bulk sorting' },
+      { value: 'IAEJ 2020', label: 'Published Article', sublabel: 'ISSN 0858-2114' }
+    ],
+    contributions: [
+      'Applied distance-transform watershed segmentation to separate touching and partially occluded rice kernels captured in bulk postharvest inspection scenes.',
+      'Extracted shape geometry and surface descriptors from separated kernel masks for multi-variety rice classification.',
+      'Removed manual single-kernel singulation bottlenecks prior to automated optical grain grading.'
+    ],
+    tables: [
+      {
+        title: 'Grain Separation & Variety Grading Pipeline (IAEJ 2020)',
+        headers: ['Processing Step', 'Technique', 'Role in Postharvest Grading'],
+        rows: [
+          ['1. Binary Masking', 'Adaptive thresholding & noise filtering', 'Isolates rice kernel cluster foreground'],
+          ['2. Kernel Separation', 'Distance transform + Watershed split', 'Separates touching/overlapping grains into singles'],
+          ['3. Variety Classification', 'Geometric & textural kernel features', 'Assigns rice cultivar class without manual sorting']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{korohou2020ricekernels,
   title={Separation of partially occluded rice kernels and variety classification based on computer vision},
   author={Korohou, Tchalla and Okinda, Cedric and Nyalala, Innocent and Torotwa, I. and Mwangi, E.},
@@ -1656,16 +2341,16 @@ export const PUBLICATIONS: Publication[] = [
     title: 'A machine vision system for early detection and prediction of sick birds: A broiler chicken model',
     shortTitle: 'Early Sick Broiler Detection via CV (Biosystems Eng. 2019)',
     authors: [
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Mingzhou Lu', affiliations: [3] },
-      { name: 'Longshen Liu', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Caroline Muneri', affiliations: [3] },
-      { name: 'Jintao Wang', affiliations: [3] },
-      { name: 'Hailin Zhang', affiliations: [3] },
-      { name: 'Mingxia Shen', affiliations: [3] }
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Mingzhou Lu', affiliations: [1] },
+      { name: 'Longshen Liu', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Caroline Muneri', affiliations: [1] },
+      { name: 'Jintao Wang', affiliations: [1] },
+      { name: 'Hailin Zhang', affiliations: [1] },
+      { name: 'Mingxia Shen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Biosystems Engineering (Elsevier), Vol. 188, pp. 229–242',
     venueShort: 'Biosystems Engineering · 2019',
     year: 2019,
@@ -1682,6 +2367,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Early illness detection prevents devastating poultry flock mortality. Using continuous overhead RGB-depth imaging, shape posture descriptors, and optical-flow mobility features, we construct an automated classifier and early warning system for sick broiler chickens validated against clinical diagnosis.',
     keywords: ['broiler health', 'machine vision', 'early disease detection', 'Biosystems Engineering', 'livestock'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: '97.8%', label: 'Classification Acc', sublabel: 'RBF-SVM (all posture + speed)' },
+      { value: '97.5%', label: 'Shape-Only RBF-SVM', sublabel: '5 posture descriptors (p < 0.05)' },
+      { value: 'Day 4', label: 'Earliest Warning', sublabel: 'Post-challenge detection' },
+      { value: '194+ Cites', label: 'Biosystems Eng.', sublabel: 'Vol. 188, pp. 229-242' }
+    ],
+    contributions: [
+      'Monitored isolated control vs. Newcastle-virus-challenged broiler flocks continuously using overhead RGB-depth imaging and walk-speed extraction.',
+      'Established statistical significance (p < 0.05) across five posture descriptors and walk speed, achieving earliest disease detection on Day 4 via circle variance and elongation (Day 6 via eccentricity and walk speed).',
+      'Achieved 97.5% accuracy (posture shape only) and 97.8% accuracy (combined shape + mobility) with RBF-SVM for non-intrusive early flock warning.'
+    ],
+    tables: [
+      {
+        title: 'Early Infection Detection Timing & RBF-SVM Classification Accuracy (2019)',
+        headers: ['Feature Group', 'Diagnostic Capability / Timing', 'RBF-SVM Accuracy (%)'],
+        rows: [
+          ['Circle Variance & Elongation', 'Earliest significant shift at Day 4 post-challenge', 'Part of 97.5% posture model'],
+          ['Eccentricity & Walk Speed', 'Significant behavioral shift by Day 6', '97.8% (all features combined)'],
+          ['Convexity & Complexity', 'No statistically reliable early warning', 'Excluded as standalone signal']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{okinda2019sickbirds,
   title={A machine vision system for early detection and prediction of sick birds: A broiler chicken model},
   author={Okinda, Cedric and Lu, Mingzhou and Liu, Longshen and Nyalala, Innocent and Muneri, Caroline and Wang, Jintao and Zhang, Hailin and Shen, Mingxia},
@@ -1700,16 +2408,16 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Tomato volume and mass estimation using computer vision and machine learning algorithms: Cherry tomato model',
     shortTitle: 'Cherry Tomato Volume & Mass CV (JFE 2019)',
     authors: [
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Luke Nyalala', affiliations: [3] },
-      { name: 'Nelson Richard Makange', affiliations: [3] },
-      { name: 'Qi Chao', affiliations: [3] },
-      { name: 'Chao Liu', affiliations: [3] },
-      { name: 'Khurram Yousaf', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] }
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Luke Nyalala', affiliations: [1] },
+      { name: 'Nelson Richard Makange', affiliations: [1] },
+      { name: 'Qi Chao', affiliations: [1] },
+      { name: 'Chao Liu', affiliations: [1] },
+      { name: 'Khurram Yousaf', affiliations: [1] },
+      { name: 'Kunjie Chen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Journal of Food Engineering (Elsevier), Vol. 263, pp. 288–298',
     venueShort: 'J. Food Engineering · 2019',
     year: 2019,
@@ -1725,6 +2433,31 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Constructs a depth-camera computer vision pipeline extracting 2D geometric and 3D depth volume descriptors trained with support vector regression and Bayesian ANN models to estimate cherry tomato mass and volume with high precision (R^2 > 0.97).',
     keywords: ['cherry tomato', 'volume estimation', 'mass estimation', 'depth imaging', 'SVR', 'Journal of Food Engineering'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: '97.06%', label: 'Mass RBF-SVM Acc', sublabel: 'Using 2D orientation features' },
+      { value: '96.94%', label: 'Volume RBF-SVM Acc', sublabel: 'Combined 2D + 3D depth cues' },
+      { value: 'R² = 0.9824', label: 'Power-Law Test R²', sublabel: 'M = 1.312 V^0.9551 (RMSE 15.84 g)' },
+      { value: '178+ Cites', label: 'J. Food Engineering', sublabel: 'Vol. 263, pp. 288-298' }
+    ],
+    contributions: [
+      'Established the physical mass-volume power relationship M = 1.312 V^0.9551 calibrated on test samples at R² = 0.9824 (RMSE = 15.84 g).',
+      'Evaluated five machine learning regressors on multi-orientation 2D and 3D depth descriptors of cherry tomatoes.',
+      'Demonstrated RBF-SVM leads non-destructive grading at 0.9706 (mass, 2D features) and 0.9694 (volume, all features).'
+    ],
+    tables: [
+      {
+        title: 'Cherry Tomato Mass & Volume Estimation Performance (J. Food Eng. 2019)',
+        headers: ['Model / Relationship', 'Input Features', 'Performance Metric'],
+        rows: [
+          ['RBF-SVM Regressor (Mass)', '2D geometric image descriptors', '97.06% prediction accuracy'],
+          ['RBF-SVM Regressor (Volume)', 'Combined 2D + 3D depth descriptors', '96.94% prediction accuracy'],
+          ['Allometric Power Law', 'M = 1.312 · V^0.9551', 'R² = 0.9824 (test RMSE = 15.84 g)']
+        ]
+      }
+    ],
+    teaserImage: '/images/papers/prior/tomato2019.jpeg',
+    teaserCaption: 'Kinect depth-imaging rig positioned 0.7 m above the 0.5 m sorting conveyor capturing multi-orientation 2D and 3D descriptors (RBF-SVM R^2 = 0.9824).',
+    isSaailLab: false,
     bibtex: `@article{nyalala2019tomato,
   title={Tomato volume and mass estimation using computer vision and machine learning algorithms: Cherry tomato model},
   author={Nyalala, Innocent and Okinda, Cedric and Nyalala, Luke and Makange, Nelson and Chao, Qi and Liu, Chao and Yousaf, Khurram and Chen, Kunjie},
@@ -1743,14 +2476,14 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Production of activated carbon from sludge and herb residue of traditional Chinese medicine industry and its application for methylene blue removal',
     shortTitle: 'Activated Carbon from Herb Sludge (BioResources 2019)',
     authors: [
-      { name: 'Zhenwei Yu', affiliations: [3] },
-      { name: 'Qi Gao', affiliations: [3] },
-      { name: 'Yue Zhang', affiliations: [3] },
-      { name: 'Dandan Wang', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] }
+      { name: 'Zhenwei Yu', affiliations: [1] },
+      { name: 'Qi Gao', affiliations: [1] },
+      { name: 'Yue Zhang', affiliations: [1] },
+      { name: 'Dandan Wang', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Kunjie Chen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'BioResources, Vol. 14(1), pp. 1333–1346',
     venueShort: 'BioResources · 2019',
     year: 2019,
@@ -1766,6 +2499,30 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Develops sustainable pyrolysis-activated adsorbents derived from traditional Chinese medicine sludge and herb residues, demonstrating efficient adsorption kinetics for methylene blue dye removal from industrial effluents.',
     keywords: ['activated carbon', 'waste valorization', 'adsorption', 'sustainability'],
     topics: ['Agriculture'],
+    highlights: [
+      { value: '700 °C', label: 'Optimal Activation', sublabel: '30 min · 1:4 impregnation' },
+      { value: '40%', label: 'CMHR Waste Ratio', sublabel: 'Sludge + herbal residue' },
+      { value: 'Langmuir', label: 'Isotherm Best Fit', sublabel: 'Monolayer dye adsorption' },
+      { value: '26+ Cites', label: 'BioResources 14(1)', sublabel: 'pp. 1333-1346 (Open Access)' }
+    ],
+    contributions: [
+      'Applied orthogonal experimental optimization across impregnation ratio, activation temperature, dwell time, and Chinese medicine herb residue (CMHR) blend ratio.',
+      'Characterized microporous activated carbon structure using XRD, FT-IR spectroscopy, SEM imaging, iodine value, and BET surface area.',
+      'Identified optimal synthesis parameters (1:4 impregnation, 700 °C, 30 min, 40% CMHR) following Langmuir monolayer isotherm behavior for industrial methylene blue removal.'
+    ],
+    tables: [
+      {
+        title: 'Optimal Pyrolysis Synthesis & Dye Adsorption Findings (BioResources 2019)',
+        headers: ['Process Variable', 'Optimal Experimental Condition / Finding'],
+        rows: [
+          ['Impregnation Ratio', '1 : 4'],
+          ['Activation Temperature & Time', '700 °C for 30 minutes'],
+          ['CMHR Biomass Addition Ratio', '40% blended with sewage sludge'],
+          ['Adsorption Isotherm Fit', 'Langmuir equation (monolayer methylene blue uptake)']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{yu2019activatedcarbon,
   title={Production of activated carbon from sludge and herb residue of traditional Chinese medicine industry and its application for methylene blue removal},
   author={Yu, Zhenwei and Gao, Qi and Zhang, Yue and Wang, Dandan and Nyalala, Innocent and Chen, Kunjie},
@@ -1784,17 +2541,17 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Influence of environmental conditions on drying efficiency and heat pump performance in closed and open loop drying of paddy',
     shortTitle: 'Heat Pump Paddy Drying Efficiency (Drying Tech. 2019)',
     authors: [
-      { name: 'Khurram Yousaf', affiliations: [3] },
-      { name: 'Haolu Liu', affiliations: [3] },
-      { name: 'Xu Gao', affiliations: [3] },
-      { name: 'Chao Liu', affiliations: [3] },
-      { name: 'Adnan Abbas', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Muhammad Ahmad', affiliations: [3] },
-      { name: 'Muhammad Ameen', affiliations: [3] },
-      { name: 'Kunjie Chen', affiliations: [3] }
+      { name: 'Khurram Yousaf', affiliations: [1] },
+      { name: 'Haolu Liu', affiliations: [1] },
+      { name: 'Xu Gao', affiliations: [1] },
+      { name: 'Chao Liu', affiliations: [1] },
+      { name: 'Adnan Abbas', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Muhammad Ahmad', affiliations: [1] },
+      { name: 'Muhammad Ameen', affiliations: [1] },
+      { name: 'Kunjie Chen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Drying Technology (Taylor & Francis)',
     venueShort: 'Drying Technology · 2019',
     year: 2019,
@@ -1809,6 +2566,28 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Evaluates how ambient temperature and relative humidity affect specific moisture extraction rates and coefficient of performance in closed-loop and open-loop paddy heat-pump drying systems.',
     keywords: ['paddy drying', 'heat pump', 'thermodynamics', 'postharvest engineering'],
     topics: ['Agriculture'],
+    highlights: [
+      { value: 'COP 2.211', label: 'Closed-Loop Efficiency', sublabel: 'vs 1.409 open-loop (+56.9%)' },
+      { value: '60 °C / 2.76 m/s', label: 'RSM Optimal Point', sublabel: 'Significant within 5% CI' },
+      { value: '1.318 kg/kWh', label: 'Peak Closed SMER2', sublabel: 'vs 0.865 open-loop OSMER2' },
+      { value: '28+ Cites', label: 'Drying Technology', sublabel: 'Taylor & Francis' }
+    ],
+    contributions: [
+      'Benchmarked parboiled paddy dehydration across series heat-pump closed-loop vs. open-loop circulation under winter subtropical ambient regimes (50-60 °C, 2-3 m/s).',
+      'Showed closed-loop circulation lifts Coefficient of Performance to 2.211 versus 1.409 open-loop by blocking cold ambient air infiltration.',
+      'Identified via Response Surface Methodology (RSM) an optimal operating regime at 60 °C and 2.76 m/s (SMER2 = 1.318 kg/kWh, MER2 = 0.796 kg/h).'
+    ],
+    tables: [
+      {
+        title: 'Closed-Loop vs. Open-Loop Heat Pump Paddy Dryer Comparison (RSM Optimal 60 °C, 2.76 m/s)',
+        headers: ['Cycle Mode', 'COP', 'SMER1 / SMER2', 'MER1 / MER2 (kg/h)'],
+        rows: [
+          ['Closed-Loop Heat Pump', '2.211', '0.321 / 1.318 kg/kWh', '0.202 / 0.796'],
+          ['Open-Loop Heat Pump', '1.409', '0.208 / 0.865 kg/kWh', '0.180 / 0.689']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{yousaf2019paddy,
   title={Influence of environmental conditions on drying efficiency and heat pump performance in closed and open loop drying of paddy},
   author={Yousaf, Khurram and Liu, Haolu and Gao, Xu and Liu, Chao and Abbas, Adnan and Nyalala, Innocent and Ahmad, Muhammad and Ameen, Muhammad and Chen, Kunjie},
@@ -1827,13 +2606,13 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Asphyxia occurrence detection in sows during the farrowing phase by inter-birth interval evaluation',
     shortTitle: 'Sow Asphyxia Detection During Farrowing (COMPAG 2018)',
     authors: [
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Mingzhou Lu', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Jiawei Li', affiliations: [3] },
-      { name: 'Mingxia Shen', affiliations: [3] }
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Mingzhou Lu', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Jiawei Li', affiliations: [1] },
+      { name: 'Mingxia Shen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Computers and Electronics in Agriculture (Elsevier), Vol. 152, pp. 221–232',
     venueShort: 'Comput. Electron. Agric. · 2018',
     year: 2018,
@@ -1849,6 +2628,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Detects prolonged inter-birth intervals and dystocia events during farrowing through continuous pen camera monitoring, enabling timely stockperson intervention to reduce neonatal piglet asphyxia mortality.',
     keywords: ['farrowing monitoring', 'asphyxia detection', 'precision livestock', 'computer vision'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: '86.3%', label: 'Asphyxia Acc', sublabel: '92.1% Spec · 72.3% Sens' },
+      { value: 'R² = 0.918', label: 'Piglet Count R²', sublabel: 'RMSE = 1.225 piglets (0-14)' },
+      { value: '105 Sows', label: 'Meishan Farm Herd', sublabel: '15 farrowings · 10 fpm depth' },
+      { value: '28+ Cites', label: 'COMPAG Vol. 152', sublabel: 'pp. 221-232 (Elsevier Q1)' }
+    ],
+    contributions: [
+      'Collected continuous 10 fpm infrared depth imagery during parturition on a 105-Meishan-sow research herd, scoring neonate standing vitality.',
+      'Built a parameterized multi-ellipse fitting detector counting litters from 0 to 14 piglets at R² = 0.918 (RMSE = 1.225) to measure exact inter-birth intervals.',
+      'Flagged dangerous dystocia and neonatal piglet asphyxia events in real time at 86.3% accuracy and 92.1% specificity.'
+    ],
+    tables: [
+      {
+        title: 'Automated Farrowing Tracking & Asphyxia Warning Accuracy (COMPAG 2018)',
+        headers: ['Task', 'Algorithm', 'Measured Performance'],
+        rows: [
+          ['Piglet Presence (0 vs 14)', 'Multi-ellipse depth fitting', '83.2% (0) · 80.1% (14) accuracy'],
+          ['Sequential Litter Count', 'Incremental ellipse tracking', 'R² = 0.918 (RMSE = 1.225 piglets)'],
+          ['Asphyxia Event Detection', 'Inter-birth interval classifier', '86.3% Acc · 92.1% Spec · 79.1% Prec · 72.3% Sens']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{okinda2018asphyxia,
   title={Asphyxia occurrence detection in sows during the farrowing phase by inter-birth interval evaluation},
   author={Okinda, Cedric and Lu, Mingzhou and Nyalala, Innocent and Li, Jiawei and Shen, Mingxia},
@@ -1867,15 +2669,15 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Detection of an onset of farrowing by classification of crated sow\'s activities',
     shortTitle: 'Farrowing Onset Classification via Sow Activity (2018)',
     authors: [
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Mingxia Shen', affiliations: [3] },
-      { name: 'Jiawei Li', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Longshen Liu', affiliations: [3] },
-      { name: 'Mingzhou Lu', affiliations: [3] },
-      { name: 'Guangyue Zhang', affiliations: [3] }
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Mingxia Shen', affiliations: [1] },
+      { name: 'Jiawei Li', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Longshen Liu', affiliations: [1] },
+      { name: 'Mingzhou Lu', affiliations: [1] },
+      { name: 'Guangyue Zhang', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'International Agricultural Engineering Journal / Asian Agricultural Engineering',
     venueShort: 'Agric. Engineering · 2018',
     year: 2018,
@@ -1889,6 +2691,28 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Analyzes posture-change frequencies and resting-to-standing dynamics of crated sows prior to parturition, providing automated alerts ahead of farrowing onset.',
     keywords: ['sow behavior', 'farrowing prediction', 'activity classification', 'precision livestock'],
     topics: ['Agriculture', 'Computer Vision'],
+    highlights: [
+      { value: 'Pre-Partum', label: 'Early Warning', sublabel: 'Detects imminent farrowing' },
+      { value: 'Posture Cue', label: 'Restless Transitions', sublabel: 'Lying-standing frequencies' },
+      { value: 'Non-Contact', label: 'Overhead Sensing', sublabel: 'Zero wearable stress on sows' },
+      { value: 'IAEJ 2018', label: 'Published Study', sublabel: 'Indexed OpenAlex W3097890783' }
+    ],
+    contributions: [
+      'Quantified rising posture-transition and nest-seeking behavioral frequencies in crated sows hours prior to farrowing onset.',
+      'Designed a non-invasive overhead monitoring classifier triggering stockperson assistance alerts ahead of parturition.',
+      'Established behavioral precursors complementing subsequent automated inter-birth asphyxia detection.'
+    ],
+    tables: [
+      {
+        title: 'Pre-Parturition Sow Activity Classification Framework (2018)',
+        headers: ['Behavioral Signal', 'Physical Change Prior to Farrowing', 'Alert Purpose'],
+        rows: [
+          ['Standing / Lying Ratio', 'Rapid increase in posture switches', 'Flags pre-farrowing restlessness window'],
+          ['Activity Transition Rate', 'Frequent postural reorientation', 'Prepares farrowing supervision & heating lamps']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{okinda2018farrowingonset,
   title={Detection of an onset of farrowing by classification of crated sow's activities},
   author={Okinda, Cedric and Shen, Mingxia and Li, Jiawei and Nyalala, Innocent and Liu, Longshen and Lu, Mingzhou and Zhang, Guangyue},
@@ -1903,14 +2727,14 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Research on range-based localisation algorithm with virtual force and time synchronisation in wireless sensor and actor networks',
     shortTitle: 'WSAN Virtual-Force Localization (IJCNDS 2016)',
     authors: [
-      { name: 'Haoyun Wang', affiliations: [3] },
-      { name: 'Ke Wang', affiliations: [3] },
-      { name: 'Li Duo', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Yingjun Xiong', affiliations: [3] },
-      { name: 'Huanliang Xu', affiliations: [3] }
+      { name: 'Haoyun Wang', affiliations: [1] },
+      { name: 'Ke Wang', affiliations: [1] },
+      { name: 'Li Duo', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Yingjun Xiong', affiliations: [1] },
+      { name: 'Huanliang Xu', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'International Journal of Communication Networks and Distributed Systems (Inderscience)',
     venueShort: 'IJCNDS · 2016',
     year: 2016,
@@ -1925,6 +2749,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Proposes a range-based localization algorithm combining virtual-force iteration and distributed time synchronization to reduce spatial estimation error in agricultural wireless sensor and actor networks.',
     keywords: ['wireless sensor networks', 'localization', 'time synchronization', 'IoT'],
     topics: ['Agriculture', 'IoT'],
+    highlights: [
+      { value: 'TLAVFTS', label: 'Hybrid Protocol', sublabel: 'TOA + Virtual Force + Sync' },
+      { value: 'Mobile Actor', label: 'Anchor-Free Flex', sublabel: 'Lowers field deployment cost' },
+      { value: 'Clock Drift', label: 'Synchronization Guard', sublabel: 'Tightens range error bounds' },
+      { value: 'IJCNDS 2016', label: 'Inderscience Journal', sublabel: 'DOI: 10.1504/ijcnds.2016.076650' }
+    ],
+    contributions: [
+      'Proposed TLAVFTS combining Time-of-Arrival (TOA) ranging, virtual-force geometric relaxation, and distributed time synchronization in wireless sensor and actor networks.',
+      'Replaced fixed GPS-equipped anchor nodes with mobile actor coordination to reduce agricultural field node cost.',
+      'Mitigated ranging distortion from clock drift across sparse multi-hop agricultural deployments.'
+    ],
+    tables: [
+      {
+        title: 'TLAVFTS Wireless Sensor & Actor Localization Components (IJCNDS 2016)',
+        headers: ['Sub-Algorithm', 'Role in Field WSAN Deployment'],
+        rows: [
+          ['Time Synchronization Layer', 'Eliminates clock offset biases in acoustic/RF ranging'],
+          ['TOA Ranging Estimator', 'Measures pairwise node-actor spatial distances'],
+          ['Virtual Force Refinement', 'Iteratively settles ambiguous geometric node coordinates']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{wang2016wsan,
   title={Research on range-based localisation algorithm with virtual force and time synchronisation in wireless sensor and actor networks},
   author={Wang, Haoyun and Wang, Ke and Duo, Li and Nyalala, Innocent and Xiong, Yingjun and Xu, Huanliang},
@@ -1940,9 +2787,9 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Design and Implementation of an Intelligent Greenhouse Control and Monitoring System Based on Arduino',
     shortTitle: 'Intelligent Greenhouse IoT System (MSc Thesis 2016)',
     authors: [
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] }
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
+    affiliations: [AFFILIATIONS.NAU],
     venue: 'Nanjing Agricultural University (M.Sc. Thesis Monograph)',
     venueShort: 'M.Sc. Thesis · NAU 2016',
     year: 2016,
@@ -1954,6 +2801,29 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Designs and validates a low-cost Arduino-based environmental sensing and closed-loop greenhouse actuation platform tracking temperature, humidity, soil moisture, and illumination.',
     keywords: ['smart greenhouse', 'Arduino', 'embedded IoT', 'agricultural automation'],
     topics: ['Agriculture', 'IoT'],
+    highlights: [
+      { value: '4 Sensors', label: 'Microclimate Variables', sublabel: 'Temp, RH, Soil, Light' },
+      { value: 'Closed-Loop', label: 'Automated Actuation', sublabel: 'Vents, irrigation, shading' },
+      { value: 'Arduino', label: 'Low-Cost Embedded', sublabel: 'Open-hardware architecture' },
+      { value: 'M.Sc. Thesis', label: 'Nanjing Agric. Univ.', sublabel: 'CSC Scholarship Research' }
+    ],
+    contributions: [
+      'Engineered a low-cost Arduino embedded greenhouse controller integrating continuous air temperature, relative humidity, volumetric soil moisture, and lux sensing.',
+      'Implemented hysteresis-bounded relay actuation driving irrigation pumps, ventilation fans, and shade motors.',
+      'Established the embedded hardware sensing baseline extended into modern edge AI and agricultural IoT telemetry at SAAIL Lab.'
+    ],
+    tables: [
+      {
+        title: 'Greenhouse Telemetry & Actuation Control Loop (2016)',
+        headers: ['Sensed Variable', 'Actuation Channel', 'Control Mode'],
+        rows: [
+          ['Air Temp & Humidity', 'Automated ventilation fans & misting', 'Threshold hysteresis feedback'],
+          ['Soil Moisture', 'Solenoid drip irrigation valve', 'Demand-driven watering'],
+          ['Solar Irradiance', 'Motorized greenhouse shading / lighting', 'Photoperiod regulation']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@mastersthesis{nyalala2016greenhouse,
   title={Design and Implementation of an Intelligent Greenhouse Control and Monitoring System Based on Arduino},
   author={Nyalala, Innocent},
@@ -1968,13 +2838,13 @@ export const PUBLICATIONS: Publication[] = [
     title: 'Intelligent energy saving system',
     shortTitle: 'Intelligent Energy Saving System (IJETAE 2015)',
     authors: [
-      { name: 'Cedric Okinda', affiliations: [3] },
-      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [3] },
-      { name: 'Z. Chi', affiliations: [3] },
-      { name: 'Mingxia Shen', affiliations: [3] }
+      { name: 'Cedric Okinda', affiliations: [1] },
+      { name: 'Innocent Nyalala', url: 'https://inyalala.github.io', affiliations: [1] },
+      { name: 'Z. Chi', affiliations: [1] },
+      { name: 'Mingxia Shen', affiliations: [1] }
     ],
-    affiliations: [AFFILIATIONS.IITMZ, AFFILIATIONS.WSAI, AFFILIATIONS.NAU],
-    venue: 'International Journal of Emerging Technology and Advanced Engineering',
+    affiliations: [AFFILIATIONS.NAU],
+    venue: 'International Journal of Emerging Technology and Advanced Engineering (IJETAE), Vol. 5, Issue 5, 2015',
     venueShort: 'IJETAE · 2015',
     year: 2015,
     month: 'May',
@@ -1986,6 +2856,28 @@ export const PUBLICATIONS: Publication[] = [
     abstract: 'Presents a microcontroller-driven sensor array and intelligent switching architecture reducing idle electrical loads across indoor facilities based on occupancy and ambient light levels.',
     keywords: ['energy conservation', 'embedded systems', 'sensors', 'IoT'],
     topics: ['IoT'],
+    highlights: [
+      { value: 'Occupancy', label: 'Sensing Trigger', sublabel: 'PIR + ambient light logic' },
+      { value: 'Zero-Standby', label: 'Waste Elimination', sublabel: 'Automated load cutoff' },
+      { value: '4+ Cites', label: 'Published Work', sublabel: 'IJETAE 2015' },
+      { value: 'Low Cost', label: 'Microcontroller Core', sublabel: 'Institutional retrofit design' }
+    ],
+    contributions: [
+      'Built a low-cost occupancy- and daylight-triggered microcontroller energy management unit cutting idle building electricity waste.',
+      'Combined passive infrared (PIR) motion verification with ambient lux sensing to gate lighting and HVAC loads.',
+      'Demonstrated reliable retrofit automation suitable for resource-constrained campus and agricultural facilities.'
+    ],
+    tables: [
+      {
+        title: 'Intelligent Energy Management Logic Summary (IJETAE 2015)',
+        headers: ['Input Sensor', 'Decision Condition', 'Controlled Electrical Load'],
+        rows: [
+          ['PIR Occupancy', 'Room occupancy timeout expiry', 'Cuts idle lighting & fan circuits'],
+          ['Ambient Lux Cell', 'Sufficient natural daylight threshold', 'Suppresses unnecessary artificial fixtures']
+        ]
+      }
+    ],
+    isSaailLab: false,
     bibtex: `@article{okinda2015energy,
   title={Intelligent energy saving system},
   author={Okinda, C. S. and Nyalala, Innocent and Chi, Z. and Mingxia, S.},

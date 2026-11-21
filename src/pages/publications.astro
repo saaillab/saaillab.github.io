@@ -2,812 +2,532 @@
 import Layout from '../layouts/Layout.astro';
 import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
-import { PUBLICATIONS, ALL_TOPICS, ALL_YEARS } from '../data/publications';
+import metrics from '../data/scholar-metrics.json';
+import { PUBLICATIONS } from '../data/publications';
 
-const totalCount = PUBLICATIONS.length;
-const journalCount = PUBLICATIONS.filter((p) => p.category === 'journal').length;
-const confCount = PUBLICATIONS.filter((p) => p.category === 'conference' || p.category === 'workshop').length;
-const citationMap = Object.fromEntries(
-  PUBLICATIONS.map((p) => [p.slug, { title: p.title, bibtex: p.bibtex, apa: p.apa }])
-);
+const saailPubs = PUBLICATIONS.filter((p) => p.isSaailLab !== false).sort((a, b) => {
+	if (a.category === 'preprint' && b.category !== 'preprint') return 1;
+	if (a.category !== 'preprint' && b.category === 'preprint') return -1;
+	if (b.year !== a.year) return b.year - a.year;
+	return b.dateISO.localeCompare(a.dateISO);
+});
+
+const priorPubs = PUBLICATIONS.filter((p) => p.isSaailLab === false).sort((a, b) => {
+	if (b.year !== a.year) return b.year - a.year;
+	return b.dateISO.localeCompare(a.dateISO);
+});
+
+const publishedCount = saailPubs.filter((p) => p.category !== 'preprint').length;
+const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').length;
 ---
 
 <Layout
-  title="Publications & Academic Project Pages | SAAIL Lab"
-  description="Complete catalog of 45+ peer-reviewed journal papers, conference proceedings, workshops, and preprints from SAAIL Lab (IIT Madras Zanzibar), each with an interactive academic project page and BibTeX citation."
-  canonical="https://saaillab.github.io/publications/"
+	title="Publications | SAAIL Lab | IIT Madras Zanzibar"
+	description="Peer-reviewed journal articles, conference papers, and under-review manuscripts from SAAIL Lab at IIT Madras Zanzibar, plus the founding PI pre-IITMZ scholarly archive."
+	canonical="https://saaillab.github.io/publications"
 >
-  <ModernHeader currentPage="publications" />
+	<ModernHeader currentPage="publications" />
 
-  <main class="pubs-main">
-    <!-- Hero -->
-    <section class="pubs-hero">
-      <div class="pubs-container">
-        <div class="hero-eyebrow">OPEN SCIENCE &amp; INDEXED RESEARCH · 2015 – 2026</div>
-        <h1>Publications &amp; Project Pages</h1>
-        <p class="hero-lead">
-          Every manuscript authored at SAAIL Lab features a dedicated academic project page with structured abstracts, reproducible artifacts, visual figures, Highwire Press metadata, and instant BibTeX export.
-        </p>
+	<main>
+		<section class="page-hero">
+			<div class="container">
+				<span class="page-eyebrow">Scholarly Record</span>
+				<h1 class="page-title">SAAIL Lab Publications</h1>
+				<p class="page-lead">
+					Peer-reviewed publications and active manuscripts authored at SAAIL Lab (IIT Madras Zanzibar &amp; WSDSAI IIT Madras, 2025 to Present), spanning precision agriculture, computer vision, Responsible AI, AI Policy &amp; GovTech, and healthcare AI.
+				</p>
 
-        <div class="pubs-stats">
-          <div class="stat-pill"><strong>{totalCount}</strong> Cataloged Works</div>
-          <div class="stat-pill"><strong>{journalCount}</strong> Journal Articles</div>
-          <div class="stat-pill"><strong>{confCount}</strong> Conferences &amp; Workshops</div>
-          <div class="stat-pill"><strong>1,185+</strong> Citations (h-index 15)</div>
-          <a href="/cropguard/" class="stat-pill stat-pill-link"><strong>Papers 1-6</strong> CropGuard Hub &rarr;</a>
-        </div>
-      </div>
-    </section>
+				<div class="metrics-strip">
+					<div class="m-chip"><strong>{publishedCount}</strong><span>SAAIL Published / Conf.</span></div>
+					<div class="m-chip"><strong>{underReviewCount}</strong><span>Under Peer Review</span></div>
+					<div class="m-chip">
+						<strong>{metrics.citations.toLocaleString()}</strong>
+						<span>Total Career Citations (h-index {metrics.hIndex})</span>
+					</div>
+				</div>
+			</div>
+		</section>
 
-    <!-- Controls -->
-    <section class="pubs-controls-band">
-      <div class="pubs-container">
-        <div class="controls-bar">
-          <div class="search-box">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-            </svg>
-            <input
-              id="pubSearch"
-              type="search"
-              placeholder="Search titles, authors, venues, topics, datasets (e.g., CropGuardNet, DGS-Bench, cloves, placenta)..."
-              aria-label="Search publications"
-            />
-          </div>
+		<!-- Primary Section: SAAIL Lab Publications -->
+		<section class="section">
+			<div class="container">
+				<div class="controls-bar">
+					<div class="filter-tabs" role="tablist" aria-label="Filter SAAIL Lab publications">
+						<button type="button" class="tab-btn is-active" data-filter="all">All SAAIL Lab ({saailPubs.length})</button>
+						<button type="button" class="tab-btn" data-filter="published">Published ({publishedCount})</button>
+						<button type="button" class="tab-btn" data-filter="preprint">Under Review ({underReviewCount})</button>
+						<button type="button" class="tab-btn" data-filter="policy">Responsible AI, Policy &amp; GovTech</button>
+						<button type="button" class="tab-btn" data-filter="agri">Agriculture &amp; Vision</button>
+					</div>
 
-          <div class="filter-selects">
-            <select id="yearFilter" aria-label="Filter by year">
-              <option value="all">All Years</option>
-              {ALL_YEARS.map((y) => <option value={String(y)}>{y}</option>)}
-            </select>
+					<input
+						id="pubSearch"
+						type="search"
+						placeholder="Search title, author, DOI, keyword..."
+						aria-label="Search SAAIL Lab publications"
+						class="search-input"
+					/>
+				</div>
 
-            <select id="topicFilter" aria-label="Filter by topic">
-              <option value="all">All Topics</option>
-              {ALL_TOPICS.map((t) => <option value={t}>{t}</option>)}
-            </select>
+				<div class="result-count" id="resultCount">Showing {saailPubs.length} SAAIL Lab works</div>
 
-            <button id="exportVisibleBtn" type="button" class="export-all-btn">
-              Export Filtered .bib
-            </button>
-          </div>
-        </div>
+				<div class="pubs-list" id="saailList">
+					{saailPubs.map((pub) => {
+						const isUnderReview = pub.category === 'preprint';
+						const cleanDoi = pub.doi ? pub.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').trim() : '';
+						const doiHref = cleanDoi ? `https://doi.org/${cleanDoi}` : '';
+						const isPolicy = pub.topics.some((t) =>
+							t.toLowerCase().includes('policy') || t.toLowerCase().includes('responsible') || t.toLowerCase().includes('govtech')
+						);
+						const isAgri = pub.topics.some((t) =>
+							t.toLowerCase().includes('agriculture') || t.toLowerCase().includes('clove') || t.toLowerCase().includes('cassava')
+						);
+						const searchText = [
+							pub.title,
+							isUnderReview ? 'under review' : pub.venue,
+							pub.authors.map((a) => a.name).join(' '),
+							pub.keywords.join(' '),
+							pub.topics.join(' '),
+							cleanDoi,
+							pub.tldr
+						].join(' ').toLowerCase();
 
-        <div class="category-tabs-row">
-          <div class="category-tabs" role="tablist">
-            <button type="button" class="cat-tab active" data-cat="all">All ({totalCount})</button>
-            <button type="button" class="cat-tab" data-cat="cropguard">CropGuard Series</button>
-            <button type="button" class="cat-tab" data-cat="journal">Journals ({journalCount})</button>
-            <button type="button" class="cat-tab" data-cat="conf">Conferences &amp; Workshops ({confCount})</button>
-            <button type="button" class="cat-tab" data-cat="preprint">Under Review / Preprints</button>
-          </div>
+						return (
+							<article
+								class="pub-item"
+								data-status={isUnderReview ? 'preprint' : 'published'}
+								data-policy={isPolicy ? 'yes' : 'no'}
+								data-agri={isAgri ? 'yes' : 'no'}
+								data-search={searchText}
+							>
+								<div class="pub-badges">
+									<span class="badge-year">{pub.year}</span>
+									<span class={isUnderReview ? 'badge-review' : 'badge-venue'}>
+										{isUnderReview ? 'Under Peer Review' : pub.venueShort}
+									</span>
+									{pub.award && <span class="badge-award">{pub.award}</span>}
+									{!isUnderReview && pub.impactFactor && <span class="badge-if">{pub.impactFactor}</span>}
+									{typeof pub.citations === 'number' && pub.citations > 0 && (
+										<span class="badge-cite">{pub.citations} Citations</span>
+									)}
+								</div>
 
-          <div class="view-toggle" aria-label="Toggle layout">
-            <span id="visibleCountLabel" class="visible-count">Showing {totalCount} of {totalCount}</span>
-            <button type="button" id="listViewBtn" class="view-btn active" title="List view">List</button>
-            <button type="button" id="gridViewBtn" class="view-btn" title="Grid view">Grid</button>
-          </div>
-        </div>
-      </div>
-    </section>
+								<h2 class="pub-title">
+									<a href={`/papers/${pub.slug}/`}>{pub.title}</a>
+								</h2>
 
-    <!-- Publications List -->
-    <section class="pubs-list-band">
-      <div class="pubs-container">
-        <div id="pubsContainer" class="pubs-list view-list">
-          {PUBLICATIONS.map((pub) => {
-            const authorNames = pub.authors.map((a) => a.name).join(' ');
-            const searchHaystack = `${pub.title} ${authorNames} ${pub.venue} ${pub.venueShort} ${pub.tldr} ${pub.keywords.join(' ')} ${pub.topics.join(' ')} ${pub.award || ''}`.toLowerCase();
-            return (
-              <article
-                class="pub-card"
-                data-year={String(pub.year)}
-                data-category={pub.category}
-                data-series={pub.seriesId || ''}
-                data-topics={pub.topics.join('|')}
-                data-slug={pub.slug}
-                data-search={searchHaystack}
-              >
-                {pub.teaserImage && (
-                  <a href={`/papers/${pub.slug}/`} class="pub-thumb-link" aria-label={`View ${pub.shortTitle || pub.title} project page`}>
-                    <img src={pub.teaserImage} alt={pub.shortTitle || pub.title} loading="lazy" class="pub-thumb" />
-                  </a>
-                )}
+								<p class="pub-authors">{pub.authors.map((a) => a.name).join(', ')}</p>
+								<p class="pub-venue-line">
+									{isUnderReview ? `Manuscript Under Peer Review (${pub.year})` : `${pub.venue} (${pub.month} ${pub.year})`}
+								</p>
+								<p class="pub-tldr">{pub.tldr}</p>
 
-                <div class="pub-body">
-                  <div class="pub-badges">
-                    <span class="badge-year">{pub.year}</span>
-                    <span class="badge-venue">{pub.venueShort}</span>
-                    {pub.seriesId === 'cropguard' && (
-                      <span class="badge-series">CropGuard Paper {pub.seriesNumber}</span>
-                    )}
-                    {pub.award && <span class="badge-award">{pub.award}</span>}
-                    {pub.impactFactor && <span class="badge-metric">{pub.impactFactor}</span>}
-                    {typeof pub.citations === 'number' && pub.citations > 0 && (
-                      <span class="badge-metric">{pub.citations}+ Citations</span>
-                    )}
-                  </div>
+								{pub.highlights && pub.highlights.length > 0 && (
+									<div class="pub-highlights-row">
+										{pub.highlights.slice(0, 4).map((h) => (
+											<span class="hi-pill">
+												<strong>{h.value}</strong> {h.label}
+											</span>
+										))}
+									</div>
+								)}
 
-                  <h2 class="pub-title">
-                    <a href={`/papers/${pub.slug}/`}>{pub.title}</a>
-                  </h2>
+								<div class="pub-actions">
+									<a href={`/papers/${pub.slug}/`} class="act-btn act-primary">Project Page &amp; Results &rarr;</a>
+									{!isUnderReview && doiHref && (
+										<a href={doiHref} target="_blank" rel="noopener" class="act-btn act-doi">
+											DOI: {cleanDoi} ↗
+										</a>
+									)}
+									{!isUnderReview && pub.paperUrl && pub.paperUrl !== doiHref && (
+										<a href={pub.paperUrl} target="_blank" rel="noopener" class="act-btn">Paper / PDF ↗</a>
+									)}
+									{pub.codeUrl && (
+										<a href={pub.codeUrl} target="_blank" rel="noopener" class="act-btn">Code ↗</a>
+									)}
+									{pub.posterUrl && (
+										<a href={pub.posterUrl} target="_blank" rel="noopener" class="act-btn">Poster ↗</a>
+									)}
+									<button type="button" class="act-btn bib-toggle-btn" data-bib-target={`bib-${pub.slug}`}>BibTeX</button>
+								</div>
 
-                  <p class="pub-authors">
-                    {pub.authors.map((a, idx) => (
-                      <>
-                        <span class={a.name.includes('Innocent Nyalala') ? 'author-pi' : ''}>{a.name}</span>
-                        {idx < pub.authors.length - 1 ? ', ' : ''}
-                      </>
-                    ))}
-                  </p>
+								<div id={`bib-${pub.slug}`} class="bib-drawer" hidden>
+									<div class="bib-drawer-top">
+										<span>BibTeX Record</span>
+										<button type="button" class="copy-bib-inline" data-bib-code={`code-${pub.slug}`}>Copy</button>
+									</div>
+									<pre><code id={`code-${pub.slug}`}>{pub.bibtex}</code></pre>
+								</div>
+							</article>
+						);
+					})}
+				</div>
+			</div>
+		</section>
 
-                  <p class="pub-tldr">{pub.tldr}</p>
+		<!-- Clearly Separated Secondary Archive: Founding PI Pre-IITMZ Publications (2015-2024) -->
+		<section class="section prior-band" id="prior-works">
+			<div class="container">
+				<div class="prior-header">
+					<span class="page-eyebrow">Scholarly Archive · Pre-IITMZ (2015-2024)</span>
+					<h2>Founding PI Prior Publications (Nanjing Agricultural University Era)</h2>
+					<p>
+						The {priorPubs.length} peer-reviewed works below were published by Dr. Innocent Nyalala during his doctoral and MSc research at Nanjing Agricultural University prior to founding SAAIL Lab at IIT Madras Zanzibar in October 2024. They carry original historical affiliations and are linked here alongside his personal archive at <a href="https://inyalala.github.io" target="_blank" rel="noopener">inyalala.github.io</a>.
+					</p>
+				</div>
 
-                  <div class="pub-topics">
-                    {pub.topics.map((t) => <span class="topic-tag">{t}</span>)}
-                  </div>
+				<div class="prior-list">
+					{priorPubs.map((pub) => {
+						const cleanDoi = pub.doi ? pub.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').trim() : '';
+						const doiHref = cleanDoi ? `https://doi.org/${cleanDoi}` : '';
+						return (
+							<article class="prior-row">
+								<div class="prior-year">{pub.year}</div>
+								<div class="prior-main">
+									<h3>
+										<a href={`/papers/${pub.slug}/`}>{pub.title}</a>
+									</h3>
+									<p class="prior-meta">
+										{pub.authors.map((a) => a.name).join(', ')} · <em>{pub.venue}</em>
+										{typeof pub.citations === 'number' && pub.citations > 0 ? ` · ${pub.citations}+ citations` : ''}
+									</p>
+									<p class="prior-tldr">{pub.tldr}</p>
+								</div>
+								<div class="prior-actions">
+									<a href={`/papers/${pub.slug}/`} class="act-btn">Summary &amp; Results &rarr;</a>
+									{doiHref && (
+										<a href={doiHref} target="_blank" rel="noopener" class="act-btn act-doi">DOI ↗</a>
+									)}
+								</div>
+							</article>
+						);
+					})}
+				</div>
+			</div>
+		</section>
+	</main>
 
-                  <div class="pub-actions">
-                    <a href={`/papers/${pub.slug}/`} class="act-btn act-primary">
-                      Project Page &rarr;
-                    </a>
-                    {(pub.paperUrl || pub.doi) && (
-                      <a href={pub.paperUrl || pub.doi} target="_blank" rel="noopener" class="act-btn">
-                        Paper
-                      </a>
-                    )}
-                    {pub.codeUrl && (
-                      <a href={pub.codeUrl} target="_blank" rel="noopener" class="act-btn">
-                        Code
-                      </a>
-                    )}
-                    {pub.datasetUrl && (
-                      <a href={pub.datasetUrl} target="_blank" rel="noopener" class="act-btn">
-                        Dataset
-                      </a>
-                    )}
-                    {pub.posterUrl && (
-                      <a href={pub.posterUrl} target="_blank" rel="noopener" class="act-btn">
-                        Poster
-                      </a>
-                    )}
-                    <button type="button" class="act-btn cite-trigger" data-slug={pub.slug}>
-                      Cite
-                    </button>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-
-        <div id="emptyState" class="empty-state" hidden>
-          <h3>No matching publications found</h3>
-          <p>Try clearing the search query or resetting year and topic filters.</p>
-          <button type="button" id="resetFiltersBtn" class="act-btn act-primary">Reset All Filters</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Citation Modal -->
-  <div id="citeModal" class="cite-modal" hidden role="dialog" aria-modal="true" aria-labelledby="citeModalTitle">
-    <div class="cite-backdrop" id="citeBackdrop"></div>
-    <div class="cite-dialog">
-      <div class="cite-head">
-        <h3 id="citeModalTitle">Cite Publication</h3>
-        <button type="button" id="closeCiteModal" class="cite-close" aria-label="Close modal">&times;</button>
-      </div>
-      <p id="citePaperTitle" class="cite-paper-name"></p>
-
-      <div class="cite-block">
-        <div class="cite-block-head">
-          <span>BibTeX</span>
-          <button type="button" id="modalCopyBib" class="copy-pill">Copy BibTeX</button>
-        </div>
-        <pre id="modalBibPre"></pre>
-      </div>
-
-      <div class="cite-block">
-        <div class="cite-block-head">
-          <span>APA Citation</span>
-          <button type="button" id="modalCopyApa" class="copy-pill">Copy APA</button>
-        </div>
-        <p id="modalApaText" class="cite-apa"></p>
-      </div>
-    </div>
-  </div>
-
-  <script id="citationsData" type="application/json" set:html={JSON.stringify(citationMap)} />
-
-  <script is:inline>
-    (function () {
-      const searchEl = document.getElementById('pubSearch');
-      const yearEl = document.getElementById('yearFilter');
-      const topicEl = document.getElementById('topicFilter');
-      const catTabs = Array.from(document.querySelectorAll('.cat-tab'));
-      const cards = Array.from(document.querySelectorAll('.pub-card'));
-      const container = document.getElementById('pubsContainer');
-      const countLabel = document.getElementById('visibleCountLabel');
-      const emptyState = document.getElementById('emptyState');
-      const resetBtn = document.getElementById('resetFiltersBtn');
-      const listViewBtn = document.getElementById('listViewBtn');
-      const gridViewBtn = document.getElementById('gridViewBtn');
-      const exportBtn = document.getElementById('exportVisibleBtn');
-
-      const citationsRaw = document.getElementById('citationsData')?.textContent || '{}';
-      const citationsMap = JSON.parse(citationsRaw);
-
-      let activeCat = 'all';
-
-      function applyFilters() {
-        const q = (searchEl?.value || '').trim().toLowerCase();
-        const yearVal = yearEl?.value || 'all';
-        const topicVal = topicEl?.value || 'all';
-        let visible = 0;
-
-        cards.forEach(function (card) {
-          const cYear = card.getAttribute('data-year') || '';
-          const cCat = card.getAttribute('data-category') || '';
-          const cSeries = card.getAttribute('data-series') || '';
-          const cTopics = (card.getAttribute('data-topics') || '').split('|');
-          const cSearch = card.getAttribute('data-search') || '';
-
-          const matchQ = !q || cSearch.includes(q);
-          const matchYear = yearVal === 'all' || cYear === yearVal;
-          const matchTopic = topicVal === 'all' || cTopics.includes(topicVal);
-          let matchCat = true;
-          if (activeCat === 'cropguard') matchCat = cSeries === 'cropguard';
-          else if (activeCat === 'journal') matchCat = cCat === 'journal';
-          else if (activeCat === 'conf') matchCat = cCat === 'conference' || cCat === 'workshop';
-          else if (activeCat === 'preprint') matchCat = cCat === 'preprint';
-
-          const show = matchQ && matchYear && matchTopic && matchCat;
-          card.style.display = show ? '' : 'none';
-          if (show) visible++;
-        });
-
-        if (countLabel) {
-          countLabel.textContent = 'Showing ' + visible + ' of ' + cards.length;
-        }
-        if (emptyState) {
-          emptyState.hidden = visible > 0;
-        }
-      }
-
-      searchEl?.addEventListener('input', applyFilters);
-      yearEl?.addEventListener('change', applyFilters);
-      topicEl?.addEventListener('change', applyFilters);
-
-      catTabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          catTabs.forEach(function (t) { t.classList.remove('active'); });
-          tab.classList.add('active');
-          activeCat = tab.getAttribute('data-cat') || 'all';
-          applyFilters();
-        });
-      });
-
-      resetBtn?.addEventListener('click', function () {
-        if (searchEl) searchEl.value = '';
-        if (yearEl) yearEl.value = 'all';
-        if (topicEl) topicEl.value = 'all';
-        activeCat = 'all';
-        catTabs.forEach(function (t) { t.classList.toggle('active', t.getAttribute('data-cat') === 'all'); });
-        applyFilters();
-      });
-
-      listViewBtn?.addEventListener('click', function () {
-        container?.classList.remove('view-grid');
-        container?.classList.add('view-list');
-        listViewBtn.classList.add('active');
-        gridViewBtn?.classList.remove('active');
-      });
-      gridViewBtn?.addEventListener('click', function () {
-        container?.classList.remove('view-list');
-        container?.classList.add('view-grid');
-        gridViewBtn.classList.add('active');
-        listViewBtn?.classList.remove('active');
-      });
-
-      exportBtn?.addEventListener('click', function () {
-        const bibEntries = [];
-        cards.forEach(function (card) {
-          if (card.style.display !== 'none') {
-            const slug = card.getAttribute('data-slug') || '';
-            if (citationsMap[slug]?.bibtex) {
-              bibEntries.push(citationsMap[slug].bibtex);
-            }
-          }
-        });
-        const blob = new Blob([bibEntries.join('\n\n') + '\n'], { type: 'application/x-bibtex;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'saaillab_publications.bib';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      });
-
-      // Modal
-      const modal = document.getElementById('citeModal');
-      const closeModalBtn = document.getElementById('closeCiteModal');
-      const backdrop = document.getElementById('citeBackdrop');
-      const modalTitle = document.getElementById('citePaperTitle');
-      const modalBib = document.getElementById('modalBibPre');
-      const modalApa = document.getElementById('modalApaText');
-
-      document.querySelectorAll('.cite-trigger').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const slug = btn.getAttribute('data-slug') || '';
-          const entry = citationsMap[slug];
-          if (!entry || !modal) return;
-          if (modalTitle) modalTitle.textContent = entry.title;
-          if (modalBib) modalBib.textContent = entry.bibtex;
-          if (modalApa) modalApa.textContent = entry.apa;
-          modal.hidden = false;
-        });
-      });
-
-      function closeModal() {
-        if (modal) modal.hidden = true;
-      }
-      closeModalBtn?.addEventListener('click', closeModal);
-      backdrop?.addEventListener('click', closeModal);
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal && !modal.hidden) closeModal();
-      });
-
-      function wireCopy(btnId, sourceId, label) {
-        const btn = document.getElementById(btnId);
-        const src = document.getElementById(sourceId);
-        if (!btn || !src) return;
-        btn.addEventListener('click', async function () {
-          await navigator.clipboard.writeText(src.textContent || '');
-          btn.textContent = 'Copied!';
-          setTimeout(function () { btn.textContent = label; }, 1600);
-        });
-      }
-      wireCopy('modalCopyBib', 'modalBibPre', 'Copy BibTeX');
-      wireCopy('modalCopyApa', 'modalApaText', 'Copy APA');
-    })();
-  </script>
-
-  <ModernFooter />
+	<ModernFooter />
 </Layout>
 
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const tabs = document.querySelectorAll('.tab-btn');
+		const searchInput = document.getElementById('pubSearch') as HTMLInputElement | null;
+		const items = Array.from(document.querySelectorAll('#saailList .pub-item')) as HTMLElement[];
+		const countEl = document.getElementById('resultCount');
+		let activeFilter = 'all';
+
+		function applyFilter() {
+			const q = (searchInput?.value || '').trim().toLowerCase();
+			let shown = 0;
+
+			items.forEach((item) => {
+				const st = item.getAttribute('data-status') || '';
+				const pol = item.getAttribute('data-policy') === 'yes';
+				const agr = item.getAttribute('data-agri') === 'yes';
+				const hay = item.getAttribute('data-search') || '';
+
+				let fOk = true;
+				if (activeFilter === 'published') fOk = st === 'published';
+				else if (activeFilter === 'preprint') fOk = st === 'preprint';
+				else if (activeFilter === 'policy') fOk = pol;
+				else if (activeFilter === 'agri') fOk = agr;
+
+				const qOk = !q || hay.includes(q);
+				const vis = fOk && qOk;
+				item.style.display = vis ? 'block' : 'none';
+				if (vis) shown++;
+			});
+
+			if (countEl) {
+				countEl.textContent = `Showing ${shown} of ${items.length} SAAIL Lab works`;
+			}
+		}
+
+		tabs.forEach((tab) => {
+			tab.addEventListener('click', () => {
+				tabs.forEach((t) => t.classList.remove('is-active'));
+				tab.classList.add('is-active');
+				activeFilter = tab.getAttribute('data-filter') || 'all';
+				applyFilter();
+			});
+		});
+
+		searchInput?.addEventListener('input', applyFilter);
+
+		document.querySelectorAll('.bib-toggle-btn').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const id = btn.getAttribute('data-bib-target') || '';
+				const drawer = document.getElementById(id);
+				if (drawer) drawer.hidden = !drawer.hidden;
+			});
+		});
+
+		document.querySelectorAll('.copy-bib-inline').forEach((btn) => {
+			btn.addEventListener('click', async () => {
+				const id = btn.getAttribute('data-bib-code') || '';
+				const codeEl = document.getElementById(id);
+				const txt = codeEl?.textContent?.trim() || '';
+				if (!txt) return;
+				await navigator.clipboard.writeText(txt);
+				const orig = btn.textContent;
+				btn.textContent = 'Copied!';
+				setTimeout(() => { btn.textContent = orig; }, 1600);
+			});
+		});
+	});
+</script>
+
 <style>
-  .pubs-main {
-    background: var(--bg-primary, #ffffff);
-    color: var(--text-primary, #0f172a);
-    min-height: 80vh;
-  }
-  .pubs-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
+	.metrics-strip {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.75rem;
+		margin-top: 1.75rem;
+	}
 
-  .pubs-hero {
-    padding: 4.5rem 0 2.5rem;
-    text-align: center;
-    background: radial-gradient(circle at top center, rgba(37, 99, 235, 0.08), transparent 60%);
-    border-bottom: 1px solid var(--border-color, #e2e8f0);
-  }
-  .hero-eyebrow {
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: #2563eb;
-    margin-bottom: 0.65rem;
-  }
-  .pubs-hero h1 {
-    font-size: clamp(2rem, 3.8vw, 2.9rem);
-    font-weight: 800;
-    margin: 0 0 0.85rem;
-    letter-spacing: -0.02em;
-  }
-  .hero-lead {
-    max-width: 760px;
-    margin: 0 auto 1.75rem;
-    font-size: 1.06rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
+	.m-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.45rem 0.95rem;
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 999px;
+		font-size: 0.85rem;
+	}
 
-  .pubs-stats {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.65rem;
-  }
-  .stat-pill {
-    padding: 0.45rem 0.95rem;
-    border-radius: 999px;
-    background: var(--bg-card, #ffffff);
-    border: 1px solid var(--border-color, #e2e8f0);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    text-decoration: none;
-  }
-  .stat-pill strong { color: var(--text-primary); }
-  .stat-pill-link {
-    background: #eff6ff;
-    border-color: #bfdbfe;
-    color: #1d4ed8;
-    font-weight: 600;
-  }
-  .stat-pill-link strong { color: #1d4ed8; }
+	.m-chip strong { color: var(--accent-primary); font-weight: 800; }
+	.m-chip span { color: var(--text-secondary); font-weight: 500; }
 
-  .pubs-controls-band {
-    padding: 1.5rem 0;
-    background: var(--bg-secondary, #f8fafc);
-    border-bottom: 1px solid var(--border-color, #e2e8f0);
-    position: sticky;
-    top: 70px;
-    z-index: 30;
-  }
-  .controls-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
-  .search-box {
-    flex: 1 1 320px;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.55rem 0.9rem;
-    background: var(--bg-card, #ffffff);
-    border: 1px solid var(--border-color, #cbd5e1);
-    border-radius: 10px;
-    color: var(--text-muted);
-  }
-  .search-box input {
-    border: none;
-    outline: none;
-    background: transparent;
-    width: 100%;
-    font-family: inherit;
-    font-size: 0.92rem;
-    color: var(--text-primary);
-  }
-  .filter-selects {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-  }
-  .filter-selects select, .export-all-btn {
-    padding: 0.55rem 0.85rem;
-    background: var(--bg-card, #ffffff);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color, #cbd5e1);
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: 0.88rem;
-    font-weight: 500;
-    cursor: pointer;
-  }
-  .export-all-btn {
-    background: #0f172a;
-    color: #ffffff;
-    border-color: #0f172a;
-    font-weight: 600;
-  }
-  .export-all-btn:hover { background: #2563eb; border-color: #2563eb; }
+	.controls-bar {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.15rem;
+	}
 
-  .category-tabs-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-  .category-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-  }
-  .cat-tab {
-    padding: 0.4rem 0.85rem;
-    border-radius: 999px;
-    border: 1px solid var(--border-color, #cbd5e1);
-    background: var(--bg-card, #ffffff);
-    color: var(--text-secondary);
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .cat-tab.active {
-    background: #2563eb;
-    border-color: #2563eb;
-    color: #ffffff;
-  }
-  .view-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-  }
-  .visible-count {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    margin-right: 0.35rem;
-  }
-  .view-btn {
-    padding: 0.35rem 0.7rem;
-    border: 1px solid var(--border-color, #cbd5e1);
-    background: var(--bg-card, #ffffff);
-    color: var(--text-secondary);
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .view-btn.active {
-    background: #0f172a;
-    border-color: #0f172a;
-    color: #ffffff;
-  }
+	.filter-tabs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
 
-  .pubs-list-band { padding: 2.5rem 0 4.5rem; }
-  .pubs-list.view-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-  .pubs-list.view-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    gap: 1.35rem;
-  }
+	.tab-btn {
+		padding: 0.48rem 0.95rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-card);
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 0.84rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
 
-  .pub-card {
-    display: flex;
-    gap: 1.35rem;
-    padding: 1.45rem;
-    background: var(--bg-card, #ffffff);
-    border: 1px solid var(--border-color, #e2e8f0);
-    border-radius: 16px;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-  }
-  .view-grid .pub-card {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .pub-card:hover {
-    border-color: #93c5fd;
-    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
-  }
-  .pub-thumb-link {
-    flex: 0 0 210px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f8fafc;
-    border: 1px solid var(--border-color, #e2e8f0);
-    border-radius: 10px;
-    overflow: hidden;
-    padding: 0.4rem;
-  }
-  .view-grid .pub-thumb-link {
-    flex: none;
-    height: 170px;
-  }
-  .pub-thumb {
-    max-width: 100%;
-    max-height: 150px;
-    object-fit: contain;
-  }
+	.tab-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
 
-  .pub-body {
-    flex: 1;
-    min-width: 0;
-  }
-  .pub-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 0.55rem;
-  }
-  .badge-year, .badge-venue, .badge-series, .badge-award, .badge-metric {
-    padding: 0.18rem 0.6rem;
-    border-radius: 6px;
-    font-size: 0.74rem;
-    font-weight: 700;
-  }
-  .badge-year { background: #0f172a; color: #ffffff; }
-  .badge-venue { background: #eff6ff; color: #1d4ed8; }
-  .badge-series { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-  .badge-award { background: #fef3c7; color: #92400e; }
-  .badge-metric { background: #f1f5f9; color: #475569; }
+	.tab-btn.is-active {
+		background: var(--accent-primary);
+		border-color: var(--accent-primary);
+		color: #ffffff;
+	}
 
-  .pub-title {
-    margin: 0 0 0.45rem;
-    font-size: 1.15rem;
-    font-weight: 700;
-    line-height: 1.38;
-  }
-  .pub-title a {
-    color: var(--text-primary);
-    text-decoration: none;
-  }
-  .pub-title a:hover {
-    color: #2563eb;
-    text-decoration: underline;
-  }
-  .pub-authors {
-    margin: 0 0 0.55rem;
-    font-size: 0.88rem;
-    color: var(--text-secondary);
-  }
-  .author-pi {
-    font-weight: 700;
-    color: var(--text-primary);
-    text-decoration: underline;
-    text-decoration-color: rgba(37, 99, 235, 0.35);
-    text-underline-offset: 2px;
-  }
-  .pub-tldr {
-    margin: 0 0 0.85rem;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    line-height: 1.55;
-  }
-  .pub-topics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    margin-bottom: 0.95rem;
-  }
-  .topic-tag {
-    padding: 0.14rem 0.5rem;
-    border-radius: 5px;
-    background: var(--bg-secondary, #f8fafc);
-    border: 1px solid var(--border-color, #e2e8f0);
-    font-size: 0.72rem;
-    color: var(--text-muted);
-  }
-  .pub-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-  }
-  .act-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.38rem 0.8rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color, #cbd5e1);
-    background: var(--bg-secondary, #f8fafc);
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .act-btn:hover {
-    border-color: #2563eb;
-    color: #2563eb;
-  }
-  .act-primary {
-    background: #0f172a;
-    border-color: #0f172a;
-    color: #ffffff;
-  }
-  .act-primary:hover {
-    background: #2563eb;
-    border-color: #2563eb;
-    color: #ffffff;
-  }
+	:global([data-theme="dark"]) .tab-btn.is-active { color: #062111; }
 
-  .empty-state {
-    text-align: center;
-    padding: 3.5rem 1rem;
-    border: 1px dashed var(--border-color, #cbd5e1);
-    border-radius: 16px;
-  }
+	.search-input {
+		padding: 0.5rem 0.9rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-card);
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 0.88rem;
+		min-width: 240px;
+	}
 
-  /* Modal */
-  .cite-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 1200;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-  .cite-modal[hidden] { display: none; }
-  .cite-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.55);
-    backdrop-filter: blur(4px);
-  }
-  .cite-dialog {
-    position: relative;
-    width: 100%;
-    max-width: 680px;
-    background: var(--bg-card, #ffffff);
-    color: var(--text-primary);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  .cite-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-  .cite-head h3 { margin: 0; font-size: 1.25rem; }
-  .cite-close {
-    border: none;
-    background: transparent;
-    font-size: 1.6rem;
-    color: var(--text-muted);
-    cursor: pointer;
-    line-height: 1;
-  }
-  .cite-paper-name {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    margin: 0 0 1.25rem;
-    font-weight: 600;
-  }
-  .cite-block { margin-bottom: 1.15rem; }
-  .cite-block-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.45rem;
-  }
-  .copy-pill {
-    padding: 0.3rem 0.75rem;
-    border-radius: 6px;
-    border: none;
-    background: #2563eb;
-    color: #ffffff;
-    font-family: inherit;
-    font-size: 0.78rem;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .cite-dialog pre {
-    margin: 0;
-    padding: 1rem;
-    background: var(--bg-secondary, #f8fafc);
-    border: 1px solid var(--border-color, #e2e8f0);
-    border-radius: 10px;
-    overflow-x: auto;
-    font-size: 0.82rem;
-    line-height: 1.55;
-  }
-  .cite-apa {
-    margin: 0;
-    padding: 0.85rem 1rem;
-    background: var(--bg-secondary, #f8fafc);
-    border: 1px solid var(--border-color, #e2e8f0);
-    border-radius: 10px;
-    font-size: 0.88rem;
-    line-height: 1.55;
-  }
+	.result-count {
+		font-size: 0.84rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		margin-bottom: 1.25rem;
+	}
 
-  @media (max-width: 768px) {
-    .pub-card { flex-direction: column; }
-    .pub-thumb-link { flex: none; max-height: 180px; }
-    .pubs-controls-band { position: static; }
-  }
+	.pubs-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.pub-item {
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 1rem;
+		padding: 1.5rem 1.75rem;
+		box-shadow: 0 2px 10px var(--shadow-light);
+	}
+
+	.pub-badges {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-bottom: 0.7rem;
+	}
+
+	.pub-badges span {
+		font-size: 0.72rem;
+		font-weight: 700;
+		padding: 0.18rem 0.6rem;
+		border-radius: 999px;
+	}
+
+	.badge-year { background: var(--accent-primary); color: #ffffff; }
+	:global([data-theme="dark"]) .badge-year { color: #062111; }
+	.badge-venue { background: #ecfdf5; color: #14532d; border: 1px solid #bbf7d0; }
+	.badge-review { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+	.badge-award { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+	.badge-if { background: #f3f4f6; color: #1f2937; }
+	.badge-cite { background: #eff6ff; color: #1e40af; }
+
+	.pub-title { font-size: 1.2rem; line-height: 1.35; margin-bottom: 0.35rem; }
+	.pub-title a { color: var(--text-primary); text-decoration: none; }
+	.pub-title a:hover { color: var(--accent-primary); text-decoration: underline; }
+
+	.pub-authors { font-size: 0.88rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 0.2rem; }
+	.pub-venue-line { font-size: 0.82rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.65rem; }
+	.pub-tldr { font-size: 0.94rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.85rem; }
+
+	.pub-highlights-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		margin-bottom: 1rem;
+	}
+
+	.hi-pill {
+		font-size: 0.78rem;
+		color: var(--text-secondary);
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 6px;
+		padding: 0.22rem 0.6rem;
+	}
+	.hi-pill strong { color: var(--accent-primary); margin-right: 0.2rem; }
+
+	.pub-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+	.act-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.4rem 0.85rem;
+		border-radius: 999px;
+		font-family: inherit;
+		font-size: 0.8rem;
+		font-weight: 600;
+		text-decoration: none;
+		border: 1px solid var(--border-color);
+		background: var(--bg-secondary);
+		color: var(--text-primary);
+		cursor: pointer;
+	}
+	.act-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+
+	.act-primary { background: var(--accent-primary); border-color: var(--accent-primary); color: #ffffff; }
+	:global([data-theme="dark"]) .act-primary { color: #062111; }
+	.act-doi { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+
+	.bib-drawer {
+		margin-top: 1rem;
+		border: 1px solid var(--border-color);
+		border-radius: 0.75rem;
+		background: var(--bg-secondary);
+		overflow: hidden;
+	}
+	.bib-drawer[hidden] { display: none; }
+	.bib-drawer-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.5rem 0.9rem;
+		font-size: 0.78rem;
+		font-weight: 700;
+		border-bottom: 1px solid var(--border-color);
+	}
+	.copy-bib-inline {
+		padding: 0.25rem 0.65rem;
+		border-radius: 6px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-card);
+		color: var(--accent-primary);
+		font-weight: 700;
+		font-size: 0.75rem;
+		cursor: pointer;
+	}
+	.bib-drawer pre {
+		margin: 0;
+		padding: 0.85rem;
+		overflow-x: auto;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.78rem;
+		color: var(--text-primary);
+	}
+
+	/* Secondary Pre-IITMZ Archive */
+	.prior-band {
+		background: var(--bg-secondary);
+		border-top: 1px solid var(--border-color);
+	}
+	.prior-header {
+		max-width: 820px;
+		margin-bottom: 2rem;
+	}
+	.prior-header h2 {
+		font-size: 1.65rem;
+		margin-bottom: 0.55rem;
+		color: var(--text-primary);
+	}
+	.prior-header p {
+		color: var(--text-secondary);
+		font-size: 0.96rem;
+		line-height: 1.65;
+	}
+	.prior-header a {
+		color: var(--accent-primary);
+		font-weight: 600;
+	}
+	.prior-list {
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 1rem;
+		overflow: hidden;
+	}
+	.prior-row {
+		display: grid;
+		grid-template-columns: 72px 1fr auto;
+		gap: 1.25rem;
+		align-items: start;
+		padding: 1.2rem 1.4rem;
+		border-bottom: 1px solid var(--border-color);
+	}
+	.prior-row:last-child { border-bottom: none; }
+	.prior-year {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.88rem;
+		font-weight: 700;
+		color: var(--text-muted);
+	}
+	.prior-main h3 { font-size: 1.02rem; margin-bottom: 0.25rem; line-height: 1.35; }
+	.prior-main h3 a { color: var(--text-primary); text-decoration: none; }
+	.prior-main h3 a:hover { color: var(--accent-primary); text-decoration: underline; }
+	.prior-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.35rem; }
+	.prior-tldr { font-size: 0.88rem; color: var(--text-secondary); }
+	.prior-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+	@media (max-width: 820px) {
+		.prior-row { grid-template-columns: 1fr; gap: 0.6rem; }
+	}
 </style>

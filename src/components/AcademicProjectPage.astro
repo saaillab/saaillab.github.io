@@ -1,5 +1,5 @@
 ---
-import { CROPGUARD_SERIES, getRelatedWorks, type Publication } from '../data/publications';
+import { getRelatedWorks, PUBLICATIONS, type Publication } from '../data/publications';
 
 export interface Props {
   pub: Publication;
@@ -15,8 +15,19 @@ const cleanDoi = pub.doi
 const doiUrl = cleanDoi ? `https://doi.org/${cleanDoi}` : undefined;
 const ogImage = pub.teaserImage
   ? `https://saaillab.github.io${pub.teaserImage}`
-  : 'https://saaillab.github.io/images/og-saaillab.png';
+  : 'https://saaillab.github.io/images/logo/saail-logo.png';
 const hasEqualAuthors = pub.authors.some((a) => a.equal);
+
+const isPriorWork = pub.isSaailLab === false;
+const isUnderReview = pub.category === 'preprint';
+
+// Anonymize venue text for active under-review manuscripts to protect peer review
+const displayVenueShort = isUnderReview ? `Under Peer Review · ${pub.year}` : pub.venueShort;
+const displayVenueFull = isUnderReview ? `Manuscript Under Peer Review (${pub.year})` : `${pub.venue} (${pub.month} ${pub.year})`;
+const displayStatus = isUnderReview ? 'Under Peer Review' : pub.status;
+
+// One primary result figure per section (matching horwitz.ai/probex layout discipline)
+const primaryFigure = pub.figures && pub.figures.length > 0 ? pub.figures[0] : undefined;
 
 const schemaJson = JSON.stringify({
   '@context': 'https://schema.org',
@@ -37,7 +48,7 @@ const schemaJson = JSON.stringify({
   })),
   publisher: {
     '@type': 'Organization',
-    name: pub.venue
+    name: isUnderReview ? 'Under Peer Review' : pub.venue
   },
   ...(doiUrl ? { sameAs: doiUrl, identifier: cleanDoi } : {})
 });
@@ -67,7 +78,7 @@ const breadcrumbJson = JSON.stringify({
   ]
 });
 
-const allFigures = pub.figures ?? [];
+const totalPapersCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).length;
 ---
 
 <!DOCTYPE html>
@@ -75,10 +86,11 @@ const allFigures = pub.figures ?? [];
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{pub.shortTitle ? `${pub.shortTitle} | ` : ''}{pub.title} - SAAIL Lab</title>
+  <title>{pub.shortTitle ? `${pub.shortTitle} | ` : ''}{pub.title}</title>
   <meta name="description" content={pub.tldr || pub.abstract.slice(0, 160)} />
   <meta name="keywords" content={pub.keywords.join(', ')} />
   <meta name="author" content={pub.authors.map((a) => a.name).join(', ')} />
+  <link rel="icon" type="image/png" href="/images/logo/saail-crest.png" />
   <link rel="canonical" href={canonicalUrl} />
 
   <!-- Highwire Press / Google Scholar Academic Meta Tags -->
@@ -87,11 +99,11 @@ const allFigures = pub.figures ?? [];
     <meta name="citation_author" content={author.name} />
   ))}
   <meta name="citation_publication_date" content={pub.dateISO.replace(/-/g, '/')} />
-  {pub.category === 'conference' || pub.category === 'workshop' ? (
+  {!isUnderReview && (pub.category === 'conference' || pub.category === 'workshop' ? (
     <meta name="citation_conference_title" content={pub.venue} />
   ) : (
     <meta name="citation_journal_title" content={pub.venue} />
-  )}
+  ))}
   {cleanDoi && <meta name="citation_doi" content={cleanDoi} />}
   {pub.paperUrl && pub.paperUrl.toLowerCase().endsWith('.pdf') && (
     <meta name="citation_pdf_url" content={pub.paperUrl} />
@@ -100,7 +112,7 @@ const allFigures = pub.figures ?? [];
 
   <!-- Open Graph & Social Previews -->
   <meta property="og:type" content="article" />
-  <meta property="og:site_name" content="SAAIL Lab · IIT Madras Zanzibar" />
+  <meta property="og:site_name" content={isPriorWork ? 'Innocent Nyalala · Publication Archive' : 'SAAIL Lab · IIT Madras Zanzibar'} />
   <meta property="og:title" content={pub.title} />
   <meta property="og:description" content={pub.tldr} />
   <meta property="og:url" content={canonicalUrl} />
@@ -129,12 +141,10 @@ const allFigures = pub.figures ?? [];
   <script type="application/ld+json" set:html={breadcrumbJson} />
 </head>
 <body>
-  <!-- Back & Navigation Floating Controls (Inspired by horwitz.ai / Academic Project Page Template) -->
-  <a href="/publications" class="floating-back-btn" aria-label="Back to SAAIL Lab Publications">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-      <path d="M19 12H5M12 19l-7-7 7-7"/>
-    </svg>
-    <span>SAAIL Lab</span>
+  <!-- Clean Floating Controls (horwitz.ai/probex minimalist header chrome) -->
+  <a href="/publications" class="floating-back-btn" aria-label="Back to Publications">
+    <img src="/images/logo/saail-crest.png" alt="SAAIL Lab" width="22" height="22" class="floating-crest" />
+    <span>{isPriorWork ? 'Publications' : 'SAAIL Lab'}</span>
   </a>
 
   <div class="more-works-container">
@@ -156,7 +166,7 @@ const allFigures = pub.figures ?? [];
 
     <div id="moreWorksDropdown" class="more-works-dropdown" role="menu" hidden>
       <div class="dropdown-header">
-        <span>More Works from SAAIL Lab</span>
+        <span>{isPriorWork ? 'Related Publications' : 'More Works from SAAIL Lab'}</span>
         <button id="closeMoreWorks" type="button" class="close-dropdown" aria-label="Close menu">&times;</button>
       </div>
       <div class="dropdown-list">
@@ -164,7 +174,7 @@ const allFigures = pub.figures ?? [];
           <a href={`/papers/${work.slug}/`} class="dropdown-item" role="menuitem">
             <div class="dropdown-item-title">{work.shortTitle || work.title}</div>
             <div class="dropdown-item-meta">
-              <span>{work.venueShort}</span>
+              <span>{work.category === 'preprint' ? `Under Review · ${work.year}` : work.venueShort}</span>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
               </svg>
@@ -172,49 +182,26 @@ const allFigures = pub.figures ?? [];
           </a>
         ))}
       </div>
-      <a href="/publications" class="dropdown-footer-link">Browse all 45+ SAAIL Lab papers &rarr;</a>
+      <a href="/publications" class="dropdown-footer-link">Browse all {totalPapersCount} SAAIL Lab publications &rarr;</a>
     </div>
   </div>
-
-  <!-- CropGuard Series Banner (for CropGuard Series papers) -->
-  {pub.seriesId === 'cropguard' && (
-    <nav class="series-banner" aria-label="CropGuard Research Series">
-      <div class="series-banner-inner">
-        <a href="/cropguard/" class="series-hub-link">
-          <span class="series-pill-label">CROPGUARD ECOSYSTEM</span>
-          <span class="series-hub-name">Papers 1-6 Umbrella Hub &rarr;</span>
-        </a>
-        <div class="series-steps">
-          {CROPGUARD_SERIES.map((item) => {
-            const isCurrent = item.slug === pub.slug;
-            const href = item.slug ? `/papers/${item.slug}/` : '/cropguard/';
-            return (
-              <a
-                href={href}
-                class={`series-step ${isCurrent ? 'is-current' : ''} ${!item.slug ? 'is-upcoming' : ''}`}
-                title={item.title}
-              >
-                P{item.number}: {item.codeName}
-              </a>
-            );
-          })}
-        </div>
-      </div>
-    </nav>
-  )}
 
   <main>
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="container">
         <div class="hero-badges">
-          <span class="venue-badge">{pub.venueShort}</span>
+          <span class="venue-badge">{displayVenueShort}</span>
           {pub.award && <span class="award-badge">{pub.award}</span>}
-          {pub.impactFactor && <span class="metric-pill">{pub.impactFactor}</span>}
+          {!isUnderReview && pub.impactFactor && <span class="metric-pill">{pub.impactFactor}</span>}
           {typeof pub.citations === 'number' && pub.citations > 0 && (
             <span class="metric-pill">{pub.citations}+ Citations</span>
           )}
-          <span class="status-pill">{pub.status}</span>
+          {isPriorWork ? (
+            <span class="prior-badge">Prior Institutional Research · Pre-IITMZ ({pub.year})</span>
+          ) : (
+            <span class="status-pill">{displayStatus}</span>
+          )}
         </div>
 
         <h1 class="publication-title">{pub.title}</h1>
@@ -238,20 +225,20 @@ const allFigures = pub.figures ?? [];
 
         <div class="publication-affiliations">
           {pub.affiliations.map((aff, i) => (
-            <span class="affiliation-item">
-              <sup>{i + 1}</sup>{aff}{i < pub.affiliations.length - 1 ? '  ·  ' : ''}
-            </span>
+            <div class="affiliation-line">
+              <sup>{i + 1}</sup><span>{aff}</span>
+            </div>
           ))}
         </div>
 
         <div class="publication-venue-full">
-          <span>{pub.venue} ({pub.month} {pub.year})</span>
+          <span>{displayVenueFull}</span>
           {hasEqualAuthors && <span class="equal-note"> · *Indicates Equal Contribution</span>}
         </div>
 
-        <!-- Action Buttons (Classic Academic Template Dark Pill Buttons) -->
+        <!-- Action Buttons -->
         <div class="action-buttons">
-          {pub.paperUrl && (
+          {!isUnderReview && pub.paperUrl && (
             <a href={pub.paperUrl} target="_blank" rel="noopener" class="action-btn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -263,7 +250,7 @@ const allFigures = pub.figures ?? [];
             </a>
           )}
 
-          {doiUrl && doiUrl !== pub.paperUrl && (
+          {!isUnderReview && doiUrl && (
             <a href={doiUrl} target="_blank" rel="noopener" class="action-btn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"/>
@@ -305,17 +292,6 @@ const allFigures = pub.figures ?? [];
             </a>
           )}
 
-          {pub.seriesId === 'cropguard' && (
-            <a href="/cropguard/" class="action-btn action-btn-accent">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
-              </svg>
-              <span>CropGuard Series (1-6)</span>
-            </a>
-          )}
-
           <a href="#BibTeX" class="action-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M6 17h3l2-4V7H5v6h3M15 17h3l2-4V7h-6v6h3"/>
@@ -326,7 +302,7 @@ const allFigures = pub.figures ?? [];
       </div>
     </section>
 
-    <!-- Teaser Visual + TL;DR Caption -->
+    <!-- Teaser Visual + Summary (Single Clean Visual per Section, horwitz.ai/probex style) -->
     <section class="teaser-section">
       <div class="container container-narrow">
         {pub.teaserImage && (
@@ -335,13 +311,13 @@ const allFigures = pub.figures ?? [];
               src={pub.teaserImage}
               alt={pub.title}
               loading="eager"
-              class="teaser-img"
+              class="teaser-img zoomable-img"
             />
           </figure>
         )}
         <div class={`tldr-block ${pub.teaserImage ? '' : 'tldr-standalone'}`}>
           <p>
-            <strong>TL;DR:</strong> {pub.teaserCaption || pub.tldr}
+            <strong>Summary:</strong> {pub.teaserCaption || pub.tldr}
           </p>
         </div>
       </div>
@@ -363,9 +339,9 @@ const allFigures = pub.figures ?? [];
       </div>
     </section>
 
-    <!-- Highlights & Contributions -->
+    <!-- Quantitative Highlights & Contributions -->
     {((pub.highlights && pub.highlights.length > 0) || (pub.contributions && pub.contributions.length > 0)) && (
-      <section class="band-section">
+      <section class="band-section" id="Findings">
         <div class="container container-reading">
           <h2 class="section-heading">Key Findings &amp; Contributions</h2>
 
@@ -392,52 +368,27 @@ const allFigures = pub.figures ?? [];
       </section>
     )}
 
-    <!-- Interactive Results & Architecture Figure Carousel -->
-    {allFigures.length > 0 && (
+    <!-- Single Primary Result Visual Section (One image per section) -->
+    {primaryFigure && (
       <section class="band-section band-light" id="Results">
-        <div class="container">
-          <h2 class="section-heading">Visual Results &amp; Figures</h2>
-          <div class="carousel-wrapper" data-total={allFigures.length}>
-            <div class="carousel-viewport">
-              {allFigures.map((fig, index) => (
-                <figure class={`carousel-slide ${index === 0 ? 'is-active' : ''}`} data-index={index}>
-                  <div class="carousel-img-frame">
-                    <img src={fig.src} alt={fig.alt || fig.caption} loading={index < 2 ? 'eager' : 'lazy'} />
-                  </div>
-                  <figcaption class="carousel-caption">
-                    <span class="figure-num">Figure {index + 1} of {allFigures.length}.</span> {fig.caption}
-                  </figcaption>
-                </figure>
-              ))}
+        <div class="container container-narrow">
+          <h2 class="section-heading">Key Empirical Figure</h2>
+          <figure class="single-result-figure">
+            <div class="single-img-frame">
+              <img src={primaryFigure.src} alt={primaryFigure.alt || primaryFigure.caption} loading="lazy" class="zoomable-img" />
             </div>
-
-            {allFigures.length > 1 && (
-              <div class="carousel-controls">
-                <button type="button" id="prevSlideBtn" class="carousel-nav-btn" aria-label="Previous figure">&larr; Previous</button>
-                <div class="carousel-dots" id="carouselDots">
-                  {allFigures.map((_, index) => (
-                    <button
-                      type="button"
-                      class={`carousel-dot ${index === 0 ? 'is-active' : ''}`}
-                      data-slide-to={index}
-                      aria-label={`View figure ${index + 1}`}
-                    />
-                  ))}
-                </div>
-                <button type="button" id="nextSlideBtn" class="carousel-nav-btn" aria-label="Next figure">Next &rarr;</button>
-              </div>
-            )}
-          </div>
+            <figcaption class="single-caption">{primaryFigure.caption}</figcaption>
+          </figure>
         </div>
       </section>
     )}
 
     <!-- Quantitative Benchmark Tables -->
     {pub.tables && pub.tables.length > 0 && (
-      <section class="band-section" id="Benchmarks">
+      <section class={`band-section ${primaryFigure ? '' : 'band-light'}`} id="Benchmarks">
         <div class="container container-reading">
           <h2 class="section-heading">Benchmark Results</h2>
-          {pub.tables.map((tbl) => (
+          {pub.tables.slice(0, 2).map((tbl) => (
             <div class="table-block">
               <h3 class="table-title">{tbl.title}</h3>
               {tbl.caption && <p class="table-caption">{tbl.caption}</p>}
@@ -465,8 +416,8 @@ const allFigures = pub.figures ?? [];
       </section>
     )}
 
-    <!-- BibTeX Citation Section (Matches horwitz.ai/probex Copy Box) -->
-    <section class="band-section band-light" id="BibTeX">
+    <!-- BibTeX Citation Section -->
+    <section class={`band-section ${(primaryFigure && !(pub.tables && pub.tables.length > 0)) ? '' : 'band-light'}`} id="BibTeX">
       <div class="container container-reading">
         <div class="bibtex-header">
           <h2>BibTeX</h2>
@@ -493,34 +444,43 @@ const allFigures = pub.figures ?? [];
     </section>
   </main>
 
+  <!-- Minimalist Clean Footer (horwitz.ai/probex inspired) -->
   <footer class="project-footer">
     <div class="container container-reading">
-      <p>
-        Hosted by <a href="/">SAAIL Lab (Scientific &amp; Applied AI Lab)</a> at
-        <a href="https://www.iitmz.ac.in/" target="_blank" rel="noopener">IIT Madras Zanzibar</a> &amp;
-        <a href="https://wsai.iitm.ac.in/" target="_blank" rel="noopener">WSDSAI IIT Madras</a>, led by
-        <a href="https://inyalala.github.io" target="_blank" rel="noopener">Dr. Innocent Nyalala</a>.
-      </p>
+      <div class="footer-brand">
+        <img src="/images/logo/saail-crest.png" alt="SAAIL Lab Crest" width="24" height="24" />
+        {isPriorWork ? (
+          <span>
+            Prior institutional publication by <a href="https://inyalala.github.io" target="_blank" rel="noopener">Dr. Innocent Nyalala</a> ({pub.year}, prior to joining IIT Madras Zanzibar)
+          </span>
+        ) : (
+          <span>
+            <a href="/">SAAIL Lab</a> · Indian Institute of Technology Madras Zanzibar &amp; WSDSAI IIT Madras
+          </span>
+        )}
+      </div>
       <p class="template-credit">
-        Page architecture inspired by the open-source <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>.
-        Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener">Creative Commons Attribution-ShareAlike 4.0 International</a>.
+        This page was adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> and is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
       </p>
       <div class="footer-links">
         <a href="/">SAAIL Lab Home</a>
         <span>·</span>
-        <a href="/publications">All Publications</a>
+        <a href="/publications">Publications</a>
         <span>·</span>
-        <a href="/cropguard/">CropGuard Ecosystem</a>
+        <a href="/projects">Projects</a>
         <span>·</span>
-        <a href="/github">Open-Source Repositories</a>
-        <span>·</span>
-        <a href="/contact">Contact</a>
+        <a href="https://github.com/saaillab" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>
 
+  <!-- Lightbox Modal for Full-Resolution Figure Inspection -->
+  <div id="imgLightbox" class="img-lightbox" hidden role="dialog" aria-modal="true" aria-label="Enlarged figure preview">
+    <button id="closeLightbox" type="button" class="lightbox-close" aria-label="Close enlarged view">&times;</button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
   <script is:inline>
-    // More Works floating dropdown
     (function () {
       const btn = document.getElementById('moreWorksBtn');
       const dropdown = document.getElementById('moreWorksDropdown');
@@ -549,35 +509,34 @@ const allFigures = pub.figures ?? [];
             setOpen(false);
           }
         });
-        document.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape' && !dropdown.hidden) setOpen(false);
-        });
       }
 
-      // Figure carousel
-      const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-      const dots = Array.from(document.querySelectorAll('.carousel-dot'));
-      const prevBtn = document.getElementById('prevSlideBtn');
-      const nextBtn = document.getElementById('nextSlideBtn');
-      let current = 0;
-
-      function showSlide(idx) {
-        if (slides.length === 0) return;
-        current = (idx + slides.length) % slides.length;
-        slides.forEach(function (s, i) { s.classList.toggle('is-active', i === current); });
-        dots.forEach(function (d, i) { d.classList.toggle('is-active', i === current); });
-      }
-
-      if (prevBtn) prevBtn.addEventListener('click', function () { showSlide(current - 1); });
-      if (nextBtn) nextBtn.addEventListener('click', function () { showSlide(current + 1); });
-      dots.forEach(function (d) {
-        d.addEventListener('click', function () {
-          const target = parseInt(d.getAttribute('data-slide-to') || '0', 10);
-          showSlide(target);
+      const lightbox = document.getElementById('imgLightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const closeLightbox = document.getElementById('closeLightbox');
+      document.querySelectorAll('.zoomable-img').forEach(function (imgEl) {
+        imgEl.title = 'Click to view full size';
+        imgEl.addEventListener('click', function () {
+          if (!lightbox || !lightboxImg) return;
+          lightboxImg.src = imgEl.src;
+          lightboxImg.alt = imgEl.alt || 'Figure';
+          lightbox.hidden = false;
         });
       });
+      if (closeLightbox && lightbox) {
+        closeLightbox.addEventListener('click', function () { lightbox.hidden = true; });
+        lightbox.addEventListener('click', function (e) {
+          if (e.target === lightbox) lightbox.hidden = true;
+        });
+      }
 
-      // Clipboard Copy buttons
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          if (dropdown && !dropdown.hidden) setOpen(false);
+          if (lightbox && !lightbox.hidden) lightbox.hidden = true;
+        }
+      });
+
       function attachCopy(btnId) {
         const copyBtn = document.getElementById(btnId);
         if (!copyBtn) return;
@@ -613,23 +572,22 @@ const allFigures = pub.figures ?? [];
   <style>
     :root {
       --bg-page: #ffffff;
-      --bg-band: #f8fafc;
+      --bg-band: #f7f7f2;
       --bg-card: #ffffff;
-      --text-main: #0f172a;
-      --text-secondary: #334155;
-      --text-muted: #64748b;
-      --border-light: #e2e8f0;
-      --accent-blue: #2563eb;
-      --accent-indigo: #4f46e5;
-      --btn-dark: #242933;
-      --btn-dark-hover: #0f172a;
-      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 10px 28px rgba(15, 23, 42, 0.08);
-      --shadow-lg: 0 18px 42px rgba(15, 23, 42, 0.14);
+      --text-main: #0c1a12;
+      --text-secondary: #2b3a32;
+      --text-muted: #5a6b61;
+      --border-light: #e2e6e0;
+      --accent-primary: #14532d;
+      --accent-hover: #0f3f22;
+      --accent-gold: #b45309;
+      --btn-dark: #132219;
+      --shadow-sm: 0 2px 8px rgba(12, 26, 18, 0.05);
+      --shadow-md: 0 10px 28px rgba(12, 26, 18, 0.08);
+      --shadow-lg: 0 18px 42px rgba(12, 26, 18, 0.14);
     }
 
     *, *::before, *::after { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -642,7 +600,7 @@ const allFigures = pub.figures ?? [];
       -webkit-font-smoothing: antialiased;
     }
 
-    a { color: var(--accent-blue); text-decoration: none; }
+    a { color: var(--accent-primary); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     .container {
@@ -654,7 +612,7 @@ const allFigures = pub.figures ?? [];
     .container-narrow { max-width: 920px; }
     .container-reading { max-width: 820px; }
 
-    /* Floating Back & More Works Buttons */
+    /* Floating Controls */
     .floating-back-btn {
       position: fixed;
       top: 1rem;
@@ -662,23 +620,28 @@ const allFigures = pub.figures ?? [];
       z-index: 60;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 0.9rem;
+      gap: 0.45rem;
+      padding: 0.42rem 0.9rem 0.42rem 0.55rem;
       background: rgba(255, 255, 255, 0.96);
       color: var(--text-main);
       border: 1px solid var(--border-light);
       border-radius: 999px;
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 700;
       box-shadow: var(--shadow-sm);
       backdrop-filter: blur(8px);
       text-decoration: none;
       transition: all 0.2s ease;
     }
+    .floating-crest {
+      display: block;
+      border-radius: 50%;
+      object-fit: contain;
+    }
     .floating-back-btn:hover {
       background: #ffffff;
-      border-color: var(--accent-blue);
-      color: var(--accent-blue);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
       text-decoration: none;
       transform: translateY(-1px);
     }
@@ -708,8 +671,8 @@ const allFigures = pub.figures ?? [];
       transition: all 0.2s ease;
     }
     .more-works-btn:hover {
-      border-color: var(--accent-blue);
-      color: var(--accent-blue);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
       box-shadow: var(--shadow-md);
     }
 
@@ -762,7 +725,7 @@ const allFigures = pub.figures ?? [];
       transition: background 0.15s ease;
     }
     .dropdown-item:hover {
-      background: #eff6ff;
+      background: #ecfdf5;
       text-decoration: none;
     }
     .dropdown-item-title {
@@ -777,7 +740,7 @@ const allFigures = pub.figures ?? [];
       justify-content: space-between;
       margin-top: 0.25rem;
       font-size: 0.75rem;
-      color: var(--accent-blue);
+      color: var(--accent-primary);
     }
 
     .dropdown-footer-link {
@@ -788,77 +751,13 @@ const allFigures = pub.figures ?? [];
       font-weight: 600;
       background: var(--bg-band);
       border-top: 1px solid var(--border-light);
-      color: var(--accent-blue);
-    }
-
-    /* CropGuard Series Top Ribbon */
-    .series-banner {
-      background: linear-gradient(90deg, #0f172a, #1e293b);
-      color: #f8fafc;
-      padding: 3.5rem 1.5rem 0.75rem;
-      font-size: 0.82rem;
-    }
-    @media (min-width: 960px) {
-      .series-banner {
-        padding: 0.65rem 1.5rem;
-      }
-    }
-    .series-banner-inner {
-      max-width: 1020px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem 1.1rem;
-    }
-    .series-hub-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .series-pill-label {
-      background: #2563eb;
-      padding: 0.15rem 0.5rem;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      letter-spacing: 0.04em;
-    }
-    .series-steps {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-    }
-    .series-step {
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #cbd5e1;
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-decoration: none;
-    }
-    .series-step:hover {
-      background: rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      text-decoration: none;
-    }
-    .series-step.is-current {
-      background: #ffffff;
-      color: #0f172a;
-      font-weight: 700;
+      color: var(--accent-primary);
     }
 
     /* Hero */
     .hero-section {
-      padding: 4.75rem 0 2rem;
+      padding: 5.25rem 0 2rem;
       text-align: center;
-    }
-    .series-banner + main .hero-section {
-      padding-top: 2.75rem;
     }
 
     .hero-badges {
@@ -866,20 +765,20 @@ const allFigures = pub.figures ?? [];
       flex-wrap: wrap;
       justify-content: center;
       gap: 0.5rem;
-      margin-bottom: 1.15rem;
+      margin-bottom: 1.2rem;
     }
 
-    .venue-badge, .award-badge, .metric-pill, .status-pill {
+    .venue-badge, .award-badge, .metric-pill, .status-pill, .prior-badge {
       display: inline-block;
-      padding: 0.25rem 0.75rem;
+      padding: 0.26rem 0.78rem;
       border-radius: 999px;
       font-size: 0.78rem;
       font-weight: 600;
     }
     .venue-badge {
-      background: #eff6ff;
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
+      background: #ecfdf5;
+      color: #14532d;
+      border: 1px solid #bbf7d0;
     }
     .award-badge {
       background: #fef3c7;
@@ -887,14 +786,19 @@ const allFigures = pub.figures ?? [];
       border: 1px solid #fde68a;
     }
     .metric-pill {
-      background: #ecfdf5;
-      color: #065f46;
-      border: 1px solid #a7f3d0;
+      background: #f4f4ef;
+      color: #1c2d23;
+      border: 1px solid #d7dcd5;
     }
     .status-pill {
+      background: #f8faf8;
+      color: #4b5c52;
+      border: 1px solid var(--border-light);
+    }
+    .prior-badge {
       background: #f1f5f9;
-      color: #475569;
-      border: 1px solid #e2e8f0;
+      color: #334155;
+      border: 1px solid #cbd5e1;
     }
 
     .publication-title {
@@ -908,14 +812,14 @@ const allFigures = pub.figures ?? [];
     }
 
     .publication-authors {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       line-height: 1.75;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.75rem;
       color: var(--text-secondary);
     }
     .publication-authors a {
-      color: var(--accent-blue);
-      font-weight: 500;
+      color: var(--accent-primary);
+      font-weight: 600;
     }
     .publication-authors sup {
       font-size: 0.72em;
@@ -923,15 +827,24 @@ const allFigures = pub.figures ?? [];
       margin-left: 1px;
     }
 
+    /* Affiliations: each affiliation strictly on its own dedicated line */
     .publication-affiliations {
-      font-size: 0.92rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.93rem;
       color: var(--text-secondary);
       max-width: 820px;
-      margin: 0 auto 0.55rem;
+      margin: 0 auto 0.75rem;
     }
-    .publication-affiliations sup {
-      margin-right: 2px;
-      font-weight: 600;
+    .affiliation-line {
+      line-height: 1.45;
+    }
+    .affiliation-line sup {
+      margin-right: 4px;
+      font-weight: 700;
+      color: var(--accent-primary);
     }
 
     .publication-venue-full {
@@ -961,23 +874,17 @@ const allFigures = pub.figures ?? [];
       background: var(--btn-dark);
       color: #ffffff;
       border-radius: 999px;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 600;
       text-decoration: none;
       transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
     }
     .action-btn:hover {
-      background: var(--btn-dark-hover);
+      background: var(--accent-primary);
       color: #ffffff;
       text-decoration: none;
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
-    }
-    .action-btn-accent {
-      background: linear-gradient(135deg, #2563eb, #4f46e5);
-    }
-    .action-btn-accent:hover {
-      background: linear-gradient(135deg, #1d4ed8, #4338ca);
     }
 
     /* Teaser */
@@ -989,36 +896,38 @@ const allFigures = pub.figures ?? [];
       background: #ffffff;
       border: 1px solid var(--border-light);
       border-radius: 14px;
-      padding: 0.85rem;
+      padding: 0.9rem;
       box-shadow: var(--shadow-sm);
     }
     .teaser-img {
       display: block;
       width: 100%;
-      max-height: 540px;
+      max-height: 520px;
       object-fit: contain;
       border-radius: 8px;
       margin: 0 auto;
     }
+    .zoomable-img {
+      cursor: zoom-in;
+    }
     .tldr-block {
-      font-size: 1.04rem;
+      font-size: 1.03rem;
       line-height: 1.72;
       color: var(--text-secondary);
-      text-align: justify;
+      text-align: left;
     }
     .tldr-standalone {
-      background: #f8fafc;
+      background: var(--bg-band);
       border: 1px solid var(--border-light);
-      border-left: 4px solid var(--accent-blue);
+      border-left: 4px solid var(--accent-primary);
       padding: 1.25rem 1.5rem;
       border-radius: 12px;
-      text-align: left;
     }
     .tldr-block p { margin: 0; }
 
     /* Bands */
     .band-section { padding: 3.5rem 0; }
-    .band-light { background: var(--bg-band); border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; }
+    .band-light { background: var(--bg-band); border-top: 1px solid #ebece6; border-bottom: 1px solid #ebece6; }
 
     .section-heading {
       font-size: 1.85rem;
@@ -1032,16 +941,16 @@ const allFigures = pub.figures ?? [];
     .section-heading::after {
       content: '';
       display: block;
-      width: 60px;
-      height: 3.5px;
+      width: 48px;
+      height: 3px;
       margin: 0.65rem auto 0;
       border-radius: 2px;
-      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      background: var(--accent-primary);
     }
 
     .abstract-text {
-      font-size: 1.05rem;
-      line-height: 1.8;
+      font-size: 1.04rem;
+      line-height: 1.82;
       color: var(--text-secondary);
       text-align: justify;
     }
@@ -1079,7 +988,7 @@ const allFigures = pub.figures ?? [];
       margin-bottom: 2rem;
     }
     .highlight-card {
-      background: #f8fafc;
+      background: var(--bg-band);
       border: 1px solid var(--border-light);
       border-radius: 12px;
       padding: 1.2rem 1rem;
@@ -1088,9 +997,10 @@ const allFigures = pub.figures ?? [];
     .highlight-value {
       font-size: 1.45rem;
       font-weight: 800;
-      color: var(--accent-blue);
+      color: var(--accent-primary);
       line-height: 1.2;
       margin-bottom: 0.3rem;
+      font-variant-numeric: tabular-nums;
     }
     .highlight-label {
       font-size: 0.86rem;
@@ -1114,37 +1024,31 @@ const allFigures = pub.figures ?? [];
       margin-bottom: 0.75rem;
     }
 
-    /* Carousel */
-    .carousel-wrapper {
+    /* Single Clean Empirical Figure */
+    .single-result-figure {
+      margin: 0;
       background: #ffffff;
       border: 1px solid var(--border-light);
-      border-radius: 16px;
-      padding: 1.25rem;
+      border-radius: 14px;
+      padding: 1.15rem;
       box-shadow: var(--shadow-sm);
     }
-    .carousel-slide {
-      display: none;
-      margin: 0;
-    }
-    .carousel-slide.is-active {
-      display: block;
-    }
-    .carousel-img-frame {
-      background: #ffffff;
-      border-radius: 10px;
-      overflow: hidden;
+    .single-img-frame {
       text-align: center;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
     }
-    .carousel-img-frame img {
+    .single-img-frame img {
       max-width: 100%;
-      max-height: 540px;
+      max-height: 520px;
       width: auto;
       height: auto;
       object-fit: contain;
       display: block;
       margin: 0 auto;
     }
-    .carousel-caption {
+    .single-caption {
       margin-top: 1rem;
       padding: 0.85rem 1rem;
       background: var(--bg-band);
@@ -1152,55 +1056,6 @@ const allFigures = pub.figures ?? [];
       font-size: 0.94rem;
       color: var(--text-secondary);
       line-height: 1.6;
-    }
-    .figure-num {
-      font-weight: 700;
-      color: var(--text-main);
-    }
-    .carousel-controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-top: 1rem;
-      padding-top: 0.9rem;
-      border-top: 1px solid var(--border-light);
-    }
-    .carousel-nav-btn {
-      padding: 0.45rem 0.95rem;
-      background: var(--bg-band);
-      color: var(--text-main);
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .carousel-nav-btn:hover {
-      background: #eff6ff;
-      border-color: var(--accent-blue);
-      color: var(--accent-blue);
-    }
-    .carousel-dots {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.4rem;
-    }
-    .carousel-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 999px;
-      border: none;
-      padding: 0;
-      background: #cbd5e1;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .carousel-dot.is-active {
-      width: 24px;
-      background: var(--accent-blue);
     }
 
     /* Tables */
@@ -1229,6 +1084,7 @@ const allFigures = pub.figures ?? [];
       width: 100%;
       border-collapse: collapse;
       font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
     }
     .academic-table th {
       background: var(--bg-band);
@@ -1241,12 +1097,12 @@ const allFigures = pub.figures ?? [];
     }
     .academic-table td {
       padding: 0.7rem 0.95rem;
-      border-bottom: 1px solid #f1f5f9;
+      border-bottom: 1px solid #eef1ec;
       color: var(--text-secondary);
       white-space: nowrap;
     }
     .academic-table tbody tr:last-child td { border-bottom: none; }
-    .academic-table tbody tr:hover { background: #f8fafc; }
+    .academic-table tbody tr:hover { background: #f8faf8; }
     .academic-table .cell-lead { font-weight: 600; color: var(--text-main); }
 
     /* BibTeX */
@@ -1267,7 +1123,7 @@ const allFigures = pub.figures ?? [];
       align-items: center;
       gap: 0.4rem;
       padding: 0.45rem 0.95rem;
-      background: var(--accent-blue);
+      background: var(--accent-primary);
       color: #ffffff;
       border: none;
       border-radius: 8px;
@@ -1277,15 +1133,15 @@ const allFigures = pub.figures ?? [];
       cursor: pointer;
       transition: background 0.16s ease;
     }
-    .copy-btn:hover { background: #1d4ed8; }
-    .copy-btn.copied { background: #059669; }
+    .copy-btn:hover { background: var(--accent-hover); }
+    .copy-btn.copied { background: var(--accent-gold); }
     .copy-btn-subtle {
-      background: #e2e8f0;
+      background: #e5e8e2;
       color: var(--text-main);
       padding: 0.3rem 0.75rem;
       font-size: 0.78rem;
     }
-    .copy-btn-subtle:hover { background: #cbd5e1; }
+    .copy-btn-subtle:hover { background: #d5dad1; }
 
     .bibtex-pre {
       margin: 0 0 1.25rem;
@@ -1328,28 +1184,80 @@ const allFigures = pub.figures ?? [];
 
     /* Footer */
     .project-footer {
-      padding: 2.75rem 0;
+      padding: 2.5rem 0 2.75rem;
       text-align: center;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--text-muted);
       border-top: 1px solid var(--border-light);
       background: #ffffff;
     }
-    .project-footer p { margin: 0 0 0.5rem; }
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      margin-bottom: 0.65rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .footer-brand img {
+      border-radius: 50%;
+    }
+    .template-credit {
+      max-width: 680px;
+      margin: 0 auto 0.85rem;
+      line-height: 1.55;
+      font-size: 0.8rem;
+    }
     .footer-links {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.55rem;
-      margin-top: 1rem;
+      gap: 0.6rem;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
+    }
+
+    /* Lightbox */
+    .img-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(9, 19, 13, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .img-lightbox[hidden] { display: none; }
+    .img-lightbox img {
+      max-width: 94vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 0.4rem;
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 1rem;
+      right: 1.25rem;
+      background: #ffffff;
+      color: var(--text-main);
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      font-size: 1.45rem;
+      line-height: 1;
+      cursor: pointer;
     }
 
     @media (max-width: 768px) {
       .hero-section { padding-top: 4.5rem; }
-      .abstract-text, .tldr-block { text-align: left; }
+      .abstract-text { text-align: left; }
       .floating-back-btn span { display: none; }
+      .floating-back-btn { padding: 0.42rem; }
     }
   </style>
 </body>

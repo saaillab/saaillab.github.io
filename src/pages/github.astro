@@ -2,27 +2,20 @@
 import Layout from '../layouts/Layout.astro';
 import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
+import { PUBLICATIONS } from '../data/publications';
+
+const saailCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).length;
 
 const repositories = [
   {
     name: 'CropGuardNet',
-    badge: 'CropGuard Paper 1',
+    badge: 'CropGuard Series · Under Peer Review',
     language: 'PyTorch / ONNX',
     description:
       'Unified lightweight CNN-Transformer framework (481,574 params, 1.84 MB, 63.8M FLOPs) with Multi-Scale Feature Pyramid, Crop-Aware Conditioning, and four-family XAI evaluation on 35,420 UUID- and pHash-deduplicated leaf images.',
     repoUrl: 'https://github.com/saaillab/CropGuardNet',
     pagesUrl: 'https://saaillab.github.io/CropGuardNet/',
     projectUrl: '/papers/cropguardnet/'
-  },
-  {
-    name: 'CropKD-Net',
-    badge: 'CropGuard Paper 2',
-    language: 'PyTorch / INT8 ONNX',
-    description:
-      'Knowledge distillation from compact CNN-Transformer teachers into sub-100K edge student backbones with INT8 quantization for offline smartphone deployment in rural agricultural extension.',
-    repoUrl: 'https://github.com/saaillab/CropKD-Net',
-    pagesUrl: 'https://saaillab.github.io/CropKD-Net/',
-    projectUrl: '/papers/cropkd-net/'
   },
   {
     name: 'dgs-bench',
@@ -56,10 +49,10 @@ const repositories = [
   },
   {
     name: 'cara-fm',
-    badge: 'Best Poster · DLI 2025',
+    badge: 'Best Poster · DLI 2025 (PMLR 302)',
     language: 'Python / Evaluation',
     description:
-      'Context-Aware Responsible African Foundation Models (CARA-FM) framework and alignment checklists published in PMLR Vol. 302 (Best Poster Award, DLI 2025).',
+      'Culturally Attuned and Resource-Aware Foundation Models (CARA-FM) framework and alignment checklists published in PMLR Vol. 302 (Best Poster Award, DLI 2025).',
     repoUrl: 'https://github.com/saaillab/cara-fm',
     pagesUrl: 'https://saaillab.github.io/cara-fm/',
     projectUrl: '/papers/cara-fm/'
@@ -67,7 +60,7 @@ const repositories = [
   {
     name: 'trustworthy-ai-iclr2026',
     badge: 'ICLR 2026 Workshop',
-    language: 'Markdown / Research',
+    language: 'Markdown / Governance',
     description:
       'Governance audit templates and community-participatory validation protocols accompanying our ICLR 2026 Workshop paper on Trustworthy AI in Africa.',
     repoUrl: 'https://github.com/saaillab/trustworthy-ai-iclr2026',
@@ -79,7 +72,7 @@ const repositories = [
     badge: 'Lab Web Platform',
     language: 'Astro / TypeScript',
     description:
-      'Source repository for the SAAIL Lab website, CropGuard Umbrella Hub, and 45+ indexed academic project pages built with Astro 5.',
+      `Source repository for the SAAIL Lab website featuring ${saailCount} SAAIL Lab manuscripts and ${PUBLICATIONS.length} total academic project pages built with Astro 5.`,
     repoUrl: 'https://github.com/saaillab/saaillab.github.io',
     pagesUrl: 'https://saaillab.github.io/',
     projectUrl: '/'
@@ -89,7 +82,7 @@ const repositories = [
 
 <Layout
   title="Open-Source GitHub Repositories | SAAIL Lab"
-  description="Official GitHub repositories of SAAIL Lab (github.com/saaillab): CropGuardNet, CropKD-Net, dgs-bench, CLOVES-4603, zstc-clove-v1, cara-fm, and trustworthy-ai-iclr2026."
+  description="Official GitHub repositories of SAAIL Lab (github.com/saaillab): CropGuardNet, dgs-bench, CLOVES-4603, zstc-clove-v1, cara-fm, and trustworthy-ai-iclr2026."
   canonical="https://saaillab.github.io/github/"
 >
   <ModernHeader currentPage="resources" />
@@ -100,7 +93,7 @@ const repositories = [
         <span class="gh-eyebrow">OPEN-SOURCE CODE &amp; REPRODUCIBILITY · GITHUB.COM/SAAILLAB</span>
         <h1>Open-Source GitHub Repositories</h1>
         <p class="gh-lead">
-          Every published paper and flagship series releases modular code, CITATION.cff metadata, deduplication manifests, and standalone project documentation under open licenses.
+          Published SAAIL Lab systems release modular PyTorch/ONNX code, CITATION.cff metadata, deduplication manifests, and standalone project documentation under open licenses.
         </p>
         <a href="https://github.com/saaillab" target="_blank" rel="noopener" class="gh-org-btn">
           Visit github.com/saaillab &rarr;
@@ -137,27 +130,27 @@ const repositories = [
 </Layout>
 
 <style>
-  .gh-main { background: var(--bg-primary, #ffffff); color: var(--text-primary); }
+  .gh-main { background: var(--bg-primary); color: var(--text-primary); }
   .gh-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
   .gh-hero {
-    padding: 4.5rem 0 2.75rem;
+    padding: 4rem 0 2.75rem;
     text-align: center;
-    background: radial-gradient(circle at top center, rgba(37, 99, 235, 0.08), transparent 60%);
-    border-bottom: 1px solid var(--border-color, #e2e8f0);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
   }
-  .gh-eyebrow { font-size: 0.78rem; font-weight: 700; color: #2563eb; letter-spacing: 0.05em; }
+  .gh-eyebrow { font-size: 0.78rem; font-weight: 800; color: var(--accent-primary); letter-spacing: 0.06em; }
   .gh-hero h1 { font-size: clamp(2rem, 4vw, 2.85rem); font-weight: 800; margin: 0.5rem 0 0.85rem; }
   .gh-lead { max-width: 720px; margin: 0 auto 1.5rem; color: var(--text-secondary); font-size: 1.05rem; }
   .gh-org-btn {
     display: inline-flex;
     padding: 0.72rem 1.4rem;
     border-radius: 10px;
-    background: #0f172a;
+    background: var(--accent-primary);
     color: #ffffff;
     font-weight: 600;
     text-decoration: none;
   }
-  .gh-org-btn:hover { background: #2563eb; }
+  .gh-org-btn:hover { background: var(--accent-secondary); }
 
   .gh-list-band { padding: 3rem 0 4.5rem; }
   .gh-grid {
@@ -168,8 +161,8 @@ const repositories = [
   .gh-card {
     display: flex;
     flex-direction: column;
-    background: var(--bg-card, #ffffff);
-    border: 1px solid var(--border-color, #e2e8f0);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 1.45rem;
   }
@@ -180,31 +173,31 @@ const repositories = [
     gap: 0.5rem;
     margin-bottom: 0.65rem;
   }
-  .gh-lang { font-size: 0.76rem; font-weight: 700; color: #059669; }
+  .gh-lang { font-size: 0.76rem; font-weight: 700; color: var(--accent-primary); }
   .gh-badge {
     padding: 0.18rem 0.6rem;
     border-radius: 999px;
-    background: #eff6ff;
-    color: #1d4ed8;
+    background: rgba(20, 83, 45, 0.1);
+    color: var(--accent-primary);
     font-size: 0.72rem;
     font-weight: 700;
   }
   .gh-card h2 { margin: 0 0 0.6rem; font-size: 1.2rem; font-weight: 800; }
   .gh-card h2 a { color: var(--text-primary); text-decoration: none; }
-  .gh-card h2 a:hover { color: #2563eb; text-decoration: underline; }
+  .gh-card h2 a:hover { color: var(--accent-primary); text-decoration: underline; }
   .gh-desc { margin: 0 0 1.2rem; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; flex: 1; }
   .gh-actions { display: flex; flex-wrap: wrap; gap: 0.45rem; }
   .g-btn {
     padding: 0.42rem 0.85rem;
     border-radius: 8px;
-    border: 1px solid var(--border-color, #cbd5e1);
-    background: var(--bg-secondary, #f8fafc);
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
     color: var(--text-primary);
     font-size: 0.82rem;
     font-weight: 600;
     text-decoration: none;
   }
-  .g-btn:hover { border-color: #2563eb; color: #2563eb; }
-  .g-btn-primary { background: #0f172a; border-color: #0f172a; color: #ffffff; }
-  .g-btn-primary:hover { background: #2563eb; border-color: #2563eb; color: #ffffff; }
+  .g-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+  .g-btn-primary { background: var(--accent-primary); border-color: var(--accent-primary); color: #ffffff; }
+  .g-btn-primary:hover { background: var(--accent-secondary); border-color: var(--accent-secondary); color: #ffffff; }
 </style>

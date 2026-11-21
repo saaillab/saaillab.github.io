@@ -82,23 +82,24 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</p>
 						<div class="dataset-list">
 							<div class="dataset-item">
-								<h4>Zanzibar Cloves Dataset</h4>
-								<p>High-resolution images for quality grading research</p>
-								<span class="dataset-status">In Development</span>
+								<h4>CLOVES-4603 &amp; ZSTC-Clove-V1</h4>
+								<p>Public 4,603-image (CVPR 2026 V4A) and 5,298-image commercial clove grading benchmarks</p>
+								<span class="dataset-status">Released Open Access</span>
 							</div>
 							<div class="dataset-item">
-								<h4>Agricultural Data Ecosystem</h4>
-								<p>Cardamom, millets, and walnuts classification data</p>
-								<span class="dataset-status">Collaboration</span>
+								<h4>CropGuard &amp; DGS-Bench Splits</h4>
+								<p>35,420 UUID/pHash-deduplicated leaf images and DLI 2026 deployment gap suites</p>
+								<span class="dataset-status">Public Manifests</span>
 							</div>
 							<div class="dataset-item">
-								<h4>Placental Imaging Dataset</h4>
-								<p>2D ultrasound images for medical AI research</p>
-								<span class="dataset-status">Restricted</span>
+								<h4>CultureSEEDS Swahili &amp; Dira</h4>
+								<p>Culturally grounded East African safety, dialect QA, and provenance corpus</p>
+								<span class="dataset-status">Active Benchmark</span>
 							</div>
 						</div>
 						<div class="resource-links">
-							<a href="#contact" class="resource-btn secondary">Request Access</a>
+							<a href="/datasets" class="resource-btn primary">Explore All Datasets</a>
+							<a href="/contact" class="resource-btn secondary">Request Access</a>
 						</div>
 					</div>
 
@@ -135,7 +136,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 							<a href="https://ge.iitm.ac.in/iitmdu/project/an-agentic-artificial-intelligence-framework-for-agricultural-technologies" target="_blank" class="resource-btn primary">
 								Apply for PhD
 							</a>
-							<a href="#contact" class="resource-btn secondary">Get Guidance</a>
+							<a href="/contact" class="resource-btn secondary">Get Guidance</a>
 						</div>
 					</div>
 
@@ -180,7 +181,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 							</div>
 						</div>
 						<div class="resource-links">
-							<a href="https://github.com/saaillab" target="_blank" class="resource-btn primary">View Tools</a>
+							<a href="/tools" class="resource-btn primary">View Mobile &amp; Software Tools</a>
 						</div>
 					</div>
 
@@ -215,7 +216,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</div>
 						<div class="resource-links">
 							<a href="/publications" class="resource-btn primary">View Publications</a>
-							<a href="#contact" class="resource-btn secondary">Request Templates</a>
+							<a href="/contact" class="resource-btn secondary">Request Templates</a>
 						</div>
 					</div>
 
@@ -251,8 +252,8 @@ import ModernFooter from '../components/ModernFooter.astro';
 							</div>
 						</div>
 						<div class="resource-links">
-							<a href="/people#collaborators" class="resource-btn primary">View Collaborators</a>
-							<a href="#contact" class="resource-btn secondary">Propose Collaboration</a>
+							<a href="/people" class="resource-btn primary">View Team</a>
+							<a href="/contact" class="resource-btn secondary">Propose Collaboration</a>
 						</div>
 					</div>
 				</div>
@@ -301,7 +302,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 
 <style>
 	.resources-page {
-		padding-top: 90px;
+		padding-top: 0;
 	}
 
 	.resources-hero {
@@ -374,27 +375,27 @@ import ModernFooter from '../components/ModernFooter.astro';
 	}
 
 	.resource-icon.github {
-		background: linear-gradient(135deg, #333 0%, #24292e 100%);
+		background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
 	}
 
 	.resource-icon.datasets {
-		background: linear-gradient(135deg, var(--accent-green) 0%, #047857 100%);
+		background: linear-gradient(135deg, var(--accent-primary) 0%, #15803d 100%);
 	}
 
 	.resource-icon.phd {
-		background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%);
+		background: linear-gradient(135deg, #14532d 0%, #166534 100%);
 	}
 
 	.resource-icon.tools {
-		background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+		background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
 	}
 
 	.resource-icon.publications {
-		background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+		background: linear-gradient(135deg, #065f46 0%, #047857 100%);
 	}
 
 	.resource-icon.collaboration {
-		background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+		background: linear-gradient(135deg, #b45309 0%, #78350f 100%);
 	}
 
 	.resource-header h3 {
