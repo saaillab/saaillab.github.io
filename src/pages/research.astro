@@ -23,7 +23,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 					</p>
 					<div class="hero-stats">
 						<div class="hstat">
-							<span class="hstat-num">33+</span>
+							<span class="hstat-num">45+</span>
 							<span class="hstat-lbl">Publications</span>
 						</div>
 						<div class="hstat-divider"></div>
@@ -208,34 +208,43 @@ import ModernFooter from '../components/ModernFooter.astro';
 				<h2 class="section-title">Selected Publications</h2>
 				<p class="section-subtitle">Peer-reviewed work from SAAIL Lab since June 2025</p>
 				<div class="pubs-grid">
-					<div class="pub-card pub-card--agri">
+					<a href="/papers/cropguardnet/" class="pub-card pub-card--agri" style="text-decoration:none">
+						<div class="pub-venue">CropGuard Series · Paper 1 (Under Review at AIIA)</div>
+						<h3>CropGuardNet: Unified Lightweight CNN-Transformer with Multi-Scale Attention and XAI</h3>
+						<p class="pub-authors">I. Nyalala, T. Makame, K. Khamis, et al.</p>
+						<div class="pub-tags">
+							<span class="ptag">481.6K Params</span>
+							<span class="ptag">35,420 Deduplicated Leaves</span>
+						</div>
+					</a>
+					<a href="/papers/cloves-4603/" class="pub-card pub-card--agri" style="text-decoration:none">
 						<div class="pub-venue">CV4A @ CVPR 2026</div>
 						<h3>CLOVES-4603: Benchmarking Classical Texture Features and Fine-Tuned Deep Models for Clove Quality Grading</h3>
-						<p class="pub-authors">I. Nyalala, P. Vincent</p>
+						<p class="pub-authors">I. Nyalala, P. N. Vincent</p>
 						<div class="pub-tags">
 							<span class="ptag">Agriculture</span>
 							<span class="ptag">Computer Vision</span>
 						</div>
-					</div>
-					<div class="pub-card pub-card--ethics">
+					</a>
+					<a href="/papers/dgs-bench/" class="pub-card pub-card--ethics" style="text-decoration:none">
 						<div class="pub-venue">DLI 2026, Lagos · Best Poster Award</div>
-						<h3>DGS-Bench: A Benchmark for Deep Grounding and Segmentation in Agricultural Scenes</h3>
-						<p class="pub-authors">I. Nyalala</p>
+						<h3>DGS-Bench: Measuring the Deployment Gap in African Agricultural AI Requires Balanced Metrics</h3>
+						<p class="pub-authors">I. Nyalala, S. Gudla, P. Vincent</p>
 						<div class="pub-tags">
-							<span class="ptag">Benchmark</span>
-							<span class="ptag">Segmentation</span>
+							<span class="ptag">Cassava Pathology</span>
+							<span class="ptag">Deployment Gap</span>
 						</div>
-					</div>
-					<div class="pub-card pub-card--ethics">
+					</a>
+					<a href="/papers/trustworthy-ai-iclr2026/" class="pub-card pub-card--ethics" style="text-decoration:none">
 						<div class="pub-venue">ICLR 2026 Workshop</div>
 						<h3>Unifying Perspectives on Learning Biases: A Data-Centric Intervention for Holistic Fairness, Robustness, and Generalization</h3>
-						<p class="pub-authors">P. Vincent, I. Nyalala</p>
+						<p class="pub-authors">P. Vincent Ndowo, I. Nyalala</p>
 						<div class="pub-tags">
 							<span class="ptag">Responsible AI</span>
 							<span class="ptag">Fairness</span>
 						</div>
-					</div>
-					<div class="pub-card pub-card--agri">
+					</a>
+					<a href="/papers/cara-fm/" class="pub-card pub-card--agri" style="text-decoration:none">
 						<div class="pub-venue">DLI 2025, Kigali · Best Poster Award</div>
 						<h3>CARA-FMs: Context-Aware and Responsible AI Framework for Foundation Models in East Africa</h3>
 						<p class="pub-authors">I. Nyalala</p>
@@ -243,7 +252,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 							<span class="ptag">Responsible AI</span>
 							<span class="ptag">Foundation Models</span>
 						</div>
-					</div>
+					</a>
 				</div>
 				<div class="pubs-cta">
 					<a href="/publications" class="btn btn-primary">View All Publications</a>

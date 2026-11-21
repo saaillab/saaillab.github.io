@@ -2,715 +2,287 @@
 import Layout from '../layouts/Layout.astro';
 import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
+
+const projects = [
+  {
+    id: 'cropguard-ecosystem',
+    category: 'agriculture',
+    status: 'Flagship Series',
+    title: 'CropGuard Research Ecosystem (Papers 1-6): Leak-Free Cross-Crop Leaf Diagnostics & Edge Distillation',
+    summary:
+      'Six-paper research program establishing UUID- and perceptual-hash deduplicated agricultural benchmarks (35,420 unique images across 8 crops and 38 classes, 80,238 duplicates purged), compact CNN-Transformer diagnostics (CropGuardNet: 481.6K params, 99.17% accuracy, 5.00 ms ONNX CPU), and INT8 distillation (CropKD-Net).',
+    lead: 'Dr. Innocent Nyalala · IITMZ & WSDSAI',
+    collaboration: 'IIT Madras Zanzibar & WSDSAI Chennai',
+    tags: ['Computer Vision', 'Explainable AI', 'Edge Deployment', 'CropGuard Series'],
+    projectPage: '/cropguard/',
+    paperPage: '/papers/cropguardnet/',
+    codeUrl: 'https://github.com/saaillab/CropGuardNet'
+  },
+  {
+    id: 'dgs-bench',
+    category: 'agriculture',
+    status: 'Award Winner · DLI 2026',
+    title: 'DGS-Bench: Measuring the Deployment Gap in African Agricultural AI Requires Balanced Metrics',
+    summary:
+      'Deployment Gap and Sensitivity Benchmark grounded in a multi-condition African cassava pathology case study, demonstrating why balanced per-class recall, F1, and calibration checks outperform aggregate accuracy under smallholder field shift. Awarded Best Poster at Deep Learning Indaba 2026 (18 accepted of 114 submissions).',
+    lead: 'Dr. Innocent Nyalala · Surabhi Gudla · Patrick N. Vincent',
+    collaboration: 'IIT Madras Zanzibar · Pan-Atlantic University Lagos',
+    tags: ['Best Poster DLI 2026', 'Cassava Pathology', 'Balanced Metrics', 'Deployment Gap'],
+    projectPage: '/papers/dgs-bench/',
+    codeUrl: 'https://github.com/saaillab/dgs-bench'
+  },
+  {
+    id: 'cloves-4603',
+    category: 'agriculture',
+    status: 'Published · CVPR 2026 V4A',
+    title: 'ZSTC Cloves Grading & CLOVES-4603 Fine-Grained Spice Inspection',
+    summary:
+      'First public 4,603-image benchmark for Zanzibar clove quality grading across four commercial ZSTC grades (ResNet-50 99.67% Acc; classical texture-fusion SVM 92.94%) plus ZSTC-Clove-V1 (5,298 single-clove images, AI4EAC 2026).',
+    lead: 'Patrick N. Vincent (MTech) · Dr. Innocent Nyalala',
+    collaboration: 'Zanzibar State Trading Corporation (ZSTC) & IITMZ',
+    tags: ['CVPR 2026 V4A', 'CLOVES-4603', 'ZSTC-Clove-V1', 'Smallholder Vision'],
+    projectPage: '/papers/cloves-4603/',
+    codeUrl: 'https://github.com/saaillab/CLOVES-4603'
+  },
+  {
+    id: 'placentavision',
+    category: 'healthcare',
+    status: 'Active · International',
+    title: 'PlacentaVision: Non-Invasive Placental Weight, Volume & Perfusion Estimation',
+    summary:
+      'AI-driven ultrasound and optical image analysis for early placental dysfunction detection and neonatal outcome estimation in maternal healthcare, developed in partnership with the PlacentaVision consortium.',
+    lead: 'Twamaa Makame (MTech) · Dr. Innocent Nyalala',
+    collaboration: 'Penn State University · Mnazi Mmoja Hospital Partners',
+    tags: ['Maternal Healthcare', 'Medical Ultrasound', 'PlacentaVision'],
+    projectPage: '/publications'
+  },
+  {
+    id: 'cara-fm',
+    category: 'responsible-ai',
+    status: 'Best Poster · DLI 2025',
+    title: 'CARA-FM & Trustworthy AI Governance Frameworks for Africa',
+    summary:
+      'Culturally grounded ethical principles (CARA-FM Framework, Best Poster Award at DLI 2025, PMLR Vol. 302) and socio-technical oversight protocols for trustworthy foundation models across agricultural advisory and healthcare triage (ICLR 2026 Workshop).',
+    lead: 'Dr. Innocent Nyalala · Global Ethics Consortium',
+    collaboration: 'IITMZ · WSDSAI · Multi-Institution Working Group',
+    tags: ['ICLR 2026 Workshop', 'Best Poster DLI 2025', 'CARA-FM', 'Trustworthy AI'],
+    projectPage: '/papers/trustworthy-ai-iclr2026/',
+    codeUrl: 'https://github.com/saaillab/cara-fm'
+  },
+  {
+    id: 'rutag-ecosystems',
+    category: 'agriculture',
+    status: 'Active Collaboration',
+    title: 'Agricultural Data Ecosystems for High-Value Specialty Crops',
+    summary:
+      'Standardized field imaging and IoT telemetry pipelines for cloves, black pepper, cardamom, millets, and walnuts built with Rural Technology Action Group (RuTAG) IIT Madras to support smallholders across India and East Africa.',
+    lead: 'SAAIL Lab Agri-Data Group',
+    collaboration: 'RuTAG IIT Madras Chennai',
+    tags: ['Agricultural Data', 'RuTAG', 'IoT Sensors', 'Smallholder Support'],
+    projectPage: '/datasets'
+  },
+  {
+    id: 'evision-assistive',
+    category: 'healthcare',
+    status: 'Completed MTech Thesis',
+    title: 'E-Vision: Intelligent Assistive Spatial Navigation for the Visually Impaired',
+    summary:
+      'On-device depth and object-detection smartphone pipeline offering bilingual voice feedback for real-time obstacle avoidance and independence.',
+    lead: 'Shivam Vyas (MTech) · Dr. Innocent Nyalala',
+    collaboration: 'IIT Madras Zanzibar',
+    tags: ['Assistive Tech', 'Edge Computer Vision', 'Accessibility'],
+    projectPage: '/publications'
+  },
+  {
+    id: 'preterm-birth-xai',
+    category: 'healthcare',
+    status: 'Completed MTech Thesis',
+    title: 'Explainable Machine Learning for Preterm Birth Prediction from Metabolomics',
+    summary:
+      'Interpretable SHAP- and attention-guided tabular classification pipeline identifying maternal serum biomarkers associated with preterm delivery risk.',
+    lead: 'Makame (MTech) · Dr. Innocent Nyalala',
+    collaboration: 'IIT Madras Zanzibar',
+    tags: ['Clinical XAI', 'Metabolomics', 'Maternal Health'],
+    projectPage: '/publications'
+  }
+];
 ---
 
-<Layout 
-	title="Projects - SAAIL Lab"
-	description="Explore our ongoing, recent, and completed research projects in AI for agriculture, healthcare, and responsible AI at SAAIL Lab, IIT Madras Zanzibar."
+<Layout
+  title="Research Projects | SAAIL Lab"
+  description="Active and completed research initiatives at SAAIL Lab: CropGuardNet (Papers 1-6), DGS-Bench, CLOVES-4603, PlacentaVision, CARA-FM, RuTAG Agricultural Data Ecosystems, and E-Vision."
+  canonical="https://saaillab.github.io/projects/"
 >
-	<ModernHeader />
-	
-	<main class="projects-page">
-		<!-- Hero Section -->
-		<section class="projects-hero">
-			<div class="container">
-				<div class="hero-content">
-					<h1>Research Projects</h1>
-					<p class="hero-description">
-						Discover our comprehensive portfolio of research projects spanning AI for agriculture, 
-						healthcare innovation, and responsible AI development.
-					</p>
-					
-					<!-- Search and Filter -->
-					<div class="search-filter">
-						<div class="search-box">
-							<input type="text" id="projectSearch" placeholder="Search projects..." />
-							<svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-								<circle cx="11" cy="11" r="8"></circle>
-								<path d="m21 21-4.35-4.35"></path>
-							</svg>
-						</div>
-						<div class="filter-tabs">
-							<button class="filter-tab active" data-filter="all">All Projects</button>
-							<button class="filter-tab" data-filter="ongoing">Ongoing</button>
-							<button class="filter-tab" data-filter="recent">Recent</button>
-							<button class="filter-tab" data-filter="completed">Completed</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+  <ModernHeader currentPage="projects" />
 
-		<!-- Projects Grid -->
-		<section class="projects-grid-section">
-			<div class="container">
-				<div class="projects-grid" id="projectsGrid">
-					<!-- Ongoing Projects -->
-					<div class="project-card ongoing" data-category="ongoing agriculture">
-						<div class="project-image">
-							<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="clovesGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#10b981;stop-opacity:0.4" />
-										<stop offset="100%" style="stop-color:#059669;stop-opacity:0.6" />
-									</linearGradient>
-								</defs>
-								<rect width="800" height="400" fill="#f0fdf4"/>
-								<circle cx="650" cy="100" r="120" fill="url(#clovesGrad)"/>
-								<circle cx="150" cy="300" r="90" fill="url(#clovesGrad)"/>
-								<text x="400" y="200" font-size="80" text-anchor="middle" fill="#059669">🌿</text>
-								<text x="400" y="260" font-size="24" text-anchor="middle" fill="#064e3b" font-weight="600">Zanzibar Cloves</text>
-							</svg>
-						</div>
-						<div class="project-header">
-							<div class="project-icon">🌿</div>
-							<div class="project-status ongoing">Ongoing</div>
-						</div>
-						<h3>Deep Learning for Fine-Grained Quality Grading of Zanzibar Cloves</h3>
-						<p class="project-description">
-							Advanced computer vision and deep learning techniques for precision crop management 
-							and quality assessment of Zanzibar's premium clove production.
-						</p>
-						<div class="project-details">
-							<div class="detail-row">
-								<span class="detail-label">Student:</span>
-								<span>Mr. Patrick Ndowo (MTech)</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Duration:</span>
-								<span>2024 - 2025</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Focus:</span>
-								<span>Precision Agriculture, Computer Vision</span>
-							</div>
-						</div>
-						<div class="project-tags">
-							<span class="tag agriculture">Agriculture AI</span>
-							<span class="tag deep-learning">Deep Learning</span>
-							<span class="tag mtech">MTech Project</span>
-						</div>
-					</div>
+  <main class="proj-main">
+    <section class="proj-hero">
+      <div class="proj-container">
+        <span class="proj-eyebrow">APPLIED &amp; FOUNDATIONAL INITIATIVES</span>
+        <h1>Lab Research Projects</h1>
+        <p class="proj-lead">
+          Each initiative connects empirical machine learning theory with real-world East African and South Asian field benchmarks across agriculture, clinical maternal care, and low-resource language technology.
+        </p>
+        <div class="proj-filters">
+          <button type="button" class="filter-chip active" data-cat="all">All Projects ({projects.length})</button>
+          <button type="button" class="filter-chip" data-cat="agriculture">AI for Agriculture</button>
+          <button type="button" class="filter-chip" data-cat="healthcare">Healthcare &amp; Assistive</button>
+          <button type="button" class="filter-chip" data-cat="responsible-ai">Responsible &amp; African AI</button>
+        </div>
+      </div>
+    </section>
 
-					<div class="project-card ongoing" data-category="ongoing healthcare">
-						<div class="project-image">
-							<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="medicalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#ef4444;stop-opacity:0.4" />
-										<stop offset="100%" style="stop-color:#dc2626;stop-opacity:0.6" />
-									</linearGradient>
-								</defs>
-								<rect width="800" height="400" fill="#fef2f2"/>
-								<circle cx="650" cy="100" r="120" fill="url(#medicalGrad)"/>
-								<circle cx="150" cy="300" r="90" fill="url(#medicalGrad)"/>
-								<text x="400" y="200" font-size="80" text-anchor="middle" fill="#dc2626">🏥</text>
-								<text x="400" y="260" font-size="24" text-anchor="middle" fill="#991b1b" font-weight="600">Placental Imaging</text>
-							</svg>
-						</div>
-						<div class="project-header">
-							<div class="project-icon">🏥</div>
-							<div class="project-status ongoing">Ongoing</div>
-						</div>
-						<h3>Placental Weight & Volume Estimation from 2D Ultrasound</h3>
-						<p class="project-description">
-							AI-powered medical image analysis for neonatal outcome prediction, collaborating 
-							with Penn State University's PlacentaVision initiative.
-						</p>
-						<div class="project-details">
-							<div class="detail-row">
-								<span class="detail-label">Student:</span>
-								<span>Ms. Twamaa Makame (MTech)</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Duration:</span>
-								<span>2024 - 2025</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Collaboration:</span>
-								<span>Penn State University</span>
-							</div>
-						</div>
-						<div class="project-tags">
-							<span class="tag healthcare">Healthcare AI</span>
-							<span class="tag medical-imaging">Medical Imaging</span>
-							<span class="tag collaboration">International</span>
-						</div>
-					</div>
+    <section class="proj-grid-band">
+      <div class="proj-container">
+        <div class="proj-grid" id="projectsGrid">
+          {projects.map((p) => (
+            <article class="proj-card" data-category={p.category}>
+              <div class="proj-card-head">
+                <span class="proj-cat">{p.category.replace('-', ' ')}</span>
+                <span class="proj-status">{p.status}</span>
+              </div>
+              <h2>{p.title}</h2>
+              <p class="proj-summary">{p.summary}</p>
+              <div class="proj-meta">
+                <div><strong>Lead:</strong> {p.lead}</div>
+                <div><strong>Partners:</strong> {p.collaboration}</div>
+              </div>
+              <div class="proj-tags">
+                {p.tags.map((t) => <span class="tag">{t}</span>)}
+              </div>
+              <div class="proj-actions">
+                <a href={p.projectPage} class="p-btn p-btn-primary">Project Page &rarr;</a>
+                {p.paperPage && <a href={p.paperPage} class="p-btn">Paper 1 Page</a>}
+                {p.codeUrl && <a href={p.codeUrl} target="_blank" rel="noopener" class="p-btn">GitHub Code</a>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
 
-					<div class="project-card ongoing" data-category="ongoing accessibility">
-						<div class="project-image">
-							<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="visionGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.4" />
-										<stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:0.6" />
-									</linearGradient>
-								</defs>
-								<rect width="800" height="400" fill="#eff6ff"/>
-								<circle cx="650" cy="100" r="120" fill="url(#visionGrad)"/>
-								<circle cx="150" cy="300" r="90" fill="url(#visionGrad)"/>
-								<text x="400" y="200" font-size="80" text-anchor="middle" fill="#1d4ed8">👁️</text>
-								<text x="400" y="260" font-size="24" text-anchor="middle" fill="#1e40af" font-weight="600">E-Vision Assistive</text>
-							</svg>
-						</div>
-						<div class="project-header">
-							<div class="project-icon">👁️</div>
-							<div class="project-status ongoing">Ongoing</div>
-						</div>
-						<h3>E-Vision: Intelligent Assistive Application for Visually Impaired</h3>
-						<p class="project-description">
-							Developing low-cost, low-latency edge AI solutions for assistive technologies, 
-							enhancing accessibility for visually impaired individuals.
-						</p>
-						<div class="project-details">
-							<div class="detail-row">
-								<span class="detail-label">Student:</span>
-								<span>Mr. Shivam Vyas (MTech)</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Duration:</span>
-								<span>2024 - 2025</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Partner:</span>
-								<span>Cadre Technologies</span>
-							</div>
-						</div>
-						<div class="project-tags">
-							<span class="tag accessibility">Accessibility</span>
-							<span class="tag edge-ai">Edge AI</span>
-							<span class="tag industry">Industry Partner</span>
-						</div>
-					</div>
+  <script is:inline>
+    (function () {
+      const chips = Array.from(document.querySelectorAll('.filter-chip'));
+      const cards = Array.from(document.querySelectorAll('.proj-card'));
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          chips.forEach(function (c) { c.classList.remove('active'); });
+          chip.classList.add('active');
+          const cat = chip.getAttribute('data-cat');
+          cards.forEach(function (card) {
+            card.style.display = (cat === 'all' || card.getAttribute('data-category') === cat) ? '' : 'none';
+          });
+        });
+      });
+    })();
+  </script>
 
-					<div class="project-card ongoing" data-category="ongoing data">
-						<div class="project-image">
-							<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="dataGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.4" />
-										<stop offset="100%" style="stop-color:#6d28d9;stop-opacity:0.6" />
-									</linearGradient>
-								</defs>
-								<rect width="800" height="400" fill="#f5f3ff"/>
-								<circle cx="650" cy="100" r="120" fill="url(#dataGrad)"/>
-								<circle cx="150" cy="300" r="90" fill="url(#dataGrad)"/>
-								<text x="400" y="200" font-size="80" text-anchor="middle" fill="#6d28d9">📊</text>
-								<text x="400" y="260" font-size="24" text-anchor="middle" fill="#5b21b6" font-weight="600">Agricultural Data</text>
-							</svg>
-						</div>
-						<div class="project-header">
-							<div class="project-icon">📊</div>
-							<div class="project-status ongoing">Ongoing</div>
-						</div>
-						<h3>Agricultural Data Ecosystems Development</h3>
-						<p class="project-description">
-							Comprehensive dataset creation for AI applications in agriculture, focusing on 
-							cardamom, millets, and walnuts in collaboration with RuTAG IIT Madras.
-						</p>
-						<div class="project-details">
-							<div class="detail-row">
-								<span class="detail-label">Partner:</span>
-								<span>RuTAG IIT Madras Chennai</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Duration:</span>
-								<span>2024 - 2026</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Crops:</span>
-								<span>Cardamom, Millets, Walnuts</span>
-							</div>
-						</div>
-						<div class="project-tags">
-							<span class="tag data">Data Science</span>
-							<span class="tag agriculture">Agriculture</span>
-							<span class="tag collaboration">Collaboration</span>
-						</div>
-					</div>
-
-					<!-- Recent Projects -->
-					<div class="project-card recent" data-category="recent ethics">
-						<div class="project-image">
-							<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="ethicsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.4" />
-										<stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0.6" />
-									</linearGradient>
-								</defs>
-								<rect width="800" height="400" fill="#faf5ff"/>
-								<circle cx="650" cy="100" r="120" fill="url(#ethicsGrad)"/>
-								<circle cx="150" cy="300" r="90" fill="url(#ethicsGrad)"/>
-								<text x="400" y="200" font-size="80" text-anchor="middle" fill="#7c3aed">⚖️</text>
-								<text x="400" y="260" font-size="24" text-anchor="middle" fill="#5b21b6" font-weight="600">Responsible AI</text>
-							</svg>
-						</div>
-						<div class="project-header">
-							<div class="project-icon">⚖️</div>
-							<div class="project-status recent">Recent</div>
-						</div>
-						<h3>Prime Directives for Responsible AI for Africa</h3>
-						<p class="project-description">
-							Collaborative research on establishing ethical guidelines for AI development in Africa, 
-							accepted at Data Science Africa 2025 conference in Nigeria.
-						</p>
-						<div class="project-details">
-							<div class="detail-row">
-								<span class="detail-label">Status:</span>
-								<span>Accepted at DSA 2025</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Conference:</span>
-								<span>Data Science Africa 2025, Nigeria</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Date:</span>
-								<span>June 2025</span>
-							</div>
-						</div>
-						<div class="project-tags">
-							<span class="tag ethics">Ethics</span>
-							<span class="tag africa">Africa</span>
-							<span class="tag conference">Conference</span>
-						</div>
-					</div>
-
-					<div class="project-card recent" data-category="recent frameworks">
-						<div class="project-image">
-							<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="frameworkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0.4" />
-										<stop offset="100%" style="stop-color:#d97706;stop-opacity:0.6" />
-									</linearGradient>
-								</defs>
-								<rect width="800" height="400" fill="#fffbeb"/>
-								<circle cx="650" cy="100" r="120" fill="url(#frameworkGrad)"/>
-								<circle cx="150" cy="300" r="90" fill="url(#frameworkGrad)"/>
-								<text x="400" y="200" font-size="80" text-anchor="middle" fill="#d97706">🔬</text>
-								<text x="400" y="260" font-size="24" text-anchor="middle" fill="#92400e" font-weight="600">CARA-FMs Framework</text>
-							</svg>
-						</div>
-						<div class="project-header">
-							<div class="project-icon">🔬</div>
-							<div class="project-status recent">Recent</div>
-						</div>
-						<h3>CARA-FMs Framework Development</h3>
-						<p class="project-description">
-							Developing theoretical frameworks for context-aware and ethical AI for East Africa, 
-							submitted to Deep Learning Indaba 2025.
-						</p>
-						<div class="project-details">
-							<div class="detail-row">
-								<span class="detail-label">Status:</span>
-								<span>Submitted to Deep Learning Indaba 2025</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Focus:</span>
-								<span>Context-Aware Responsible AI</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Region:</span>
-								<span>East Africa</span>
-							</div>
-						</div>
-						<div class="project-tags">
-							<span class="tag frameworks">AI Frameworks</span>
-							<span class="tag responsible-ai">Responsible AI</span>
-							<span class="tag theory">Theoretical</span>
-						</div>
-					</div>
-
-					<!-- Completed Projects -->
-					<div class="project-card completed" data-category="completed medical">
-						<div class="project-image">
-							<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-								<defs>
-									<linearGradient id="completedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-										<stop offset="0%" style="stop-color:#10b981;stop-opacity:0.4" />
-										<stop offset="100%" style="stop-color:#059669;stop-opacity:0.6" />
-									</linearGradient>
-								</defs>
-								<rect width="800" height="400" fill="#ecfdf5"/>
-								<circle cx="650" cy="100" r="120" fill="url(#completedGrad)"/>
-								<circle cx="150" cy="300" r="90" fill="url(#completedGrad)"/>
-								<text x="400" y="200" font-size="80" text-anchor="middle" fill="#059669">🎓</text>
-								<text x="400" y="260" font-size="24" text-anchor="middle" fill="#064e3b" font-weight="600">Medical Research</text>
-							</svg>
-						</div>
-						<div class="project-header">
-							<div class="project-icon">🎓</div>
-							<div class="project-status completed">Completed</div>
-						</div>
-						<h3>Explainable Machine Learning for Preterm Birth Prediction</h3>
-						<p class="project-description">
-							MTech thesis project focusing on explainable AI models for prediction of preterm birth 
-							using metabolomics data, successfully defended in July 2025.
-						</p>
-						<div class="project-details">
-							<div class="detail-row">
-								<span class="detail-label">Student:</span>
-								<span>Mr. Makame Mohammed Haji</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Completed:</span>
-								<span>July 2025</span>
-							</div>
-							<div class="detail-row">
-								<span class="detail-label">Type:</span>
-								<span>MTech Thesis</span>
-							</div>
-						</div>
-						<div class="project-tags">
-							<span class="tag explainable-ai">Explainable AI</span>
-							<span class="tag medical">Medical AI</span>
-							<span class="tag completed">Completed</span>
-						</div>
-					</div>
-				</div>
-
-				<!-- No Results Message -->
-				<div id="noResults" class="no-results" style="display: none;">
-					<div class="no-results-content">
-						<div class="no-results-icon">🔍</div>
-						<h3>No projects found</h3>
-						<p>Try adjusting your search terms or filters.</p>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
-
-	<ModernFooter />
+  <ModernFooter />
 </Layout>
 
 <style>
-	.projects-page {
-		padding-top: 90px;
-	}
+  .proj-main { background: var(--bg-primary, #ffffff); color: var(--text-primary); }
+  .proj-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .proj-hero {
+    padding: 4.5rem 0 2.5rem;
+    text-align: center;
+    background: radial-gradient(circle at top center, rgba(37, 99, 235, 0.08), transparent 60%);
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+  }
+  .proj-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #2563eb;
+    letter-spacing: 0.05em;
+  }
+  .proj-hero h1 { font-size: clamp(2rem, 4vw, 2.85rem); font-weight: 800; margin: 0.5rem 0 0.85rem; }
+  .proj-lead { max-width: 740px; margin: 0 auto 1.75rem; color: var(--text-secondary); font-size: 1.05rem; }
+  .proj-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.55rem; }
+  .filter-chip {
+    padding: 0.48rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color, #cbd5e1);
+    background: var(--bg-card, #ffffff);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .filter-chip.active { background: #2563eb; border-color: #2563eb; color: #ffffff; }
 
-	.projects-hero {
-		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-		padding: 4rem 0;
-		text-align: center;
-	}
-
-	.hero-content h1 {
-		font-size: 3rem;
-		font-weight: 700;
-		color: var(--accent-blue);
-		margin-bottom: 1.5rem;
-	}
-
-	.hero-description {
-		font-size: 1.25rem;
-		color: var(--text-secondary);
-		max-width: 800px;
-		margin: 0 auto 3rem;
-		line-height: 1.7;
-	}
-
-	.search-filter {
-		max-width: 600px;
-		margin: 0 auto;
-	}
-
-	.search-box {
-		position: relative;
-		margin-bottom: 2rem;
-	}
-
-	.search-box input {
-		width: 100%;
-		padding: 1rem 1rem 1rem 3rem;
-		border: 2px solid var(--border-color);
-		border-radius: 0.75rem;
-		font-size: 1rem;
-		background: var(--bg-primary);
-		color: var(--text-primary);
-		transition: all 0.3s ease;
-	}
-
-	.search-box input:focus {
-		outline: none;
-		border-color: var(--accent-blue);
-		box-shadow: 0 0 0 3px rgba(var(--accent-blue-rgb), 0.1);
-	}
-
-	.search-icon {
-		position: absolute;
-		left: 1rem;
-		top: 50%;
-		transform: translateY(-50%);
-		color: var(--text-muted);
-		stroke: currentColor;
-		stroke-width: 2;
-		fill: none;
-	}
-
-	.filter-tabs {
-		display: flex;
-		justify-content: center;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-	}
-
-	.filter-tab {
-		padding: 0.75rem 1.5rem;
-		border: 2px solid var(--border-color);
-		background: var(--bg-primary);
-		color: var(--text-secondary);
-		border-radius: 0.75rem;
-		font-weight: 500;
-		cursor: pointer;
-		transition: all 0.3s ease;
-	}
-
-	.filter-tab:hover,
-	.filter-tab.active {
-		background: var(--accent-blue);
-		color: white;
-		border-color: var(--accent-blue);
-	}
-
-	.projects-grid-section {
-		padding: 5rem 0;
-		background: var(--bg-primary);
-	}
-
-	.projects-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-		gap: 2rem;
-	}
-
-	.project-card {
-		background: var(--bg-secondary);
-		border-radius: 1.5rem;
-		padding: 2rem;
-		box-shadow: 0 4px 12px var(--shadow-light);
-		border: 1px solid var(--border-color);
-		transition: all 0.3s ease;
-	}
-
-	.project-image {
-		width: 100%;
-		height: 180px;
-		margin: -2rem -2rem 1.5rem -2rem;
-		border-radius: 1.5rem 1.5rem 0 0;
-		overflow: hidden;
-	}
-
-	.project-image img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform 0.3s ease;
-	}
-
-	.project-card:hover .project-image img {
-		transform: scale(1.05);
-	}
-
-	.project-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 12px 24px var(--shadow-medium);
-	}
-
-	.project-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 1rem;
-	}
-
-	.project-icon {
-		font-size: 2.5rem;
-	}
-
-	.project-status {
-		padding: 0.5rem 1rem;
-		border-radius: 0.5rem;
-		font-size: 0.875rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.project-status.ongoing {
-		background: #dcfce7;
-		color: #166534;
-	}
-
-	.project-status.recent {
-		background: #fef3c7;
-		color: #d97706;
-	}
-
-	.project-status.completed {
-		background: #e0f2fe;
-		color: #0369a1;
-	}
-
-	.project-card h3 {
-		font-size: 1.25rem;
-		font-weight: 600;
-		color: var(--text-primary);
-		margin-bottom: 1rem;
-		line-height: 1.3;
-	}
-
-	.project-description {
-		color: var(--text-secondary);
-		line-height: 1.6;
-		margin-bottom: 1.5rem;
-	}
-
-	.project-details {
-		margin-bottom: 1.5rem;
-	}
-
-	.detail-row {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 0.5rem;
-		font-size: 0.875rem;
-	}
-
-	.detail-label {
-		font-weight: 600;
-		color: var(--text-primary);
-	}
-
-	.detail-row span:last-child {
-		color: var(--text-secondary);
-		text-align: right;
-		flex: 1;
-		margin-left: 1rem;
-	}
-
-	.project-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
-
-	.tag {
-		padding: 0.25rem 0.75rem;
-		border-radius: 0.5rem;
-		font-size: 0.75rem;
-		font-weight: 500;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.tag.agriculture { background: #dcfce7; color: #166534; }
-	.tag.healthcare { background: #fef2f2; color: #dc2626; }
-	.tag.accessibility { background: #f3e8ff; color: #7c3aed; }
-	.tag.data { background: #e0f2fe; color: #0369a1; }
-	.tag.ethics { background: #fff7ed; color: #ea580c; }
-	.tag.frameworks { background: #f1f5f9; color: #475569; }
-	.tag.deep-learning { background: #ecfdf5; color: #059669; }
-	.tag.medical-imaging { background: #fef2f2; color: #dc2626; }
-	.tag.edge-ai { background: #f3e8ff; color: #7c3aed; }
-	.tag.explainable-ai { background: #fef3c7; color: #d97706; }
-
-	.no-results {
-		text-align: center;
-		padding: 4rem 2rem;
-	}
-
-	.no-results-icon {
-		font-size: 4rem;
-		margin-bottom: 1rem;
-		opacity: 0.5;
-	}
-
-	.no-results h3 {
-		font-size: 1.5rem;
-		color: var(--text-primary);
-		margin-bottom: 0.5rem;
-	}
-
-	.no-results p {
-		color: var(--text-secondary);
-	}
-
-	@media (max-width: 768px) {
-		.hero-content h1 {
-			font-size: 2.5rem;
-		}
-
-		.projects-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.filter-tabs {
-			flex-direction: column;
-		}
-
-		.detail-row {
-			flex-direction: column;
-			gap: 0.25rem;
-		}
-
-		.detail-row span:last-child {
-			text-align: left;
-			margin-left: 0;
-		}
-	}
+  .proj-grid-band { padding: 3rem 0 4.5rem; }
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .proj-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  .proj-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .proj-cat {
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #059669;
+  }
+  .proj-status {
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .proj-card h2 { margin: 0 0 0.7rem; font-size: 1.18rem; font-weight: 800; line-height: 1.38; }
+  .proj-summary { margin: 0 0 1rem; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; flex: 1; }
+  .proj-meta {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    padding: 0.75rem;
+    border-radius: 10px;
+    background: var(--bg-secondary, #f8fafc);
+    margin-bottom: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.1rem; }
+  .tag {
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    background: var(--bg-secondary, #f8fafc);
+    border: 1px solid var(--border-color, #e2e8f0);
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .proj-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .p-btn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #cbd5e1);
+    background: var(--bg-secondary, #f8fafc);
+    color: var(--text-primary);
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .p-btn:hover { border-color: #2563eb; color: #2563eb; }
+  .p-btn-primary { background: #0f172a; border-color: #0f172a; color: #ffffff; }
+  .p-btn-primary:hover { background: #2563eb; border-color: #2563eb; color: #ffffff; }
 </style>
-
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-		const searchInput = document.getElementById('projectSearch');
-		const filterTabs = document.querySelectorAll('.filter-tab');
-		const projectCards = document.querySelectorAll('.project-card');
-		const noResults = document.getElementById('noResults');
-
-		let currentFilter = 'all';
-
-		// Search functionality
-		searchInput?.addEventListener('input', function() {
-			filterProjects();
-		});
-
-		// Filter functionality
-		filterTabs.forEach(tab => {
-			tab.addEventListener('click', function() {
-				filterTabs.forEach(t => t.classList.remove('active'));
-				this.classList.add('active');
-				currentFilter = this.dataset.filter || 'all';
-				filterProjects();
-			});
-		});
-
-		function filterProjects() {
-			const searchTerm = searchInput?.value.toLowerCase() || '';
-			let visibleCount = 0;
-
-			projectCards.forEach(card => {
-				const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
-				const description = card.querySelector('.project-description')?.textContent.toLowerCase() || '';
-				const category = card.dataset.category || '';
-				
-				const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
-				const matchesFilter = currentFilter === 'all' || category.includes(currentFilter);
-
-				if (matchesSearch && matchesFilter) {
-					card.style.display = 'block';
-					visibleCount++;
-				} else {
-					card.style.display = 'none';
-				}
-			});
-
-			// Show/hide no results message
-			if (noResults) {
-				noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-			}
-		}
-	});
-</script>

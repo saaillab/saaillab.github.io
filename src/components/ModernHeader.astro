@@ -1,7 +1,11 @@
 ---
+export interface Props {
+	currentPage?: string;
+}
+const { currentPage = '' } = Astro.props;
 ---
 
-<header class="modern-header">
+<header class="modern-header" data-page={currentPage}>
 	<!-- Main Navigation -->
 	<nav class="navbar">
 		<div class="container">
@@ -24,6 +28,7 @@
 						<a href="/research" class="nav-link">Research <span class="dropdown-arrow">▼</span></a>
 						<div class="dropdown-menu">
 							<a href="/research#areas" class="dropdown-link">Research Areas</a>
+							<a href="/cropguard/" class="dropdown-link">CropGuard Series (1-6)</a>
 							<a href="/projects" class="dropdown-link">Projects</a>
 							<a href="/collaborations" class="dropdown-link">Collaborations</a>
 						</div>
@@ -75,6 +80,7 @@
 			<div class="mobile-menu" id="mobileMenu">
 				<a href="/" class="mobile-link">Home</a>
 				<a href="/research" class="mobile-link">Research</a>
+				<a href="/cropguard/" class="mobile-link">CropGuard Series</a>
 				<a href="/projects" class="mobile-link">Projects</a>
 				<a href="/publications" class="mobile-link">Publications</a>
 				<a href="/resources" class="mobile-link">Resources</a>
@@ -83,9 +89,6 @@
 			</div>
 		</div>
 	</nav>
-
-					</svg>
-				</a>
 </header>
 
 <style>
@@ -96,8 +99,11 @@
 		right: 0;
 		width: 100%;
 		z-index: 1000;
-		background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-		box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+		background: rgba(15, 23, 42, 0.94);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.14);
 		transition: all 0.3s ease;
 	}
 

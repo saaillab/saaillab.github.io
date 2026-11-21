@@ -1,0 +1,19 @@
+---
+import AcademicProjectPage from '../../components/AcademicProjectPage.astro';
+import { PUBLICATIONS, type Publication } from '../../data/publications';
+
+export function getStaticPaths() {
+  return PUBLICATIONS.map((pub) => ({
+    params: { slug: pub.slug },
+    props: { pub }
+  }));
+}
+
+interface Props {
+  pub: Publication;
+}
+
+const { pub } = Astro.props;
+---
+
+<AcademicProjectPage pub={pub} />

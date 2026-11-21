@@ -2,9 +2,16 @@
 export interface Props {
 	title?: string;
 	description?: string;
+	canonical?: string;
+	ogImage?: string;
 }
 
-const { title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar", description = "Sustainable AI for Agriculture & Intelligent Livelihoods Lab led by Dr. Innocent Nyalala at IIT Madras Zanzibar - Pioneering transformative AI solutions for East Africa" } = Astro.props;
+const {
+	title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar",
+	description = "Sustainable AI for Agriculture & Intelligent Livelihoods Lab led by Dr. Innocent Nyalala at IIT Madras Zanzibar - Pioneering transformative AI solutions for East Africa",
+	canonical = "https://saaillab.github.io",
+	ogImage = "https://saaillab.github.io/images/people/image.png"
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -17,14 +24,15 @@ const { title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar", descriptio
 		<!-- Performance Optimization -->
 		<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 		<link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
 		<link rel="dns-prefetch" href="https://visitor-badge.laobi.icu" />
-		<link rel="preload" as="image" href="/images/people/profile.webp" type="image/webp" />
-		<link rel="preload" as="image" href="/images/people/profile-optimized.jpg" type="image/jpeg" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		
 		<!-- Comprehensive SEO Meta Tags -->
-		<meta name="keywords" content="Innocent Nyalala, Dr Innocent Nyalala, Assistant Professor Innocent Nyalala, Innocent Nyalala IIT Madras, Innocent Nyalala Zanzibar, Innocent Nyalala AI, Innocent Nyalala Data Science, Innocent Nyalala Machine Learning, Innocent Nyalala Computer Vision, Innocent Nyalala Deep Learning, Innocent Nyalala agriculture, Innocent Nyalala research, Innocent Nyalala publications, Innocent Nyalala Tanzania, Innocent Nyalala East Africa, SAAIL Lab, Sustainable AI Lab, Sustainable AI Agriculture Intelligent Livelihoods, IIT Madras Zanzibar, IIT Madras Tanzania, Wadhwani School Data Science AI, AI agriculture East Africa, AI Tanzania, AI Zanzibar, data science East Africa, data science Tanzania, data science Zanzibar, machine learning Africa, deep learning Africa, computer vision agriculture, AI smart agriculture, precision agriculture AI, agricultural technology Africa, sustainable farming AI, medical imaging AI, healthcare AI Africa, placental imaging, assistive technology AI, responsible AI Africa, ethical AI Africa, AI research East Africa, AI research Tanzania, blockchain agriculture, spice supply chain, Zanzibar cloves, Swahili NLP, Swahili speech processing, AI for development, AI for good Africa, machine learning agriculture, precision crop management, agricultural data ecosystems, medical image analysis, Nanjing Agricultural University, 960 citations, h-index 14">
+		<meta name="keywords" content="Innocent Nyalala, Dr Innocent Nyalala, Assistant Professor Innocent Nyalala, IIT Madras Zanzibar, Wadhwani School Data Science AI, SAAIL Lab, CropGuardNet, CropKD-Net, DGS-Bench, CLOVES-4603, CARA-FM, sustainable agriculture AI, medical imaging AI, placental imaging, explainable AI, East Africa, Zanzibar, Tanzania, 1185 citations, h-index 15">
 		<meta name="author" content="Innocent Nyalala">
 		<meta name="citation_author" content="Innocent Nyalala">
 		<meta name="dc.creator" content="Innocent Nyalala">
@@ -34,7 +42,7 @@ const { title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar", descriptio
 		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 		<meta name="googlebot" content="index, follow">
 		<meta name="bingbot" content="index, follow">
-		<link rel="canonical" href="https://saaillab.github.io">
+		<link rel="canonical" href={canonical}>
 
 		<!-- Geographic and Regional SEO -->
 		<meta name="geo.region" content="TZ-15">
@@ -61,10 +69,10 @@ const { title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar", descriptio
 		<meta property="og:title" content={title}>
 		<meta property="og:description" content={description}>
 		<meta property="og:type" content="website">
-		<meta property="og:url" content="https://saaillab.github.io">
+		<meta property="og:url" content={canonical}>
 		<meta property="og:site_name" content="SAAIL Lab - Innocent Nyalala">
-		<meta property="og:image" content="https://saaillab.github.io/images/people/image.png">
-		<meta property="og:image:alt" content="Dr. Innocent Nyalala - SAAIL Lab Principal Investigator">
+		<meta property="og:image" content={ogImage}>
+		<meta property="og:image:alt" content="SAAIL Lab - Sustainable AI for Agriculture & Intelligent Livelihoods">
 		<meta property="og:image:width" content="1200">
 		<meta property="og:image:height" content="630">
 		<meta property="og:locale" content="en_US">
@@ -74,7 +82,7 @@ const { title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar", descriptio
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:title" content={title}>
 		<meta name="twitter:description" content={description}>
-		<meta name="twitter:image" content="https://saaillab.github.io/images/people/image.png">
+		<meta name="twitter:image" content={ogImage}>
 		<meta name="twitter:image:alt" content="Dr. Innocent Nyalala - SAAIL Lab">
 		<meta name="twitter:creator" content="@innocentnyalala">
 		<meta name="twitter:site" content="@saaillab">
@@ -263,7 +271,7 @@ const { title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar", descriptio
 		        "https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en",
 		        "https://www.linkedin.com/in/innocentnyalala/",
 		        "https://www.researchgate.net/profile/Innocent-Nyalala",
-		        "https://orcid.org/0000-0002-1234-5678"
+		        "https://orcid.org/0000-0002-7969-437X"
 		      ]
 		    },
 		    {
@@ -367,17 +375,18 @@ const { title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar", descriptio
 		--bg-primary: #ffffff;
 		--bg-secondary: #f8fafc;
 		--bg-tertiary: #e2e8f0;
-		--text-primary: #1e293b;
+		--bg-card: #ffffff;
+		--text-primary: #0f172a;
 		--text-secondary: #475569;
 		--text-muted: #64748b;
 		--accent-primary: #0f172a;
 		--accent-secondary: #334155;
-		--accent-blue: #1e40af;
+		--accent-blue: #2563eb;
 		--accent-green: #059669;
 		--border-color: #e2e8f0;
-		--shadow-light: rgba(0, 0, 0, 0.1);
-		--shadow-medium: rgba(0, 0, 0, 0.15);
-		--accent-blue-rgb: 30, 64, 175;
+		--shadow-light: rgba(15, 23, 42, 0.08);
+		--shadow-medium: rgba(15, 23, 42, 0.14);
+		--accent-blue-rgb: 37, 99, 235;
 	}
 
 	[data-theme="dark"] {
@@ -385,6 +394,7 @@ const { title = "SAAIL Lab | Innocent Nyalala | IIT Madras Zanzibar", descriptio
 		--bg-primary: #0f172a;
 		--bg-secondary: #1e293b;
 		--bg-tertiary: #334155;
+		--bg-card: #1e293b;
 		--text-primary: #f1f5f9;
 		--text-secondary: #cbd5e1;
 		--text-muted: #94a3b8;

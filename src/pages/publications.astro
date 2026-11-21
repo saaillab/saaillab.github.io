@@ -2,2238 +2,812 @@
 import Layout from '../layouts/Layout.astro';
 import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
+import { PUBLICATIONS, ALL_TOPICS, ALL_YEARS } from '../data/publications';
+
+const totalCount = PUBLICATIONS.length;
+const journalCount = PUBLICATIONS.filter((p) => p.category === 'journal').length;
+const confCount = PUBLICATIONS.filter((p) => p.category === 'conference' || p.category === 'workshop').length;
+const citationMap = Object.fromEntries(
+  PUBLICATIONS.map((p) => [p.slug, { title: p.title, bibtex: p.bibtex, apa: p.apa }])
+);
 ---
 
 <Layout
-	title="Publications - SAAIL Lab"
-	description="Explore our research publications, academic papers, and scholarly contributions in AI for agriculture, healthcare, and responsible AI at SAAIL Lab, IIT Madras Zanzibar."
+  title="Publications & Academic Project Pages | SAAIL Lab"
+  description="Complete catalog of 45+ peer-reviewed journal papers, conference proceedings, workshops, and preprints from SAAIL Lab (IIT Madras Zanzibar), each with an interactive academic project page and BibTeX citation."
+  canonical="https://saaillab.github.io/publications/"
 >
-	<ModernHeader />
+  <ModernHeader currentPage="publications" />
 
-	<main class="publications-page">
-		<section class="publications-hero">
-			<div class="container">
-				<div class="hero-content">
-					<h1>Research Output</h1>
-					<p class="hero-description">
-						Our research advances AI for agriculture, healthcare, and digital sovereignty across East Africa and the Global South.
-					</p>
+  <main class="pubs-main">
+    <!-- Hero -->
+    <section class="pubs-hero">
+      <div class="pubs-container">
+        <div class="hero-eyebrow">OPEN SCIENCE &amp; INDEXED RESEARCH · 2015 – 2026</div>
+        <h1>Publications &amp; Project Pages</h1>
+        <p class="hero-lead">
+          Every manuscript authored at SAAIL Lab features a dedicated academic project page with structured abstracts, reproducible artifacts, visual figures, Highwire Press metadata, and instant BibTeX export.
+        </p>
 
-					<div class="research-metrics">
-						<div class="metric-card">
-							<span class="metric-number">33+</span>
-							<span class="metric-label">Publications</span>
-						</div>
-						<div class="metric-card">
-							<span class="metric-number">1,185+</span>
-							<span class="metric-label">Citations</span>
-						</div>
-						<div class="metric-card">
-							<span class="metric-number">15</span>
-							<span class="metric-label">h-index</span>
-						</div>
-						<div class="metric-card">
-							<span class="metric-number">17</span>
-							<span class="metric-label">i10-index</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+        <div class="pubs-stats">
+          <div class="stat-pill"><strong>{totalCount}</strong> Cataloged Works</div>
+          <div class="stat-pill"><strong>{journalCount}</strong> Journal Articles</div>
+          <div class="stat-pill"><strong>{confCount}</strong> Conferences &amp; Workshops</div>
+          <div class="stat-pill"><strong>1,185+</strong> Citations (h-index 15)</div>
+          <a href="/cropguard/" class="stat-pill stat-pill-link"><strong>Papers 1-6</strong> CropGuard Hub &rarr;</a>
+        </div>
+      </div>
+    </section>
 
-		<section class="publications-list">
-			<div class="container">
-				<!-- Filter and Search Controls -->
-				<div class="filter-controls">
-					<div class="search-bar">
-						<svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<circle cx="11" cy="11" r="8" stroke-width="2"/>
-							<path d="M21 21L16.65 16.65" stroke-width="2" stroke-linecap="round"/>
-						</svg>
-						<input
-							type="text"
-							id="search-input"
-							placeholder="Search publications by title, author, or keywords..."
-							aria-label="Search publications"
-						/>
-					</div>
+    <!-- Controls -->
+    <section class="pubs-controls-band">
+      <div class="pubs-container">
+        <div class="controls-bar">
+          <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+            </svg>
+            <input
+              id="pubSearch"
+              type="search"
+              placeholder="Search titles, authors, venues, topics, datasets (e.g., CropGuardNet, DGS-Bench, cloves, placenta)..."
+              aria-label="Search publications"
+            />
+          </div>
 
-					<div class="filter-row">
-						<div class="filter-group">
-							<label for="type-filter">Type:</label>
-							<select id="type-filter" aria-label="Filter by publication type">
-								<option value="all">All Types</option>
-								<option value="journal">Journal Articles</option>
-								<option value="conference">Conferences</option>
-								<option value="invited">Invited Talks</option>
-							</select>
-						</div>
+          <div class="filter-selects">
+            <select id="yearFilter" aria-label="Filter by year">
+              <option value="all">All Years</option>
+              {ALL_YEARS.map((y) => <option value={String(y)}>{y}</option>)}
+            </select>
 
-						<div class="filter-group">
-							<label for="year-filter">Year:</label>
-							<select id="year-filter" aria-label="Filter by year">
-								<option value="all">All Years</option>
-								<option value="2026">2026</option>
-								<option value="2025">2025</option>
-							</select>
-						</div>
+            <select id="topicFilter" aria-label="Filter by topic">
+              <option value="all">All Topics</option>
+              {ALL_TOPICS.map((t) => <option value={t}>{t}</option>)}
+            </select>
 
-						<div class="filter-group">
-							<label for="topic-filter">Topic:</label>
-							<select id="topic-filter" aria-label="Filter by topic">
-								<option value="all">All Topics</option>
-								<option value="AI Sovereignty">AI Sovereignty</option>
-								<option value="Digital Sovereignty">Digital Sovereignty</option>
-								<option value="Responsible AI">Responsible AI</option>
-								<option value="Agriculture">Agriculture</option>
-								<option value="Healthcare">Healthcare</option>
-								<option value="Medical Imaging">Medical Imaging</option>
-								<option value="Deep Learning">Deep Learning</option>
-								<option value="Policy">Policy</option>
-								<option value="Global South">Global South</option>
-								<option value="Foundation Models">Foundation Models</option>
-								<option value="Fraud Detection">Fraud Detection</option>
-								<option value="Cybersecurity">Cybersecurity</option>
-								<option value="Solar Energy">Solar Energy</option>
-								<option value="Cassava">Cassava</option>
-								<option value="Benchmarking">Benchmarking</option>
-								<option value="Zanzibar">Zanzibar</option>
-								<option value="East Africa">East Africa</option>
-							</select>
-						</div>
+            <button id="exportVisibleBtn" type="button" class="export-all-btn">
+              Export Filtered .bib
+            </button>
+          </div>
+        </div>
 
-						<button id="reset-filters" class="reset-btn" aria-label="Reset all filters">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-								<path d="M21 3v5h-5"/>
-								<path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-								<path d="M3 21v-5h5"/>
-							</svg>
-							Reset
-						</button>
-					</div>
+        <div class="category-tabs-row">
+          <div class="category-tabs" role="tablist">
+            <button type="button" class="cat-tab active" data-cat="all">All ({totalCount})</button>
+            <button type="button" class="cat-tab" data-cat="cropguard">CropGuard Series</button>
+            <button type="button" class="cat-tab" data-cat="journal">Journals ({journalCount})</button>
+            <button type="button" class="cat-tab" data-cat="conf">Conferences &amp; Workshops ({confCount})</button>
+            <button type="button" class="cat-tab" data-cat="preprint">Under Review / Preprints</button>
+          </div>
 
-					<div class="action-row">
-						<div class="view-toggle">
-							<button id="list-view-btn" class="view-btn active" aria-label="List view">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<line x1="8" y1="6" x2="21" y2="6"/>
-									<line x1="8" y1="12" x2="21" y2="12"/>
-									<line x1="8" y1="18" x2="21" y2="18"/>
-									<line x1="3" y1="6" x2="3.01" y2="6"/>
-									<line x1="3" y1="12" x2="3.01" y2="12"/>
-									<line x1="3" y1="18" x2="3.01" y2="18"/>
-								</svg>
-								List
-							</button>
-							<button id="grid-view-btn" class="view-btn" aria-label="Grid view">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<rect x="3" y="3" width="7" height="7"/>
-									<rect x="14" y="3" width="7" height="7"/>
-									<rect x="14" y="14" width="7" height="7"/>
-									<rect x="3" y="14" width="7" height="7"/>
-								</svg>
-								Grid
-							</button>
-						</div>
+          <div class="view-toggle" aria-label="Toggle layout">
+            <span id="visibleCountLabel" class="visible-count">Showing {totalCount} of {totalCount}</span>
+            <button type="button" id="listViewBtn" class="view-btn active" title="List view">List</button>
+            <button type="button" id="gridViewBtn" class="view-btn" title="Grid view">Grid</button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-						<div class="export-actions">
-							<button id="export-bibtex" class="export-btn" aria-label="Export all as BibTeX">
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-									<polyline points="7 10 12 15 17 10"/>
-									<line x1="12" y1="15" x2="12" y2="3"/>
-								</svg>
-								Export BibTeX
-							</button>
-							<button id="export-apa" class="export-btn" aria-label="Export all as APA">
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-									<polyline points="7 10 12 15 17 10"/>
-									<line x1="12" y1="15" x2="12" y2="3"/>
-								</svg>
-								Export APA
-							</button>
-						</div>
-					</div>
+    <!-- Publications List -->
+    <section class="pubs-list-band">
+      <div class="pubs-container">
+        <div id="pubsContainer" class="pubs-list view-list">
+          {PUBLICATIONS.map((pub) => {
+            const authorNames = pub.authors.map((a) => a.name).join(' ');
+            const searchHaystack = `${pub.title} ${authorNames} ${pub.venue} ${pub.venueShort} ${pub.tldr} ${pub.keywords.join(' ')} ${pub.topics.join(' ')} ${pub.award || ''}`.toLowerCase();
+            return (
+              <article
+                class="pub-card"
+                data-year={String(pub.year)}
+                data-category={pub.category}
+                data-series={pub.seriesId || ''}
+                data-topics={pub.topics.join('|')}
+                data-slug={pub.slug}
+                data-search={searchHaystack}
+              >
+                {pub.teaserImage && (
+                  <a href={`/papers/${pub.slug}/`} class="pub-thumb-link" aria-label={`View ${pub.shortTitle || pub.title} project page`}>
+                    <img src={pub.teaserImage} alt={pub.shortTitle || pub.title} loading="lazy" class="pub-thumb" />
+                  </a>
+                )}
 
-					<div id="results-count" class="results-count"></div>
-				</div>
+                <div class="pub-body">
+                  <div class="pub-badges">
+                    <span class="badge-year">{pub.year}</span>
+                    <span class="badge-venue">{pub.venueShort}</span>
+                    {pub.seriesId === 'cropguard' && (
+                      <span class="badge-series">CropGuard Paper {pub.seriesNumber}</span>
+                    )}
+                    {pub.award && <span class="badge-award">{pub.award}</span>}
+                    {pub.impactFactor && <span class="badge-metric">{pub.impactFactor}</span>}
+                    {typeof pub.citations === 'number' && pub.citations > 0 && (
+                      <span class="badge-metric">{pub.citations}+ Citations</span>
+                    )}
+                  </div>
 
-				<div id="publications-container" class="year-section">
-					<div class="year-header">
-						<h2>2025-2026</h2>
-						<div class="year-stats">
-							<span class="stat">3 Journal Articles</span>
-							<span class="stat">16 Conferences & Workshops</span>
-							<span class="stat">2 Invited Talks</span>
-						</div>
-					</div>
+                  <h2 class="pub-title">
+                    <a href={`/papers/${pub.slug}/`}>{pub.title}</a>
+                  </h2>
 
-					<!-- Aug 2026 — DLI 2026 Best Poster Award -->
-					<div class="publication-item featured">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradientDGS)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#f59e0b" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<text x="100" y="145" text-anchor="middle" fill="#f59e0b" font-size="18" font-weight="bold">🏆</text>
-									<defs>
-										<linearGradient id="docGradientDGS" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#d97706"/>
-											<stop offset="100%" style="stop-color:#92400e"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge award">🏆 Best Poster Award</span>
-								<span class="badge year">Aug 2026</span>
-							</div>
-							<h3>DGS-Bench: A Benchmark for Deep Grounding and Segmentation in Agricultural Scenes</h3>
-							<p class="authors"><strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								<a href="https://deeplearningindaba.com/2026/" target="_blank" rel="noopener">Deep Learning Indaba 2026</a>, Lagos, Nigeria (3–8 August 2026)
-							</p>
-							<p class="abstract">
-								Introduces DGS-Bench, a benchmark for deep grounding and segmentation of agricultural scenes, addressing the critical gap in evaluation standards for agricultural AI systems. Accepted as one of 18 papers out of 114 submissions (15.82% acceptance rate). Winner, Best Poster Award at Deep Learning Indaba 2026 — SAAIL Lab's second consecutive Best Poster Award at Africa's premier machine learning conference.
-							</p>
-							<div class="publication-meta">
-								<span class="meta-item">📍 Lagos, Nigeria</span>
-								<span class="meta-item">📅 August 3–8, 2026</span>
-								<span class="meta-item">📊 18 of 114 accepted (15.82%)</span>
-							</div>
-							<div class="tags">
-								<span class="tag">Agriculture</span>
-								<span class="tag">Computer Vision</span>
-								<span class="tag">Benchmarking</span>
-								<span class="tag">Segmentation</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="dgsbench2026">Cite</button>
-							</div>
-						</div>
-					</div>
+                  <p class="pub-authors">
+                    {pub.authors.map((a, idx) => (
+                      <>
+                        <span class={a.name.includes('Innocent Nyalala') ? 'author-pi' : ''}>{a.name}</span>
+                        {idx < pub.authors.length - 1 ? ', ' : ''}
+                      </>
+                    ))}
+                  </p>
 
-					<!-- Jul 2026 — DSA Oral -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient9)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#10b981" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient9" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#10b981"/>
-											<stop offset="100%" style="stop-color:#059669"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Workshop</span>
-								<span class="badge award">🎤 Oral Presentation</span>
-								<span class="badge year">Jul 2026</span>
-							</div>
-							<h3>When Synthetic Data Hurts: DCGAN Augmentation Failure Under Extreme Data Scarcity for Cassava Disease Classification in East Africa</h3>
-							<p class="authors">Patrick Ndowo, <strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								<a href="https://www.datascienceafrica.org/" target="_blank" rel="noopener">DSA 2026 Workshop</a>, Makerere University, Kampala, Uganda (23–24 July 2026)
-							</p>
-							<p class="abstract">
-								Investigates failure modes of DCGAN-based data augmentation under extreme data scarcity in cassava disease classification, revealing conditions under which synthetic augmentation degrades model performance in East African field settings.
-							</p>
-							<div class="tags">
-								<span class="tag">Agriculture</span>
-								<span class="tag">Cassava</span>
-								<span class="tag">GANs</span>
-								<span class="tag">East Africa</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="dcgan2026">Cite</button>
-							</div>
-						</div>
-					</div>
+                  <p class="pub-tldr">{pub.tldr}</p>
 
-					<!-- July 2026 — DSA Poster 1 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient10)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#14b8a6" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient10" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#14b8a6"/>
-											<stop offset="100%" style="stop-color:#0d9488"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Workshop</span>
-								<span class="badge year">Jul 2026</span>
-							</div>
-							<h3>Auditing Representation in Crop Disease Benchmark Datasets Intended for Sub-Saharan African Deployment</h3>
-							<p class="authors">Patrick Ndowo, <strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								<a href="https://www.datascienceafrica.org/" target="_blank" rel="noopener">DSA 2026 Workshop</a>, Makerere University, Kampala, Uganda (23–24 July 2026) — Oral Presentation
-							</p>
-							<p class="abstract">
-								Audits geographic, class, and demographic representation in widely-used crop disease benchmark datasets intended for Sub-Saharan African deployment, highlighting critical gaps that reduce model transferability in local field conditions.
-							</p>
-							<div class="tags">
-								<span class="tag">Agriculture</span>
-								<span class="tag">Responsible AI</span>
-								<span class="tag">Datasets</span>
-								<span class="tag">Africa</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="audit2026">Cite</button>
-							</div>
-						</div>
-					</div>
+                  <div class="pub-topics">
+                    {pub.topics.map((t) => <span class="topic-tag">{t}</span>)}
+                  </div>
 
-					<!-- July 2026 — DSA Poster 2 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient11)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#06b6d4" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient11" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#06b6d4"/>
-											<stop offset="100%" style="stop-color:#0891b2"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Workshop</span>
-								<span class="badge year">Jul 2026</span>
-							</div>
-							<h3>Few-Shot Transfer Learning for Cassava Leaf Disease Detection Under East African Field Conditions</h3>
-							<p class="authors">Patrick Ndowo, <strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								<a href="https://www.datascienceafrica.org/" target="_blank" rel="noopener">DSA 2026 Workshop</a>, Makerere University, Kampala, Uganda (23–24 July 2026) — Oral Presentation
-							</p>
-							<p class="abstract">
-								Evaluates few-shot transfer learning strategies for cassava leaf disease detection, specifically addressing the domain shift challenges arising from real-world East African field image conditions compared to curated benchmark data.
-							</p>
-							<div class="tags">
-								<span class="tag">Agriculture</span>
-								<span class="tag">Cassava</span>
-								<span class="tag">Transfer Learning</span>
-								<span class="tag">East Africa</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="fewshot2026">Cite</button>
-							</div>
-						</div>
-					</div>
+                  <div class="pub-actions">
+                    <a href={`/papers/${pub.slug}/`} class="act-btn act-primary">
+                      Project Page &rarr;
+                    </a>
+                    {(pub.paperUrl || pub.doi) && (
+                      <a href={pub.paperUrl || pub.doi} target="_blank" rel="noopener" class="act-btn">
+                        Paper
+                      </a>
+                    )}
+                    {pub.codeUrl && (
+                      <a href={pub.codeUrl} target="_blank" rel="noopener" class="act-btn">
+                        Code
+                      </a>
+                    )}
+                    {pub.datasetUrl && (
+                      <a href={pub.datasetUrl} target="_blank" rel="noopener" class="act-btn">
+                        Dataset
+                      </a>
+                    )}
+                    {pub.posterUrl && (
+                      <a href={pub.posterUrl} target="_blank" rel="noopener" class="act-btn">
+                        Poster
+                      </a>
+                    )}
+                    <button type="button" class="act-btn cite-trigger" data-slug={pub.slug}>
+                      Cite
+                    </button>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
 
-					<!-- July 2026 — AAIAC #65 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient12)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#3b82f6" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient12" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#3b82f6"/>
-											<stop offset="100%" style="stop-color:#1d4ed8"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge year">Jul 2026</span>
-							</div>
-							<h3>From Digital Consumerism to Strategic Sovereignty: Analyzing the Draft EAC Regional AI Strategy (2026)</h3>
-							<p class="authors">Patrick Ndowo, <strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Mlimani City Conference Centre, Dar es Salaam, Tanzania (22–23 July 2026)
-							</p>
-							<p class="abstract">
-								Critically analyzes the Draft East African Community Regional AI Strategy through a digital sovereignty lens, identifying gaps between aspirational policy goals and structural constraints facing the region's AI ecosystem.
-							</p>
-							<div class="tags">
-								<span class="tag">AI Sovereignty</span>
-								<span class="tag">Policy</span>
-								<span class="tag">East Africa</span>
-								<span class="tag">Global South</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="eac2026">Cite</button>
-							</div>
-						</div>
-					</div>
+        <div id="emptyState" class="empty-state" hidden>
+          <h3>No matching publications found</h3>
+          <p>Try clearing the search query or resetting year and topic filters.</p>
+          <button type="button" id="resetFiltersBtn" class="act-btn act-primary">Reset All Filters</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-					<!-- July 2026 — AAIAC #68 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient13)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#6366f1" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient13" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#6366f1"/>
-											<stop offset="100%" style="stop-color:#4f46e5"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge year">Jul 2026</span>
-							</div>
-							<h3>Leakage-Free Fraud Detection in Mobile-First Banking: A PR-AUC Benchmark of XGBoost, Random Forest, and Isolation Forest for East Africa</h3>
-							<p class="authors">Patrick Ndowo, <strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Mlimani City Conference Centre, Dar es Salaam, Tanzania (22–23 July 2026)
-							</p>
-							<p class="abstract">
-								Establishes a rigorous leakage-free PR-AUC benchmarking methodology for mobile-first banking fraud detection in East Africa, comparing XGBoost, Random Forest, and Isolation Forest under realistic data imbalance conditions.
-							</p>
-							<div class="tags">
-								<span class="tag">Fraud Detection</span>
-								<span class="tag">FinTech</span>
-								<span class="tag">East Africa</span>
-								<span class="tag">Benchmarking</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="fraud2026">Cite</button>
-							</div>
-						</div>
-					</div>
+  <!-- Citation Modal -->
+  <div id="citeModal" class="cite-modal" hidden role="dialog" aria-modal="true" aria-labelledby="citeModalTitle">
+    <div class="cite-backdrop" id="citeBackdrop"></div>
+    <div class="cite-dialog">
+      <div class="cite-head">
+        <h3 id="citeModalTitle">Cite Publication</h3>
+        <button type="button" id="closeCiteModal" class="cite-close" aria-label="Close modal">&times;</button>
+      </div>
+      <p id="citePaperTitle" class="cite-paper-name"></p>
 
-					<!-- July 2026 — AAIAC #69 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient14)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#8b5cf6" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient14" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#8b5cf6"/>
-											<stop offset="100%" style="stop-color:#7c3aed"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge year">Jul 2026</span>
-							</div>
-							<h3>A Physics-Informed Random Forest Framework for Multi-Decadal Solar Irradiance Forecasting in Tanzanian Off-Grid Mini-Grids</h3>
-							<p class="authors">Patrick Ndowo, <strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Mlimani City Conference Centre, Dar es Salaam, Tanzania (22–23 July 2026)
-							</p>
-							<p class="abstract">
-								Develops a physics-informed random forest model for long-horizon solar irradiance forecasting tailored to Tanzanian off-grid mini-grid deployments, integrating domain physical constraints to improve reliability under data-scarce conditions.
-							</p>
-							<div class="tags">
-								<span class="tag">Solar Energy</span>
-								<span class="tag">Climate AI</span>
-								<span class="tag">Tanzania</span>
-								<span class="tag">Deep Learning</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="solar2026">Cite</button>
-							</div>
-						</div>
-					</div>
+      <div class="cite-block">
+        <div class="cite-block-head">
+          <span>BibTeX</span>
+          <button type="button" id="modalCopyBib" class="copy-pill">Copy BibTeX</button>
+        </div>
+        <pre id="modalBibPre"></pre>
+      </div>
 
-					<!-- July 2026 — AAIAC #70 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient15)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#f43f5e" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient15" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#f43f5e"/>
-											<stop offset="100%" style="stop-color:#e11d48"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge year">Jul 2026</span>
-							</div>
-							<h3>Resilient Cyber Defence for African Military 5G Networks: A Multi-Stage Hybrid ML Framework for Zero-Day Detection</h3>
-							<p class="authors">Patrick Ndowo, <strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Mlimani City Conference Centre, Dar es Salaam, Tanzania (22–23 July 2026)
-							</p>
-							<p class="abstract">
-								Proposes a multi-stage hybrid machine learning framework for zero-day threat detection in African military 5G network environments, combining anomaly detection with signature-based classifiers for resilient cyber defence.
-							</p>
-							<div class="tags">
-								<span class="tag">Cybersecurity</span>
-								<span class="tag">5G Networks</span>
-								<span class="tag">Africa</span>
-								<span class="tag">Deep Learning</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="cyber2026">Cite</button>
-							</div>
-						</div>
-					</div>
+      <div class="cite-block">
+        <div class="cite-block-head">
+          <span>APA Citation</span>
+          <button type="button" id="modalCopyApa" class="copy-pill">Copy APA</button>
+        </div>
+        <p id="modalApaText" class="cite-apa"></p>
+      </div>
+    </div>
+  </div>
 
-					<!-- July 2026 — AAIAC #71 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient16)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#f59e0b" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient16" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#f59e0b"/>
-											<stop offset="100%" style="stop-color:#d97706"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge year">Jul 2026</span>
-							</div>
-							<h3>Predicting Insurgency Hotspots in the Sahel: Leveraging GTD Data for Regional Defence Resource Allocation</h3>
-							<p class="authors">Patrick Ndowo, <strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context, Mlimani City Conference Centre, Dar es Salaam, Tanzania (22–23 July 2026)
-							</p>
-							<p class="abstract">
-								Uses Global Terrorism Database (GTD) data with machine learning models to predict insurgency hotspots across the Sahel region, enabling data-driven regional defence resource allocation for conflict prevention.
-							</p>
-							<div class="tags">
-								<span class="tag">Conflict AI</span>
-								<span class="tag">Sahel</span>
-								<span class="tag">Africa</span>
-								<span class="tag">Policy</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="sahel2026">Cite</button>
-							</div>
-						</div>
-					</div>
+  <script id="citationsData" type="application/json" set:html={JSON.stringify(citationMap)} />
 
-					<!-- May 2026 — CV4A@CVPR -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient7)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#f97316" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient7" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#f97316"/>
-											<stop offset="100%" style="stop-color:#ea580c"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Workshop</span>
-								<span class="badge ranking">CVPR 2026</span>
-								<span class="badge year">May 2026</span>
-							</div>
-							<h3>CLOVES-4603: Benchmarking Classical Texture Features and Fine-Tuned Deep Models for Clove Quality Grading</h3>
-							<p class="authors"><strong>Innocent Nyalala</strong>, Patrick Ndowo Vincent</p>
-							<p class="venue">
-								<a href="https://cvpr.thecvf.com/Conferences/2026" target="_blank" rel="noopener">7th Workshop on Vision for Agriculture (CV4A) @ CVPR 2026</a>
-							</p>
-							<p class="abstract">
-								Introduces the CLOVES-4603 dataset and benchmarks classical texture features (LBP, GLCM, HOG) against fine-tuned deep learning models for automated clove quality grading, addressing a critical post-harvest challenge for Zanzibar's primary export crop.
-							</p>
-							<div class="tags">
-								<span class="tag">Agriculture</span>
-								<span class="tag">Computer Vision</span>
-								<span class="tag">Zanzibar</span>
-								<span class="tag">Benchmarking</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="cloves2026">Cite</button>
-							</div>
-						</div>
-					</div>
+  <script is:inline>
+    (function () {
+      const searchEl = document.getElementById('pubSearch');
+      const yearEl = document.getElementById('yearFilter');
+      const topicEl = document.getElementById('topicFilter');
+      const catTabs = Array.from(document.querySelectorAll('.cat-tab'));
+      const cards = Array.from(document.querySelectorAll('.pub-card'));
+      const container = document.getElementById('pubsContainer');
+      const countLabel = document.getElementById('visibleCountLabel');
+      const emptyState = document.getElementById('emptyState');
+      const resetBtn = document.getElementById('resetFiltersBtn');
+      const listViewBtn = document.getElementById('listViewBtn');
+      const gridViewBtn = document.getElementById('gridViewBtn');
+      const exportBtn = document.getElementById('exportVisibleBtn');
 
-					<!-- Mar 2026 — ICLR Workshop -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient8)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#7c3aed" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient8" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#7c3aed"/>
-											<stop offset="100%" style="stop-color:#6d28d9"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Workshop</span>
-								<span class="badge ranking">ICLR 2026</span>
-								<span class="badge year">Mar 2026</span>
-							</div>
-							<h3>Unifying Perspectives on Learning Biases: A Data-Centric Intervention for Holistic Fairness, Robustness, and Generalization</h3>
-							<p class="authors">Patrick Ndowo Vincent, <strong>Innocent Nyalala</strong></p>
-							<p class="venue">
-								<a href="https://iclr.cc/Conferences/2026" target="_blank" rel="noopener">ICLR 2026 Workshop on Principled Design for Trustworthy AI-Interpretability</a>
-							</p>
-							<p class="abstract">
-								Proposes a unified data-centric framework that simultaneously addresses fairness, robustness, and generalization through principled bias interventions, bridging previously siloed perspectives in trustworthy ML research.
-							</p>
-							<div class="tags">
-								<span class="tag">Responsible AI</span>
-								<span class="tag">Fairness</span>
-								<span class="tag">Robustness</span>
-								<span class="tag">Deep Learning</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="biases2026">Cite</button>
-							</div>
-						</div>
-					</div>
+      const citationsRaw = document.getElementById('citationsData')?.textContent || '{}';
+      const citationsMap = JSON.parse(citationsRaw);
 
-					<!-- Jan 2026 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient1)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#3b82f6" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#f97316"/>
-											<stop offset="100%" style="stop-color:#ea580c"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge ranking">AAAI A*</span>
-								<span class="badge year">Jan 2026</span>
-							</div>
-							<h3>AI Sovereignty in the Global South: Power, Dependency, and Strategic Futures</h3>
-							<p class="venue">
-								<a href="https://aaai.org/conference/aaai/" target="_blank" rel="noopener">AAAI 2026 Conference</a> - Workshop Empowering Global South AI
-							</p>
-							<p class="abstract">
-								Analyzes structural power asymmetries in AI development across the Global South, proposing multipolar policy frameworks involving the African Union, ASEAN, and South-South cooperation to counter digital dependency on foreign platforms.
-							</p>
-							<div class="tags">
-								<span class="tag">AI Sovereignty</span>
-								<span class="tag">Policy</span>
-								<span class="tag">Global South</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="sovereignty2026">Cite</button>
-							</div>
-						</div>
-					</div>
+      let activeCat = 'all';
 
-					<!-- November 2025 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient2)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#6366f1" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#6366f1"/>
-											<stop offset="100%" style="stop-color:#4f46e5"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge ranking">EurIPS 2025</span>
-								<span class="badge year">Dec 2025</span>
-							</div>
-							<h3>Digital Sovereignty or Digital Serfdom? AI Strategies, Geopolitics, and the Quest for an Equitable Global South</h3>
-							<p class="venue">
-								<a href="https://eurips.cc/" target="_blank" rel="noopener">PAIG Workshop @ EurIPS 2025</a> (Beyond Regulation: Governance of AI in the Real World)
-							</p>
-							<p class="abstract">
-								Examines whether Global South countries are advancing toward digital sovereignty or drifting into digital serfdom. Uses a seven-dimensional framework and four case studies (Singapore, Vietnam, Kenya, and Syria) to reveal asymmetries in computing, talent, and regulation.
-							</p>
-							<div class="tags">
-								<span class="tag">Digital Sovereignty</span>
-								<span class="tag">AI Policy</span>
-								<span class="tag">Global South</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="serfdom2025">Cite</button>
-							</div>
-						</div>
-					</div>
+      function applyFilters() {
+        const q = (searchEl?.value || '').trim().toLowerCase();
+        const yearVal = yearEl?.value || 'all';
+        const topicVal = topicEl?.value || 'all';
+        let visible = 0;
 
-					<!-- October 2025 -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient3)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#10b981" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#10b981"/>
-											<stop offset="100%" style="stop-color:#059669"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge journal">Journal</span>
-								<span class="badge impact">IF: 7.5</span>
-								<span class="badge year">Oct 2025</span>
-							</div>
-							<h3>BAFNet: Deep contour-aware features for colorectal polyps segmentation</h3>
-							<p class="venue">
-								<a href="https://www.sciencedirect.com/journal/expert-systems-with-applications" target="_blank" rel="noopener">Expert Systems with Applications</a>, October 2025
-							</p>
-							<p class="abstract">
-								Introduces a boundary-aware feature fusion neural network for improved colorectal polyp segmentation through gating mechanisms that select high-quality contour features and enhance semantic accuracy.
-							</p>
-							<div class="tags">
-								<span class="tag">Healthcare</span>
-								<span class="tag">Medical Imaging</span>
-								<span class="tag">Deep Learning</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="bafnet2025">Cite</button>
-							</div>
-						</div>
-					</div>
+        cards.forEach(function (card) {
+          const cYear = card.getAttribute('data-year') || '';
+          const cCat = card.getAttribute('data-category') || '';
+          const cSeries = card.getAttribute('data-series') || '';
+          const cTopics = (card.getAttribute('data-topics') || '').split('|');
+          const cSearch = card.getAttribute('data-search') || '';
 
-					<!-- August 2025 - DLI Award Winner -->
-					<div class="publication-item featured">
-						<div class="publication-poster">
-							<img src="/images/posters/dli-cara-fm-poster.jpg" alt="CARA-FMs Framework Poster" />
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge award">🏆 Best Poster Award</span>
-								<span class="badge year">Aug 2025</span>
-							</div>
-							<h3>CARA-FMs: A Framework for Context-Aware and Responsible AI in East Africa</h3>
-							<p class="venue">
-								<a href="https://deeplearningindaba.com/2025/" target="_blank" rel="noopener">Deep Learning Indaba 2025</a>
-							</p>
-							<p class="abstract">
-								Presented theoretical framework for culturally attuned foundation models for East African agriculture.
-								Winner, Best Poster Award (Publication & Dataset Category).
-							</p>
-							<div class="publication-meta">
-								<span class="meta-item">📍 Kigali, Rwanda</span>
-								<span class="meta-item">📅 August 16-23, 2025</span>
-							</div>
-							<div class="tags">
-								<span class="tag">Responsible AI</span>
-								<span class="tag">Africa</span>
-								<span class="tag">Framework</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="dli2025">Cite</button>
-							</div>
-						</div>
-					</div>
+          const matchQ = !q || cSearch.includes(q);
+          const matchYear = yearVal === 'all' || cYear === yearVal;
+          const matchTopic = topicVal === 'all' || cTopics.includes(topicVal);
+          let matchCat = true;
+          if (activeCat === 'cropguard') matchCat = cSeries === 'cropguard';
+          else if (activeCat === 'journal') matchCat = cCat === 'journal';
+          else if (activeCat === 'conf') matchCat = cCat === 'conference' || cCat === 'workshop';
+          else if (activeCat === 'preprint') matchCat = cCat === 'preprint';
 
-					<!-- August 2025 - Foundation Models -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient4)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#14b8a6" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#14b8a6"/>
-											<stop offset="100%" style="stop-color:#0d9488"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge year">Aug 2025</span>
-							</div>
-							<h3>Towards Culturally Attuned and Resource-Aware Foundation Models for East African Agriculture: A theoretical framework and research agenda</h3>
-							<p class="venue">
-								<a href="https://deeplearningindaba.com/2025/" target="_blank" rel="noopener">Deep Learning Indaba (DLI) 2025 Conference</a> - Responsible AI Workshop
-							</p>
-							<p class="abstract">
-								Oral presentation on theoretical framework for culturally attuned foundation models for East African agriculture. To be published in PMLR Conference Proceedings (Tentatively January 2026).
-							</p>
-							<div class="tags">
-								<span class="tag">Foundation Models</span>
-								<span class="tag">Agriculture</span>
-								<span class="tag">East Africa</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="foundation2025">Cite</button>
-							</div>
-						</div>
-					</div>
+          const show = matchQ && matchYear && matchTopic && matchCat;
+          card.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
 
-					<!-- June 2025 - DSA -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<img src="/images/posters/research-poster.png" alt="Responsible AI Africa" />
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge year">Jun 2025</span>
-							</div>
-							<h3>Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology</h3>
-							<p class="venue">
-								<a href="https://www.datascienceafrica.org/" target="_blank" rel="noopener">Data Science Africa (DSA) 2025</a>, Ibadan University, Nigeria
-							</p>
-							<p class="abstract">
-								We present a holistic framework for developing inclusive, ethical, and sustainable AI that addresses Africa's unique cultural, social, and economic contexts. We emphasize participatory design, data equity, and local empowerment to ensure AI benefits all African communities.
-							</p>
-							<div class="tags">
-								<span class="tag">Responsible AI</span>
-								<span class="tag">Ethics</span>
-								<span class="tag">Africa</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="manifesto2025">Cite</button>
-							</div>
-						</div>
-					</div>
+        if (countLabel) {
+          countLabel.textContent = 'Showing ' + visible + ' of ' + cards.length;
+        }
+        if (emptyState) {
+          emptyState.hidden = visible > 0;
+        }
+      }
 
-					<!-- May 2025 - Cassava -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient5)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#22c55e" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#22c55e"/>
-											<stop offset="100%" style="stop-color:#16a34a"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge journal">Journal</span>
-								<span class="badge impact">IF: 8.9</span>
-								<span class="badge year">May 2025</span>
-							</div>
-							<h3>Rectifying the extremely weakened signals for cassava leaf disease detection</h3>
-							<p class="authors">Zhang Jiayu, Baohua Zhang, <strong>Innocent Nyalala</strong>, Peter Mecha, Junlong Chen, Kunjie Chen, Junfeng Gao</p>
-							<p class="venue">
-								<a href="https://www.sciencedirect.com/journal/computers-and-electronics-in-agriculture" target="_blank" rel="noopener">Computers and Electronics in Agriculture</a>, Volume 232, 2025
-							</p>
-							<p class="abstract">
-								Developed an artificial intelligence approach to accurately detect cassava leaf diseases by enhancing weak signal patterns in agricultural imaging.
-							</p>
-							<div class="tags">
-								<span class="tag">Agriculture</span>
-								<span class="tag">Disease Detection</span>
-								<span class="tag">Cassava</span>
-							</div>
-							<div class="links">
-								<a href="https://doi.org/10.1016/j.compag.2025.110107" target="_blank" class="link">DOI</a>
-								<button class="link cite" data-citation="cassava2025">Cite</button>
-							</div>
-						</div>
-					</div>
+      searchEl?.addEventListener('input', applyFilters);
+      yearEl?.addEventListener('change', applyFilters);
+      topicEl?.addEventListener('change', applyFilters);
 
-					<!-- 2025 - Clove -->
-					<div class="publication-item">
-						<div class="publication-poster">
-							<div class="poster-placeholder document">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#docGradient6)"/>
-									<rect x="50" y="40" width="100" height="120" fill="white" rx="4"/>
-									<line x1="65" y1="60" x2="135" y2="60" stroke="#3b82f6" stroke-width="3"/>
-									<line x1="65" y1="80" x2="135" y2="80" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="95" x2="135" y2="95" stroke="#94a3b8" stroke-width="2"/>
-									<line x1="65" y1="110" x2="120" y2="110" stroke="#94a3b8" stroke-width="2"/>
-									<defs>
-										<linearGradient id="docGradient6" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#3b82f6"/>
-											<stop offset="100%" style="stop-color:#1d4ed8"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge conference">Conference</span>
-								<span class="badge year">Nov 2025</span>
-							</div>
-							<h3>From Art to Algorithms: Co-Designing AI for Clove Grading with Zanzibar's Indigenous Experts</h3>
-							<p class="venue">
-								<a href="https://dl.acm.org/conference/africhi" target="_blank" rel="noopener">AFRICHI ACM Conference 2025</a>
-							</p>
-							<p class="abstract">
-								Proposes a socio-technical approach to modernizing Zanzibar's clove grading system. Validates a segmentation-first deep learning architecture, achieving 99.0% accuracy, while advocating for co-design with Indigenous experts to develop a low-cost mobile tool that fosters transparency and trust.
-							</p>
-							<div class="tags">
-								<span class="tag">Co-Design</span>
-								<span class="tag">Agriculture</span>
-								<span class="tag">Indigenous Knowledge</span>
-								<span class="tag">Zanzibar</span>
-							</div>
-							<div class="links">
-								<button class="link cite" data-citation="clove2025">Cite</button>
-							</div>
-						</div>
-					</div>
+      catTabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          catTabs.forEach(function (t) { t.classList.remove('active'); });
+          tab.classList.add('active');
+          activeCat = tab.getAttribute('data-cat') || 'all';
+          applyFilters();
+        });
+      });
 
-					<!-- Invited Talks -->
-					<div class="publication-item invited">
-						<div class="publication-poster">
-							<div class="poster-placeholder talk">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#talkGradient)"/>
-									<text x="100" y="100" text-anchor="middle" fill="white" font-size="60" font-weight="bold">🎤</text>
-									<defs>
-										<linearGradient id="talkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#06b6d4"/>
-											<stop offset="100%" style="stop-color:#0891b2"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge invited">Invited Talk</span>
-								<span class="badge year">Sep 2025</span>
-							</div>
-							<h3>Computing at the Edge of Possibility: Building Agricultural AI for Resource Constrained East Africa</h3>
-							<p class="venue"><strong>NPTEL CRC 302 Studio, IIT Madras Chennai</strong></p>
-							<p class="abstract">
-								Faculty talk on developing agricultural AI solutions for resource-constrained environments in East Africa.
-							</p>
-							<div class="tags">
-								<span class="tag">Agriculture</span>
-								<span class="tag">Edge Computing</span>
-								<span class="tag">East Africa</span>
-							</div>
-						</div>
-					</div>
+      resetBtn?.addEventListener('click', function () {
+        if (searchEl) searchEl.value = '';
+        if (yearEl) yearEl.value = 'all';
+        if (topicEl) topicEl.value = 'all';
+        activeCat = 'all';
+        catTabs.forEach(function (t) { t.classList.toggle('active', t.getAttribute('data-cat') === 'all'); });
+        applyFilters();
+      });
 
-					<div class="publication-item invited">
-						<div class="publication-poster">
-							<div class="poster-placeholder talk">
-								<svg width="100%" height="100%" viewBox="0 0 200 200">
-									<rect width="200" height="200" fill="url(#talkGradient2)"/>
-									<text x="100" y="100" text-anchor="middle" fill="white" font-size="60" font-weight="bold">💬</text>
-									<defs>
-										<linearGradient id="talkGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" style="stop-color:#8b5cf6"/>
-											<stop offset="100%" style="stop-color:#6d28d9"/>
-										</linearGradient>
-									</defs>
-								</svg>
-							</div>
-						</div>
-						<div class="publication-content">
-							<div class="publication-badges">
-								<span class="badge invited">Invited Talk</span>
-								<span class="badge year">Aug 2025</span>
-							</div>
-							<h3>How can Innovation Modernize the Public Service Delivery and Create Inclusive Digital Economy</h3>
-							<p class="venue"><strong>4th ZRCP Joint Annual Conference, Zanzibar</strong></p>
-							<p class="abstract">
-								A talk on innovation's role in modernizing public service delivery and fostering an inclusive digital economy.
-							</p>
-							<div class="tags">
-								<span class="tag">Innovation</span>
-								<span class="tag">Digital Economy</span>
-								<span class="tag">Public Service</span>
-							</div>
-						</div>
-					</div>
-				</div>
+      listViewBtn?.addEventListener('click', function () {
+        container?.classList.remove('view-grid');
+        container?.classList.add('view-list');
+        listViewBtn.classList.add('active');
+        gridViewBtn?.classList.remove('active');
+      });
+      gridViewBtn?.addEventListener('click', function () {
+        container?.classList.remove('view-list');
+        container?.classList.add('view-grid');
+        gridViewBtn.classList.add('active');
+        listViewBtn?.classList.remove('active');
+      });
 
-				<!-- No Results Message -->
-				<div id="no-results" class="no-results" style="display: none;">
-					<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<circle cx="11" cy="11" r="8"/>
-						<path d="M21 21L16.65 16.65"/>
-						<line x1="11" y1="8" x2="11" y2="14"/>
-						<line x1="11" y1="16" x2="11.01" y2="16"/>
-					</svg>
-					<h3>No publications found</h3>
-					<p>Try adjusting your search or filters</p>
-				</div>
-			</div>
-		</section>
-	</main>
+      exportBtn?.addEventListener('click', function () {
+        const bibEntries = [];
+        cards.forEach(function (card) {
+          if (card.style.display !== 'none') {
+            const slug = card.getAttribute('data-slug') || '';
+            if (citationsMap[slug]?.bibtex) {
+              bibEntries.push(citationsMap[slug].bibtex);
+            }
+          }
+        });
+        const blob = new Blob([bibEntries.join('\n\n') + '\n'], { type: 'application/x-bibtex;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'saaillab_publications.bib';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
 
-	<ModernFooter />
+      // Modal
+      const modal = document.getElementById('citeModal');
+      const closeModalBtn = document.getElementById('closeCiteModal');
+      const backdrop = document.getElementById('citeBackdrop');
+      const modalTitle = document.getElementById('citePaperTitle');
+      const modalBib = document.getElementById('modalBibPre');
+      const modalApa = document.getElementById('modalApaText');
 
-	<div id="citation-modal" class="modal">
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<h3>Cite this work</h3>
-			<div class="citation-tabs">
-				<button class="tab-btn active" data-format="bibtex">BibTeX</button>
-				<button class="tab-btn" data-format="apa">APA</button>
-			</div>
-			<div class="citation-text-container">
-				<pre id="citation-text"></pre>
-			</div>
-			<button id="copy-citation" class="copy-btn">Copy to Clipboard</button>
-		</div>
-	</div>
+      document.querySelectorAll('.cite-trigger').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const slug = btn.getAttribute('data-slug') || '';
+          const entry = citationsMap[slug];
+          if (!entry || !modal) return;
+          if (modalTitle) modalTitle.textContent = entry.title;
+          if (modalBib) modalBib.textContent = entry.bibtex;
+          if (modalApa) modalApa.textContent = entry.apa;
+          modal.hidden = false;
+        });
+      });
+
+      function closeModal() {
+        if (modal) modal.hidden = true;
+      }
+      closeModalBtn?.addEventListener('click', closeModal);
+      backdrop?.addEventListener('click', closeModal);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal && !modal.hidden) closeModal();
+      });
+
+      function wireCopy(btnId, sourceId, label) {
+        const btn = document.getElementById(btnId);
+        const src = document.getElementById(sourceId);
+        if (!btn || !src) return;
+        btn.addEventListener('click', async function () {
+          await navigator.clipboard.writeText(src.textContent || '');
+          btn.textContent = 'Copied!';
+          setTimeout(function () { btn.textContent = label; }, 1600);
+        });
+      }
+      wireCopy('modalCopyBib', 'modalBibPre', 'Copy BibTeX');
+      wireCopy('modalCopyApa', 'modalApaText', 'Copy APA');
+    })();
+  </script>
+
+  <ModernFooter />
 </Layout>
 
 <style>
-	.publications-page {
-		min-height: 100vh;
-	}
-
-	.publications-hero {
-		background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-		color: white;
-		padding: 5rem 0 3rem;
-		text-align: center;
-	}
-
-	.hero-content h1 {
-		font-size: 3.5rem;
-		font-weight: 800;
-		margin-bottom: 1rem;
-	}
-
-	.hero-description {
-		font-size: 1.25rem;
-		max-width: 800px;
-		margin: 0 auto 3rem;
-		opacity: 0.95;
-		line-height: 1.6;
-	}
-
-	.research-metrics {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-		gap: 2rem;
-		max-width: 800px;
-		margin: 0 auto;
-	}
-
-	.metric-card {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	.metric-number {
-		font-size: 3rem;
-		font-weight: 800;
-		line-height: 1;
-		background: linear-gradient(135deg, #fbbf24, #f59e0b);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-	}
-
-	.metric-label {
-		font-size: 1rem;
-		opacity: 0.9;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		font-weight: 600;
-	}
-
-	.publications-list {
-		padding: 4rem 0;
-		background: #f9fafb;
-	}
-
-	.filter-controls {
-		background: white;
-		border-radius: 1rem;
-		padding: 2rem;
-		margin-bottom: 3rem;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-	}
-
-	.search-bar {
-		position: relative;
-		margin-bottom: 1.5rem;
-	}
-
-	.search-icon {
-		position: absolute;
-		left: 1rem;
-		top: 50%;
-		transform: translateY(-50%);
-		color: #94a3b8;
-	}
-
-	#search-input {
-		width: 100%;
-		padding: 0.875rem 1rem 0.875rem 3rem;
-		border: 2px solid #e2e8f0;
-		border-radius: 0.75rem;
-		font-size: 1rem;
-		transition: all 0.3s;
-	}
-
-	#search-input:focus {
-		outline: none;
-		border-color: #3b82f6;
-		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-	}
-
-	.filter-row {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto;
-		gap: 1rem;
-		margin-bottom: 1.5rem;
-	}
-
-	.filter-group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	.filter-group label {
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: #475569;
-	}
-
-	.filter-group select {
-		padding: 0.625rem 0.875rem;
-		border: 2px solid #e2e8f0;
-		border-radius: 0.5rem;
-		font-size: 0.875rem;
-		cursor: pointer;
-		transition: all 0.3s;
-	}
-
-	.filter-group select:focus {
-		outline: none;
-		border-color: #3b82f6;
-		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-	}
-
-	.reset-btn {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.625rem 1rem;
-		background: #f1f5f9;
-		border: 2px solid #e2e8f0;
-		border-radius: 0.5rem;
-		color: #475569;
-		font-weight: 600;
-		font-size: 0.875rem;
-		cursor: pointer;
-		transition: all 0.3s;
-		align-self: flex-end;
-	}
-
-	.reset-btn:hover {
-		background: #e2e8f0;
-		color: #1e293b;
-	}
-
-	.action-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: 1rem;
-		padding-top: 1rem;
-		border-top: 1px solid #e2e8f0;
-	}
-
-	.view-toggle {
-		display: flex;
-		gap: 0.5rem;
-		background: #f1f5f9;
-		padding: 0.25rem;
-		border-radius: 0.5rem;
-	}
-
-	.view-btn {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.5rem 1rem;
-		background: transparent;
-		border: none;
-		border-radius: 0.375rem;
-		color: #64748b;
-		font-weight: 600;
-		font-size: 0.875rem;
-		cursor: pointer;
-		transition: all 0.3s;
-	}
-
-	.view-btn.active {
-		background: white;
-		color: #3b82f6;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
-
-	.export-actions {
-		display: flex;
-		gap: 0.75rem;
-	}
-
-	.export-btn {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.625rem 1rem;
-		background: linear-gradient(135deg, #10b981, #059669);
-		border: none;
-		border-radius: 0.5rem;
-		color: white;
-		font-weight: 600;
-		font-size: 0.875rem;
-		cursor: pointer;
-		transition: all 0.3s;
-	}
-
-	.export-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-	}
-
-	.results-count {
-		margin-top: 1rem;
-		padding: 0.75rem 1rem;
-		background: #eff6ff;
-		border-left: 4px solid #3b82f6;
-		border-radius: 0.5rem;
-		color: #1e40af;
-		font-weight: 600;
-		font-size: 0.875rem;
-	}
-
-	.no-results {
-		text-align: center;
-		padding: 4rem 2rem;
-		color: #64748b;
-	}
-
-	.no-results svg {
-		margin: 0 auto 1.5rem;
-		color: #cbd5e1;
-	}
-
-	.no-results h3 {
-		font-size: 1.5rem;
-		font-weight: 700;
-		color: #475569;
-		margin-bottom: 0.5rem;
-	}
-
-	.no-results p {
-		font-size: 1rem;
-		margin: 0;
-	}
-
-	.publications-container-grid .publication-item {
-		grid-template-columns: 1fr;
-		max-width: 450px;
-	}
-
-	.publications-container-grid .publication-poster {
-		min-height: 250px;
-	}
-
-	.publications-container-grid .publication-content {
-		padding: 1.5rem;
-	}
-
-	.publications-container-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-		gap: 2rem;
-	}
-
-	.publications-container-grid .year-header,
-	.publications-container-grid .year-stats {
-		grid-column: 1 / -1;
-	}
-
-	.year-section {
-		margin-bottom: 3rem;
-	}
-
-	.year-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 3rem;
-		padding-bottom: 1rem;
-		border-bottom: 3px solid #3b82f6;
-	}
-
-	.year-header h2 {
-		font-size: 3rem;
-		font-weight: 800;
-		color: #1e293b;
-	}
-
-	.year-stats {
-		display: flex;
-		gap: 1.5rem;
-	}
-
-	.stat {
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: #64748b;
-		padding: 0.5rem 1rem;
-		background: white;
-		border-radius: 0.5rem;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-	}
-
-	.publication-item {
-		background: white;
-		border-radius: 1rem;
-		margin-bottom: 2rem;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-		display: grid;
-		grid-template-columns: 300px 1fr;
-		gap: 2rem;
-		overflow: hidden;
-		transition: all 0.3s ease;
-	}
-
-	.publication-item:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-	}
-
-	.publication-item.featured {
-		border: 3px solid #fbbf24;
-	}
-
-	.publication-item.invited {
-		border-left: 4px solid #8b5cf6;
-	}
-
-	.publication-poster {
-		width: 100%;
-		height: 100%;
-		min-height: 300px;
-		overflow: hidden;
-		background: #f1f5f9;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.publication-poster img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.poster-placeholder {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.publication-content {
-		padding: 2rem 2rem 2rem 0;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.publication-badges {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
-
-	.badge {
-		padding: 0.375rem 0.875rem;
-		border-radius: 0.5rem;
-		font-size: 0.75rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.badge.conference {
-		background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-		color: white;
-	}
-
-	.badge.journal {
-		background: linear-gradient(135deg, #10b981, #059669);
-		color: white;
-	}
-
-	.badge.invited {
-		background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-		color: white;
-	}
-
-	.badge.award {
-		background: linear-gradient(135deg, #fbbf24, #f59e0b);
-		color: white;
-	}
-
-	.badge.impact {
-		background: linear-gradient(135deg, #ef4444, #dc2626);
-		color: white;
-		font-weight: 700;
-	}
-
-	.badge.ranking {
-		background: linear-gradient(135deg, #f97316, #ea580c);
-		color: white;
-		font-weight: 700;
-	}
-
-	.badge.year {
-		background: #e2e8f0;
-		color: #475569;
-	}
-
-	.publication-content h3 {
-		font-size: 1.375rem;
-		font-weight: 700;
-		color: #1e293b;
-		line-height: 1.4;
-		margin: 0;
-	}
-
-	.authors {
-		color: #64748b;
-		font-size: 0.9375rem;
-		line-height: 1.6;
-		margin: 0;
-	}
-
-	.venue {
-		color: #3b82f6;
-		font-size: 1rem;
-		margin: 0;
-	}
-
-	.venue a {
-		color: #3b82f6;
-		text-decoration: none;
-		font-weight: 600;
-		transition: color 0.3s ease;
-	}
-
-	.venue a:hover {
-		color: #1d4ed8;
-		text-decoration: underline;
-	}
-
-	.abstract {
-		color: #475569;
-		line-height: 1.7;
-		font-size: 0.9375rem;
-		margin: 0;
-	}
-
-	.publication-meta {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-	}
-
-	.meta-item {
-		color: #64748b;
-		font-size: 0.875rem;
-		font-weight: 500;
-	}
-
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
-
-	.tag {
-		padding: 0.25rem 0.75rem;
-		background: #f1f5f9;
-		color: #475569;
-		border-radius: 0.375rem;
-		font-size: 0.8125rem;
-		font-weight: 600;
-	}
-
-	.links {
-		display: flex;
-		gap: 0.75rem;
-		margin-top: auto;
-	}
-
-	.link {
-		padding: 0.5rem 1rem;
-		border-radius: 0.5rem;
-		font-size: 0.875rem;
-		font-weight: 600;
-		text-decoration: none;
-		transition: all 0.3s ease;
-		border: none;
-		cursor: pointer;
-		background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-		color: white;
-	}
-
-	.link:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-	}
-
-	.link.cite {
-		background: linear-gradient(135deg, #64748b, #475569);
-	}
-
-	.link.cite:hover {
-		box-shadow: 0 4px 12px rgba(100, 116, 139, 0.4);
-	}
-
-	.modal {
-		display: none;
-		position: fixed;
-		z-index: 1000;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.7);
-		animation: fadeIn 0.3s;
-	}
-
-	@keyframes fadeIn {
-		from { opacity: 0; }
-		to { opacity: 1; }
-	}
-
-	.modal-content {
-		background: white;
-		margin: 5% auto;
-		padding: 2.5rem;
-		border-radius: 1rem;
-		width: 90%;
-		max-width: 700px;
-		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-		animation: slideDown 0.3s;
-	}
-
-	@keyframes slideDown {
-		from { transform: translateY(-50px); opacity: 0; }
-		to { transform: translateY(0); opacity: 1; }
-	}
-
-	.modal-content h3 {
-		color: #1e293b;
-		font-size: 1.75rem;
-		margin-bottom: 1.5rem;
-	}
-
-	.close {
-		color: #94a3b8;
-		float: right;
-		font-size: 2rem;
-		font-weight: bold;
-		line-height: 1;
-		cursor: pointer;
-		transition: color 0.3s;
-	}
-
-	.close:hover {
-		color: #1e293b;
-	}
-
-	.citation-tabs {
-		display: flex;
-		gap: 1rem;
-		margin-bottom: 1.5rem;
-		border-bottom: 2px solid #e2e8f0;
-	}
-
-	.tab-btn {
-		padding: 0.75rem 1.5rem;
-		background: none;
-		border: none;
-		font-size: 1rem;
-		font-weight: 600;
-		color: #64748b;
-		cursor: pointer;
-		border-bottom: 3px solid transparent;
-		transition: all 0.3s;
-	}
-
-	.tab-btn.active {
-		color: #3b82f6;
-		border-bottom-color: #3b82f6;
-	}
-
-	.citation-text-container {
-		background: #f8fafc;
-		border: 1px solid #e2e8f0;
-		border-radius: 0.5rem;
-		padding: 1.5rem;
-		margin-bottom: 1.5rem;
-		max-height: 400px;
-		overflow-y: auto;
-	}
-
-	#citation-text {
-		font-family: 'Monaco', 'Courier New', monospace;
-		font-size: 0.875rem;
-		color: #1e293b;
-		margin: 0;
-		white-space: pre-wrap;
-		word-wrap: break-word;
-	}
-
-	.copy-btn {
-		width: 100%;
-		padding: 0.875rem;
-		background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-		color: white;
-		border: none;
-		border-radius: 0.5rem;
-		font-size: 1rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s;
-	}
-
-	.copy-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-	}
-
-	.copy-btn:active {
-		transform: translateY(0);
-	}
-
-	@media (max-width: 1024px) {
-		.publication-item {
-			grid-template-columns: 250px 1fr;
-			gap: 1.5rem;
-		}
-	}
-
-	@media (max-width: 1024px) {
-		.publications-container-grid {
-			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		}
-	}
-
-	@media (max-width: 768px) {
-		.hero-content h1 {
-			font-size: 2.5rem;
-		}
-
-		.hero-description {
-			font-size: 1rem;
-		}
-
-		.research-metrics {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 1.5rem;
-		}
-
-		.metric-number {
-			font-size: 2rem;
-		}
-
-		.filter-controls {
-			padding: 1.5rem;
-		}
-
-		.filter-row {
-			grid-template-columns: 1fr;
-		}
-
-		.reset-btn {
-			align-self: stretch;
-		}
-
-		.action-row {
-			flex-direction: column;
-			align-items: stretch;
-		}
-
-		.view-toggle,
-		.export-actions {
-			width: 100%;
-			justify-content: center;
-		}
-
-		.export-btn {
-			flex: 1;
-		}
-
-		.year-header {
-			flex-direction: column;
-			align-items: flex-start;
-			gap: 1rem;
-		}
-
-		.year-stats {
-			flex-direction: column;
-			gap: 0.5rem;
-			width: 100%;
-		}
-
-		.stat {
-			width: 100%;
-		}
-
-		.publication-item {
-			grid-template-columns: 1fr;
-			gap: 0;
-		}
-
-		.publication-poster {
-			min-height: 200px;
-		}
-
-		.publication-content {
-			padding: 1.5rem;
-		}
-
-		.publication-content h3 {
-			font-size: 1.125rem;
-		}
-
-		.publications-container-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.publications-container-grid .publication-item {
-			max-width: 100%;
-		}
-
-		.modal-content {
-			width: 95%;
-			margin: 10% auto;
-			padding: 1.5rem;
-		}
-	}
+  .pubs-main {
+    background: var(--bg-primary, #ffffff);
+    color: var(--text-primary, #0f172a);
+    min-height: 80vh;
+  }
+  .pubs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .pubs-hero {
+    padding: 4.5rem 0 2.5rem;
+    text-align: center;
+    background: radial-gradient(circle at top center, rgba(37, 99, 235, 0.08), transparent 60%);
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+  }
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #2563eb;
+    margin-bottom: 0.65rem;
+  }
+  .pubs-hero h1 {
+    font-size: clamp(2rem, 3.8vw, 2.9rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+    letter-spacing: -0.02em;
+  }
+  .hero-lead {
+    max-width: 760px;
+    margin: 0 auto 1.75rem;
+    font-size: 1.06rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .pubs-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+  .stat-pill {
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .stat-pill strong { color: var(--text-primary); }
+  .stat-pill-link {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1d4ed8;
+    font-weight: 600;
+  }
+  .stat-pill-link strong { color: #1d4ed8; }
+
+  .pubs-controls-band {
+    padding: 1.5rem 0;
+    background: var(--bg-secondary, #f8fafc);
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+    position: sticky;
+    top: 70px;
+    z-index: 30;
+  }
+  .controls-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .search-box {
+    flex: 1 1 320px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.9rem;
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-color, #cbd5e1);
+    border-radius: 10px;
+    color: var(--text-muted);
+  }
+  .search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+  }
+  .filter-selects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .filter-selects select, .export-all-btn {
+    padding: 0.55rem 0.85rem;
+    background: var(--bg-card, #ffffff);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color, #cbd5e1);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .export-all-btn {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+    font-weight: 600;
+  }
+  .export-all-btn:hover { background: #2563eb; border-color: #2563eb; }
+
+  .category-tabs-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .cat-tab {
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color, #cbd5e1);
+    background: var(--bg-card, #ffffff);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .cat-tab.active {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+  }
+  .view-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .visible-count {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-right: 0.35rem;
+  }
+  .view-btn {
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--border-color, #cbd5e1);
+    background: var(--bg-card, #ffffff);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .view-btn.active {
+    background: #0f172a;
+    border-color: #0f172a;
+    color: #ffffff;
+  }
+
+  .pubs-list-band { padding: 2.5rem 0 4.5rem; }
+  .pubs-list.view-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .pubs-list.view-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.35rem;
+  }
+
+  .pub-card {
+    display: flex;
+    gap: 1.35rem;
+    padding: 1.45rem;
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 16px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .view-grid .pub-card {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .pub-card:hover {
+    border-color: #93c5fd;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+  }
+  .pub-thumb-link {
+    flex: 0 0 210px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 0.4rem;
+  }
+  .view-grid .pub-thumb-link {
+    flex: none;
+    height: 170px;
+  }
+  .pub-thumb {
+    max-width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+  }
+
+  .pub-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .pub-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.55rem;
+  }
+  .badge-year, .badge-venue, .badge-series, .badge-award, .badge-metric {
+    padding: 0.18rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+  .badge-year { background: #0f172a; color: #ffffff; }
+  .badge-venue { background: #eff6ff; color: #1d4ed8; }
+  .badge-series { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+  .badge-award { background: #fef3c7; color: #92400e; }
+  .badge-metric { background: #f1f5f9; color: #475569; }
+
+  .pub-title {
+    margin: 0 0 0.45rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.38;
+  }
+  .pub-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .pub-title a:hover {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+  .pub-authors {
+    margin: 0 0 0.55rem;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+  }
+  .author-pi {
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-decoration-color: rgba(37, 99, 235, 0.35);
+    text-underline-offset: 2px;
+  }
+  .pub-tldr {
+    margin: 0 0 0.85rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .pub-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.95rem;
+  }
+  .topic-tag {
+    padding: 0.14rem 0.5rem;
+    border-radius: 5px;
+    background: var(--bg-secondary, #f8fafc);
+    border: 1px solid var(--border-color, #e2e8f0);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+  .pub-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .act-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.38rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #cbd5e1);
+    background: var(--bg-secondary, #f8fafc);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .act-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+  }
+  .act-primary {
+    background: #0f172a;
+    border-color: #0f172a;
+    color: #ffffff;
+  }
+  .act-primary:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 3.5rem 1rem;
+    border: 1px dashed var(--border-color, #cbd5e1);
+    border-radius: 16px;
+  }
+
+  /* Modal */
+  .cite-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .cite-modal[hidden] { display: none; }
+  .cite-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(4px);
+  }
+  .cite-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    background: var(--bg-card, #ffffff);
+    color: var(--text-primary);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .cite-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .cite-head h3 { margin: 0; font-size: 1.25rem; }
+  .cite-close {
+    border: none;
+    background: transparent;
+    font-size: 1.6rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+  }
+  .cite-paper-name {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0 0 1.25rem;
+    font-weight: 600;
+  }
+  .cite-block { margin-bottom: 1.15rem; }
+  .cite-block-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.45rem;
+  }
+  .copy-pill {
+    padding: 0.3rem 0.75rem;
+    border-radius: 6px;
+    border: none;
+    background: #2563eb;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .cite-dialog pre {
+    margin: 0;
+    padding: 1rem;
+    background: var(--bg-secondary, #f8fafc);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+  .cite-apa {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    background: var(--bg-secondary, #f8fafc);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 768px) {
+    .pub-card { flex-direction: column; }
+    .pub-thumb-link { flex: none; max-height: 180px; }
+    .pubs-controls-band { position: static; }
+  }
 </style>
-
-<script>
-	const citations = {
-		cloves2026: {
-			bibtex: `@inproceedings{nyalala2026cloves,
-  title={CLOVES-4603: Benchmarking Classical Texture Features and Fine-Tuned Deep Models for Clove Quality Grading},
-  author={Nyalala, Innocent and Vincent, Patrick Ndowo},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-  year={2026}
-}`,
-			apa: `Nyalala, I., & Vincent, P. N. (2026). CLOVES-4603: Benchmarking Classical Texture Features and Fine-Tuned Deep Models for Clove Quality Grading. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR 2026).`
-		},
-		biases2026: {
-			bibtex: `@inproceedings{vincent2026biases,
-  title={Unifying Perspectives on Learning Biases: A Data-Centric Intervention for Holistic Fairness, Robustness, and Generalization},
-  author={Vincent, Patrick Ndowo and Nyalala, Innocent},
-  booktitle={ICLR 2026 Workshop on Principled Design for Trustworthy AI-Interpretability},
-  year={2026}
-}`,
-			apa: `Vincent, P. N., & Nyalala, I. (2026). Unifying Perspectives on Learning Biases: A Data-Centric Intervention for Holistic Fairness, Robustness, and Generalization. In ICLR 2026 Workshop on Principled Design for Trustworthy AI-Interpretability.`
-		},
-		dcgan2026: {
-			bibtex: `@inproceedings{ndowo2026dcgan,
-  title={When Synthetic Data Hurts: DCGAN Augmentation Failure Under Extreme Data Scarcity for Cassava Disease Classification in East Africa},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={DSA 2026 Workshop},
-  address={Makerere University, Kampala, Uganda},
-  year={2026},
-  month={July},
-  note={Oral Presentation}
-}`,
-			apa: `Ndowo, P., & Nyalala, I. (2026, July). When Synthetic Data Hurts: DCGAN Augmentation Failure Under Extreme Data Scarcity for Cassava Disease Classification in East Africa. In DSA 2026 Workshop, Makerere University, Kampala, Uganda. (Oral Presentation)`
-		},
-		audit2026: {
-			bibtex: `@inproceedings{ndowo2026audit,
-  title={Auditing Representation in Crop Disease Benchmark Datasets Intended for Sub-Saharan African Deployment},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={DSA 2026 Workshop},
-  address={Makerere University, Kampala, Uganda},
-  year={2026},
-  month={July},
-  note={Oral Presentation}
-}`,
-			apa: `Ndowo, P., & Nyalala, I. (2026, July). Auditing Representation in Crop Disease Benchmark Datasets Intended for Sub-Saharan African Deployment. In DSA 2026 Workshop, Makerere University, Kampala, Uganda. (Oral Presentation)`
-		},
-		fewshot2026: {
-			bibtex: `@inproceedings{ndowo2026fewshot,
-  title={Few-Shot Transfer Learning for Cassava Leaf Disease Detection Under East African Field Conditions},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={DSA 2026 Workshop},
-  address={Makerere University, Kampala, Uganda},
-  year={2026},
-  month={July},
-  note={Oral Presentation}
-}`,
-			apa: `Ndowo, P., & Nyalala, I. (2026, July). Few-Shot Transfer Learning for Cassava Leaf Disease Detection Under East African Field Conditions. In DSA 2026 Workshop, Makerere University, Kampala, Uganda. (Oral Presentation)`
-		},
-		eac2026: {
-			bibtex: `@inproceedings{ndowo2026eac,
-  title={From Digital Consumerism to Strategic Sovereignty: Analyzing the Draft EAC Regional AI Strategy (2026)},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-			apa: `Ndowo, P., & Nyalala, I. (2026, July). From Digital Consumerism to Strategic Sovereignty: Analyzing the Draft EAC Regional AI Strategy (2026). In AAIAC 2026, Dar es Salaam, Tanzania.`
-		},
-		fraud2026: {
-			bibtex: `@inproceedings{ndowo2026fraud,
-  title={Leakage-Free Fraud Detection in Mobile-First Banking: A PR-AUC Benchmark of XGBoost, Random Forest, and Isolation Forest for East Africa},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-			apa: `Ndowo, P., & Nyalala, I. (2026, July). Leakage-Free Fraud Detection in Mobile-First Banking: A PR-AUC Benchmark of XGBoost, Random Forest, and Isolation Forest for East Africa. In AAIAC 2026, Dar es Salaam, Tanzania.`
-		},
-		solar2026: {
-			bibtex: `@inproceedings{ndowo2026solar,
-  title={A Physics-Informed Random Forest Framework for Multi-Decadal Solar Irradiance Forecasting in Tanzanian Off-Grid Mini-Grids},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-			apa: `Ndowo, P., & Nyalala, I. (2026, July). A Physics-Informed Random Forest Framework for Multi-Decadal Solar Irradiance Forecasting in Tanzanian Off-Grid Mini-Grids. In AAIAC 2026, Dar es Salaam, Tanzania.`
-		},
-		cyber2026: {
-			bibtex: `@inproceedings{ndowo2026cyber,
-  title={Resilient Cyber Defence for African Military 5G Networks: A Multi-Stage Hybrid ML Framework for Zero-Day Detection},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-			apa: `Ndowo, P., & Nyalala, I. (2026, July). Resilient Cyber Defence for African Military 5G Networks: A Multi-Stage Hybrid ML Framework for Zero-Day Detection. In AAIAC 2026, Dar es Salaam, Tanzania.`
-		},
-		sahel2026: {
-			bibtex: `@inproceedings{ndowo2026sahel,
-  title={Predicting Insurgency Hotspots in the Sahel: Leveraging GTD Data for Regional Defence Resource Allocation},
-  author={Ndowo, Patrick and Nyalala, Innocent},
-  booktitle={AAIAC 2026 — 2nd International Conference on Advancements of AI in the African Context},
-  address={Dar es Salaam, Tanzania},
-  year={2026},
-  month={July}
-}`,
-			apa: `Ndowo, P., & Nyalala, I. (2026, July). Predicting Insurgency Hotspots in the Sahel: Leveraging GTD Data for Regional Defence Resource Allocation. In AAIAC 2026, Dar es Salaam, Tanzania.`
-		},
-		sovereignty2026: {
-			bibtex: `@inproceedings{nyalala2026sovereignty,
-  title={AI Sovereignty in the Global South: Power, Dependency, and Strategic Futures},
-  author={Nyalala, Innocent},
-  booktitle={AAAI 2026 Conference - Workshop Empowering Global South AI},
-  year={2026},
-  month={January}
-}`,
-			apa: `Nyalala, I. (2026, January). AI Sovereignty in the Global South: Power, Dependency, and Strategic Futures. In AAAI 2026 Conference - Workshop Empowering Global South AI.`
-		},
-		serfdom2025: {
-			bibtex: `@inproceedings{nyalala2025serfdom,
-  title={Digital Sovereignty or Digital Serfdom? AI Strategies, Geopolitics, and the Quest for an Equitable Global South},
-  author={Nyalala, Innocent},
-  booktitle={EurIPS 2025 Conference - Workshop on Private AI Governance},
-  year={2025},
-  month={November}
-}`,
-			apa: `Nyalala, I. (2025, November). Digital Sovereignty or Digital Serfdom? AI Strategies, Geopolitics, and the Quest for an Equitable Global South. In EurIPS 2025 Conference - Workshop on Private AI Governance.`
-		},
-		bafnet2025: {
-			bibtex: `@article{nyalala2025bafnet,
-  title={BAFNet: Deep contour-aware features for colorectal polyps segmentation},
-  author={Nyalala, Innocent and others},
-  journal={Expert Systems with Applications},
-  year={2025},
-  month={October},
-  day={14},
-  publisher={Elsevier}
-}`,
-			apa: `Nyalala, I., et al. (2025, October 14). BAFNet: Deep contour-aware features for colorectal polyps segmentation. Expert Systems with Applications. Elsevier.`
-		},
-		dli2025: {
-			bibtex: `@inproceedings{nyalala2025cara,
-  title={CARA-FMs: A Framework for Context-Aware and Responsible AI in East Africa},
-  author={Nyalala, Innocent},
-  booktitle={Deep Learning Indaba 2025},
-  year={2025},
-  month={August},
-  day={20},
-  address={Kigali, Rwanda},
-  note={Best Poster Award (Publication \\& Dataset Category)}
-}`,
-			apa: `Nyalala, I. (2025, August 20). CARA-FMs: A Framework for Context-Aware and Responsible AI in East Africa. In Deep Learning Indaba 2025. Kigali, Rwanda. (Best Poster Award)`
-		},
-		foundation2025: {
-			bibtex: `@inproceedings{nyalala2025foundation,
-  title={Towards Culturally Attuned and Resource-Aware Foundation Models for East African Agriculture: A theoretical framework and research agenda},
-  author={Nyalala, Innocent},
-  booktitle={Deep Learning Indaba (DLI) 2025 Conference - Responsible AI Workshop},
-  year={2025},
-  month={August},
-  day={21},
-  note={To be published in PMLR Conference Proceedings, January 2026}
-}`,
-			apa: `Nyalala, I. (2025, August 21). Towards Culturally Attuned and Resource-Aware Foundation Models for East African Agriculture: A theoretical framework and research agenda. In Deep Learning Indaba (DLI) 2025 Conference - Responsible AI Workshop. (To be published in PMLR, January 2026)`
-		},
-		manifesto2025: {
-			bibtex: `@inproceedings{nyalala2025manifesto,
-  title={Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology},
-  author={Nyalala, Innocent and others},
-  booktitle={Data Science Africa (DSA) 2025},
-  address={Ibadan University, Nigeria},
-  year={2025},
-  month={June},
-  day={5-6}
-}`,
-			apa: `Nyalala, I., et al. (2025, June 5-6). Prime Directives for Responsible AI for Africa: A Manifesto for Inclusive Technology. In Data Science Africa (DSA) 2025, Ibadan University, Nigeria.`
-		},
-		cassava2025: {
-			bibtex: `@article{zhang2025cassava,
-  title={Rectifying the extremely weakened signals for cassava leaf disease detection},
-  author={Zhang, Jiayu and Zhang, Baohua and Nyalala, Innocent and Mecha, Peter and Chen, Junlong and Chen, Kunjie and Gao, Junfeng},
-  journal={Computers and Electronics in Agriculture},
-  volume={232},
-  year={2025},
-  month={May},
-  day={1},
-  doi={10.1016/j.compag.2025.110107},
-  publisher={Elsevier}
-}`,
-			apa: `Zhang, J., Zhang, B., Nyalala, I., Mecha, P., Chen, J., Chen, K., & Gao, J. (2025, May 1). Rectifying the extremely weakened signals for cassava leaf disease detection. Computers and Electronics in Agriculture, 232. https://doi.org/10.1016/j.compag.2025.110107`
-		},
-		clove2025: {
-			bibtex: `@inproceedings{nyalala2025clove,
-  title={From Art to Algorithms: Co-Designing AI for Clove Grading with Zanzibar's Indigenous Experts},
-  author={Nyalala, Innocent and others},
-  booktitle={AFRICHI ACM Conference 2025},
-  year={2025}
-}`,
-			apa: `Nyalala, I., et al. (2025). From Art to Algorithms: Co-Designing AI for Clove Grading with Zanzibar's Indigenous Experts. In AFRICHI ACM Conference 2025.`
-		}
-	};
-
-	const modal = document.getElementById('citation-modal');
-	const closeBtn = document.querySelector('.close');
-	const citationText = document.getElementById('citation-text');
-	const copyBtn = document.getElementById('copy-citation');
-	const tabBtns = document.querySelectorAll('.tab-btn');
-
-	let currentCitation = '';
-	let currentFormat = 'bibtex';
-
-	document.querySelectorAll('.cite').forEach(btn => {
-		btn.addEventListener('click', function() {
-			currentCitation = this.dataset.citation;
-			currentFormat = 'bibtex';
-			updateCitation();
-			modal.style.display = 'block';
-		});
-	});
-
-	closeBtn.addEventListener('click', () => {
-		modal.style.display = 'none';
-	});
-
-	window.addEventListener('click', (e) => {
-		if (e.target === modal) {
-			modal.style.display = 'none';
-		}
-	});
-
-	tabBtns.forEach(btn => {
-		btn.addEventListener('click', function() {
-			tabBtns.forEach(b => b.classList.remove('active'));
-			this.classList.add('active');
-			currentFormat = this.dataset.format;
-			updateCitation();
-		});
-	});
-
-	copyBtn.addEventListener('click', () => {
-		navigator.clipboard.writeText(citationText.textContent);
-		const originalText = copyBtn.textContent;
-		copyBtn.textContent = 'Copied!';
-		setTimeout(() => {
-			copyBtn.textContent = originalText;
-		}, 2000);
-	});
-
-	function updateCitation() {
-		if (citations[currentCitation]) {
-			citationText.textContent = citations[currentCitation][currentFormat];
-			tabBtns.forEach(btn => {
-				btn.classList.toggle('active', btn.dataset.format === currentFormat);
-			});
-		}
-	}
-
-	// Filter and Search Functionality
-	const searchInput = document.getElementById('search-input');
-	const typeFilter = document.getElementById('type-filter');
-	const yearFilter = document.getElementById('year-filter');
-	const topicFilter = document.getElementById('topic-filter');
-	const resetBtn = document.getElementById('reset-filters');
-	const listViewBtn = document.getElementById('list-view-btn');
-	const gridViewBtn = document.getElementById('grid-view-btn');
-	const exportBibtexBtn = document.getElementById('export-bibtex');
-	const exportApaBtn = document.getElementById('export-apa');
-	const publicationsContainer = document.getElementById('publications-container');
-	const resultsCount = document.getElementById('results-count');
-	const noResults = document.getElementById('no-results');
-
-	const publications = Array.from(document.querySelectorAll('.publication-item'));
-
-	function filterPublications() {
-		const searchTerm = searchInput.value.toLowerCase();
-		const selectedType = typeFilter.value;
-		const selectedYear = yearFilter.value;
-		const selectedTopic = topicFilter.value;
-
-		let visibleCount = 0;
-
-		publications.forEach(pub => {
-			const title = pub.querySelector('h3')?.textContent.toLowerCase() || '';
-			const abstract = pub.querySelector('.abstract')?.textContent.toLowerCase() || '';
-			const authors = pub.querySelector('.authors')?.textContent.toLowerCase() || '';
-			const venue = pub.querySelector('.venue')?.textContent.toLowerCase() || '';
-			const badges = Array.from(pub.querySelectorAll('.badge')).map(b => b.textContent.toLowerCase());
-			const tags = Array.from(pub.querySelectorAll('.tag')).map(t => t.textContent);
-			const yearBadge = pub.querySelector('.badge.year')?.textContent || '';
-
-			const matchesSearch = searchTerm === '' ||
-				title.includes(searchTerm) ||
-				abstract.includes(searchTerm) ||
-				authors.includes(searchTerm) ||
-				venue.includes(searchTerm);
-
-			const matchesType = selectedType === 'all' || badges.includes(selectedType);
-
-			const matchesYear = selectedYear === 'all' || yearBadge.includes(selectedYear);
-
-			const matchesTopic = selectedTopic === 'all' || tags.includes(selectedTopic);
-
-			if (matchesSearch && matchesType && matchesYear && matchesTopic) {
-				pub.style.display = '';
-				visibleCount++;
-			} else {
-				pub.style.display = 'none';
-			}
-		});
-
-		if (visibleCount === 0) {
-			publicationsContainer.style.display = 'none';
-			noResults.style.display = 'block';
-			resultsCount.textContent = 'No publications match your criteria';
-		} else {
-			publicationsContainer.style.display = '';
-			noResults.style.display = 'none';
-			resultsCount.textContent = `Showing ${visibleCount} of ${publications.length} publications`;
-		}
-	}
-
-	searchInput.addEventListener('input', filterPublications);
-	typeFilter.addEventListener('change', filterPublications);
-	yearFilter.addEventListener('change', filterPublications);
-	topicFilter.addEventListener('change', filterPublications);
-
-	resetBtn.addEventListener('click', () => {
-		searchInput.value = '';
-		typeFilter.value = 'all';
-		yearFilter.value = 'all';
-		topicFilter.value = 'all';
-		filterPublications();
-	});
-
-	// View Toggle
-	listViewBtn.addEventListener('click', () => {
-		publicationsContainer.classList.remove('publications-container-grid');
-		listViewBtn.classList.add('active');
-		gridViewBtn.classList.remove('active');
-	});
-
-	gridViewBtn.addEventListener('click', () => {
-		publicationsContainer.classList.add('publications-container-grid');
-		gridViewBtn.classList.add('active');
-		listViewBtn.classList.remove('active');
-	});
-
-	// Export Functions
-	function getVisiblePublications() {
-		return publications.filter(pub => pub.style.display !== 'none');
-	}
-
-	function extractCitationKey(pub) {
-		const citeBtn = pub.querySelector('.cite');
-		return citeBtn ? citeBtn.dataset.citation : null;
-	}
-
-	function exportCitations(format) {
-		const visiblePubs = getVisiblePublications();
-		let exportText = '';
-
-		visiblePubs.forEach(pub => {
-			const key = extractCitationKey(pub);
-			if (key && citations[key]) {
-				exportText += citations[key][format] + '\n\n';
-			}
-		});
-
-		if (exportText) {
-			const blob = new Blob([exportText], { type: 'text/plain' });
-			const url = URL.createObjectURL(blob);
-			const a = document.createElement('a');
-			a.href = url;
-			a.download = `saail-lab-publications-${format}.${format === 'bibtex' ? 'bib' : 'txt'}`;
-			document.body.appendChild(a);
-			a.click();
-			document.body.removeChild(a);
-			URL.revokeObjectURL(url);
-		}
-	}
-
-	exportBibtexBtn.addEventListener('click', () => exportCitations('bibtex'));
-	exportApaBtn.addEventListener('click', () => exportCitations('apa'));
-
-	// Initial filter to show results count
-	filterPublications();
-</script>

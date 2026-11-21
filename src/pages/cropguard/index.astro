@@ -1,0 +1,447 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ModernHeader from '../../components/ModernHeader.astro';
+import ModernFooter from '../../components/ModernFooter.astro';
+import { CROPGUARD_SERIES, PUBLICATIONS } from '../../data/publications';
+
+const cropguardPapers = PUBLICATIONS.filter((p) => p.seriesId === 'cropguard');
+---
+
+<Layout
+  title="CropGuard Research Ecosystem (Papers 1-6) | SAAIL Lab"
+  description="The CropGuard Research Ecosystem at SAAIL Lab (IIT Madras Zanzibar): six coordinated manuscripts spanning leak-free cross-crop CNN-Transformers, INT8 knowledge distillation, Vision Mamba, domain generalization, continual learning, and severity grading."
+  canonical="https://saaillab.github.io/cropguard/"
+  ogImage="https://saaillab.github.io/images/papers/cropguardnet/architecture.png"
+>
+  <ModernHeader currentPage="research" />
+
+  <main class="cg-main">
+    <!-- Hero -->
+    <section class="cg-hero">
+      <div class="cg-container">
+        <div class="cg-eyebrow">SAAIL LAB FLAGSHIP RESEARCH SERIES · IIT MADRAS ZANZIBAR &amp; WSDSAI</div>
+        <h1 class="cg-title">The CropGuard Research Ecosystem</h1>
+        <p class="cg-subtitle">
+          A six-paper research program building leak-free, explainable, ultra-compact Vision and State-Space architectures for real-world crop pathology across smallholder edge devices.
+        </p>
+
+        <div class="cg-kpi-strip">
+          <div class="cg-kpi">
+            <span class="cg-kpi-val">80,238</span>
+            <span class="cg-kpi-lbl">Duplicates Purged</span>
+          </div>
+          <div class="cg-kpi">
+            <span class="cg-kpi-val">35,420</span>
+            <span class="cg-kpi-lbl">Unique Leaf Images</span>
+          </div>
+          <div class="cg-kpi">
+            <span class="cg-kpi-val">481.6K</span>
+            <span class="cg-kpi-lbl">CropGuardNet Params</span>
+          </div>
+          <div class="cg-kpi">
+            <span class="cg-kpi-val">99.17%</span>
+            <span class="cg-kpi-lbl">Cross-Crop Accuracy</span>
+          </div>
+          <div class="cg-kpi">
+            <span class="cg-kpi-val">5.00 ms</span>
+            <span class="cg-kpi-lbl">CPU ONNX Latency</span>
+          </div>
+        </div>
+
+        <div class="cg-hero-actions">
+          <a href="/papers/cropguardnet/" class="cg-btn cg-btn-primary">Paper 1: CropGuardNet Project Page &rarr;</a>
+          <a href="https://github.com/saaillab/CropGuardNet" target="_blank" rel="noopener" class="cg-btn cg-btn-secondary">CropGuardNet GitHub Repo</a>
+          <a href="/papers/cropkd-net/" class="cg-btn cg-btn-secondary">Paper 2: CropKD-Net Roadmap</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Preview Banner -->
+    <section class="cg-arch-band">
+      <div class="cg-container">
+        <div class="cg-arch-card">
+          <img
+            src="/images/papers/cropguardnet/architecture.png"
+            alt="CropGuardNet Unified Lightweight CNN-Transformer Architecture"
+            loading="eager"
+          />
+          <p class="cg-arch-caption">
+            <strong>Series Anchor (Paper 1 · CropGuardNet):</strong> MobileNetV3-Small backbone paired with a Multi-Scale Feature Pyramid (MSFP), Squeeze-and-Excitation recalibration, a 2-layer Compact Vision Transformer encoder, and Crop-Aware Conditioning over UUID- and pHash-deduplicated agricultural imaging benchmarks.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 Papers Grid -->
+    <section class="cg-series-band">
+      <div class="cg-container">
+        <div class="cg-section-head">
+          <h2>Papers 1 to 6 Roadmap &amp; Repositories</h2>
+          <p>Each study pairs dedicated source code, leakage-free data splits, reproducibility documentation, and an indexed academic project page.</p>
+        </div>
+
+        <div class="cg-grid">
+          {CROPGUARD_SERIES.map((item) => {
+            const matchedPub = cropguardPapers.find((p) => p.slug === item.slug);
+            return (
+              <article class={`cg-card ${item.slug ? 'is-active' : 'is-upcoming'}`}>
+                <div class="cg-card-top">
+                  <span class="cg-paper-num">Paper {item.number}</span>
+                  <span class={`cg-status ${item.number === 1 ? 'status-review' : item.number === 2 ? 'status-active' : 'status-planned'}`}>
+                    {item.status}
+                  </span>
+                </div>
+
+                <h3 class="cg-card-code">{item.codeName}</h3>
+                <p class="cg-card-title">{item.title}</p>
+                <p class="cg-card-venue">Target Venue: <strong>{item.targetVenue}</strong></p>
+                <p class="cg-card-summary">{item.summary}</p>
+
+                <div class="cg-tags">
+                  {item.tags.map((t) => <span class="cg-tag">{t}</span>)}
+                </div>
+
+                <div class="cg-card-links">
+                  {item.slug ? (
+                    <a href={`/papers/${item.slug}/`} class="cg-link-btn cg-link-primary">Project Page &rarr;</a>
+                  ) : (
+                    <span class="cg-link-muted">Project Page Coming Soon</span>
+                  )}
+                  {item.repoUrl && (
+                    <a href={item.repoUrl} target="_blank" rel="noopener" class="cg-link-btn">GitHub Code</a>
+                  )}
+                  {matchedPub?.paperUrl && (
+                    <a href={matchedPub.paperUrl} target="_blank" rel="noopener" class="cg-link-btn">Paper</a>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- Engineering & Reproducibility Commitments -->
+    <section class="cg-principles-band">
+      <div class="cg-container">
+        <div class="cg-section-head">
+          <h2>Methodological Safeguards Across the Series</h2>
+          <p>Consistent verification standards enforced before release across all six CropGuard repositories.</p>
+        </div>
+        <div class="cg-principles-grid">
+          <div class="cg-principle">
+            <h3>1. Leakage-Free Dataset Curation</h3>
+            <p>Exact SHA/UUID checks followed by perceptual hash (pHash) near-duplicate clustering ensure identical leaves never bridge training and test partitions.</p>
+          </div>
+          <div class="cg-principle">
+            <h3>2. Faithfulness-Verified XAI</h3>
+            <p>Heatmaps from gradient, activation, perturbation, and SHAP families are audited quantitatively with insertion AUC, deletion AUC, and Pointing Game localization.</p>
+          </div>
+          <div class="cg-principle">
+            <h3>3. Field-Ready Edge Deployment</h3>
+            <p>All models are benchmarked for parameter footprint, FLOPs, ONNX Runtime CPU latency, and INT8 post-training quantization on commodity processors.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <ModernFooter />
+</Layout>
+
+<style>
+  .cg-main {
+    background: var(--bg-primary, #ffffff);
+    color: var(--text-primary, #0f172a);
+  }
+  .cg-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .cg-hero {
+    padding: 4rem 0 3rem;
+    text-align: center;
+    background: radial-gradient(circle at top center, rgba(37, 99, 235, 0.08), transparent 65%);
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+  }
+  .cg-eyebrow {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .cg-title {
+    font-size: clamp(2rem, 4vw, 3.1rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin: 0 0 1rem;
+    color: var(--text-primary);
+  }
+  .cg-subtitle {
+    max-width: 780px;
+    margin: 0 auto 2rem;
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .cg-kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.9rem;
+    max-width: 920px;
+    margin: 0 auto 2rem;
+  }
+  .cg-kpi {
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 12px;
+    padding: 1rem 0.75rem;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  }
+  .cg-kpi-val {
+    display: block;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #2563eb;
+  }
+  .cg-kpi-lbl {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .cg-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+  }
+  .cg-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.45rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .cg-btn-primary {
+    background: #2563eb;
+    color: #ffffff;
+  }
+  .cg-btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+  }
+  .cg-btn-secondary {
+    background: var(--bg-card, #ffffff);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color, #cbd5e1);
+  }
+  .cg-btn-secondary:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+  }
+
+  .cg-arch-band {
+    padding: 2.5rem 0;
+    background: var(--bg-secondary, #f8fafc);
+  }
+  .cg-arch-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  }
+  .cg-arch-card img {
+    display: block;
+    width: 100%;
+    max-height: 440px;
+    object-fit: contain;
+    margin: 0 auto 1rem;
+  }
+  .cg-arch-caption {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .cg-series-band { padding: 3.5rem 0; }
+  .cg-section-head {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 2.5rem;
+  }
+  .cg-section-head h2 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+  }
+  .cg-section-head p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1.02rem;
+  }
+
+  .cg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 1.5rem;
+  }
+  .cg-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cg-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  }
+  .cg-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+  }
+  .cg-paper-num {
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #2563eb;
+  }
+  .cg-status {
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .status-review { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+  .status-active { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .status-planned { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+  .cg-card-code {
+    margin: 0 0 0.4rem;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+  .cg-card-title {
+    margin: 0 0 0.65rem;
+    font-size: 0.94rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.45;
+  }
+  .cg-card-venue {
+    margin: 0 0 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+  .cg-card-summary {
+    margin: 0 0 1rem;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .cg-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.15rem;
+  }
+  .cg-tag {
+    padding: 0.2rem 0.55rem;
+    background: var(--bg-secondary, #f8fafc);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 6px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+  .cg-card-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border-color, #e2e8f0);
+  }
+  .cg-link-btn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--bg-secondary, #f1f5f9);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color, #cbd5e1);
+  }
+  .cg-link-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+  }
+  .cg-link-primary {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+  }
+  .cg-link-primary:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+  }
+  .cg-link-muted {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 0.4rem 0;
+  }
+
+  .cg-principles-band {
+    padding: 3.5rem 0 4.5rem;
+    background: var(--bg-secondary, #f8fafc);
+    border-top: 1px solid var(--border-color, #e2e8f0);
+  }
+  .cg-principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .cg-principle {
+    background: var(--bg-card, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 14px;
+    padding: 1.5rem;
+  }
+  .cg-principle h3 {
+    margin: 0 0 0.6rem;
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .cg-principle p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+</style>

@@ -10,17 +10,17 @@ const teamMembers = [
 	{
 		id: '1',
 		name: 'Dr. Innocent Nyalala',
-		role: 'Assistant Professor & Founding Principal Investigator',
+		role: 'Assistant Professor, Associate Researcher (WSDSAI) & Founding Principal Investigator',
 		category: 'director',
-		location: 'IIT Madras, Zanzibar',
+		location: 'IIT Madras Zanzibar & WSDSAI IIT Madras',
 		email: 'innocent@iitmz.ac.in',
 		linkedin_url: 'https://www.linkedin.com/in/innocentnyalala/',
 		scholar_url: 'https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en',
-		orcid_url: null,
-		researchgate_url: null,
+		orcid_url: 'https://orcid.org/0000-0002-7969-437X',
+		researchgate_url: 'https://www.researchgate.net/profile/Innocent-Nyalala',
 		personal_website: 'https://inyalala.github.io',
 		photo_url: '/images/people/Photo.jpg',
-		bio: 'Dr. Innocent Nyalala is an Assistant Professor at IIT Madras Zanzibar and the Founding Principal Investigator of SAAIL Lab. His research focuses on developing transformative AI solutions for sustainable agriculture and intelligent livelihoods in East Africa.',
+		bio: 'Dr. Innocent Nyalala is an Assistant Professor at IIT Madras Zanzibar, Associate Researcher at the Wadhwani School of Data Science and AI (IIT Madras), Editorial Board Member for Discover AI (Springer Nature), and Founding Principal Investigator of SAAIL Lab (45+ cataloged works, 1,185+ citations, h-index 15, 2x Deep Learning Indaba Best Poster Award).',
 		research_interests: ['AI for Agriculture', 'Computer Vision', 'Deep Learning', 'Responsible AI', 'Medical Imaging'],
 		is_featured: true,
 		display_order: 1,
@@ -294,6 +294,69 @@ const alumni = [
 ];
 
 const director = teamMembers.find(m => m.category === 'director')!;
+const phdStudents = [
+	{
+		id: 'phd1',
+		name: 'Bidhan Chandra Bhattarai',
+		role: 'Joint PhD Candidate (IITMZ & Deakin University)',
+		category: 'phd',
+		institution: 'IIT Madras Zanzibar & Deakin University, Australia',
+		personal_website: null,
+		bio: 'Researching Agentic AI for Agricultural Technologies. Joint PhD co-supervised with A/Prof. Sunil Aryal and Dr. Kallol Karmakar.',
+		research_interests: ['Agentic AI', 'Agricultural Technologies', 'Joint Cotutelle PhD'],
+		country_flag: '🇳🇵',
+		affiliation: 'IITMZ / Deakin University'
+	},
+	{
+		id: 'phd2',
+		name: 'Saide Abdulla Mbarak',
+		role: 'PhD Candidate (Co-Supervised)',
+		category: 'phd',
+		institution: 'Swami Vivekanand Subharti University (2025-Present)',
+		personal_website: null,
+		bio: 'PhD research in Molecular Biology, co-supervised with Prof. Sunil Sazawal and Dr. Saikat Deb.',
+		research_interests: ['Molecular Biology', 'Genomics', 'Global Health'],
+		country_flag: '🇹🇿',
+		affiliation: 'SVSU / Zanzibar'
+	},
+	{
+		id: 'phd3',
+		name: 'Ali Salim Ali',
+		role: 'PhD Candidate (Co-Supervised)',
+		category: 'phd',
+		institution: 'Swami Vivekanand Subharti University (2025-Present)',
+		personal_website: null,
+		bio: 'PhD research in Public Health and Epidemiology, co-supervised with Prof. Sunil Sazawal and Dr. Afeefa Ateeq.',
+		research_interests: ['Public Health', 'Epidemiology', 'Health Data Science'],
+		country_flag: '🇹🇿',
+		affiliation: 'SVSU / Zanzibar'
+	},
+	{
+		id: 'phd4',
+		name: 'Ibrahim Byatike Kabole',
+		role: 'PhD Candidate (Co-Supervised)',
+		category: 'phd',
+		institution: 'SVSU & State University of Zanzibar (SUZA) (2025-Present)',
+		personal_website: null,
+		bio: 'PhD research in Public Health and Epidemiology, co-supervised with Prof. Sunil Sazawal (SVSU) and Dr. Chukwuma James (SUZA).',
+		research_interests: ['Public Health', 'Epidemiology', 'Biostatistics'],
+		country_flag: '🇺🇬',
+		affiliation: 'SVSU / SUZA'
+	},
+	{
+		id: 'phd5',
+		name: 'Bihila Abdalla Bakari',
+		role: 'PhD Candidate (Co-Supervised)',
+		category: 'phd',
+		institution: 'Swami Vivekanand Subharti University (2025-Present)',
+		personal_website: null,
+		bio: 'PhD research in Public Health and Epidemiology, co-supervised with Prof. Sunil Sazawal and Dr. Saikat Deb.',
+		research_interests: ['Public Health', 'Epidemiology', 'Clinical Informatics'],
+		country_flag: '🇹🇿',
+		affiliation: 'SVSU / Zanzibar'
+	}
+];
+
 const zanzibarStudents = teamMembers.filter(m => m.category === 'mtech-zanzibar');
 const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 ---
@@ -318,17 +381,17 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 				<p class="hero-sub">Researchers, innovators, and students building transformative AI solutions for sustainable agriculture and intelligent livelihoods across Africa</p>
 				<div class="hero-stats">
 					<div class="stat-item">
-						<span class="stat-num">7+</span>
-						<span class="stat-lbl">Team Members</span>
+						<span class="stat-num">12+</span>
+						<span class="stat-lbl">Researchers &amp; Scholars</span>
 					</div>
 					<div class="stat-sep"></div>
 					<div class="stat-item">
-						<span class="stat-num">3</span>
-						<span class="stat-lbl">Countries</span>
+						<span class="stat-num">5</span>
+						<span class="stat-lbl">PhD Candidates</span>
 					</div>
 					<div class="stat-sep"></div>
 					<div class="stat-item">
-						<span class="stat-num">6+</span>
+						<span class="stat-num">8+</span>
 						<span class="stat-lbl">Active Projects</span>
 					</div>
 					<div class="stat-sep"></div>
@@ -352,6 +415,7 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 				<nav class="filter-nav" role="navigation" aria-label="Team filter">
 					<button class="filter-btn active" data-filter="all">All Members</button>
 					<button class="filter-btn" data-filter="leadership">Leadership</button>
+					<button class="filter-btn" data-filter="phd">PhD Candidates</button>
 					<button class="filter-btn" data-filter="zanzibar">🇹🇿 Zanzibar</button>
 					<button class="filter-btn" data-filter="chennai">🇮🇳 Chennai</button>
 					<button class="filter-btn" data-filter="collaborators">Collaborators</button>
@@ -493,6 +557,34 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 					</div>
 				</div>
 
+				<!-- PhD Candidates (Co-Supervised) -->
+				<div class="campus-group" data-group="phd">
+					<div class="campus-divider">
+						<div class="divider-line"></div>
+						<div class="divider-content">
+							<span class="divider-flag">🎓</span>
+							<span class="divider-name">PhD Candidates (Co-Supervised)</span>
+							<span class="divider-tag">IITMZ · Deakin · SVSU · SUZA</span>
+						</div>
+						<div class="divider-line"></div>
+					</div>
+					<div class="collab-grid">
+						{phdStudents.map(p => (
+							<div class="collab-card" data-member-id={p.id} role="button" tabindex="0">
+								<div class="collab-flag-box">{p.country_flag}</div>
+								<div class="collab-info">
+									<h4 class="collab-name">{p.name}</h4>
+									<p class="collab-role">{p.role}</p>
+									<p class="collab-inst">{p.institution}</p>
+									<div class="collab-tags">
+										{p.research_interests.map(t => <span class="collab-tag">{t}</span>)}
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+
 				<!-- Collaborators -->
 				<div class="campus-group collab-group" data-group="collaborators" style="display:none">
 					<div class="campus-divider">
@@ -627,15 +719,16 @@ const chennaiStudents = teamMembers.filter(m => m.category === 'mtech-chennai');
 
 	<ModernFooter />
 
-	<script define:vars={{ teamMembers, collaborators, alumni }}>
+	<script define:vars={{ teamMembers, phdStudents, collaborators, alumni }}>
 		const allMembers = [
 			...teamMembers.map(m => ({ ...m, _type: 'member' })),
+			...phdStudents.map(p => ({ ...p, _type: 'collaborator', location: p.institution })),
 			...collaborators.map(c => ({ ...c, _type: 'collaborator', location: c.institution })),
 			...alumni.map(a => ({ ...a, _type: 'alumni' }))
 		];
 
 		// ── Filter nav ──
-		const showOnAll = new Set(['leadership', 'zanzibar', 'chennai']);
+		const showOnAll = new Set(['leadership', 'phd', 'zanzibar', 'chennai']);
 		document.querySelectorAll('.filter-btn').forEach(btn => {
 			btn.addEventListener('click', () => {
 				document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
