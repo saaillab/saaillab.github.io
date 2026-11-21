@@ -25,21 +25,23 @@ import ModernFooter from '../components/ModernFooter.astro';
 		<section class="section">
 			<div class="container">
 				<div class="contact-layout">
-					<!-- Left: Working Inquiry Form (Formspree JSON/POST safe, no broken file upload) -->
+					<!-- Left: Official Lab Email FormSubmit (saail_lab@iitmz.ac.in) + Direct Compose Fallbacks -->
 					<div class="form-card">
 						<h2>Send a Research Inquiry</h2>
 						<p class="form-intro">
-							Messages go directly to the SAAIL Lab inbox. Or write directly to <a href="mailto:saail_lab@iitmz.ac.in">saail_lab@iitmz.ac.in</a>.
+							Messages route directly to <a href="mailto:saail_lab@iitmz.ac.in">saail_lab@iitmz.ac.in</a>. You can submit below or launch your mail client directly with prefilled details.
 						</p>
 
 						<div id="formBanner" class="form-banner" hidden role="status" aria-live="polite" tabindex="-1"></div>
 
-						<form id="saailContactForm" class="contact-form" action="https://formspree.io/f/mzzvvnon" method="POST">
-							<input type="hidden" name="_subject" value="New Inquiry · SAAIL Lab Website" />
+						<form id="saailContactForm" class="contact-form" action="https://formsubmit.co/ajax/saail_lab@iitmz.ac.in" method="POST">
+							<input type="hidden" name="_subject" value="New Research Inquiry · SAAIL Lab Website" />
+							<input type="hidden" name="_template" value="table" />
+							<input type="hidden" name="_captcha" value="false" />
 							<div class="form-row">
 								<div class="form-group">
 									<label for="firstName">First Name *</label>
-									<input type="text" id="firstName" name="firstName" required autocomplete="given-name" placeholder="e.g., Amina" />
+									<input type="text" id="firstName" name="firstName" required autocomplete="given-name" placeholder="e.g., Umniya" />
 								</div>
 								<div class="form-group">
 									<label for="lastName">Last Name *</label>
@@ -63,7 +65,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 								<select id="topic" name="topic" required>
 									<option value="">Select a topic...</option>
 									<option value="Agriculture & Blue Economy Research">Precision Agriculture &amp; Blue Economy Collaboration</option>
-									<option value="CultureSEEDS & Swahili NLP">CultureSEEDS &amp; Swahili NLP / Safety</option>
+									<option value="Swahili NLP & Dira Provenance">Swahili NLP, Corpus &amp; Dira Provenance</option>
 									<option value="Responsible AI & DGS-Bench">Responsible AI, Audits &amp; Governance</option>
 									<option value="Healthcare & Clinical AI">Healthcare &amp; PlacentaVision Clinical ML</option>
 									<option value="MTech or BS Student Inquiry">MTech DSAI / BS Fellowship Inquiry</option>
@@ -82,9 +84,16 @@ import ModernFooter from '../components/ModernFooter.astro';
 								<textarea id="message" name="message" rows="5" required placeholder="Share details of your research proposal, question, or background..."></textarea>
 							</div>
 
-							<button type="submit" id="submitContactBtn" class="btn btn-primary submit-btn">
-								Send Message &rarr;
-							</button>
+							<div class="submit-actions">
+								<button type="submit" id="submitContactBtn" class="btn btn-primary submit-btn">
+									Send to saail_lab@iitmz.ac.in &rarr;
+								</button>
+								<div class="direct-compose-row">
+									<button type="button" id="mailtoComposeBtn" class="direct-btn">Open Email App</button>
+									<button type="button" id="gmailComposeBtn" class="direct-btn">Open in Gmail Web</button>
+									<button type="button" id="copyEmailBtn" class="direct-btn">Copy Lab Email</button>
+								</div>
+							</div>
 						</form>
 					</div>
 
@@ -172,9 +181,66 @@ import ModernFooter from '../components/ModernFooter.astro';
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {
+		const LAB_EMAIL = 'saail_lab@iitmz.ac.in';
 		const form = document.getElementById('saailContactForm');
 		const banner = document.getElementById('formBanner');
 		const submitBtn = document.getElementById('submitContactBtn');
+		const mailtoBtn = document.getElementById('mailtoComposeBtn');
+		const gmailBtn = document.getElementById('gmailComposeBtn');
+		const copyBtn = document.getElementById('copyEmailBtn');
+
+		function buildDraft() {
+			const fd = form instanceof HTMLFormElement ? new FormData(form) : new FormData();
+			const first = String(fd.get('firstName') || '').trim();
+			const last = String(fd.get('lastName') || '').trim();
+			const email = String(fd.get('email') || '').trim();
+			const inst = String(fd.get('institution') || '').trim();
+			const topic = String(fd.get('topic') || 'Research Inquiry').trim();
+			const url = String(fd.get('portfolioUrl') || '').trim();
+			const msg = String(fd.get('message') || '').trim();
+			const subject = `[SAAIL Lab Inquiry] ${topic}${first || last ? ` - ${first} ${last}`.trim() : ''}`;
+			const lines = [
+				`Name: ${`${first} ${last}`.trim() || 'Prospective Collaborator'}`,
+				email ? `Email: ${email}` : '',
+				inst ? `Institution: ${inst}` : '',
+				`Topic: ${topic}`,
+				url ? `Link: ${url}` : '',
+				'',
+				msg
+			].filter((v, idx, arr) => v !== '' || idx === arr.length - 2);
+			return { subject, body: lines.join('\n') };
+		}
+
+		function showBanner(ok: boolean, text: string) {
+			if (!banner) return;
+			banner.hidden = false;
+			banner.setAttribute('role', ok ? 'status' : 'alert');
+			banner.className = `form-banner ${ok ? 'banner-ok' : 'banner-err'}`;
+			banner.textContent = text;
+			const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			banner.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'nearest' });
+			banner.focus();
+		}
+
+		mailtoBtn?.addEventListener('click', function () {
+			const { subject, body } = buildDraft();
+			window.location.href = `mailto:${LAB_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+		});
+
+		gmailBtn?.addEventListener('click', function () {
+			const { subject, body } = buildDraft();
+			const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(LAB_EMAIL)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+			window.open(gmailUrl, '_blank', 'noopener');
+		});
+
+		copyBtn?.addEventListener('click', async function () {
+			try {
+				await navigator.clipboard.writeText(LAB_EMAIL);
+				showBanner(true, `Copied ${LAB_EMAIL} to clipboard.`);
+			} catch (_e) {
+				showBanner(true, `Official lab inbox: ${LAB_EMAIL}`);
+			}
+		});
 
 		if (!(form instanceof HTMLFormElement)) return;
 
@@ -191,36 +257,18 @@ import ModernFooter from '../components/ModernFooter.astro';
 					body: formData,
 					headers: { Accept: 'application/json' }
 				});
-				if (banner) {
-					banner.hidden = false;
-					if (response.ok) {
-						banner.setAttribute('role', 'status');
-						banner.className = 'form-banner banner-ok';
-						banner.textContent = 'Thank you for your inquiry. We have received your message and will respond from saail_lab@iitmz.ac.in.';
-						form.reset();
-					} else {
-						banner.setAttribute('role', 'alert');
-						banner.className = 'form-banner banner-err';
-						banner.textContent = 'Delivery via form endpoint failed. Please send your note directly to saail_lab@iitmz.ac.in.';
-					}
-					const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-					banner.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'nearest' });
-					banner.focus();
+				if (response.ok) {
+					showBanner(true, 'Inquiry transmitted toward saail_lab@iitmz.ac.in. You can also keep a copy via "Open Email App" or "Open in Gmail Web" below.');
+					form.reset();
+				} else {
+					showBanner(false, 'Direct endpoint delivery did not confirm; please use "Open Email App" or "Open in Gmail Web" below to send straight to saail_lab@iitmz.ac.in.');
 				}
 			} catch (_err) {
-				if (banner) {
-					banner.hidden = false;
-					banner.setAttribute('role', 'alert');
-					banner.className = 'form-banner banner-err';
-					banner.textContent = 'Network issue submitting the form. Please email us directly at saail_lab@iitmz.ac.in.';
-					const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-					banner.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'nearest' });
-					banner.focus();
-				}
+				showBanner(false, 'Network blocked form submission. Click "Open Email App" or "Open in Gmail Web" below to send directly to saail_lab@iitmz.ac.in.');
 			} finally {
 				if (submitBtn instanceof HTMLButtonElement) {
 					submitBtn.disabled = false;
-					submitBtn.textContent = 'Send Message →';
+					submitBtn.textContent = 'Send to saail_lab@iitmz.ac.in →';
 				}
 			}
 		});
@@ -302,10 +350,40 @@ import ModernFooter from '../components/ModernFooter.astro';
 		background: var(--bg-card);
 	}
 
+	.submit-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		align-items: flex-start;
+	}
+
 	.submit-btn {
 		align-self: flex-start;
 		padding: 0.85rem 1.75rem;
 		font-size: 0.96rem;
+	}
+
+	.direct-compose-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.55rem;
+	}
+
+	.direct-btn {
+		padding: 0.48rem 0.9rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-secondary);
+		color: var(--text-primary);
+		font-size: 0.82rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.16s ease;
+	}
+
+	.direct-btn:hover {
+		border-color: var(--accent-primary);
+		color: var(--accent-primary);
 	}
 
 	.info-stack { display: flex; flex-direction: column; gap: 1.5rem; }

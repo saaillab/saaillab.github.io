@@ -5,8 +5,8 @@ import ModernFooter from '../components/ModernFooter.astro';
 ---
 
 <Layout
-	title="Research Pillars | SAAIL Lab | IIT Madras Zanzibar"
-	description="Scientific pillars of SAAIL Lab across Precision Agriculture and the Blue Economy (CashewAI, Cloves, Seaweed, CropGuardNet), Swahili NLP and CultureSEEDS AI Safety, Responsible AI, and Healthcare."
+	title="AI Research Pillars in Zanzibar | SAAIL Lab · IIT Madras Zanzibar"
+	description="Deep learning, machine learning, computer vision, and Swahili NLP research pillars at SAAIL Lab, IIT Madras Zanzibar, Tanzania: Precision Agriculture AI, Swahili Provenance, Responsible AI Governance, and Healthcare AI."
 	canonical="https://saaillab.github.io/research/"
 >
 	<ModernHeader currentPage="research" />
@@ -14,17 +14,17 @@ import ModernFooter from '../components/ModernFooter.astro';
 	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
-				<span class="page-eyebrow">Research Agenda</span>
-				<h1 class="page-title">Four Scientific Pillars Grounded in East Africa</h1>
+				<span class="page-eyebrow">Scientific Methodology &amp; Benchmarks · Zanzibar, Tanzania</span>
+				<h1 class="page-title">Four Scientific AI Pillars Grounded in East Africa</h1>
 				<p class="page-lead">
-					Every research pillar pairs empirical ML theory with regional field data across Tanzania, Kenya, Uganda, and India, producing open datasets, edge-deployable models, and audited benchmarks.
+					Whereas active grants live under <a href="/projects/" class="hero-inline">Projects</a> and codebases under <a href="/github/" class="hero-inline">GitHub</a>, this page synthesizes the deep learning architectures, computer vision benchmarks, Swahili NLP pipelines, and clinical machine learning methods developed at IIT Madras Zanzibar.
 				</p>
 			</div>
 		</section>
 
 		<section class="section">
 			<div class="container pillars-stack">
-				<!-- Pillar 1: Agriculture & Blue Economy (includes CropGuard!) -->
+				<!-- Pillar 1: Agriculture & Blue Economy -->
 				<article id="agriculture" class="pillar-panel">
 					<div class="panel-header panel-agri">
 						<div class="panel-header-inner">
@@ -34,94 +34,109 @@ import ModernFooter from '../components/ModernFooter.astro';
 								<span>CashewAI</span>
 								<span>Zanzibar Cloves</span>
 								<span>Seaweed &amp; Blue Economy</span>
-								<span>CropGuard Cross-Crop Vision</span>
-								<span>Food Supply Chains</span>
+								<span>CropGuardNet</span>
+								<span>Livestock &amp; Crop 3D Vision</span>
 							</div>
 						</div>
 					</div>
 					<div class="panel-body">
 						<p class="panel-intro">
-							Smallholder commodities across East Africa suffer acute yield and grading losses under manual inspection, climate shocks, and field disease pressure. We build lightweight vision and multimodal models validated directly on Zanzibar warehouses, coastal seaweed plots, cashew orchards, and smallholder fields.
+							Smallholder commodities across East Africa lose value to unstandardized manual inspection, marine heatwave bleaching, and field disease pressure. Our vision architectures enforce foreground-aligned interpretability and leak-free deduplication so accuracy on held-out laboratory splits transfers safely to edge hardware.
 						</p>
-						<div class="subgrid">
-							<div class="subbox">
-								<h3>Commodity &amp; Crop Systems</h3>
-								<ul>
-									<li><strong>Clove Quality Grading:</strong> ETRI Journal (2026) compositional XAI grading (99.45% F1, 100% EER), CVPR 2026 V4A CLOVES-4603 benchmark (4,603 images, 99.67% ResNet-50), ZSTC-Clove-V1 feasibility (5,298 single cloves), and participatory AfriCHI co-design.</li>
-									<li><strong>CropGuard Cross-Crop Diagnostics:</strong> CropGuardNet (481,574 params, 5.00 ms CPU ONNX) unites leak-free UUID/pHash deduplication (35,420 unique leaf images across 8 crops, 38 classes) with four-method XAI faithfulness.</li>
-									<li><strong>Cashew, Cassava &amp; Maize:</strong> ICSR-funded <em>CashewAI</em> dual-stream yield and pest forecasting; <em>COMPAG</em> (2024, 2025) &amp; <em>AIIA</em> (2024) cassava pathology; mobile DeepLabV3+/MobileViT maize segmentation.</li>
-								</ul>
-							</div>
-							<div class="subbox">
-								<h3>Coastal Blue Economy &amp; Telemetry</h3>
-								<ul>
-									<li><strong>Seaweed Heatwave &amp; Disease Early Warning:</strong> Tracking <em>Eucheuma</em> and <em>Kappaphycus</em> Ice-Ice disease outbreaks triggered by sea-surface heatwaves across Zanzibar coastal farms.</li>
-									<li><strong>Aquaculture &amp; Coral Restoration:</strong> Computer vision monitoring for coastal mariculture and reef biodiversity health in partnership with Zafiri and regional marine institutions.</li>
-									<li><strong>3D Livestock &amp; Horticultural Grading:</strong> Kinect v2 depth reconstruction (Poultry Science 2024, R² = 0.9988), tomato and egg volume grading under occlusion, and RuTAG IoT crop hubs.</li>
-								</ul>
+
+						<div class="pillar-visual-grid">
+							<figure class="pillar-figure">
+								<img src="/images/papers/cropguardnet/architecture.png" alt="CropGuardNet lightweight CNN-Transformer architecture" loading="lazy" />
+								<figcaption><strong>Unified Edge Architecture:</strong> CropGuardNet compresses multi-scale dilated convolutions and a 2-head ViT into 481,574 parameters (63.8M FLOPs, 5.00 ms CPU ONNX).</figcaption>
+							</figure>
+
+							<div class="pillar-table-card">
+								<h3>Verified Empirical Highlights</h3>
+								<div class="table-scroll">
+									<table class="pillar-table">
+										<thead>
+											<tr><th>System / Venue</th><th>Dataset Scope</th><th>Key Result</th></tr>
+										</thead>
+										<tbody>
+											<tr><td><strong>CropGuardNet</strong> (Under Review)</td><td>35,420 unique images · 8 crops</td><td>99.17% acc · 0.9874 F1-macro · 200 FPS ONNX</td></tr>
+											<tr><td><strong>Compositional XAI</strong> (ETRI 2026)</td><td>4,603 ZSTC clove buds</td><td>99.45% macro-F1 · 100% EER by design</td></tr>
+											<tr><td><strong>CLOVES-4603</strong> (CVPR V4A 2026)</td><td>4 commercial clove grades</td><td>99.67% ResNet-50 · 92.94% texture SVM</td></tr>
+											<tr><td><strong>3D Poultry Volume</strong> (Poult. Sci. 2024)</td><td>Kinect v2 moving shackles</td><td>R&sup2; = 0.9988 · RMSE 5.335 cm&sup3; · &lt;1.6 s</td></tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
+
 						<div class="panel-actions">
-							<a href="/projects/cropguard-pathology/" class="btn btn-primary">CropGuardNet Project Site</a>
-							<a href="/projects/ubora-ai/" class="btn btn-secondary">Ubora-AI Clove Grading</a>
-							<a href="/projects/cashew-ai/" class="btn btn-secondary">CashewAI</a>
+							<a href="/papers/cropguardnet/" class="btn btn-primary">CropGuardNet Paper</a>
+							<a href="/papers/clove-xai-etri2026/" class="btn btn-secondary">ETRI 2026 Clove XAI</a>
+							<a href="/projects/ubora-ai/" class="btn btn-secondary">Ubora-AI Project</a>
 							<a href="/projects/seaweed-blue-economy/" class="btn btn-secondary">Seaweed Blue Economy</a>
 						</div>
 					</div>
 				</article>
 
-				<!-- Pillar 2: Language AI, CultureSEEDS & Swahili NLP -->
+				<!-- Pillar 2: Language AI, Swahili Corpus & Dira Provenance -->
 				<article id="language" class="pillar-panel">
 					<div class="panel-header panel-lang">
 						<div class="panel-header-inner">
-							<span class="panel-index">Pillar 02 · US$100K Google Award</span>
-							<h2>Swahili NLP, Cultural Preservation &amp; Multilingual Safety</h2>
+							<span class="panel-index">Pillar 02</span>
+							<h2>Swahili NLP, Provenance &amp; Culturally Attuned Models</h2>
 							<div class="panel-tags">
-								<span>CultureSEEDS (GDM / Google.org)</span>
 								<span>Zanzibar Swahili Corpus</span>
-								<span>Dira Provenance</span>
-								<span>Storytelling &amp; ML</span>
+								<span>Dira Provenance Benchmark</span>
+								<span>Spoken Agricultural QA</span>
+								<span>CARA-FM (PMLR 302)</span>
 							</div>
 						</div>
 					</div>
 					<div class="panel-body">
 						<p class="panel-intro">
-							Large language models frequently conflate cultural norms with harm or default to unnatural translated Swahili. Supported by a US$100,000 Google Research unrestricted award linked to Google DeepMind and Google.org CultureSEEDS, we build authentic East African linguistic corpora and safety benchmarks.
+							Public African language evaluations rely heavily on machine-translated English text ("translationese") and compute footprints incompatible with offline mobile hardware. We build native Kiunguja Swahili text and spoken corpora paired with stylometric provenance detectors and low-memory foundation model agendas.
 						</p>
-						<div class="subgrid">
-							<div class="subbox">
-								<h3>CultureSEEDS &amp; East African Evaluation</h3>
-								<ul>
-									<li><strong>CultureSEEDS East Africa Track:</strong> Designing culturally grounded safety vs. appropriateness evaluation datasets across 10+ African languages anchored in Swahili (Kiunguja/standard variants), Dholuo, Gikuyu, and regional speech registers.</li>
-									<li><strong>Multimodal &amp; Domain Spoken QA:</strong> Joint work with Prof. Nirav Bhatt and student teams developing spoken health and agricultural advisory benchmarks across Kiswahili dialects.</li>
-								</ul>
-							</div>
-							<div class="subbox">
-								<h3>Zanzibar Swahili Corpus &amp; Dira</h3>
-								<ul>
-									<li><strong>Dira Native vs. Translated Detector:</strong> Built with BS researchers to measure and detect machine-translated ("translationese") Swahili vs. authentic coastal native prose across zero-shot, prompted, and fine-tuned LLMs.</li>
-									<li><strong>Storytelling &amp; Cultural Preservation:</strong> IITMZ grant (Rs. 10.00 lakhs with Co-PI Hope K. McCoy) preserving East African oral and community narratives through participatory machine learning.</li>
-								</ul>
+
+						<div class="pillar-visual-grid">
+							<figure class="pillar-figure">
+								<img src="/images/projects/swahili_corpus_sources.png" alt="Zanzibar Swahili Corpus document counts and Swahili-dominant share" loading="lazy" />
+								<figcaption><strong>Zanzibar Swahili Corpus Profiling:</strong> Native document counts and Swahili-dominant shares across regional sources anchored in coastal Kiunguja usage.</figcaption>
+							</figure>
+
+							<div class="pillar-table-card">
+								<h3>Language &amp; Resource Targets</h3>
+								<div class="table-scroll">
+									<table class="pillar-table">
+										<thead>
+											<tr><th>Research Track</th><th>Target Reality / Scope</th><th>Core Scientific Focus</th></tr>
+										</thead>
+										<tbody>
+											<tr><td><strong>Zanzibar Swahili Corpus</strong></td><td>Kiunguja text &amp; spoken audio</td><td>Domain-grounded coastal agricultural &amp; civic QA</td></tr>
+											<tr><td><strong>Dira Provenance Detector</strong></td><td>Native vs. MT Swahili</td><td>Discriminating human writing from translationese</td></tr>
+											<tr><td><strong>CARA-FM</strong> (PMLR Vol. 302)</td><td>1-3 GB RAM · 1.2 Mbps links</td><td>4-pillar community data, IKS &amp; edge-first design</td></tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
+
 						<div class="panel-actions">
-							<a href="/projects/cultureseeds/" class="btn btn-primary">CultureSEEDS Project Website</a>
-							<a href="/projects/swahili-dira/" class="btn btn-secondary">Swahili &amp; Dira Project</a>
-							<a href="/datasets/#language" class="btn btn-secondary">Swahili Datasets</a>
+							<a href="/projects/swahili-dira/" class="btn btn-primary">Swahili Corpus &amp; Dira Project</a>
+							<a href="/papers/cara-fm/" class="btn btn-secondary">CARA-FM Paper (PMLR 302)</a>
+							<a href="/datasets/#language" class="btn btn-secondary">Language Datasets</a>
 						</div>
 					</div>
 				</article>
 
-				<!-- Pillar 3: Responsible, Explainable & Sovereign AI -->
+				<!-- Pillar 3: Responsible AI, Deployment Audits & Sovereign Governance -->
 				<article id="responsible" class="pillar-panel">
 					<div class="panel-header panel-resp">
 						<div class="panel-header-inner">
 							<span class="panel-index">Pillar 03 · 2x DLI Best Poster</span>
-							<h2>Responsible AI, Evaluation Audits &amp; Governance</h2>
+							<h2>Responsible AI, Evaluation Audits &amp; Regional Governance</h2>
 							<div class="panel-tags">
 								<span>DGS-Bench (DLI 2026)</span>
-								<span>ICLR 2026 Trustworthy AI</span>
-								<span>CARA-FM (PMLR 302)</span>
+								<span>ICLR 2026 DDR</span>
+								<span>DSA 2026 Kampala</span>
 								<span>Oxford TAIS 2026</span>
 								<span>AAAI 2026 Sovereignty</span>
 							</div>
@@ -129,28 +144,37 @@ import ModernFooter from '../components/ModernFooter.astro';
 					</div>
 					<div class="panel-body">
 						<p class="panel-intro">
-							Deploying models imported from well-resourced labs without local audits produces silent field failures and deepens technological dependency. We formalize evaluation protocols, explainability guarantees, and regional AI policies anchored in African institutional agency.
+							High accuracy on imbalanced agricultural datasets often masks silent minority-class collapse and capture-session confounding, whereas imported governance codes misfit regional institutions. Our audits formalize balanced evaluation metrics and anchor East African AI policy in Ubuntu, Harambee, and Ujamaa principles.
 						</p>
-						<div class="subgrid">
-							<div class="subbox">
-								<h3>Technical Auditing &amp; Edge Compression</h3>
-								<ul>
-									<li><strong>Deployment Gap Score (DGS-Bench):</strong> Best Poster Award at Deep Learning Indaba 2026 (18/114 accepted); exposes negative raw-accuracy mirages (-5.96 pp) where macro-F1 confirms +8.19 pp field degradation.</li>
-									<li><strong>Procedural &amp; Data Boundaries:</strong> Documenting DCGAN failure modes (-23.2 pp at n=25), few-shot budget curves (DSA 2026), and the AgriAI Bias Card across PlantVillage (4/10) vs. iCassava (9/10).</li>
-								</ul>
-							</div>
-							<div class="subbox">
-								<h3>African AI Governance &amp; CARA-FM</h3>
-								<ul>
-									<li><strong>CARA-FM Theoretical Agenda:</strong> Best Poster at DLI 2025 (PMLR Vol. 302), defining 5M-50M Tiny/Lite/Edge architectures matching 1-3 GB East African hardware.</li>
-									<li><strong>Policy Harmonization:</strong> Comparative national strategy analysis across Ethiopia, Kenya, and Rwanda (Oxford TAIS 2026), the Draft EAC Strategy (AAIAC 2026), and AU-ASEAN AI sovereignty (AAAI 2026, NeurIPS 2025).</li>
-								</ul>
+
+						<div class="pillar-visual-grid">
+							<figure class="pillar-figure">
+								<img src="/images/papers/dgs2026/fig1_dgs_bar.png" alt="DGS-Bench Evaluation Mirage bar plot comparing accuracy vs macro-F1" loading="lazy" />
+								<figcaption><strong>Exposing the Evaluation Mirage:</strong> Across 40 controlled runs (DLI 2026 Best Poster), raw accuracy implies false field improvement (-6.00 pp DGS) while macro-F1 reveals severe minority degradation (+8.16 pp).</figcaption>
+							</figure>
+
+							<div class="pillar-table-card">
+								<h3>Auditing &amp; Policy Findings</h3>
+								<div class="table-scroll">
+									<table class="pillar-table">
+										<thead>
+											<tr><th>Study / Venue</th><th>Audit Target</th><th>Key Quantitative Finding</th></tr>
+										</thead>
+										<tbody>
+											<tr><td><strong>DGS-Bench</strong> (DLI 2026 Best Poster)</td><td>iCassava 19,397 field images</td><td>Raw acc mirage in 40/40 runs; GrabCut bg drop 20-35 pp</td></tr>
+											<tr><td><strong>DCGAN Failure</strong> (DSA 2026 Oral)</td><td>Extreme scarcity (n = 25-100)</td><td>DCGAN degrades ResNet-50 by -35.9 pp vs. real data</td></tr>
+											<tr><td><strong>AgriAI Bias Card</strong> (DSA 2026)</td><td>PlantVillage vs. iCassava/iBean</td><td>Rubric scores 4/10 (PV) vs. 9/10 (African field sets)</td></tr>
+											<tr><td><strong>Policy Harmonization</strong> (TAIS 2026)</td><td>Ethiopia, Kenya &amp; Rwanda</td><td>4 shared pillars across water, power, languages, council</td></tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
+
 						<div class="panel-actions">
 							<a href="/papers/dgs-bench/" class="btn btn-primary">DGS-Bench Paper</a>
-							<a href="/papers/cara-fm/" class="btn btn-secondary">CARA-FM Framework</a>
-							<a href="/papers/ai-policy-harmonization-tais2026/" class="btn btn-secondary">TAIS 2026 Policy</a>
+							<a href="/papers/ai-policy-harmonization-tais2026/" class="btn btn-secondary">Oxford TAIS 2026</a>
+							<a href="/projects/responsible-ai-global-south/" class="btn btn-secondary">Responsible AI Project</a>
 						</div>
 					</div>
 				</article>
@@ -163,35 +187,42 @@ import ModernFooter from '../components/ModernFooter.astro';
 							<h2>Healthcare &amp; Clinical AI</h2>
 							<div class="panel-tags">
 								<span>PlacentaVision</span>
-								<span>BAFNet Polyp Seg.</span>
-								<span>Preterm Risk ML</span>
-								<span>Federated Privacy</span>
+								<span>Preterm Serum Biomarkers</span>
+								<span>BAFNet Polyp Seg. (ESWA 2025)</span>
 							</div>
 						</div>
 					</div>
 					<div class="panel-body">
 						<p class="panel-intro">
-							High-stakes clinical AI requires tight anatomical boundary fidelity, privacy preservation, and calibrated risk scoring in low-resource hospitals. Through international clinical consortia, we advance maternal ultrasound/optical analysis and endoscopic segmentation.
+							Low-resource maternity wards and diagnostic clinics require calibrated morphometric pipelines and sharp anatomical boundary fidelity without heavy compute servers. Through multi-institutional partnerships in Pemba, Penn State, and Zhejiang/Hangzhou, we advance non-invasive placental analysis and clinical segmentation.
 						</p>
-						<div class="subgrid">
-							<div class="subbox">
-								<h3>Clinical Imaging &amp; Biomarker Modeling</h3>
-								<ul>
-									<li><strong>PlacentaVision Consortium:</strong> International collaboration with Prof. Alison Gernand (Penn State University) and maternal health clinics predicting placental weight, perfusion, and dysfunction risk non-invasively.</li>
-									<li><strong>BAFNet Colorectal Segmentation:</strong> Published in <em>Expert Systems with Applications</em> (2025, IF 7.5), reaching 0.914 EndoScene Dice in 5.98M params (3.59 GFLOPs).</li>
-								</ul>
-							</div>
-							<div class="subbox">
-								<h3>Maternal Cohorts &amp; Federated Privacy</h3>
-								<ul>
-									<li><strong>Maternal &amp; Neonatal Risk ML:</strong> Metabolomic preterm birth prediction with Center for Public Health Kinetics (Pemba) and 4 co-supervised PhD researchers alongside MTech SHAP biomarker pipelines.</li>
-									<li><strong>Privacy-Preserving Learning:</strong> Federated optimization protocols protecting sensitive biomedical and field edge-device data across distributed institutions.</li>
-								</ul>
+
+						<div class="pillar-visual-grid">
+							<figure class="pillar-figure">
+								<img src="/images/projects/placentavision_pipeline.png" alt="PlacentaVision automated three-view placental analysis framework" loading="lazy" />
+								<figcaption><strong>PlacentaVision Pipeline:</strong> View-specific fetal, maternal, and trimmed placenta segmentation paired with calibration-ruler morphometry across 9,883 clinical photographs.</figcaption>
+							</figure>
+
+							<div class="pillar-table-card">
+								<h3>Clinical Consortium Benchmarks</h3>
+								<div class="table-scroll">
+									<table class="pillar-table">
+										<thead>
+											<tr><th>Clinical Workstream</th><th>Cohort / Benchmark</th><th>Verified Outcome</th></tr>
+										</thead>
+										<tbody>
+											<tr><td><strong>PlacentaVision Consortium</strong></td><td>9,883 bedside placental images</td><td>98.92% automated mask QC pass rate (9,776 valid)</td></tr>
+											<tr><td><strong>CPHK Pemba Cohorts</strong></td><td>Zanzibar &amp; Pemba maternal serum</td><td>SHAP-explainable preterm &amp; neonatal risk models</td></tr>
+											<tr><td><strong>BAFNet Segmentation</strong> (ESWA 2025)</td><td>EndoScene · CVC-ColonDB · ETIS</td><td>0.914 EndoScene Dice in 5.98M params (3.59 GFLOPs)</td></tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
+
 						<div class="panel-actions">
 							<a href="/projects/placentavision/" class="btn btn-primary">PlacentaVision Project Site</a>
-							<a href="/papers/bafnet-polyp-2025/" class="btn btn-secondary">BAFNet Paper (ESWA)</a>
+							<a href="/papers/bafnet-polyp-2025/" class="btn btn-secondary">BAFNet Paper (ESWA 2025)</a>
 						</div>
 					</div>
 				</article>
@@ -203,6 +234,13 @@ import ModernFooter from '../components/ModernFooter.astro';
 </Layout>
 
 <style>
+	.hero-inline {
+		color: var(--accent-primary);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
 	.pillars-stack {
 		display: flex;
 		flex-direction: column;
@@ -218,7 +256,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 	}
 
 	.panel-header {
-		padding: 2rem 2.25rem;
+		padding: 1.85rem 2.25rem;
 		color: #ffffff;
 	}
 
@@ -240,7 +278,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 
 	.panel-header h2 {
 		font-size: clamp(1.45rem, 2.5vw, 1.95rem);
-		margin-bottom: 0.9rem;
+		margin-bottom: 0.85rem;
 		color: #ffffff;
 	}
 
@@ -265,46 +303,84 @@ import ModernFooter from '../components/ModernFooter.astro';
 	}
 
 	.panel-intro {
-		font-size: 1.03rem;
+		font-size: 1.02rem;
 		line-height: 1.72;
 		color: var(--text-secondary);
-		margin-bottom: 1.65rem;
+		margin-bottom: 1.6rem;
 	}
 
-	.subgrid {
+	.pillar-visual-grid {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1.5rem;
+		grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+		gap: 1.65rem;
+		align-items: start;
 		margin-bottom: 1.75rem;
 	}
 
-	.subbox {
+	.pillar-figure {
+		margin: 0;
+		background: #ffffff;
+		border: 1px solid var(--border-color);
+		border-radius: 0.85rem;
+		padding: 0.85rem;
+	}
+
+	.pillar-figure img {
+		width: 100%;
+		height: auto;
+		max-height: 290px;
+		object-fit: contain;
+		border-radius: 0.5rem;
+		background: #ffffff;
+	}
+
+	.pillar-figure figcaption {
+		margin-top: 0.65rem;
+		font-size: 0.84rem;
+		line-height: 1.5;
+		color: #475569;
+	}
+
+	.pillar-table-card {
 		background: var(--bg-secondary);
 		border: 1px solid var(--border-color);
 		border-radius: 0.85rem;
-		padding: 1.35rem 1.45rem;
+		padding: 1.15rem 1.25rem;
 	}
 
-	.subbox h3 {
-		font-size: 1rem;
+	.pillar-table-card h3 {
+		font-size: 0.95rem;
 		color: var(--accent-primary);
-		margin-bottom: 0.75rem;
+		margin: 0 0 0.75rem;
 	}
 
-	.subbox ul {
-		margin: 0;
-		padding-left: 1.15rem;
+	.table-scroll {
+		overflow-x: auto;
+	}
+
+	.pillar-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.85rem;
+		text-align: left;
+	}
+
+	.pillar-table th {
+		padding: 0.5rem 0.55rem;
+		border-bottom: 2px solid var(--border-color);
+		color: var(--text-primary);
+		font-weight: 700;
+	}
+
+	.pillar-table td {
+		padding: 0.55rem 0.55rem;
+		border-bottom: 1px solid var(--border-color);
 		color: var(--text-secondary);
-		font-size: 0.92rem;
-		line-height: 1.62;
+		vertical-align: top;
 	}
 
-	.subbox li {
-		margin-bottom: 0.6rem;
-	}
-
-	.subbox li:last-child {
-		margin-bottom: 0;
+	.pillar-table tr:last-child td {
+		border-bottom: none;
 	}
 
 	.panel-actions {
@@ -313,12 +389,15 @@ import ModernFooter from '../components/ModernFooter.astro';
 		gap: 0.75rem;
 	}
 
-	@media (max-width: 820px) {
-		.panel-header, .panel-body {
-			padding: 1.5rem;
-		}
-		.subgrid {
+	@media (max-width: 920px) {
+		.pillar-visual-grid {
 			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 680px) {
+		.panel-header, .panel-body {
+			padding: 1.4rem;
 		}
 	}
 </style>

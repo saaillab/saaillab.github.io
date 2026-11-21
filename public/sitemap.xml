@@ -1,375 +1,632 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://saaillab.github.io/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>SAAIL Lab AI Research in Zanzibar at IIT Madras Zanzibar</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/people/innocent-nyalala-saail-lab-zanzibar.jpg</image:loc>
+      <image:caption>Innocent Nyalala, Principal Investigator of SAAIL Lab at IIT Madras Zanzibar</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cropguardnet/architecture.png</image:loc>
+      <image:caption>CropGuardNet Lightweight CNN-Transformer Architecture at SAAIL Lab Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/research/</loc>
+    <loc>https://saaillab.github.io/collaborations/</loc>
     <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>AI Research Collaborations | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/projects/</loc>
+    <loc>https://saaillab.github.io/contact/</loc>
     <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Contact Us | SAAIL Lab | IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/datasets/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>East Africa AI Datasets &amp; Swahili Benchmarks | SAAIL Lab Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/gallery/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Event Gallery &amp; Posters | SAAIL Lab | IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/github/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Open-Source GitHub Repositories | SAAIL Lab</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/hiring/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Join SAAIL Lab | AI Research Positions at IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/people/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/people/innocent-nyalala-saail-lab-zanzibar.jpg</image:loc>
+      <image:caption>Innocent Nyalala, Assistant Professor and Principal Investigator, SAAIL Lab, IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://saaillab.github.io/publications/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>AI Publications from Zanzibar | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/datasets/</loc>
+    <loc>https://saaillab.github.io/research/</loc>
     <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>AI Research Pillars in Zanzibar | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/resources/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Resources &amp; Reproducibility Ledger | SAAIL Lab | IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://saaillab.github.io/tools/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>On-Device AI Apps &amp; Software | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/people/</loc>
+    <loc>https://saaillab.github.io/projects/</loc>
     <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/gallery/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/collaborations/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/resources/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/hiring/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/contact/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/github/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/projects/cultureseeds/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/projects/swahili-dira/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/projects/ubora-ai/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/projects/cropguard-pathology/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>AI Projects &amp; Grants in Zanzibar | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://saaillab.github.io/projects/cashew-ai/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/projects/cashew_ai_samples.jpg</image:loc>
+      <image:caption>CashewAI Monitoring | SAAIL Lab Projects</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/projects/seaweed-blue-economy/</loc>
+    <loc>https://saaillab.github.io/projects/cropguard-pathology/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cropguardnet/fig_xai_master_8crops.png</image:loc>
+      <image:caption>CropGuardNet &amp; DGS-Bench | SAAIL Lab Projects</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://saaillab.github.io/projects/placentavision/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/projects/placentavision_pipeline.png</image:loc>
+      <image:caption>PlacentaVision Clinical AI | SAAIL Lab Projects</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/papers/cropguardnet/</loc>
+    <loc>https://saaillab.github.io/projects/responsible-ai-global-south/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/projects/responsible_ai_framework.png</image:loc>
+      <image:caption>Responsible AI &amp; Sovereignty | SAAIL Lab Projects</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/papers/capture-session-confounding-cloves/</loc>
+    <loc>https://saaillab.github.io/projects/seaweed-blue-economy/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/projects/seaweed_ice_ice_arch.png</image:loc>
+      <image:caption>Coastal Seaweed &amp; Blue Economy | SAAIL Lab Projects</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/papers/digital-authoritarianism-east-africa/</loc>
+    <loc>https://saaillab.github.io/projects/swahili-dira/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/projects/swahili_corpus_sources.png</image:loc>
+      <image:caption>Swahili Corpus &amp; Dira | SAAIL Lab Projects</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/papers/digital-ag-platform-failure-east-africa/</loc>
+    <loc>https://saaillab.github.io/projects/ubora-ai/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/institutional-drivers-digital-ag-ssa/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/dgs-bench/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/cloves-4603/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/trustworthy-ai-iclr2026/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/cara-fm/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/clove-xai-etri2026/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/zstc-clove-v1/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/dcgan-cassava-dsa2026/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/auditing-crop-datasets-dsa2026/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/few-shot-cassava-dsa2026/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/ai-policy-harmonization-tais2026/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/ai-sovereignty-global-south-aaai2026/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/bafnet-polyp-2025/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/cassava-weakened-signals-2025/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/digital-sovereignty-serfdom-2025/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/clove-codesign-africhi2025/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/cassava-salient-feature-2024/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/chicken-carcass-3d-2024/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/maianet-cassava-2024/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/poultry-cv-review-2021/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/occluded-tomatoes-2021/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/precise-subsoiling-2021/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/broiler-carcass-weight-2021/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/tea-chrysanthemum-fyolo-2021/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/garlic-drying-optimization-2021/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/poultry-welfare-review-2020/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/egg-volume-cv-2020/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/wheat-grain-yield-2020/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/rice-kernels-separation-2020/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/sick-birds-broiler-2019/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://saaillab.github.io/papers/cherry-tomato-volume-2019/</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cloves/Fig4_Comprehensive_Model_Comparison.png</image:loc>
+      <image:caption>Ubora-AI Clove Grading | SAAIL Lab Projects</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://saaillab.github.io/papers/activated-carbon-sludge-2019/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/prior/carbon2019_sem.jpg</image:loc>
+      <image:caption>Activated Carbon from Herb Sludge (BioResources 2019) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/papers/paddy-drying-efficiency-2019/</loc>
+    <loc>https://saaillab.github.io/papers/ai-policy-harmonization-tais2026/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/projects/responsible_ai_framework.png</image:loc>
+      <image:caption>AI Policy Harmonization in East Africa (TAIS 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/papers/sow-asphyxia-farrowing-2018/</loc>
+    <loc>https://saaillab.github.io/papers/ai-sovereignty-global-south-aaai2026/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/sovereignty/sovereignty_7d_framework.png</image:loc>
+      <image:caption>AI Sovereignty in the Global South (AAAI 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/auditing-crop-datasets-dsa2026/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/dsa2026/fig1_audit_radar.png</image:loc>
+      <image:caption>Auditing Crop Benchmark Datasets (DSA 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/bafnet-polyp-2025/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/health/bafnet_arch.png</image:loc>
+      <image:caption>BAFNet Colorectal Polyp Segmentation (ESWA 2025) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/broiler-carcass-weight-2021/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Online Broiler Carcass &amp; Cuts Weight CV (Poultry Sci. 2021) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/capture-session-confounding-cloves/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cloves/fig1_workflow.png</image:loc>
+      <image:caption>Capture-Session Confounding in Clove AI | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/cara-fm/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/carafm/cara_fm_framework.jpeg</image:loc>
+      <image:caption>CARA-FM Framework (PMLR 2026 / DLI Best Poster) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/cassava-salient-feature-2024/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cassava/cassava_leaf_classes.jpg</image:loc>
+      <image:caption>Salient Feature Tactic for Cassava (AIIA 2024) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/cassava-weakened-signals-2025/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cassava/cassava_leaf_classes.jpg</image:loc>
+      <image:caption>Rectifying Weakened Signals for Cassava (COMPAG 2025) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/cherry-tomato-volume-2019/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/prior/tomato2019.jpeg</image:loc>
+      <image:caption>Cherry Tomato Volume &amp; Mass CV (JFE 2019) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/chicken-carcass-3d-2024/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/prior/carcass2024_workflow.jpeg</image:loc>
+      <image:caption>3D Chicken Carcass Volume Estimation (Poultry Sci. 2024) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/clove-codesign-africhi2025/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cloves/africhi2025_codesign.png</image:loc>
+      <image:caption>Co-Designing Clove Grading AI (AfriCHI 2025) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/clove-xai-etri2026/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/etri2026/fig1_pipeline.png</image:loc>
+      <image:caption>XAI for Clove Grading (ETRI Journal 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/cloves-4603/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cloves/cloves4603_pipeline.png</image:loc>
+      <image:caption>CLOVES-4603 (CVPR 2026 V4A) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/cropguardnet/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cropguardnet/architecture.png</image:loc>
+      <image:caption>CropGuardNet (Cross-Crop Leaf Disease AI) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/dcgan-cassava-dsa2026/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/dsa2026/fig1_f1_improvement.png</image:loc>
+      <image:caption>When Synthetic Data Hurts (DSA 2026 Oral) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/dgs-bench/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/dgs2026/fig1_dgs_bar.png</image:loc>
+      <image:caption>DGS-Bench (DLI 2026 Best Poster) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/digital-ag-platform-failure-east-africa/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/govtech/figure_01_taxonomy.png</image:loc>
+      <image:caption>Why Digital Ag Platforms Fail or Survive in EA | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/digital-authoritarianism-east-africa/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/govtech/itd_digital_citizenship.jpeg</image:loc>
+      <image:caption>AI Surveillance &amp; Digital Citizenship in EA | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/digital-sovereignty-serfdom-2025/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/sovereignty/sovereignty_7d_framework.png</image:loc>
+      <image:caption>Digital Sovereignty vs. Digital Serfdom (EurIPS/NeurIPS 2025) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/egg-volume-cv-2020/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Egg Volume Estimation via Computer Vision (JFE 2020) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://saaillab.github.io/papers/farrowing-onset-classification-2018/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Farrowing Onset Classification via Sow Activity (2018) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/papers/wsn-localization-virtual-force-2016/</loc>
+    <loc>https://saaillab.github.io/papers/few-shot-cassava-dsa2026/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/dsa2026/p1_all_backbones.png</image:loc>
+      <image:caption>Few-Shot Cassava Transfer Learning (DSA 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://saaillab.github.io/papers/intelligent-greenhouse-arduino-2016/</loc>
+    <loc>https://saaillab.github.io/papers/garlic-drying-optimization-2021/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Closed-Loop Heat Pump Garlic Drying (JFPP 2021) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/institutional-drivers-digital-ag-ssa/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/govtech/figure_01_framework.png</image:loc>
+      <image:caption>Institutional Barriers in SSA Digital Ag | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://saaillab.github.io/papers/intelligent-energy-saving-2015/</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Intelligent Energy Saving System (IJETAE 2015) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/intelligent-greenhouse-arduino-2016/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Intelligent Greenhouse IoT System (MSc Thesis 2016) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/maianet-cassava-2024/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cassava/cassava_leaf_classes.jpg</image:loc>
+      <image:caption>MAIANet Cassava Classification (COMPAG 2024) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/occluded-tomatoes-2021/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/prior/tomato2021_clusters.jpeg</image:loc>
+      <image:caption>Occluded Tomatoes Machine Vision (IJFP 2021) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/paddy-drying-efficiency-2019/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Heat Pump Paddy Drying Efficiency (Drying Tech. 2019) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/poultry-cv-review-2021/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Poultry Weight &amp; Volume CV Review (Poultry Sci. 2021) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/poultry-welfare-review-2020/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Computer Vision in Poultry Welfare Review (AIIA 2020) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/precise-subsoiling-2021/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/prior/subsoiling2021_dem.jpeg</image:loc>
+      <image:caption>Precise Subsoiling &amp; DEM Simulation (Sci. Rep. 2021) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/rice-kernels-separation-2020/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Occluded Rice Kernel Classification (IAEJ 2020) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/sick-birds-broiler-2019/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Early Sick Broiler Detection via CV (Biosystems Eng. 2019) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/sow-asphyxia-farrowing-2018/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Sow Asphyxia Detection During Farrowing (COMPAG 2018) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/tea-chrysanthemum-fyolo-2021/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>F-YOLO Tea Chrysanthemum Detection (Agronomy 2021) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/trustworthy-ai-iclr2026/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/iclr2026/ddr_framework.png</image:loc>
+      <image:caption>Trustworthy AI &amp; Bias Unification (ICLR 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/wheat-grain-yield-2020/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>Wheat Grain Yield Estimation (J. Sensors 2020) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/wsn-localization-virtual-force-2016/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>WSAN Virtual-Force Localization (IJCNDS 2016) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://saaillab.github.io/papers/zstc-clove-v1/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/papers/cloves/graphical_abstract.png</image:loc>
+      <image:caption>ZSTC-Clove-V1 Feasibility Study (AI4EAC 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+    </image:image>
   </url>
 </urlset>

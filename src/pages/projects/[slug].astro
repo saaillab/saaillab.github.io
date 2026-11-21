@@ -99,14 +99,18 @@ const { project } = Astro.props;
                 </>
               )}
 
-              <dt>SAAIL Lab Team</dt>
-              <dd>
-                <div class="chip-wrap">
-                  {project.team.map((member) => (
-                    <span class="chip">{member}</span>
-                  ))}
-                </div>
-              </dd>
+              {project.team.length > 0 && (
+                <>
+                  <dt>SAAIL Lab Team</dt>
+                  <dd>
+                    <div class="chip-wrap">
+                      {project.team.map((member) => (
+                        <span class="chip">{member}</span>
+                      ))}
+                    </div>
+                  </dd>
+                </>
+              )}
 
               <dt>Institutional Partners</dt>
               <dd>

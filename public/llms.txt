@@ -1,0 +1,39 @@
+# SAAIL Lab - Sustainable AI for Agriculture and Intelligent Livelihoods
+
+> AI, deep learning, machine learning, computer vision, Swahili NLP, agricultural AI, and clinical healthcare ML research laboratory at the School of Engineering and Science, Indian Institute of Technology Madras Zanzibar (IIT Madras Zanzibar), Tanzania, led by Innocent Nyalala.
+
+## Identity & Location
+- **Laboratory**: SAAIL Lab (Sustainable AI for Agriculture and Intelligent Livelihoods Lab)
+- **Institution**: School of Engineering and Science, Indian Institute of Technology Madras Zanzibar (IIT Madras Zanzibar), Bweleo, Zanzibar, Tanzania
+- **Principal Investigator**: Innocent Nyalala (Assistant Professor, IIT Madras Zanzibar; Associate Research Fellow, Wadhwani School of Data Science and AI, IIT Madras)
+- **Website**: https://saaillab.github.io/
+- **Faculty Archive**: https://inyalala.github.io/
+- **GitHub Organization**: https://github.com/saaillab
+- **Contact**: saail_lab@iitmz.ac.in
+- **Scholar Metrics (updated 2026-11-21)**: 1,270 citations (1,204 since 2021), h-index 15, i10-index 17, 42 cataloged works (20 SAAIL Lab: 15 published/accepted + 5 under review; 22 prior PI works).
+
+## Core Research Pillars
+1. **Precision Agriculture & Coastal Blue Economy AI** (https://saaillab.github.io/research/#agriculture): Lightweight CNN-Transformer foliar disease classification (CropGuardNet), Zanzibar clove quality grading (CLOVES-4603, ZSTC-Clove-V1, Ubora-AI), CashewAI phenology-aware orchard monitoring, and Zanzibar coastal seaweed Ice-Ice disease and marine heatwave sensing.
+2. **Swahili NLP & Cultural AI Alignment** (https://saaillab.github.io/research/#nlp): Zanzibar Swahili Corpus (coastal Kiunguja prose and spoken agricultural QA), Dira native-vs-translated Swahili provenance detection, and Culturally Attuned Resource-Aware Foundation Models (CARA-FM, PMLR Vol. 302).
+3. **Responsible AI, Explainability & East African Governance** (https://saaillab.github.io/research/#responsible): Deployment Gap and Sensitivity Benchmark (DGS-Bench, Deep Learning Indaba 2026 Best Poster Award), compositional explainable AI under domain shift (ETRI Journal 2026), and East African AI Policy Harmonization (Oxford TAIS 2026).
+4. **Healthcare & Clinical Machine Learning** (https://saaillab.github.io/research/#healthcare): PlacentaVision fetal-maternal imaging with Penn State University, preterm birth serum biomarker modeling with Pemba Center for Public Health Kinetics, and boundary-aware polyp segmentation (BAFNet, Expert Systems with Applications 2025).
+
+## Dedicated Project Sites
+- Responsible AI & Ethical AI Governance for the Global South: https://saaillab.github.io/projects/responsible-ai-global-south/
+- Zanzibar Swahili Corpus & Dira Provenance Benchmark: https://saaillab.github.io/projects/swahili-dira/
+- Ubora-AI: ZSTC Clove Quality Grading Mobile App: https://saaillab.github.io/projects/ubora-ai/
+- CropGuardNet & Field Crop Pathology: https://saaillab.github.io/projects/cropguard-pathology/
+- CashewAI: Phenology-Aware Orchard Monitoring: https://saaillab.github.io/projects/cashew-ai/
+- Zanzibar Coastal Blue Economy (Seaweed Ice-Ice & Heatwave Sensing): https://saaillab.github.io/projects/seaweed-blue-economy/
+- PlacentaVision & Maternal-Neonatal Clinical AI: https://saaillab.github.io/projects/placentavision/
+
+## Key Pages & Resources
+- Publications Catalog (42 Academic Project Pages): https://saaillab.github.io/publications/
+- Research Group & Alumni: https://saaillab.github.io/people/
+- Open Datasets & Benchmarks: https://saaillab.github.io/datasets/
+- Mobile Applications & Open Software: https://saaillab.github.io/tools/
+- GitHub Repositories: https://saaillab.github.io/github/
+- Conference & Field Gallery: https://saaillab.github.io/gallery/
+- Research Opportunities & Hiring: https://saaillab.github.io/hiring/
+- International Collaborations: https://saaillab.github.io/collaborations/
+- Contact: https://saaillab.github.io/contact/

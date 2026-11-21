@@ -68,7 +68,7 @@ export interface Publication {
 
 export const AFFILIATIONS = {
   IITMZ: 'School of Engineering and Science, Indian Institute of Technology Madras Zanzibar, Tanzania',
-  WSAI: 'Wadhwani School of Data Science and AI (WSDSAI), Indian Institute of Technology Madras, Chennai, India',
+  WSAI: 'Wadhwani School of Data Science and AI, Indian Institute of Technology Madras, Chennai, India',
   NAU: 'College of Engineering, Nanjing Agricultural University, Nanjing, China',
   DEAKIN: 'School of Information Technology, Deakin University, Australia',
   CAMBRIDGE: 'Department of Computer Science and Technology, University of Cambridge, UK',
@@ -142,38 +142,30 @@ export const PUBLICATIONS: Publication[] = [
           ['LeafXNet', '79,782', '0.30', '1,156.6', '97.27', '0.9558', '0.9717', '22.64 ± 0.55'],
           ['CropGuardNet (Ours)', '481,574', '1.84', '63.8', '99.17', '0.9874', '0.9914', '11.49 (PyTorch) / 5.00 (ONNX)']
         ]
-      },
-      {
-        title: 'Layer-by-Layer Architecture & Trainable Parameter Breakdown',
-        caption: 'Total trainable parameters: 481,574 (1.84 MB FP32, 0.92 MB FP16, 0.46 MB raw INT8).',
-        headers: ['Stage / Module', 'Configuration', 'Output Shape', 'Params', 'Share (%)'],
-        rows: [
-          ['1. Backbone', 'MobileNetV3-Small (α = 0.50, features-only, stride 32)', 'B × 288 × 7 × 7', '272,288', '56.54'],
-          ['2. MSFP Pyramid', '3 parallel branches (1×1; 3×3 r=2; 3×3 r=4) + 1×1 fuse', 'B × 32 × 7 × 7', '178,432', '37.05'],
-          ['3. DSR Refinement', 'DWConv 3×3 (288) + PWConv 1×1 (1,024) + BN + SiLU', 'B × 32 × 7 × 7', '1,376', '0.29'],
-          ['4. SE Attention', 'GAP + bias-free FC 32→8→32 + Sigmoid', 'B × 32 × 7 × 7', '512', '0.11'],
-          ['5. Compact ViT', 'PosEmbed (1,568) + 2-head MHSA (4,224) + FFN + 3×LN', 'B × 32 × 7 × 7', '10,176', '2.11'],
-          ['6. Dual-Path Fusion', 'GAP(F_SE) || GAP(F_Trans) parameter-free pooling', 'B × 64', '0', '0.00'],
-          ['7. Crop Conditioning', 'Embed(8×16) + Linear 80→64 + SiLU + Drop(0.1)', 'B × 64', '5,312', '1.10'],
-          ['8. Classifier Head', 'Linear 64→128 + SiLU + BN + Drop(0.3) + Linear 128→38', 'B × 38', '13,478', '2.80'],
-          ['Total', 'Complete CropGuardNet (1.84 MB FP32)', 'B × 38', '481,574', '100.00']
-        ]
-      },
-      {
-        title: 'Quantitative XAI Faithfulness (n = 80 Stratified Images, 10 per Crop)',
-        caption: 'Evaluated at F_SE (32 × 7 × 7) over 20 steps against a 21×21 Gaussian blur baseline (σ = 10.0) under Mode A1.',
-        headers: ['XAI Method', 'Mechanism Family', 'Deletion AUC (↓)', 'Insertion AUC (↑)'],
-        rows: [
-          ['LayerCAM', 'Element-wise Multi-Scale Spatial Gradients', '0.7262 ± 0.2705', '0.9181 ± 0.1175'],
-          ['Grad-CAM++', 'Higher-Order Gradient Weights', '0.7289 ± 0.2643', '0.9214 ± 0.1141'],
-          ['GradientSHAP', 'Game-Theoretic Path Gradients', '0.7446 ± 0.2515', '0.9259 ± 0.1013'],
-          ['LIME', 'SLIC Superpixel Surrogate Regression', '0.8492 ± 0.1782', '0.9039 ± 0.1386']
-        ]
       }
     ],
-    figureHeading: 'Multi-Crop Explainable AI Attribution',
+    figureHeading: 'Architecture, Efficiency Pareto & Cross-Crop Explainable AI',
     figures: [
-      { src: '/images/papers/cropguardnet/fig_xai_master_8crops.png', caption: 'Quad-family explainable AI attribution (Grad-CAM++, LayerCAM, LIME, and GradientSHAP) across all eight crop species under Mode A1 inference. Gradient maps concentrate on necrotic leaf pathology with low Deletion AUC (0.7262 for LayerCAM; 0.7289 for Grad-CAM++), whereas GradientSHAP achieves the highest Insertion AUC (0.9259).' }
+      {
+        src: '/images/papers/cropguardnet/fig_xai_master_8crops.png',
+        caption: 'Quad-method XAI visual comparison across all eight crop species (Grad-CAM++, LayerCAM, LIME, GradientSHAP).',
+        alt: 'CropGuardNet XAI master comparison across 8 crops'
+      },
+      {
+        src: '/images/papers/cropguardnet/fig08_pareto_efficiency.png',
+        caption: 'Pareto trade-off comparing test F1-macro against computational FLOPs and CPU ONNX inference latency across seven evaluated architectures.',
+        alt: 'CropGuardNet Pareto efficiency frontier'
+      },
+      {
+        src: '/images/papers/cropguardnet/fig_robustness_curves.png',
+        caption: 'Mean classification accuracy degradation trajectories across 20 corruption regimes at severity levels 1 through 5.',
+        alt: 'CropGuardNet robustness across 20 corruption regimes'
+      },
+      {
+        src: '/images/papers/cropguardnet/fig_plantdoc_field_transfer.png',
+        caption: 'Field-transfer performance comparison on uncurated PlantDoc smartphone images under Mode A1, Mode A1-Auto, and 20-epoch adaptation.',
+        alt: 'PlantDoc field transfer evaluation'
+      }
     ],
     isSaailLab: true,
     bibtex: `@misc{nyalala2026cropguardnet,
@@ -265,6 +257,8 @@ export const PUBLICATIONS: Publication[] = [
     status: 'Under Peer Review',
     isSaailLab: true,
     openAccess: false,
+    teaserImage: '/images/papers/govtech/itd_digital_citizenship.jpeg',
+    teaserCaption: 'Resistant digital citizenship practices in hybrid regimes grounded in Ubuntu relational ethics and Afrofeminist collective data governance.',
     tldr: 'Comparative political-economy and governance analysis of AI surveillance, internet shutdowns, and Ubuntu/Afrofeminist digital citizenship resistance across Tanzania and Kenya between 2015 and 2025.',
     abstract: 'This study examines what happens to digital rights, political freedom, and citizen agency when governments deploy artificial intelligence surveillance systems and internet shutdowns across East African hybrid regimes between 2015 and 2025. Although Sub-Saharan Africa reached 29% mobile internet penetration in 2024, African governments spent over 1 billion USD annually on citizen surveillance infrastructure and imposed 21 internet shutdowns across 15 countries in 2024 alone, costing over 1.6 billion USD. Focusing on Tanzania (October 2025 election internet blackout and blocking of 80,000+ websites alongside cybercrime prosecution of journalists) and Kenya (Huawei Safe City facial recognition in Nairobi and Mombasa, constitutional litigation over biometric ID, and 2024 Finance Bill Gen Z protest disruptions), this study addresses Northern theoretical bias by grounding analysis in Ubuntu communal ethics and Afrofeminist data governance.',
     keywords: ['digital authoritarianism', 'AI surveillance', 'internet shutdowns', 'digital citizenship', 'Ubuntu ethics', 'Tanzania', 'Kenya', 'GovTech'],
@@ -434,10 +428,10 @@ export const PUBLICATIONS: Publication[] = [
     paperUrl: 'https://deeplearningindaba.com/2026/',
     posterUrl: '/images/papers/posters/dgs-bench-poster-dli2026.png',
     codeUrl: 'https://github.com/saaillab/dgs-bench',
-    teaserImage: '/images/papers/posters/dgs-bench-poster-dli2026.png',
-    teaserCaption: 'Camera-ready poster awarded Best Poster at Deep Learning Indaba 2026 (Lagos, Nigeria; 18 accepted of 114 submissions). Shows how class-imbalanced field splits induce a -5.96 pp raw-accuracy evaluation mirage, whereas macro-F1 exposes +8.19 pp true deployment degradation.',
+    teaserImage: '/images/papers/dgs2026/fig1_dgs_bar.png',
+    teaserCaption: 'The Evaluation Mirage: raw accuracy shows a misleading positive shift under field imbalance while balanced macro-F1 exposes negative deployment gaps across all 4 architectures.',
     tldr: 'Demonstrates that aggregate accuracy hides catastrophic minority-disease failures under field shift in African cassava diagnostics, introducing balanced deployment-gap evaluation metrics (Best Poster Award, DLI 2026).',
-    abstract: 'Aggregate classification accuracy on imbalanced agricultural datasets routinely hides silent failures on minority but economically devastating plant diseases. We introduce DGS-Bench, a Deployment Gap and Sensitivity Benchmark tailored for African agricultural AI, grounded in a multi-condition cassava pathology case study. Evaluating models across controlled versus real smallholder field acquisitions reveals that models boasting high top-line accuracy frequently suffer sharp drops in macro-averaged recall and per-class F1 on rare pathologies. DGS-Bench establishes a standardized evaluation protocol combining balanced per-class metrics, deployment gap quantification, and calibration checks, earning the Best Poster Award at Deep Learning Indaba 2026 (one of 18 papers accepted out of 114 submissions, 15.79% acceptance rate).',
+    abstract: 'Agricultural AI models trained on balanced laboratory datasets routinely report moderate linear-probe accuracy (~55%), yet the same models appear to improve when evaluated on naturally imbalanced African field data. We show that this apparent improvement is an Evaluation Mirage: class imbalance inflates aggregate accuracy while minority-class performance degrades. We introduce DGS-Bench, a reproducible evaluation framework using the public Kaggle cassava disease dataset, and demonstrate the mirage across 40 independent experiments (10 random seeds x 4 pretrained architectures): raw-accuracy DGS is negative in all 40 cases (mean -6.00 +/- 2.38 pp; t = -15.8, p < 1e-6), while macro-F1 DGS is positive in all 40 (mean +8.16 +/- 2.34 pp; t = 21.7, p < 1e-6). Three additional lines of evidence strengthen the finding: (1) image-space background removal via GrabCut segmentation collapses field accuracy by 20-35 pp, confirming feature-space perturbation results with direct pixel-level evidence; (2) fine-tuning ResNet-50 (full and last-block) amplifies the mirage rather than eliminating it; and (3) cross-architecture threshold analysis reveals that the mirage onset varies from 20% to 50% dominant-class prevalence depending on architecture. Macro-AUPRC DGS is positive for all architectures (mean +8.3 pp), confirming the F1 finding; macro-AUROC DGS diverges (negative), highlighting the critical distinction between ranking and threshold-dependent metrics under imbalance. Cross-dataset validation on PlantVillage Tomato (10 classes) and Rice Leaf Disease (4 classes) confirms that the mirage requires both severe class imbalance and moderate model uncertainty; it does not appear when frozen features achieve >90% lab accuracy. All code is available on Kaggle.',
     keywords: ['DGS-Bench', 'African agricultural AI', 'cassava disease', 'balanced metrics', 'deployment gap', 'Deep Learning Indaba'],
     topics: ['Agriculture', 'Benchmarking', 'Responsible AI', 'Cassava', 'East Africa'],
     highlights: [
@@ -446,9 +440,23 @@ export const PUBLICATIONS: Publication[] = [
       { value: '-17.0 pp', label: 'BG Perturbation Drop', sublabel: 'ViT-Small/16 loses 21.3 pp' },
       { value: 'Best Poster', label: 'DLI 2026 Winner', sublabel: '18 / 114 accepted (15.79%)' }
     ],
-    figureHeading: 'Deployment Gap Score Across Architectures',
+    figureHeading: 'Empirical Perturbation & Cross-Architecture Mirage Evidence',
     figures: [
-      { src: '/images/papers/dgs2026/fig1_dgs_bar.png', caption: 'Lab vs. natural field accuracy across four architectures revealing negative raw-accuracy DGS mirage, whereas macro-F1 exposes +8.19 pp mean deployment degradation.' }
+      {
+        src: '/images/papers/dgs2026/fig2_perturbation.png',
+        caption: 'Feature perturbation curves demonstrating reliance on background shortcuts during field inference.',
+        alt: 'Feature perturbation curves at severity 1.0'
+      },
+      {
+        src: '/images/papers/dgs2026/fig3_balanced_dgs.png',
+        caption: 'Comparison of raw accuracy deployment gap against balanced macro-F1 deployment gap across seeds.',
+        alt: 'Balanced macro-F1 deployment gap across models'
+      },
+      {
+        src: '/images/papers/dgs2026/fig7_cross_dataset.png',
+        caption: 'Cross-dataset validation on PlantVillage Tomato and Rice Leaf Disease showing mirage dependence on model uncertainty and imbalance.',
+        alt: 'Cross-dataset validation on Tomato and Rice'
+      }
     ],
     contributions: [
       'Defines the Deployment Gap Score (DGS) across raw accuracy, balanced accuracy, and macro-F1 to quantify lab-to-field distribution shift on imbalanced smallholder datasets.',
@@ -466,16 +474,6 @@ export const PUBLICATIONS: Publication[] = [
           ['EfficientNet-B3', '56.25', '61.93', '-5.68', '54.66', '56.10', '46.78', '+9.32'],
           ['MobileNetV3-S', '54.00', '56.97', '-2.97', '53.26', '54.05', '44.37', '+9.67'],
           ['ViT-Small/16', '57.00', '64.14', '-7.14', '57.51', '56.88', '49.37', '+7.51']
-        ]
-      },
-      {
-        title: 'Controlled Perturbation Drop (pp) on Field Features at Severity 1.0',
-        headers: ['Architecture', 'Base Field Acc (%)', 'Background Δ (pp)', 'Gaussian Noise Δ (pp)', 'Brightness Δ (pp)'],
-        rows: [
-          ['ResNet-50', '62.8', '14.3', '9.9', '-0.9'],
-          ['EfficientNet-B3', '61.9', '13.6', '9.0', '-0.5'],
-          ['MobileNetV3-S', '57.0', '18.8', '14.8', '-1.6'],
-          ['ViT-Small/16', '64.1', '21.3', '16.0', '-0.6']
         ]
       }
     ],
@@ -514,10 +512,10 @@ export const PUBLICATIONS: Publication[] = [
     paperUrl: 'https://openreview.net/pdf?id=V1UbAtXS4M',
     codeUrl: 'https://github.com/saaillab/CLOVES-4603',
     datasetUrl: 'https://github.com/saaillab/CLOVES-4603',
-    teaserImage: '/images/papers/cloves/Fig4_Comprehensive_Model_Comparison.png',
-    teaserCaption: 'Five-family benchmark on CLOVES-4603 (4,603 ZSTC clove images): fine-tuned ResNet-50 reaches 99.67% accuracy, frozen DINOv2 linear probe achieves 94.90%, and GPU-free GLCM+GLRLM+LBP texture fusion SVM reaches 92.94%.',
+    teaserImage: '/images/papers/cloves/cloves4603_pipeline.png',
+    teaserCaption: 'CLOVES-4603 standardized acquisition, texture feature fusion (GLCM+GLRLM+LBP), and deep fine-tuning benchmarking pipeline across four ZSTC grades.',
     tldr: 'Introduces CLOVES-4603, the first public 4,603-image benchmark for Zanzibar clove grading across four commercial grades, comparing classical texture pipelines (92.94%) against fine-tuned deep architectures (99.67%).',
-    abstract: 'We introduce CLOVES-4603, the first public benchmark dataset for automated clove quality grading, comprising 4,603 standardized 224x224 RGB images spanning four commercial grades collected at the Zanzibar State Trading Corporation (ZSTC). We benchmark classical texture pipelines (HOG+SVM, GLCM+GLRLM+LBP fusion) against fine-tuned deep learning models including ResNet-50, MobileNetV3, and a frozen DINOv2 vision transformer. ResNet-50 achieves 99.67% accuracy on the test set, whereas texture-fusion SVM reaches 92.94%, providing a strong and deployment-friendly classical baseline. This benchmark informs real-world deployment trade-offs between accuracy, latency, and computational cost in agricultural settings where infrastructure is limited.',
+    abstract: 'Zanzibar produces approximately 8,000 tons of dried cloves annually; however, post-harvest quality grading remains manual, inconsistent, and costly. We introduce CLOVES-4603, a dataset of 4,603 standardized 224x224 RGB images spanning four commercial grades collected at the Zanzibar State Trading Corporation facilities. Using lot-aware stratified 70/10/20 splits (5 seeds, bootstrap 95% CIs), we benchmarked classical texture pipelines (HOG+SVM and GLCM+GLRLM+LBP fusion with RBF-SVM), a frozen DINOv2 ViT-B/14 linear probe, and four fine-tuned ImageNet models. On the 921-image test set, ResNet-50 achieved 99.67% accuracy (macro F1 99.66%), and MobileNetV3-Large achieved an accuracy of 99.35%. The frozen DINOv2 probe achieved 94.90%, outperforming the texture fusion SVM at 92.94%. HOG+SVM reaches 32.68%. Accuracy, latency, and parameter trade-offs are provided for deployment. This benchmark establishes a reproducible evaluation standard for whole dried-spice grading research.',
     keywords: ['CLOVES-4603', 'clove quality grading', 'Zanzibar', 'texture features', 'deep learning', 'CVPR 2026', 'vision for agriculture'],
     topics: ['Agriculture', 'Computer Vision', 'Zanzibar', 'Benchmarking', 'Deep Learning'],
     highlights: [
@@ -545,9 +543,23 @@ export const PUBLICATIONS: Publication[] = [
       'Demonstrates that combined GLCM+GLRLM+LBP texture fusion with RBF-SVM achieves 92.94% test accuracy without GPUs, outperforming HOG+SVM (32.68%) by +60.26 percentage points.',
       'Profiles accuracy-latency-parameter Pareto trade-offs showing MobileNetV3-Large reaches 99.35% accuracy as a mobile-ready alternative to ResNet-50 (99.67%).'
     ],
-    figureHeading: 'Stratified Grade Distribution of CLOVES-4603',
+    figureHeading: 'Benchmark Results, Confusion Matrix & Pareto Latency Analysis',
     figures: [
-      { src: '/images/papers/cloves/Fig1_Class_Distribution.png', caption: 'Lot-aware stratified 70/10/20 class distribution across Grades 1 to 4 (N = 4,603 ZSTC clove images).' }
+      {
+        src: '/images/papers/cloves/cloves4603_benchmark.png',
+        caption: 'Test accuracy and macro-F1 across classical pipelines (HOG+SVM, Texture+SVM) and fine-tuned CNN/ViT models on the 921-image test split.',
+        alt: 'CLOVES-4603 classifier accuracy and F1 comparison'
+      },
+      {
+        src: '/images/papers/cloves/cloves4603_cm.png',
+        caption: 'Held-out test confusion matrix for the top-performing ResNet-50 model (99.67% accuracy, 0.9966 macro-F1).',
+        alt: 'ResNet-50 test confusion matrix across 4 clove grades'
+      },
+      {
+        src: '/images/papers/cloves/cloves4603_pareto.png',
+        caption: 'Test accuracy versus single-image inference latency showing sub-5 ms edge-deployable models.',
+        alt: 'Accuracy versus inference latency trade-off'
+      }
     ],
     isSaailLab: true,
     bibtex: `@inproceedings{nyalala2026cloves4603,
@@ -583,10 +595,11 @@ export const PUBLICATIONS: Publication[] = [
     citations: 2,
     paperUrl: 'https://openreview.net/forum?id=RCEEHTbSDk',
     codeUrl: 'https://github.com/saaillab/trustworthy-ai-iclr2026',
-    teaserImage: '/images/papers/posters/iclr-2026-trustworthy-ai.webp',
-    teaserCaption: 'Accepted paper at the ICLR 2026 Trustworthy AI Workshop unifying fairness, robustness, and out-of-distribution generalization via data-centric bias intervention.',
+    teaserImage: '/images/papers/iclr2026/ddr_framework.png',
+    teaserCaption: 'Dynamic Data Re-weighting (DDR) unifies fairness disparities, shortcut vulnerability, and OOD generalization failure through adversarial sample introspection.',
+    posterUrl: '/images/papers/posters/iclr-2026-trustworthy-ai.webp',
     tldr: 'Introduces Dynamic Data Re-weighting (DDR), a data-centric intervention using adversarial introspection to jointly improve algorithmic fairness, spurious-correlation robustness, and out-of-distribution generalization without group labels.',
-    abstract: 'Fairness disparities, shortcut vulnerability, and out-of-distribution generalization failures are typically addressed in separate silos despite tracing back to a shared reliance on non-causal spurious correlations in training data. We introduce Dynamic Data Re-weighting (DDR), a data-centric framework that uses adversarial introspection to detect and up-weight difficult, shortcut-dependent examples without requiring expensive explicit spurious group annotations. Evaluated across background biases, attribute shifts, and class imbalances, DDR consistently improves Worst-Group Accuracy alongside out-of-distribution generalization.',
+    abstract: 'Subgroup fairness disparities, spurious-shortcut sensitivity, and out-of-distribution generalization failures are routinely investigated in separate machine learning subfields despite sharing a common causal source in non-causal spurious correlations baked into training data. We introduce Dynamic Data Re-weighting (DDR), a unified data-centric intervention using adversarial introspection to automatically detect and up-weight high-difficulty, shortcut-dependent examples without requiring expensive explicit spurious-group annotations during training. Evaluated across background biases, attribute shifts, and severe class imbalances, DDR consistently improves Worst-Group Accuracy alongside out-of-distribution generalization.',
     keywords: ['trustworthy AI', 'fairness', 'robustness', 'generalization', 'Dynamic Data Re-weighting', 'ICLR 2026'],
     topics: ['Responsible AI', 'Deep Learning', 'East Africa'],
     contributions: [
@@ -628,10 +641,10 @@ export const PUBLICATIONS: Publication[] = [
     openAccess: true,
     paperUrl: 'https://proceedings.mlr.press/v302/nyalala26a.html',
     codeUrl: 'https://github.com/saaillab/cara-fm',
-    teaserImage: '/images/papers/posters/cara-fm-poster-dli2025.png',
-    teaserCaption: 'Best Poster presentation at Deep Learning Indaba 2025 (Kigali, Rwanda; published in PMLR Vol. 302): quantifies 5x-40x infrastructure disparities in East Africa and defines four architectural pillars plus Tiny/Lite/Edge deployment tiers.',
+    teaserImage: '/images/papers/carafm/cara_fm_framework.jpeg',
+    teaserCaption: 'The four-pillar CARA-FM architecture uniting Data-Centric AI, Cultural Attunement, Resource-Aware edge efficiency, and Ethical participatory governance.',
     tldr: 'Introduces the four-pillar CARA-FM framework (Community-Driven Data, Indigenous Knowledge Systems, Edge-First Architecture, Participatory Governance) for East African agricultural foundation models.',
-    abstract: 'East African agriculture supports more than 175 million people yet faces mounting challenges from climate variability, compute scarcity, and information barriers. Current foundation models fail to address the region\'s computational constraints, linguistic diversity spanning over 200 languages, and distinct ecological knowledge systems. We present CARA-FM, a theoretical framework comprising four pillars: Community-Driven Data Architecture, Indigenous Knowledge Systems, Edge-First Model Design, and Participatory Governance. We define multi-dimensional evaluation metrics spanning technical, agronomic, and cultural criteria to guide foundation model research under severe resource constraints.',
+    abstract: 'East African agriculture supports more than 175 million people but faces mounting challenges from climate change, resource constraints, and information access barriers. Current foundation models fail to address the region’s computational limitations (devices with 1-4 GB RAM), linguistic diversity (200+ languages), and knowledge system differences. This paper presents CARA-FM (Culturally Attuned and Resource-Aware Foundation Models), a theoretical framework comprising four pillars: Community-Driven Data Architecture, Indigenous Knowledge Systems, Edge-First Model Design, and Participatory Governance. We propose evaluation metrics that span the technical (computational efficiency), agricultural (yield improvement), and cultural (community acceptance) dimensions. Although empirically unvalidated, this framework provides a research agenda for developing agricultural AI systems that operate within severe resource constraints and respect local contexts. Our contribution is theoretical and offers a blueprint for future empirical work rather than implemented solutions.',
     keywords: ['CARA-FM', 'foundation models', 'East African agriculture', 'responsible AI', 'indigenous knowledge', 'PMLR', 'Deep Learning Indaba'],
     topics: ['Foundation Models', 'Responsible AI', 'Agriculture', 'East Africa'],
     highlights: [
@@ -641,9 +654,7 @@ export const PUBLICATIONS: Publication[] = [
       { value: '5M-50M', label: 'Edge Compression Tiers', sublabel: 'Tiny / Lite / Edge specs' }
     ],
     figureHeading: 'Deep Learning Indaba 2025 Best Poster Recognition',
-    figures: [
-      { src: '/images/papers/posters/cara-fm-dli-spotlight.webp', caption: 'Best Poster Award recognition at Deep Learning Indaba 2025, Kigali, Rwanda (published in PMLR Vol. 302, 2026).' }
-    ],
+    figures: [],
     posterUrl: '/images/papers/posters/cara-fm-poster-dli2025.png',
     contributions: [
       'Quantifies concrete resource mismatches between standard foundation models (8-32 GB RAM, 50+ Mbps) and East African field realities (1-3 GB smartphones, 1.2 Mbps connectivity, intermittent power).',
@@ -660,15 +671,6 @@ export const PUBLICATIONS: Publication[] = [
           ['Power Availability', 'Continuous', '4 - 8 hours/day', '6x'],
           ['Target Device Cost', '$500+', '< $100', '5x'],
           ['Cloud GPU Acceleration', 'Required', 'Unavailable offline', 'Inf']
-        ]
-      },
-      {
-        title: 'Proposed CARA-FM Edge-Cloud Deployment Tiers',
-        headers: ['Tier', 'Parameter / Size Budget', 'Target Hardware', 'Target Acc.', 'Primary Use Case'],
-        rows: [
-          ['CARA-Tiny', '5M params / 20 MB', 'Entry feature & low-end phones', '80%', 'Offline crop symptom screening'],
-          ['CARA-Lite', '15M params / 60 MB', 'Budget smartphones (1-2 GB RAM)', '85%', 'Multi-disease field triage'],
-          ['CARA-Edge', '50M params / 200 MB', 'Mid-range extension phones', '90%', 'Full seasonal advisory']
         ]
       }
     ],
@@ -704,7 +706,7 @@ export const PUBLICATIONS: Publication[] = [
     category: 'journal',
     status: 'Published · Q2 SCI · Vol. 48(5)',
     tldr: 'Evaluates 7 post hoc XAI methods across 8 CNN/ViT models on 4,603 ZSTC clove images, revealing 33.4-82.4% EER attribution fragility and up to 86.5 pp shift drops, whereas a U-Net + ResNet-18 compositional pipeline reaches 99.45% F1 with 100% EER.',
-    abstract: 'Reliable agricultural commodity grading requires accuracy and explanations that match regulatory criteria. Using 4,603 expert-graded clove images across four Zanzibar State Trading Corporation (ZSTC) quality grades, we benchmark post hoc explainable artificial intelligence (XAI) methods including Grad-CAM, LIME, and GradientSHAP across eight CNN and Vision Transformer architectures and compare them with a compositional segmentation-classification pipeline. All eight monolithic architectures achieve 99.48% to 99.85% test F1-score, yet their Explanation Evidence Ratio (EER) varies sharply from 33.4% to 82.4%, with domain-shift F1 drops ranging from 6.7 to 86.5 percentage points. By isolating clove foregrounds prior to attribute grading via U-Net segmentation (Dice 0.9505) and ZSTC mpeta percentage rules, the compositional pipeline achieves 99.45% F1 with 100% EER by design and receives unanimous preference from three certified ZSTC inspectors.',
+    abstract: 'Reliable agricultural commodity grading requires accuracy and explanations that match regulatory criteria. Using 4603 expert-graded clove images across four Zanzibar State Trading Corporation (ZSTC) quality grades, we benchmark seven post hoc explainable artificial intelligence (XAI) methods (GradCAM, Grad-CAM++, ScoreCAM, LIME, GradientSHAP, CLS-Attention, and Chefer LRP) across eight CNN/ViT architectures and compare them with a compositional segmentation-classification pipeline that builds interpretability into the model. We propose the Explanation Energy Ratio (EER) to quantify foreground-aligned explanations using ground-truth masks. EER varies widely by architecture explainer, with different explainers yielding different results for the same classifier. Under a synthetic background-replacement domain shift, robustness differs despite similar in-domain performance. LIME performs well on transformers but is slow; SHAP is too costly for edge use. The compositional pipeline achieves 99.45% F1 with 100% EER by design and is preferred by certified ZSTC graders for regulatory auditing.',
     keywords: [
       'explainable AI',
       'clove quality grading',
@@ -741,9 +743,23 @@ export const PUBLICATIONS: Publication[] = [
       'Quantified background domain-shift robustness across all eight monolithic backbones, uncovering F1 collapses of 53.7 pp (EfficientNet-B2) to 86.5 pp (EfficientNet-B0) despite near-100% in-domain scores.',
       'Built and validated a compositional U-Net (Dice 0.9505) + ResNet-18 rule-aligned grading pipeline achieving 99.45% F1, guaranteed 100% EER, and unanimous approval from three certified ZSTC clove graders.'
     ],
-    figureHeading: 'Explanation Faithfulness and Domain-Shift Robustness',
+    figureHeading: 'Attribution Qualitative Comparison, EER Correlation & Expert Audits',
     figures: [
-      { src: '/images/papers/etri2026/fig3_eer_vs_robustness.png', caption: 'Correlation between Explanation Evidence Ratio (EER) and classification F1 retention under acquisition domain shift across eight deep architectures.' }
+      {
+        src: '/images/papers/etri2026/fig2_xai_comparison.png',
+        caption: 'Qualitative saliency alignment across Grad-CAM, LIME, GradientSHAP, and compositional segmentation masks for Grades I-IV.',
+        alt: 'ETRI 2026 XAI attribution comparison across clove grades'
+      },
+      {
+        src: '/images/papers/etri2026/fig3_eer_vs_robustness.png',
+        caption: 'Correlation between Explanation Energy Ratio (EER) and accuracy under background-replacement domain shift across architectures.',
+        alt: 'EER vs Domain Shift robustness scatter plot'
+      },
+      {
+        src: '/images/papers/etri2026/fig4_expert_evaluation.png',
+        caption: 'Grade agreement and unanimous ZSTC expert regulatory audit approval (3/3 certified inspectors across 90 batches).',
+        alt: 'ZSTC expert evaluation and audit approval bar chart'
+      }
     ],
     tables: [
       {
@@ -759,34 +775,6 @@ export const PUBLICATIONS: Publication[] = [
           ['EfficientNet-B0', '5.3', '99.53', '99.55', '99.50'],
           ['EfficientNet-B2', '9.2', '99.48', '99.48', '99.47'],
           ['Compositional (U-Net + ResNet-18)', '13.2', '99.45', '99.45', '99.45']
-        ]
-      },
-      {
-        title: 'Post Hoc XAI Faithfulness (EER %) & Inference Time per Image (s)',
-        headers: ['Architecture', 'Grad-CAM EER (%)', 'Grad-CAM Time (s)', 'LIME EER (%)', 'LIME Time (s)', 'SHAP EER (%)', 'SHAP Time (s)'],
-        rows: [
-          ['Swin-Base', '73.6', '0.028', '81.1', '5.8', '81.9', '26.1'],
-          ['DeiT-Base', '33.4', '0.007', '82.4', '5.3', '65.4', '24.1'],
-          ['DenseNet-121', '65.7', '0.049', '74.4', '2.0', '66.0', '5.1'],
-          ['ResNet-50', '71.2', '0.020', '71.6', '2.0', '64.5', '4.8'],
-          ['ResNet-18', '69.4', '0.009', '57.9', '1.7', '66.8', '3.2'],
-          ['DenseNet-201', '62.9', '0.089', '56.2', '2.3', '70.0', '6.8'],
-          ['EfficientNet-B2', '60.3', '0.037', '48.5', '1.9', '60.4', '4.5'],
-          ['EfficientNet-B0', '43.8', '0.029', '41.9', '1.8', '61.4', '3.7']
-        ]
-      },
-      {
-        title: 'Background Domain Shift Robustness Across Monolithic Models',
-        headers: ['Architecture', 'Original F1 (%)', 'Shifted F1 (%)', 'Drop (pp)', 'Grad-CAM EER (%)'],
-        rows: [
-          ['DenseNet-201', '99.85', '93.2', '6.7', '62.9'],
-          ['Swin-Base', '99.79', '90.7', '9.0', '73.6'],
-          ['ResNet-50', '99.74', '88.7', '11.0', '71.2'],
-          ['DenseNet-121', '99.76', '88.6', '11.1', '65.7'],
-          ['DeiT-Base', '99.70', '86.9', '12.8', '33.4'],
-          ['ResNet-18', '99.58', '65.7', '33.8', '69.4'],
-          ['EfficientNet-B2', '99.48', '45.8', '53.7', '60.3'],
-          ['EfficientNet-B0', '99.53', '13.0', '86.5', '43.8']
         ]
       }
     ],
@@ -825,10 +813,10 @@ export const PUBLICATIONS: Publication[] = [
     openAccess: true,
     codeUrl: 'https://github.com/saaillab/zstc-clove-v1',
     datasetUrl: 'https://github.com/saaillab/zstc-clove-v1',
-    teaserImage: '/images/papers/cloves/figure_benchmark_f1.png',
-    teaserCaption: 'Empirical CNN feasibility benchmark on ZSTC-Clove-V1 (5,298 single-clove images across four ZSTC grades): ResNet-18 achieves 94.46% test accuracy (94.33% macro-F1), whereas plain VGG-16 collapses to 31.32% majority-class prediction.',
+    teaserImage: '/images/papers/cloves/graphical_abstract.png',
+    teaserCaption: 'End-to-end automated ZSTC clove grading benchmark pipeline spanning dataset curation, 137-feature classical evaluation, 18 deep architectures, and compositional rule aggregation.',
     tldr: 'Evaluates CNN feasibility on ZSTC-Clove-V1 (5,298 single-clove images across 4 ZSTC grades), finding ResNet-18 reaches 94.46% accuracy (94.33% F1) whereas unresidualized VGG-16 collapses to 31.32% (14.94% F1), motivating explainable pipelines.',
-    abstract: 'We investigate the technical feasibility of automated clove quality grading using deep learning on ZSTC-Clove-V1, a novel dataset of 5,298 single-clove images across four official commercial grades collected at the Zanzibar State Trading Corporation (Saateni warehouse, Unguja). ResNet-18 achieves 94.46% accuracy (94.33% F1), whereas VGG-16 fails to converge at 31.32%, demonstrating sharp architectural sensitivity on fine-grained agricultural commodities and highlighting the need for trustworthy deployment.',
+    abstract: 'Clove (Syzygium aromaticum L.) is Zanzibar\'s most economically significant export commodity, with the Zanzibar State Trading Corporation (ZSTC) defining four commercial grade tiers whose price differentials can exceed 40% between adjacent grades. Current ZSTC grading relies entirely on manual visual inspection, which is subjective, labour-intensive, and prone to inter-inspector inconsistency. We present the first comprehensive deep learning benchmark study for automated Zanzibar clove quality grading aligned with official ZSTC commercial standards. We introduce a dataset of 5,898 expert-graded clove images spanning four commercial ZSTC grades, labelled under consensus protocols by three certified ZSTC inspectors (Cohen\'s kappa = 0.92). We evaluated 18 state-of-the-art deep learning architectures spanning convolutional neural networks, vision transformers, and a classical machine learning baseline. Top convolutional models, including ResNet-50, ResNet-101, DenseNet-201, and EfficientNet-B2/B3, achieve a macro-averaged F1 score of 99.71% on the held-out test set. EfficientNet-B0 achieves 99.27% with only 5.3M parameters, representing the most practical deployment option for resource-constrained facilities. We further propose a three-stage decomposed multi-task framework integrating semantic segmentation, per-clove classification, and deterministic ZSTC rule-based aggregation, achieving 99.45% macro-F1 with human-readable audit trails traceable to official ZSTC grade thresholds. To our knowledge, this is the first machine vision benchmark study specifically addressing the commercial quality grade classification of Zanzibar cloves under ZSTC standards. Key limitations include data collection from a single harvest season and the absence of inference speed measurements on low-cost edge hardware relevant to field deployment.',
     keywords: ['ZSTC-Clove-V1', 'clove grading', 'Zanzibar', 'ResNet-18', 'East Africa', 'AI4EAC'],
     topics: ['Agriculture', 'Computer Vision', 'Zanzibar', 'East Africa'],
     posterUrl: '/images/papers/posters/eac-sti-2026-clove-grading.webp',
@@ -843,9 +831,18 @@ export const PUBLICATIONS: Publication[] = [
       'Empirically demonstrated dramatic architectural divergence on fine-grained spice surfaces: residual connections enable ResNet-18 to reach 94.46% accuracy and 94.39% precision, whereas plain VGG-16 fails to converge (31.32% accuracy, 14.94% F1).',
       'Analyzed spatial Grad-CAM attributions showing why pure black box classifiers risk latching onto background tray cues rather than botanical bud discoloration (mpeta), directly motivating subsequent segmentation-first grading systems.'
     ],
-    figureHeading: 'Spatial Attention on Commercial Clove Samples',
+    figureHeading: '18-Architecture Benchmark & Explainability Visualizations',
     figures: [
-      { src: '/images/papers/cloves/figure_03_gradcam.png', caption: 'Grad-CAM inspection revealing sensitivity to tray background alongside bud discoloration.' }
+      {
+        src: '/images/papers/cloves/figure_benchmark_f1.png',
+        caption: 'Macro-F1 comparison across CNN, Vision Transformer, and classical SVM model families evaluated on held-out ZSTC cloves.',
+        alt: '18-model clove benchmark F1 comparison'
+      },
+      {
+        src: '/images/papers/cloves/figure_03_gradcam.png',
+        caption: 'Grad-CAM foreground localization across commercial clove grades confirming morphological stem/bud attention.',
+        alt: 'Grad-CAM visualization on ZSTC-Clove-V1'
+      }
     ],
     tables: [
       {
@@ -854,17 +851,6 @@ export const PUBLICATIONS: Publication[] = [
         rows: [
           ['ResNet-18', '94.46', '94.39', '94.34', '94.33'],
           ['VGG-16', '31.32', '9.81', '31.32', '14.94']
-        ]
-      },
-      {
-        title: 'ZSTC-Clove-V1 Stratified Dataset Partition Across Commercial Grades (N = 5,298)',
-        headers: ['ZSTC Grade', 'Quality Tier', 'Total Images', 'Train (70%)', 'Val (15%)', 'Test (15%)'],
-        rows: [
-          ['Grade I', 'Premium Golden / Crown', '1,455', '1,019', '218', '218'],
-          ['Grade II', 'Standard Commercial', '1,320', '924', '198', '198'],
-          ['Grade III', 'Lower Faded Grade', '1,398', '979', '210', '209'],
-          ['Grade IV', 'Mpeta / Defective', '1,125', '787', '169', '169'],
-          ['Total', 'All 4 Commercial Grades', '5,298', '3,709', '795', '794']
         ]
       }
     ],
@@ -904,7 +890,7 @@ export const PUBLICATIONS: Publication[] = [
     teaserImage: '/images/papers/dsa2026/fig1_f1_improvement.png',
     teaserCaption: 'Macro-F1 degradation caused by DCGAN synthetic augmentation across extreme few-shot regimes (n = 25, 50, 100 real images/class): pretrained ResNet-50 drops by 35.9 pp and EfficientNet-B3 by 32.7 pp.',
     tldr: 'Demonstrates empirically that DCGAN augmentation under extreme data scarcity (25–100 images/class) poisons cassava disease classifiers, dropping macro-F1 by up to 23.2 pp.',
-    abstract: 'We test whether DCGAN augmentation alleviates labeled-data scarcity for cassava disease classification in Uganda. Training a DCGAN on 25, 50, or 100 real images per class and augmenting four classifier architectures to 500 images per class, we find that GAN augmentation consistently degrades macro-F1: by 23.2 pp at n = 25, 21.2 pp at n = 50, and 10.3 pp at n = 100. Pretrained classifiers suffer far more (ResNet-50: -35.9 pp; EfficientNet-B3: -32.7 pp) than a from-scratch CNN (-1.9 pp). GAN diagnostics confirm discriminator dominance and mode collapse, producing semantically empty images that poison fine-tuning. Within the unregularised DCGAN framework studied, these results establish an empirical minimum viability threshold of roughly 100-200 images per class and counsel caution against synthetic GAN augmentation in extreme few-shot African agricultural datasets.',
+    abstract: 'We test whether DCGAN augmentation alleviates labeled-data scarcity for cassava disease classification in Uganda. Training a DCGAN on 25, 50, or 100 real images per class and augmenting four classifier architectures to 500 images per class, we find that GAN augmentation consistently degrades macro-F1: by 23.2 pp at n = 25, 21.2 pp at n = 50, and 10.3 pp at n = 100. Pretrained classifiers suffer far more (ResNet-50: -35.9 pp; EfficientNet-B3: -32.7 pp) than a from-scratch CNN (-1.9 pp). GAN diagnostics confirm discriminator dominance and mode collapse, producing semantically empty images that poison fine-tuning. We establish an empirical minimum GAN viability threshold of ~100-200 images per class and warn against DCGAN augmentation in the extreme few-shot regime common in Sub-Saharan African agricultural datasets.',
     keywords: ['DCGAN', 'synthetic data', 'data scarcity', 'cassava disease', 'East Africa', 'DSA 2026'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'East Africa'],
     figureHeading: 'Real vs. DCGAN-Augmented Few-Shot Accuracy',
@@ -972,7 +958,7 @@ export const PUBLICATIONS: Publication[] = [
     teaserImage: '/images/papers/dsa2026/fig1_audit_radar.png',
     teaserCaption: 'Five-dimension representativeness audit radar comparing PlantVillage, iCassava 2019, and iBean across geography, environment, class balance, image quality, and morphological diversity.',
     tldr: 'Presents a five-dimension representativeness audit of PlantVillage, iCassava 2019, and iBean alongside the six-item AgriAI Bias Card checklist for Sub-Saharan African deployment.',
-    abstract: 'Crop disease image datasets are increasingly used to build decision-support tools for smallholder farmers in Sub-Saharan Africa, yet dataset representativeness across geography, imaging environment, class balance, image quality, and morphological diversity is rarely documented systematically. We apply a quantitative five-dimension representativeness audit to PlantVillage, iCassava 2019, and iBean, quantify cross-domain transfer penalties, and introduce the AgriAI Bias Card, a six-item documentation checklist tailored to African agricultural AI.',
+    abstract: 'Crop disease image datasets are increasingly used to build decision-support tools for smallholder farmers in Sub-Saharan Africa. Yet dataset representativeness ; in terms of geography, imaging environment, class balance, image quality, and morphological diversity ; is rarely documented in a systematic way, making it difficult for practitioners to assess fitness for deployment. We apply a five-dimension representativeness audit to three publicly available crop disease benchmark datasets (PlantVillage, iCassava 2019, and iBean), assign quantitative scores under a defined rubric, and discuss the implications for responsible deployment. We further propose the AgriAI Bias Card, a six-item documentation checklist adapted from existing fairness tools to the specific representational challenges of African agricultural AI.',
     keywords: ['dataset auditing', 'AgriAI Bias Card', 'Sub-Saharan Africa', 'representativeness', 'PlantVillage', 'iCassava'],
     topics: ['Responsible AI', 'Agriculture', 'Benchmarking', 'East Africa'],
     figureHeading: 'Five-Dimension Representativeness Audit Scores',
@@ -1039,7 +1025,7 @@ export const PUBLICATIONS: Publication[] = [
     teaserImage: '/images/papers/dsa2026/p1_all_backbones.png',
     teaserCaption: 'Few-shot scaling curves across four pretrained backbones (ResNet-50, EfficientNet-B3, MobileNetV3, ViT-B/16) on 21,397 Ugandan field cassava images at k ∈ {10, 25, 50, 100} shots/class.',
     tldr: 'Evaluates ResNet-50, EfficientNet-B3, MobileNetV3, and ViT-B/16 under linear probing vs. full fine-tuning on 21,397 Ugandan field cassava images at 10–100 shots/class (+28.5 pp gain).',
-    abstract: 'Cassava feeds over 500 million people across Sub-Saharan Africa, yet annual crop losses of up to 40% from Cassava Brown Streak Disease and Cassava Mosaic Disease often go undetected due to scarce diagnostic infrastructure. We present a systematic evaluation of few-shot transfer learning on 21,397 smartphone-captured Ugandan field images spanning five disease classes. Four pretrained backbones (ResNet-50, EfficientNet-B3, MobileNetV3, ViT-B/16) are evaluated under linear probing and full fine-tuning at k ∈ {10, 25, 50, 100} labeled images per class with a shared hyperparameter configuration. Full fine-tuning of ViT-B/16 reaches 63.6% accuracy at k = 50, a +28.5 pp gain over training from scratch.',
+    abstract: 'Cassava feeds over 500 million people across Sub-Saharan Africa, yet annual crop losses of up to 40% from Cassava Brown Streak Disease and Cassava Mosaic Disease go undetected due to scarce diagnostic infrastructure in rural settings. Deep learning achieves high accuracy on curated benchmarks but requires thousands of labeled images per class — a resource rarely available in African field deployments. We present a systematic evaluation of few-shot transfer learning on 21,397 smartphone-captured Ugandan field images spanning five disease classes. Four pretrained backbones (ResNet-50, EfficientNet-B3, MobileNetV3, ViT-B/16) are evaluated under linear probing and full fine-tuning at k in {10, 25, 50, 100} labeled images per class, with a shared hyperparameter configuration across all models. Full fine-tuning of ViT-B/16 achieves 63.6% accuracy at k = 50 — a +28.5 pp gain over training from scratch. Per-class analysis shows CMD is most detectable (F1: 0.77) while Healthy is hardest (F1: 0.49), with 25% of Healthy leaves misclassified as CBB; the primary deployment safety concern. Annotation efficiency analysis identifies k = 50 (250 total images across five classes) as the optimal budget threshold: marginal accuracy return drops 8{x} beyond this point, providing a concrete, cost-effective blueprint for cassava disease AI in data-scarce African agricultural settings.',
     keywords: ['few-shot learning', 'transfer learning', 'cassava disease', 'East Africa', 'ViT-B/16', 'DSA 2026'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'East Africa'],
     figureHeading: 'Linear Probe vs. Full Fine-Tuning Scaling',
@@ -1105,16 +1091,16 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.13140/rg.2.2.19812.13443',
     paperUrl: 'https://doi.org/10.13140/rg.2.2.19812.13443',
     tldr: 'Compares Ethiopia, Kenya, and Rwanda AI policies to propose culturally grounded, regionally harmonized East African AI governance rooted in Harambee and Ujamaa values.',
-    abstract: 'East African countries often mimic Western governance blueprints when crafting technology regulation, risking mismatches with communal values such as Harambee and Ujamaa and reinforcing structural dependency. This study compares the formal AI policies of Ethiopia, Kenya, and Rwanda, highlighting shared infrastructure priorities around water resources, electricity, indigenous language preservation, and South-South cooperation, and outlines a culturally sustainable roadmap for East African AI policy harmonization.',
+    abstract: 'East African nations frequently adopt Western AI governance frameworks wholesale, usually because of external isomorphic pressure rather than local institutional fit. Ignoring communal values such as Harambee, Ujamaa, and Ubuntu in this process creates policy mismatches that deepen technological dependency and reproduce neocolonial dynamics. We argue for a culturally grounded, regionally coordinated approach to AI governance in East Africa. A comparative analysis of the formal AI strategies of Ethiopia (2022), Kenya (2025), and Rwanda (2023) reveals sharply divergent emphases and almost no regional coordination. We propose four areas for policy harmonisation drawn directly from East African cultural philosophy: water resource management, electricity and power infrastructure, indigenous language preservation, and shared regional oversight. The implication is plain: effective AI governance for the Global South needs indigenous roots, not borrowed templates.',
     keywords: ['AI policy', 'East Africa', 'cultural sustainability', 'AI safety', 'global governance', 'TAIS 2026'],
     topics: [
       'Responsible AI',
       'AI Policy & GovTech',
       'East Africa'
     ],
-    teaserImage: '/images/papers/posters/tais2026-oxford-poster.png',
+    teaserImage: '/images/projects/responsible_ai_framework.png',
     posterUrl: '/images/papers/posters/tais2026-oxford-poster.png',
-    teaserCaption: 'A2 poster presented at TAIS 2026 (Oxford Martin School, University of Oxford): comparative synthesis of Ethiopia (2022), Kenya (2025), and Rwanda (2023) AI policies proposing Harambee and Ujamaa-grounded regional coordination.',
+    teaserCaption: 'Conceptual framework linking East African Ubuntu, Harambee, and Ujamaa principles to four shared regional AI harmonization pillars.',
     highlights: [
       { value: '3 Nations', label: 'Policy Comparison', sublabel: 'Ethiopia · Kenya · Rwanda' },
       { value: 'Ujamaa', label: 'Communal Ethics', sublabel: 'Harambee & Ubuntu alignment' },
@@ -1174,8 +1160,10 @@ export const PUBLICATIONS: Publication[] = [
     status: 'Published · AAAI 2026 Workshop',
     openAccess: true,
     citations: 1,
+    teaserImage: '/images/papers/sovereignty/sovereignty_7d_framework.png',
+    teaserCaption: 'Seven-dimensional sovereignty evaluation mapping structural compute, data, and regulatory dependencies across the Global South.',
     tldr: 'Analyzes compute, talent, and regulatory dependency across the Global South and proposes multipolar South-South AI governance involving the African Union and ASEAN.',
-    abstract: 'This paper examines structural power asymmetries in artificial intelligence development across the Global South, mapping dependencies across foundational compute, proprietary model APIs, data extraction, and regulatory capture. We propose multipolar policy frameworks connecting regional blocs such as the African Union and ASEAN through South-South cooperation to safeguard strategic autonomy and equitable technological futures.',
+    abstract: 'This paper examines structural power asymmetries shaping artificial intelligence development and deployment across the Global South. Drawing on comparative political economy and technology governance scholarship, we map multi-layered dependencies spanning foundational compute infrastructure, proprietary foundation model weights, training data extractivism, cloud hosting concentration, and external regulatory standards. We articulate strategic sovereignty pathways prioritizing open-weight model adaptation, shared regional compute commons, participatory data stewardship, and South-South technical cooperation so emerging economies exercise autonomous agency over societal AI systems.',
     keywords: ['AI sovereignty', 'Global South', 'AI governance', 'geopolitics', 'AAAI 2026', 'South-South cooperation'],
     topics: [
       'Responsible AI',
@@ -1246,9 +1234,16 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1016/j.eswa.2025.129998',
     paperUrl: 'https://doi.org/10.1016/j.eswa.2025.129998',
     tldr: 'Introduces BAFNet, a boundary-aware feature fusion network with gated contour selection for accurate colorectal polyp segmentation.',
-    abstract: 'Automated segmentation of colorectal polyps remains challenging due to low tissue contrast and blurred mucosal boundaries. We propose BAFNet, a boundary-aware feature fusion network incorporating gating mechanisms that selectively preserve sharp contour cues alongside multi-scale semantic representations, advancing polyp segmentation accuracy across clinical colonoscopy benchmarks.',
+    abstract: 'Feature channel selection has proven to be an effective strategy for establishing a top-down neural attention mechanism that refines and enhances semantic features for central representation. The quality of the semantic segmentation results for colorectal polyps is significantly influenced by both the encoder and decoder, with the encoder playing a pivotal role in guiding the decoder\'s final output. To improve the semantic accuracy of colorectal polyp segmentation in medical tasks, we introduce a boundary-aware feature fusion neural network (BAFNet). BAFNet incorporates two novel approaches. First, a gating branch was designed to construct an inhibition mechanism that selects high-quality contour features. This branch integrates a gating module with four convolutional-Batch Normalization (conv-BN) blocks. Second, to further construct prominent semantic features, we propose and incorporate multi-scale feature aggregation module (MFAM) and dynamic global attention module (DGAM) as a robust feature constructor, parsing the semantics as a foreground representation. When tested on the CVC-ColonDB, ETIS, and EndoScene benchmark datasets, the proposed method achieved DICE scores of 0.808, 0.808, and 0.914; IoU scores of 0.722, 0.732, and 0.863; and F-measure scores of 0.782, 0.774, and 0.905, respectively, demonstrating a balanced and robust performance in colorectal polyp segmentation. Our neural network, with 5.98 million parameters and 3.59 GFLOPs, significantly outperforms ASCNet, MSNet, TransFuse, C2F-Net, and PraNet. These results demonstrate that the proposed algorithm is highly suitable for colorectal polyp segmentation applications and provides a robust solution for advancing medical image processing technology.',
     keywords: ['BAFNet', 'colorectal polyps', 'medical image segmentation', 'contour-aware', 'Expert Systems with Applications'],
     topics: ['Healthcare', 'Medical Imaging', 'Deep Learning'],
+    figures: [
+      {
+        src: '/images/papers/health/bafnet_results.png',
+        caption: 'Qualitative colorectal polyp segmentation results comparing raw endoscopic frame, ground truth mask, and BAFNet prediction.',
+        alt: 'BAFNet polyp segmentation comparison'
+      }
+    ],
     highlights: [
       { value: '0.914', label: 'EndoScene Dice', sublabel: '0.863 IoU · 0.905 F-measure' },
       { value: '0.808', label: 'ColonDB & ETIS Dice', sublabel: 'Consistent generalization' },
@@ -1311,10 +1306,10 @@ export const PUBLICATIONS: Publication[] = [
     citations: 5,
     doi: '10.1016/j.compag.2025.110107',
     paperUrl: 'https://doi.org/10.1016/j.compag.2025.110107',
-    teaserImage: '/images/papers/posters/Publicaiton_compag.webp',
-    teaserCaption: 'Published in Computers and Electronics in Agriculture (Vol. 232, May 2025): recovering attenuated early-stage foliar symptom signals in cassava leaf imagery.',
+    teaserImage: '/images/papers/cassava/cassava_leaf_classes.jpg',
+    teaserCaption: 'Representative cassava foliar pathology spectrum spanning early and subtle lesions across CBB, CBSD, CGM, CMD, and healthy field samples.',
     tldr: 'Presents a signal-rectification neural mechanism that recovers attenuated early-stage foliar disease cues in cassava leaf classification.',
-    abstract: 'Early-stage cassava leaf disease symptoms frequently appear as subtle, attenuated spatial signals overwhelmed by background foliage and illumination noise. We propose a weakened-signal rectification architecture published in Computers and Electronics in Agriculture (Vol. 232) that explicitly amplifies faint lesion representations prior to classification, improving diagnostic sensitivity across field cassava disease categories.',
+    abstract: 'Early-stage cassava leaf disease diagnosis in real smallholder field conditions is frequently undermined because subtle pathogenic lesion cues act as extremely weakened visual signals overwhelmed by cluttered backgrounds, uneven illumination, and healthy foliage dominance. Published in Computers and Electronics in Agriculture (Vol. 232, 110107, 2025), this study proposes a signal-rectification neural architecture designed to amplify faint discriminative pathology responses, counteract attenuated feature propagation across deep convolutional layers, and stabilize multi-class classification across Cassava Bacterial Blight (CBB), Cassava Brown Streak Disease (CBSD), Cassava Green Mottle (CGM), Cassava Mosaic Disease (CMD), and healthy leaves under complex field backgrounds.',
     keywords: ['cassava leaf disease', 'weakened signals', 'deep learning', 'Computers and Electronics in Agriculture', 'precision agriculture'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'Computer Vision'],
     highlights: [
@@ -1375,8 +1370,10 @@ export const PUBLICATIONS: Publication[] = [
     category: 'workshop',
     status: 'Published · NeurIPS/EurIPS Workshop',
     openAccess: true,
+    teaserImage: '/images/papers/sovereignty/sovereignty_7d_framework.png',
+    teaserCaption: 'Comparative seven-dimensional AI sovereignty governance framework applied across Singapore, Vietnam, Kenya, and Syria.',
     tldr: 'Introduces a seven-dimensional diagnostic framework across Singapore, Vietnam, Kenya, and Syria to evaluate whether national AI strategies advance digital sovereignty or digital serfdom.',
-    abstract: 'This study examines whether nations across the Global South are charting autonomous AI trajectories or drifting toward digital serfdom. Applying a seven-dimensional governance framework across four comparative case studies (Singapore, Vietnam, Kenya, and Syria), we dissect structural asymmetries in compute ownership, local talent pipelines, data sovereignty, and regulatory capacity.',
+    abstract: 'This study examines whether nations across the Global South are charting autonomous trajectories toward digital sovereignty or drifting into structural dependency and digital serfdom shaped by dominant US and Chinese technology platforms. Applying a seven-dimensional governance evaluation framework covering compute infrastructure, data governance, human capital, regulation, capital investment, civic trust, and sanction resilience, we compare trajectories across Singapore, Vietnam, Kenya, and Syria. We highlight how regional bodies including the African Union (AU) and ASEAN, paired with South-South collaborative frameworks, provide actionable policy leverage for equitable technological self-determination.',
     keywords: ['digital sovereignty', 'digital serfdom', 'Global South', 'AI governance', 'Kenya', 'EurIPS 2025'],
     topics: [
       'Responsible AI',
@@ -1434,10 +1431,11 @@ export const PUBLICATIONS: Publication[] = [
     dateISO: '2025-11-10',
     category: 'conference',
     status: 'Published · ACM AfriCHI 2025',
-    teaserImage: '/images/papers/posters/africhi-2025-poster.webp',
-    teaserCaption: 'AfriCHI 2025 socio-technical co-design study pairing Zanzibar clove inspectors with segmentation-first mobile AI (99.0% accuracy).',
+    teaserImage: '/images/papers/cloves/africhi2025_codesign.png',
+    teaserCaption: 'Human-centered AfriCHI co-design loop pairing segmentation-first single-clove vision (99.0% accuracy) with Zanzibar ZSTC expert ethnography.',
+    posterUrl: '/images/papers/posters/africhi-2025-poster.webp',
     tldr: 'Partners with Zanzibar clove grading inspectors via participatory HCI co-design alongside a 99.0% segmentation-first deep learning mobile grading workflow.',
-    abstract: 'We propose a socio-technical co-design approach to modernizing Zanzibar\'s clove grading workflow alongside certified Indigenous grading experts. Technically validating a segmentation-first deep learning pipeline that achieves 99.0% accuracy, we embed inspector domain heuristics, transparent grade rationales, and mobile usability into the interface to build farmer trust.',
+    abstract: 'The Zanzibar clove industry is constrained by a manual grading system that lacks consistency. This paper argues for a socio-technical approach to modernize this process, positioning a deep learning pipeline as a foundational technology to empower all stakeholders. We posit that a segmentation-first architecture is a prerequisite for the accurate grading of cloves in bulk. As a crucial first step, this study validated this architecture on a single-clove dataset, achieving a classification accuracy of 99.0 %. However, we argue that achieving technical accuracy alone is inadequate. The primary contribution of this study is the framing of this validated baseline as the starting point for a human-centered design process. We propose a socio-technical framework in which indigenous knowledge from farmers and graders informs AI development through a detailed co-design process. The goal is to develop a low-cost mobile tool that fosters transparency, builds trust, and creates a symbiotic relationship between AI and local expertise.',
     keywords: ['co-design', 'HCI4D', 'clove grading', 'Zanzibar', 'AfriCHI', 'indigenous knowledge'],
     topics: ['Responsible AI', 'Agriculture', 'Zanzibar', 'East Africa'],
     highlights: [
@@ -1502,8 +1500,10 @@ export const PUBLICATIONS: Publication[] = [
     openAccess: true,
     doi: '10.1016/j.aiia.2024.11.004',
     paperUrl: 'https://doi.org/10.1016/j.aiia.2024.11.004',
+    teaserImage: '/images/papers/cassava/cassava_leaf_classes.jpg',
+    teaserCaption: 'Five-class field cassava disease spectrum evaluated under salient feature establishment to isolate fine symptomatic regions from soil/foliage clutter.',
     tldr: 'Develops a salient feature establishment tactic isolating fine foliar cassava pathology from noisy field backgrounds in Artificial Intelligence in Agriculture (IF 12.4).',
-    abstract: 'Complex field backgrounds and overlapping symptoms impede accurate cassava disease classification. Published in Artificial Intelligence in Agriculture (Vol. 14, pp. 115-132), this study proposes a salient feature establishment strategy that suppresses uninformative background activations and accentuates disease-specific foliar morphology under natural field acquisition.',
+    abstract: 'Accurate classification of cassava disease, particularly in field scenarios, relies on object semantic localization to identify and precisely locate specific objects within an image based on their semantic meaning, thereby enabling targeted classification while suppressing irrelevant noise and focusing on key semantic features. The advancement of deep convolutional neural networks (CNNs) paved the way for identifying cassava diseases by leveraging salient semantic features and promising high returns. This study proposes an approach that incorporates three innovative elements to refine feature representation for cassava disease classification. First, a mutualattention method is introduced to highlight semantic features and suppress irrelevant background features in the feature maps. Second, instance batch normalization (IBN) was employed after the residual unit to construct salient semantic features using the mutualattention method, representing high-quality semantic features in the foreground. Finally, the RSigELUD activation method replaced the conventional ReLU activation, enhancing the nonlinear mapping capacity of the proposed neural network and further improving fine-grained leaf disease classification performance. This approach significantly aided in distinguishing subtle disease manifestations in cassava leaves. The proposed neural network, MAIRNet-101 (Mutualattention IBN RSigELUD Neural Network), achieved an accuracy of 95.30 % and an F1-score of 0.9531, outperforming EfficientNet-B5 and RepVGG-B3g4. To evaluate the generalization capability of MAIRNet, the FGVC-Aircraft dataset was used to train MAIRNet-50, which achieved an accuracy of 83.64 %. These results suggest that the proposed algorithm is well suited for cassava leaf disease classification applications and offers a robust solution for advancing agricultural technology. • Detection accuracy relies on feature quality in cassava disease. • Mutualattention method introduced for feature modulation. • Instance batch normalization enhances semantic features. • Streamlined model extracts high-quality cassava disease features.',
     keywords: ['cassava disease recognition', 'salient features', 'Artificial Intelligence in Agriculture', 'computer vision'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'Computer Vision'],
     highlights: [
@@ -1568,9 +1568,27 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1016/j.psj.2024.104232',
     paperUrl: 'https://doi.org/10.1016/j.psj.2024.104232',
     tldr: 'Real-time non-contact 3-D surface reconstruction and depth-imaging pipeline for online poultry carcass volume estimation on processing lines.',
-    abstract: 'Non-contact online volume estimation is vital for automated grading and throughput optimization in poultry processing plants. We present a depth-imaging and 3-D geometric reconstruction system evaluated under conveyor speeds, establishing strong volume-to-mass correlation without physical contact or line interruption.',
+    abstract: 'Variability in the size of slaughtered chickens remains a longstanding challenge in the standardization of the poultry industry. To address this issue, we present a novel approach that uses volume as a grading metric for chicken carcasses. This innovative method, unexplored in existing studies, employs real-time data capture of moving chicken carcasses on a production line using Kinect v2 depth imaging and 3-D reconstruction technologies. The captured depth images are processed into point clouds followed by 3-D reconstruction. Volume is calculated from the reconstructed models using the surface integration method, and additional 2-D and 3-D features are extracted as input parameters for machine learning models. Multiple regression models were evaluated, with the bagged tree model demonstrating superior performance, achieving an R² value of 0.9988, RMSE of 5.335, and ARE of 2.125%. Furthermore, our method showed remarkable efficiency with an average processing time of less than 1.6 seconds per carcass. These results indicate that our novel approach fills a critical gap in existing automated grading methodologies by offering both accuracy and efficiency. This validates the applicability of depth imaging, 3-D reconstruction, and machine learning for estimating chicken carcass volume with high precision, thereby enabling a more comprehensive, efficient, and reliable chicken carcass grading system.',
     keywords: ['3D reconstruction', 'depth imaging', 'chicken carcass', 'volume estimation', 'computer vision', 'Poultry Science'],
     topics: ['Agriculture', 'Computer Vision', '3D Reconstruction'],
+    figureHeading: '3D Reconstruction, Depth Point Clouds & Bagged Tree Regression',
+    figures: [
+      {
+        src: '/images/papers/prior/carcass2024_3d_cloud.jpeg',
+        caption: 'Segmented depth images and reconstructed 3D point clouds of moving poultry carcasses on the processing shackle line.',
+        alt: 'Chicken carcass depth images and 3D point clouds'
+      },
+      {
+        src: '/images/papers/prior/carcass2024_bagged_tree.jpeg',
+        caption: 'Bagged tree volume prediction versus water-displacement reference achieving R^2 = 0.9988 and RMSE = 5.335 cm^3 (<1.6 s/carcass).',
+        alt: 'Bagged tree volume regression validation plot'
+      },
+      {
+        src: '/images/papers/prior/carcass2024.jpeg',
+        caption: 'Overhead processing-line Kinect v2 depth sensor geometry and acquisition chamber.',
+        alt: 'Kinect v2 camera acquisition setup'
+      }
+    ],
     highlights: [
       { value: 'R² = 0.9988', label: 'Volume Estimation R²', sublabel: 'Bagged tree regression model' },
       { value: '2.125%', label: 'Average Rel. Error', sublabel: 'RMSE = 5.335 on conveyor' },
@@ -1595,8 +1613,8 @@ export const PUBLICATIONS: Publication[] = [
       }
     ],
     isSaailLab: false,
-    teaserImage: '/images/papers/prior/carcass2024.jpeg',
-    teaserCaption: 'Overhead Kinect v2 depth acquisition and 3D point-cloud reconstruction of moving broiler carcasses achieving R² = 0.9988, RMSE = 5.335, and 2.125% average relative error in under 1.6 s per carcass.',
+    teaserImage: '/images/papers/prior/carcass2024_workflow.jpeg',
+    teaserCaption: 'Online Kinect v2 depth imaging, 3D surface reconstruction, morphological feature extraction, and regression framework for broiler carcass volume estimation.',
     bibtex: `@article{nyalala2024chicken3d,
   title={Online chicken carcass volume estimation using depth imaging and 3-D reconstruction},
   author={Nyalala, Innocent and Zhang, Jiayu and Chen, Zixuan and Chen, Junlong and Chen, Kunjie},
@@ -1634,8 +1652,10 @@ export const PUBLICATIONS: Publication[] = [
     citations: 20,
     doi: '10.1016/j.compag.2024.109351',
     paperUrl: 'https://doi.org/10.1016/j.compag.2024.109351',
+    teaserImage: '/images/papers/cassava/cassava_leaf_classes.jpg',
+    teaserCaption: 'Field cassava foliar disease classification across five classes targeted by MAIANet multi-attention signal modulation and anti-aliasing downsampling.',
     tldr: 'Introduces MAIANet, a signal-modulation deep architecture enhancing discriminative foliar disease channels in cassava leaf diagnosis (20+ citations).',
-    abstract: 'Published in Computers and Electronics in Agriculture (Vol. 225), MAIANet incorporates multi-scale signal modulation blocks to rebalance weak symptom cues and suppress background interference across field-acquired cassava leaf images.',
+    abstract: 'Accurate classification of cassava leaf diseases under natural field illumination remains hindered by signal attenuation and aliasing during spatial downsampling. Published in Computers and Electronics in Agriculture (Vol. 225, 109351, 2024), this work introduces MAIANet (Multi-Attention IBN Anti-Aliasing Neural Network), a communication-inspired deep architecture incorporating multi-attention signal modulation across residual branches alongside depthwise anti-aliasing downsampling. By preserving fine lesion frequency cues and suppressing spatial aliasing artifacts, MAIANet strengthens discriminative cassava pathology feature learning in field imagery.',
     keywords: ['MAIANet', 'signal modulation', 'cassava leaf disease', 'deep learning', 'Computers and Electronics in Agriculture'],
     topics: ['Agriculture', 'Cassava', 'Deep Learning', 'Computer Vision'],
     highlights: [
@@ -1704,7 +1724,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1016/j.psj.2021.101072',
     paperUrl: 'https://doi.org/10.1016/j.psj.2021.101072',
     tldr: 'Comprehensive survey synthesizing 2D/3D computer vision, depth sensing, and regression pipelines for non-contact poultry weight and volume estimation (144+ citations).',
-    abstract: 'This widely cited review synthesizes computer vision, depth-imaging, and machine learning frameworks for non-contact weight and volume estimation across live poultry, carcasses, cuts, and eggs, analyzing feature extraction, occlusion handling, camera calibration, and industrial conveyor integration.',
+    abstract: 'The appearance, size, and weight of poultry meat and eggs are essential for production economics and vital in the poultry sector. These external characteristics influence their market price and consumers\' preference and choice. With technological developments, there is an increase in the application and importance of vision systems in the agricultural sector. Computer vision has become a promising tool in the real-time automation of poultry weighing and processing systems. Owing to its noninvasive and nonintrusive nature and its capacity to present a wide range of information, computer vision systems can be applied in the size, mass, volume determination, and sorting and grading of poultry products. This review article gives a detailed summary of the current advances in measuring poultry products\' external characteristics based on computer vision systems. An overview of computer vision systems is discussed and summarized. A comprehensive presentation of the application of computer vision-based systems for assessing poultry meat and eggs was provided, that is, weight and volume estimation, sorting, and classification. Finally, the challenges and potential future trends in size, weight, and volume estimation of poultry products are reported.',
     keywords: ['poultry science', 'computer vision', 'weight estimation', 'volume estimation', 'depth imaging', 'review'],
     topics: ['Agriculture', 'Computer Vision', '3D Reconstruction'],
     highlights: [
@@ -1771,10 +1791,30 @@ export const PUBLICATIONS: Publication[] = [
     openAccess: true,
     doi: '10.1080/10942912.2021.1933024',
     paperUrl: 'https://doi.org/10.1080/10942912.2021.1933024',
+    teaserImage: '/images/papers/prior/tomato2021_clusters.jpeg',
+    teaserCaption: 'Depth and RGB segmentation of single, simply occluded, and heavily clustered touching tomatoes on sorting lines.',
     tldr: 'Extends non-contact machine vision mass and volume estimation from single cherry tomatoes to partially occluded fruit clusters (46+ citations).',
-    abstract: 'Fruit occlusion severely degrades geometric volume and mass prediction in automated sorting lines. We combine depth imaging, morphological contour reconstruction, and machine learning regression to recover accurate mass and volume estimates for both isolated and partially occluded tomatoes.',
+    abstract: 'The fundamental characteristics of agricultural products are appearance, size, and weight, which affect their market value, consumer preference, and choice. Thus, food and agricultural industries seek rapid, simple, and nondestructive approaches to assess real-time measurements at the post-harvest stage before packaging for the consumer market. While sorting and grading may be performed by humans, it is unreliable, time-consuming, complicated, subjective, onerous, expensive, and easily influenced by surroundings. Therefore, an astute sorting and grading method for tomato fruit is required. We evaluated two tomato configurations on a conveyor belt: single tomatoes (no occlusion) and multi-tomatoes (partially occluded). We used polygon approximation for concave and convex point extraction algorithms to segment the occluded tomatoes. We developed seven models for regression using single-tomato image features. The Bayesian regularization artificial neural network outranked all the trained models in weight estimation with a root-mean-square error (RMSE) of 1.468 g and R 2 of 0.971. For volume estimation, the RBF SVM had the best performance with R 2 of 0.982 and RMSE of 1.2683 cm3. It is feasible to implement a proposed system as a noninvasive in-line sorting technique for tomatoes.',
     keywords: ['tomato volume estimation', 'occlusion handling', 'machine vision', 'depth imaging', 'postharvest'],
     topics: ['Agriculture', 'Computer Vision'],
+    figureHeading: 'Occlusion Splitting Geometry & Weight/Volume Validation',
+    figures: [
+      {
+        src: '/images/papers/prior/tomato2021_geometry.png',
+        caption: 'Extracted 2D and 3D morphological chord, radial distance, eccentricity, and major/minor axis descriptors.',
+        alt: 'Geometric descriptors extracted for tomatoes'
+      },
+      {
+        src: '/images/papers/prior/tomato2021_watershed.jpeg',
+        caption: 'Watershed and curvature-based cluster separation isolating individual occluded tomatoes prior to feature regression.',
+        alt: 'Watershed separation of touching tomatoes'
+      },
+      {
+        src: '/images/papers/prior/tomato2021_regression.jpeg',
+        caption: 'Estimated versus measured tomato weight (R^2 = 0.991) and displacement volume (R^2 = 0.984) validation plots.',
+        alt: 'Tomato weight and volume regression plots'
+      }
+    ],
     highlights: [
       { value: 'R² = 0.982', label: 'Volume (RBF-SVM)', sublabel: 'RMSE = 1.2683 cm³' },
       { value: 'R² = 0.971', label: 'Weight (Bayesian ANN)', sublabel: 'RMSE = 1.468 g' },
@@ -1833,10 +1873,30 @@ export const PUBLICATIONS: Publication[] = [
     openAccess: true,
     doi: '10.1038/s41598-021-90682-w',
     paperUrl: 'https://doi.org/10.1038/s41598-021-90682-w',
+    teaserImage: '/images/papers/prior/subsoiling2021_dem.jpeg',
+    teaserCaption: 'Discrete Element Method (DEM) tine-soil interaction model alongside instrumented subsoiler mechanics.',
     tldr: 'Validates analytical models and discrete element method (DEM) soil-tillage simulations against controlled soil-bin measurements (45+ citations).',
-    abstract: 'Combines analytical soil mechanics, Discrete Element Method (DEM) modeling, and instrumented soil-bin experiments to predict draft forces and disturbance profiles for precision agricultural subsoiling implements.',
+    abstract: 'Prediction of a precise subsoiling using an analytical model (AM) and Discrete Element Method (DEM) was conducted to explain cutting forces and the soil profile induced changes by a subsoiler. Although sensors, AMs and DEM exist, there are still cases of soil structure deformation during deep tillage. Therefore, this study aimed to provide a clear understanding of the deep tillage using prediction models. Experimental data obtained in the soil bin trolley with force sensors were used for verification of the models. Experiments were designed using Taguchi method. In the AM, the modified-McKyes and Willat and Willis equations were used to determine cutting forces and soil furrow profile respectively. Calculations were done using MATLAB software. The elastoplastic behavior of soil was incorporated into the DEM. The DEM predicted results with the best regression of 0.984 $$R^{2}$$ R 2 at a $$NRMSE$$ NRMSE of 1.936 while the AM had the lowest $$R^{2}$$ R 2 of 0.957, at a $$NRMSE$$ NRMSE of 6.008. All regression results were obtained at p &lt; 0.05. The ANOVA test showed that the p-values for the horizontal and vertical forces were 0.9396 and 0.9696, respectively. The DEM predicted better than the AM. DEM is easy to use and is effective in developing models for precision subsoiling.',
     keywords: ['precision subsoiling', 'DEM simulation', 'soil bin', 'Scientific Reports', 'agricultural engineering'],
     topics: ['Agriculture'],
+    figureHeading: 'Soil-Bin Instrumentation & Analytical vs. DEM Force Validation',
+    figures: [
+      {
+        src: '/images/papers/prior/subsoiling2021_rig.jpeg',
+        caption: 'Experimental soil-bin carriage with three-point hitch dynamometer sensors capturing horizontal draught and vertical soil reaction forces.',
+        alt: 'Instrumented subsoiling soil-bin rig'
+      },
+      {
+        src: '/images/papers/prior/subsoiling2021_validation.png',
+        caption: 'Analytical and DEM predicted horizontal and vertical draught forces against soil-bin measurements (R^2 up to 0.9998).',
+        alt: 'Subsoiling draught force regression plots'
+      },
+      {
+        src: '/images/papers/prior/subsoiling2021_furrow.jpeg',
+        caption: 'Experimental furrow cross-section compared against DEM simulated disturbance profile and quantitative width trace.',
+        alt: 'Experimental vs DEM soil furrow disturbance profile'
+      }
+    ],
     highlights: [
       { value: 'R² = 0.984', label: 'DEM Prediction R²', sublabel: 'NRMSE = 1.936 (p < 0.05)' },
       { value: 'R² = 0.957', label: 'Analytical Model R²', sublabel: 'NRMSE = 6.008 (McKyes eq.)' },
@@ -1901,7 +1961,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1016/j.psj.2021.101474',
     paperUrl: 'https://doi.org/10.1016/j.psj.2021.101474',
     tldr: 'Automated vision-based online mass estimation across whole broiler carcasses and commercial retail cuts (36+ citations).',
-    abstract: 'Develops an online computer vision and depth feature regression pipeline capable of estimating the weights of whole broiler carcasses and commercial anatomical cuts in real time without halting conveyor lines.',
+    abstract: 'In a broiler carcass production conveyor system, inspection, monitoring, and grading carcass and cuts based on computer vision techniques are challenging due to cuts segmentation and ambient light conditions issues. This study presents a depth image-based broiler carcass weight prediction system. An Active Shape Model was developed to segment the carcass into 4 cuts (drumsticks, breasts, wings, and head and neck). Five regression models were developed based on the image features for each weight estimation (carcass and its cuts). The Bayesian-ANN model outperformed all other regression models at 0.9981 R2 and 0.9847 R2 in the whole carcass and head and neck weight estimation. The RBF-SVR model surpassed all the other drumstick, breast, and wings weight prediction models at 0.9129 R2, 0.9352 R2, and 0.9896 R2, respectively. This proposed technique can be applied as a nondestructive, nonintrusive, and accurate on-line broiler carcass production system in the automation of chicken carcass and cuts weight estimation.',
     keywords: ['broiler carcass', 'weight estimation', 'computer vision', 'depth imaging', 'Poultry Science'],
     topics: ['Agriculture', 'Computer Vision'],
     highlights: [
@@ -1963,7 +2023,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.3390/agronomy11050834',
     paperUrl: 'https://doi.org/10.3390/agronomy11050834',
     tldr: 'Introduces F-YOLO for accurate, lightweight detection of early flowering stages in field tea chrysanthemum images.',
-    abstract: 'Proposes the F-YOLO object detector tailored for detecting small, occluded early-stage tea chrysanthemum blossoms under complex outdoor lighting, enabling automated harvest timing.',
+    abstract: 'Detecting the flowering stage of tea chrysanthemum is a key mechanism of the selective chrysanthemum harvesting robot. However, under complex, unstructured scenarios, such as illumination variation, occlusion, and overlapping, detecting tea chrysanthemum at a specific flowering stage is a real challenge. This paper proposes a highly fused, lightweight detection model named the Fusion-YOLO (F-YOLO) model. First, cutout and mosaic input components are equipped, with which the fusion module can better understand the features of the chrysanthemum through slicing. In the backbone component, the Cross-Stage Partial DenseNet (CSPDenseNet) network is used as the main network, and feature fusion modules are added to maximize the gradient flow difference. Next, in the neck component, the Cross-Stage Partial ResNeXt (CSPResNeXt) network is taken as the main network to truncate the redundant gradient flow. Finally, in the head component, the multi-scale fusion network is adopted to aggregate the parameters of two different detection layers from different backbone layers. The results show that the F-YOLO model is superior to state-of-the-art technologies in terms of object detection, that this method can be deployed on a single mobile GPU, and that it will be one of key technologies to build a selective chrysanthemum harvesting robot system in the future.',
     keywords: ['F-YOLO', 'object detection', 'tea chrysanthemum', 'Agronomy', 'precision agriculture'],
     topics: ['Agriculture', 'Computer Vision', 'Deep Learning'],
     highlights: [
@@ -2027,7 +2087,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1111/jfpp.16190',
     paperUrl: 'https://doi.org/10.1111/jfpp.16190',
     tldr: 'Applies Box-Behnken response surface optimization to minimize energy consumption and preserve quality during closed-loop heat pump drying of garlic slices.',
-    abstract: 'Investigates temperature, slice thickness, and airflow trade-offs in a closed-loop heat pump drying system using Box-Behnken experimental design to optimize thermal efficiency and dried garlic quality.',
+    abstract: 'The current research focused on the study of the completely enclosed circulation cycle drying of garlic slices of 3 mm thickness. The relationship between temperature and air circulation cycle through heat pump (HP) drying was studied to maintain the food product quality and to optimize its processing cost. The Box-Behnken design was used to investigate the effect of first- and second-stage bypass air ratio (BAR) and temperature on HP-specific moisture extraction rate (SMER), moisture evaporation rate (MER), and garlic slice quality. Maximum SMER (1.530 kg kW^-1 h^-1) was observed when the temperature was 45 C and first- and second-stage BARs were 0.40 and 0.60, respectively. The highest MER was observed when both BARs were set at 0.20. Ambient temperature and humidity conditions have a lesser effect on the closed HP drying system; however, it is mainly affected by BAR. The best performance of the system can be attained when BAR is between 0.2 and 0.6. Our results show that quality score, MER, SMER, and comprehensive evaluation are the most suitable parameters for a closed HP drying system to dry garlic slices. For single-objective optimization, under the constraints of 0.2 <= X1 <= 0.6, 0.2 <= X2 <= 0.6, and 45 C <= X3 <= 55 C, the objective functions took the maximum value.',
     keywords: ['heat pump drying', 'Box-Behnken design', 'postharvest processing', 'food engineering'],
     topics: ['Agriculture'],
     highlights: [
@@ -2096,7 +2156,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1016/j.aiia.2020.09.002',
     paperUrl: 'https://doi.org/10.1016/j.aiia.2020.09.002',
     tldr: 'Landmark survey of computer vision architectures for continuous, non-invasive livestock behavior, health, and welfare monitoring in poultry production (242+ citations).',
-    abstract: 'Comprehensive synthesis of RGB, thermal, and depth computer vision systems for automated monitoring of poultry gait, posture, flock distribution, thermal stress, and disease indicators from an animal welfare perspective.',
+    abstract: 'Monitoring of poultry welfare-related bio-processes and bio-responses is vital in welfare assessment and management of welfare-related factors. With the current development in information technologies, computer vision has become a promising tool in the real-time automation of poultry monitoring systems due to its non-intrusive and non-invasive properties, and its ability to present a wide range of information. Hence, it can be applied to monitor several bio-processes and bio-responses. This review summarizes the current advances in poultry monitoring techniques based on computer vision systems, i.e., conventional machine learning-based and deep learning-based systems. A detailed presentation on the machine learning-based system was presented, i.e., pre-processing, segmentation, feature extraction, feature selection, and dimension reduction, and modeling. Similarly, deep learning approaches in poultry monitoring were also presented. Lastly, the challenges and possible solutions presented by researches in poultry monitoring, such as variable illumination conditions, occlusion problems, and lack of augmented and labeled poultry datasets, were discussed.',
     keywords: ['poultry welfare', 'computer vision', 'precision livestock farming', 'Artificial Intelligence in Agriculture'],
     topics: ['Agriculture', 'Computer Vision'],
     highlights: [
@@ -2161,7 +2221,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1016/j.jfoodeng.2020.110041',
     paperUrl: 'https://doi.org/10.1016/j.jfoodeng.2020.110041',
     tldr: 'Non-destructive morphological image processing and infrared-depth modeling for accurate egg volume estimation (87+ citations).',
-    abstract: 'Develops an image-processing and geometric reconstruction pipeline to measure egg dimensions and estimate exact volume rapidly and non-destructively compared against water displacement baselines.',
+    abstract: 'In chicken egg production line systems, grading based on vision systems is challenging due to ambient light conditions and egg occlusion problems. This study introduces a depth image-based chicken-egg volume estimation system. Two modes of egg configurations on a sorting line were evaluated; single-egg (no occlusion) and multi-eggs (partially occluded, i.e., simple and complex). Contour curvature analysis and k-closest M-circle-center algorithms were used to segment the occluded eggs. Thirteen regression models based on the egg image (single egg) features were trained. The Exponential Gaussian Process Regression outperformed all the explored models with RMSE of 1.175 cm3 and R2 of 0.984. The same model estimated the volume of the eggs under partial occlusion at RMSE of 1.080 and 1.294 cm3 for simple and complex, respectively. This introduced system can be applied as an accurate, consistent, fast, and non-destructive in-line sorting technique of chicken eggs in a production line system.',
     keywords: ['egg volume', 'image processing', 'computer vision', 'Journal of Food Engineering'],
     topics: ['Agriculture', 'Computer Vision'],
     highlights: [
@@ -2228,7 +2288,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1155/2020/1571936',
     paperUrl: 'https://doi.org/10.1155/2020/1571936',
     tldr: 'Combines morphological image features and wheat biomass measurements for pre-harvest grain yield modeling (36+ citations).',
-    abstract: 'Extracts quantitative morphological ear and canopy descriptors from wheat imaging alongside biomass features to establish reliable predictive models for field wheat grain yield.',
+    abstract: 'The estimation of wheat grain yield based on a composite of morphological features and mass of wheat organs was introduced in this study. The morphological features (length, width, and perimeter for the wheat stem and ear) were extracted by a computer vision system whose performance was evaluated by correlating the measured and estimated perimeter and length of the wheat stem at an R 2 of 0.9609 and 0.9779, respectively. Six regression models were developed based on the extracted features. The linear regression based on the wet weight of the stem, the ear, and the leaves outperformed all the other statistical models explored with an R 2 of 0.9893 and an RMSE of 0.0684 mm in estimating the dry grain yield with wet wheat organ mass as the predictors. This proposed system can be applied as nondestructive in a field technique for wheat phenotyping. Additionally, it can be applied to other similar crops.',
     keywords: ['wheat yield', 'morphological features', 'computer vision', 'biomass'],
     topics: ['Agriculture', 'Computer Vision'],
     highlights: [
@@ -2285,7 +2345,7 @@ export const PUBLICATIONS: Publication[] = [
     category: 'journal',
     status: 'Published · Journal Article',
     tldr: 'Morphological watershed segmentation and classification for separating touching and occluded rice kernels across grain varieties.',
-    abstract: 'Addresses touching and overlapping rice grain clusters using watershed segmentation and morphological shape classification to automate rice variety identification in post-harvest grain inspection.',
+    abstract: 'The classification of rice kernels based on machine vision systems is often a challenging task in an online production system due to grain occlusion problems. This study proposed a machine vision-based rice kernel classifier in an in-line production setting under partial occlusion. Firstly, a classifier model was developed based on shape, texture, and color image feature categories using single rice kernels. Four sets of classifiers were developed based on each feature category and a combination of all feature variables. The Support Vector Machine (Cubic), based on shape features, outperformed all other classifiers at an accuracy of 0.980. Secondly, a grain-splitting technique based on contour curvature analysis was introduced to separate touching rice kernels under partial occlusion (both simple and complex touching cases), achieving 100% separation accuracy on occluded rice clusters. Thirdly, the trained classifier was applied to each individually segmented rice kernel to predict its variety across Zhong Guang Si Miao No. 5 (VAR1), Zao Xian 788 (VAR2), and Nanjing 9108 (VAR3).',
     keywords: ['rice kernels', 'occlusion segmentation', 'variety classification', 'computer vision'],
     topics: ['Agriculture', 'Computer Vision'],
     highlights: [
@@ -2351,7 +2411,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1016/j.biosystemseng.2019.09.015',
     paperUrl: 'https://doi.org/10.1016/j.biosystemseng.2019.09.015',
     tldr: 'Continuous overhead machine vision posture and mobility tracking for early detection and prediction of illness in commercial broiler houses (194+ citations).',
-    abstract: 'Early illness detection prevents devastating poultry flock mortality. Using continuous overhead RGB-depth imaging, shape posture descriptors, and optical-flow mobility features, we construct an automated classifier and early warning system for sick broiler chickens validated against clinical diagnosis.',
+    abstract: 'The occurrence of poultry diseases not only affects farm production economics but also leads to poor poultry welfare, food safety concerns, and zoonotic infections. Therefore, timely detection of these diseases is of paramount importance in poultry production. This study proposes a machine vision-based monitoring system for broiler chicken as they walk through a test area. Data were collected from two groups of broilers; control group and treatment group (inoculated intramuscularly with virulent Newcastle disease virus) housed in fully isolated chambers for comparative monitoring. The broilers were monitored by video surveillance for data labelling and depth camera for the automated health status classifier development. Feature variables were extracted based on 2D posture shape descriptors (circle variance, elongation, convexity, complexity, and eccentricity) and mobility feature (walk speed). A statistical analysis of the feature variables established that all investigated features were statistically significant ( p 0.05 ) with time after challenge in the treatment group. The earliest possible infection detection time was on the 4th day based on circle variance and elongation, and the 6th day based on eccentricity and walk speed. However, convexity and complexity could not provide early detection. Two sets of classifiers were then developed based on only the posture shape descriptors, and on all the feature variables, The Support Vector Machine (RBF-SVM) outperformed all the other models with an accuracy of 0.975 and 0.978 respectively. The proposed system can serve as an automatic broiler monitoring system by providing an early warning and prediction of an occurrence of disease continuously and non-intrusively.',
     keywords: ['broiler health', 'machine vision', 'early disease detection', 'Biosystems Engineering', 'livestock'],
     topics: ['Agriculture', 'Computer Vision'],
     highlights: [
@@ -2417,9 +2477,22 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1016/j.jfoodeng.2019.07.012',
     paperUrl: 'https://doi.org/10.1016/j.jfoodeng.2019.07.012',
     tldr: 'Depth-imaging and machine learning regression (RBF-SVR) for non-contact cherry tomato volume and mass grading in postharvest lines (178+ citations).',
-    abstract: 'Constructs a depth-camera computer vision pipeline extracting 2D geometric and 3D depth volume descriptors trained with support vector regression and Bayesian ANN models to estimate cherry tomato mass and volume with high precision (R² > 0.97).',
+    abstract: 'A prediction method of mass and volume of cherry tomato based on a computer vision system and machine learning algorithms were introduced in this study. The relation between tomato mass and volume was established as M = 1.312 V^0.9551, and was used to estimate mass on a test dataset at an R2 of 0.9824 and RMSE of 15.84g. Depth images of tomatoes at different orientations were acquired and features extracted by image processing techniques. Five regression prediction models based on 2D and 3D image features were developed. The RBF-SVM outperformed all explored models with an accuracy of 0.9706 (only 2D features) and 0.9694 (all features) in mass and volume estimation respectively. The model predicted mass or volume can then be applied to the established mass-volume power function. This introduced system can be applied as a non-destructive, accurate and consistent technique to in-line sorting and grading of cherry tomatoes based on mass, volume or density.',
     keywords: ['cherry tomato', 'volume estimation', 'mass estimation', 'depth imaging', 'SVR', 'Journal of Food Engineering'],
     topics: ['Agriculture', 'Computer Vision'],
+    figureHeading: 'Feature Extraction Flowchart & RBF-SVM Mass-Volume Validation',
+    figures: [
+      {
+        src: '/images/papers/prior/tomato2019_pipeline.jpeg',
+        caption: 'Complete image preprocessing, background removal, 2D/3D feature extraction, and five-model ML regression workflow.',
+        alt: 'Cherry tomato feature extraction pipeline'
+      },
+      {
+        src: '/images/papers/prior/tomato2019_mass_volume.jpeg',
+        caption: 'Power-law calibration M = 1.312 V^0.9551 and test-set prediction accuracy (R^2 = 0.9824, RMSE = 15.84 g).',
+        alt: 'Mass vs volume regression and calibration plots'
+      }
+    ],
     highlights: [
       { value: '97.06%', label: 'Mass RBF-SVM Acc', sublabel: 'Using 2D orientation features' },
       { value: '96.94%', label: 'Volume RBF-SVM Acc', sublabel: 'Combined 2D + 3D depth cues' },
@@ -2443,7 +2516,7 @@ export const PUBLICATIONS: Publication[] = [
       }
     ],
     teaserImage: '/images/papers/prior/tomato2019.jpeg',
-    teaserCaption: 'Kinect depth-imaging rig positioned 0.7 m above the 0.5 m sorting conveyor capturing multi-orientation 2D and 3D descriptors (RBF-SVM R² = 0.9824).',
+    teaserCaption: 'Overhead Kinect depth acquisition rig (0.7 m height) capturing cherry tomato views for 2D/3D feature regression.',
     isSaailLab: false,
     bibtex: `@article{nyalala2019tomato,
   title={Tomato volume and mass estimation using computer vision and machine learning algorithms: Cherry tomato model},
@@ -2482,8 +2555,10 @@ export const PUBLICATIONS: Publication[] = [
     openAccess: true,
     doi: '10.15376/biores.14.1.1333-1346',
     paperUrl: 'https://doi.org/10.15376/biores.14.1.1333-1346',
+    teaserImage: '/images/papers/prior/carbon2019_sem.jpg',
+    teaserCaption: 'Scanning electron micrographs (x1000 SEM) comparing unmodified sewage sludge char (a) and porous CMHR-sludge activated carbon prepared at 1:4 impregnation ratio and 700 C (b).',
     tldr: 'Valorizes pharmaceutical herb residues and sludge into high-surface-area activated carbon adsorbents for wastewater dye remediation (26+ citations).',
-    abstract: 'Develops sustainable pyrolysis-activated adsorbents derived from traditional Chinese medicine sludge and herb residues, demonstrating efficient adsorption kinetics for methylene blue dye removal from industrial effluents.',
+    abstract: 'Sludge-based activated carbon (SAC) was prepared with sewage sludge and Chinese medicine herbal residues (CMHR’s). An orthogonal experimental design method was used to determine the optimum preparation conditions. The effects of the impregnation ratio, activation temperature, activation time, and addition ratio of CMHR’s on the iodine value and Brunauer-Emmett-Teller surface area of activated carbon were studied. X-ray diffraction, Fourier-transform infrared spectrometer, and scanning electron microscopy were used to characterize the prepared SAC. The results showed that the optimal process conditions for preparing the SAC were as follows: an impregnation ratio of 1:4, an activation time of 30 min, an activation temperature of 700 °C, and an addition ratio of CMHR’s of 40%. The adsorption balance of the methylene blue dye was examined at room temperature. Adsorption isotherms were obtained by fitting the data using the Langmuir and Freundlich models, which showed that methylene blue adsorption was most suitable for the Langmuir equation. The results demonstrated that SAC prepared from SS and CMHR’s from a Chinese medicine factory could effectively expel dyes from wastewater.',
     keywords: ['activated carbon', 'waste valorization', 'adsorption', 'sustainability'],
     topics: ['Agriculture'],
     highlights: [
@@ -2550,7 +2625,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1080/07373937.2019.1691011',
     paperUrl: 'https://doi.org/10.1080/07373937.2019.1691011',
     tldr: 'Compares thermodynamic efficiency and moisture extraction rates of closed-loop vs. open-loop heat pump paddy dryers across ambient regimes (28+ citations).',
-    abstract: 'Evaluates how ambient temperature and relative humidity affect specific moisture extraction rates and coefficient of performance in closed-loop and open-loop paddy heat-pump drying systems.',
+    abstract: 'The concern of cumulative demand of parboiled paddy dryings signposts the requirement of more optimized and mechanized processing. The study was conducted to fulfill the requirements of an efficient heat pump (HP) dryer unit for paddy drying in subtropical monsoon climate region of China, by utilizing the different hot air circulation methods and environmental conditions in the winter season. Therefore, a newly designed HP drying test bench enhanced with a series of heat pumps was employed for parboiled paddy drying of different varieties and sample loads. The drying efficiency and performance of HP was assessed in terms of specific moisture evaporation rate (SMER), moisture evaporation rate (MER), and coefficient of performance (COP) in closed and open-loop cycles. The closed and open-loop cycles hot air dryings were employed with the temperature and velocity ranges of 50-60˚C and 2-3 m/s, respectively. Furthermore, SMER and MER for both varieties and COP in closed and open loops were optimized using response surface methodology (RSM). The findings of the study revealed the dependency of SMER and MER on the temperature and velocity, as minimum SMER and MER were witnessed at 47.93˚C and 2.5 m/s, while COP in closed loop (2.211) was higher than that of the open cycle (1.409) due to the entrance of a significant amount of ambient air into the designed system during each cycle. Moreover, the intended parameters were optimized by exploiting RSM and were as follows: 60˚C (drying temperature), 2.76 m/s (air velocity), 0.321 (SMER1), 1.318 (SMER2), 0.208 (OSMER1), 0.865 kg/kWh (OSMER2), 0.202 (MER1), 0.796 (MER2), 0.180 (OMER1), 0.689 kg/h (OMER2), 2.211 (COP-closed), and 1.409 (COP-open). We further perceived that the temperature has more effect on the drying efficiency compared to air velocity as performance indicators were found to be increased by lofting the temperature profiles. The confidence of interval was observed significant (5%) as we equated the optimized values with experimental values, that particularly offerings our study a valuable to achieve a high quality of parboiled paddy.',
     keywords: ['paddy drying', 'heat pump', 'thermodynamics', 'postharvest engineering'],
     topics: ['Agriculture'],
     highlights: [
@@ -2612,7 +2687,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1016/j.compag.2018.07.007',
     paperUrl: 'https://doi.org/10.1016/j.compag.2018.07.007',
     tldr: 'Automated vision-based inter-birth interval tracking to flag neonatal piglet asphyxia risks in real time during sow farrowing (28+ citations).',
-    abstract: 'Detects prolonged inter-birth intervals and dystocia events during farrowing through continuous pen camera monitoring, enabling timely stockperson intervention to reduce neonatal piglet asphyxia mortality.',
+    abstract: 'The occurrence of asphyxia in sows during parturition often results in stillbirths and low vitality piglets, thus significantly affecting pig production and animal welfare in terms of piglet mortality. The losses during farrowing can account to a significant loss in a litter, a whole litter or in extreme cases, the loss of the sow. The objective of this study was to develop an infrared depth image sensor-based monitoring system as a surveillance support system for stockmen during the farrowing phase of sows, in an effort to reduce piglet mortality associated with asphyxiation of piglets. Experiments were performed at Jurong Research farm of Nanjing Agricultural University, using a herd of 105 Meishan sows. Data was collected by monitoring the farrowing process of 15 sows housed in farrowing pens. The sows were monitored by video recording for labeling and depth images taken at 10 fpm for automatic system development. Data labeling was based on the timestamps of births of all the piglets in a litter and each piglet vitality score based on the number of times a piglet attempts to stand within the 1st minute after birth. Data labeling was performed 1 h before the start of parturition until 0.5 h after the end of parturition. The depth images were processed to segment the piglets, and a developed parametrized ellipse-fitting algorithm performed piglet detection by multi-ellipse fitting. Piglet count and count tracking were established by the number of fitted ellipses on the image-object shape. Each sequential increment in the piglet count was used to compute the inter-birth interval. The developed model attained a detection accuracy of 0.832 for no piglets and 0.801 for 14 piglets in a range of 0 to 14 piglets in a litter. In piglet counting and count tracking, the model achieved an average accuracy of 0.918 (R2) at an RMSE of 1.225 piglets. For the classification of an asphyxia event, the model indicated an accuracy of 0.863, specificity of 0.921, precision of 0.791, and a sensitivity of 0.723. The developed system can serve as part of Precision Livestock Farming automatic farrowing monitoring system with the aim of detecting the start of parturition, piglet count tracking, and asphyxia occurrence.',
     keywords: ['farrowing monitoring', 'asphyxia detection', 'precision livestock', 'computer vision'],
     topics: ['Agriculture', 'Computer Vision'],
     highlights: [
@@ -2675,7 +2750,7 @@ export const PUBLICATIONS: Publication[] = [
     citations: 3,
     paperUrl: 'https://openalex.org/W3097890783',
     tldr: 'Classifies temporal posture transitions in crated sows to predict impending farrowing onset using overhead sensing.',
-    abstract: 'Analyzes posture-change frequencies and resting-to-standing dynamics of crated sows prior to parturition, providing automated alerts ahead of farrowing onset.',
+    abstract: 'Losses during the farrowing phase significantly affect both farm economics and animal welfare regarding piglet mortality. Thus, warranting the need for animal supervision. The automation of monitoring of animals during this period is crucial to Precision Livestock Farming and general animal welfare. The objective of this study was to develop an automated farrowing predictor by classification of sow nest-building behaviors based on non-intrusive, stress-free, contactless infrared distance sensors. Experiments were performed at Jurong Research farm of Nanjing Agricultural University, using a herd of 125 large white Landrace sows. Time-series data were collected from 14 crated sows, 10 were assigned to the training dataset and four as a testing dataset for final model validation. Cluster evaluation was performed by distance-based and density-based methods to determine the optimum groupings within the dataset. Subtractive clustering was then used to develop an optimized Adaptive Neuro-Fuzzy Inference System model to correlate the infrared distance sensor data to the sow nest-building behavior. The cluster analysis gave a result of nesting and non-nesting behaviors as the optimum grouping within the dataset. The developed optimized model had an RMSE of 0.1516 for training dataset and 0.1173 for checking dataset. The classification of nest-building behavior by the model achieved an average accuracy of 89.00%, a specificity of 90.59%, a precision of 83.82%, and a sensitivity of 89.25%. The developed system can thus be used as an automatic monitoring system in Precision Livestock Farming for both animal and stockman welfare.',
     keywords: ['sow behavior', 'farrowing prediction', 'activity classification', 'precision livestock'],
     topics: ['Agriculture', 'Computer Vision'],
     highlights: [
@@ -2733,7 +2808,7 @@ export const PUBLICATIONS: Publication[] = [
     doi: '10.1504/ijcnds.2016.076650',
     paperUrl: 'https://doi.org/10.1504/ijcnds.2016.076650',
     tldr: 'Improves node localization accuracy and clock synchronization across agricultural Wireless Sensor and Actor Networks using virtual-force refinement.',
-    abstract: 'Proposes a range-based localization algorithm combining virtual-force iteration and distributed time synchronization to reduce spatial estimation error in agricultural wireless sensor and actor networks.',
+    abstract: 'In order to solve the problem of sensor node localisation of wireless sensor and actor networks, a range-based time of arrival (TOA) localisation algorithm with virtual force and time synchronisation (TLAVFTS) in WSAN is proposed in this paper, which uses mobile actors instead of WSNs anchors, and combines TOA with virtual force on the premise of time synchronisation. When a sensor node requests for localisation, the algorithm first calculates the virtual force of actor nodes, and makes it move close to the requested sensor node, then synchronise time of entire network. Finally, three-bonier measurement method will be adopted to complete node localisation. The simulation results show that the proposed algorithm can improve the success localisation rate by up to 40% and also is superior to traditional TOA on the average localisation time, error and overhead; it can apply to real-time filed with small number of actor nodes.',
     keywords: ['wireless sensor networks', 'localization', 'time synchronization', 'IoT'],
     topics: ['Agriculture', 'IoT'],
     highlights: [
@@ -2785,7 +2860,7 @@ export const PUBLICATIONS: Publication[] = [
     category: 'journal',
     status: 'Published · M.Sc. Monograph',
     tldr: 'Embedded microcontroller and multi-sensor greenhouse automation architecture for real-time microclimate monitoring and actuation.',
-    abstract: 'Designs and validates a low-cost Arduino-based environmental sensing and closed-loop greenhouse actuation platform tracking temperature, humidity, soil moisture, and illumination.',
+    abstract: 'Controlled-environment greenhouse horticulture demands responsive telemetry and actuation without prohibitive industrial controller costs. Developed as an M.Sc. thesis at Nanjing Agricultural University (2016), this work designs and validates a low-cost Arduino-based intelligent greenhouse monitoring and closed-loop control platform integrating temperature, relative humidity, soil moisture, and ambient illumination sensors with relay-driven ventilation, irrigation, shading, and supplemental lighting actuators for automated protected crop management.',
     keywords: ['smart greenhouse', 'Arduino', 'embedded IoT', 'agricultural automation'],
     topics: ['Agriculture', 'IoT'],
     highlights: [
@@ -2840,7 +2915,7 @@ export const PUBLICATIONS: Publication[] = [
     status: 'Published · 4+ Citations',
     citations: 4,
     tldr: 'Sensor-triggered occupancy and ambient illumination controller designed for automated energy conservation in academic and industrial facilities.',
-    abstract: 'Presents a microcontroller-driven sensor array and intelligent switching architecture reducing idle electrical loads across indoor facilities based on occupancy and ambient light levels.',
+    abstract: 'Published in the International Journal of Emerging Technology and Advanced Engineering (Vol. 5, Issue 12, Dec. 2015), this study presents a microcontroller-driven intelligent energy saving system evaluated in a modern university library environment. Combining passive infrared human presence sensors, light-dependent resistors (LDR), and temperature sensing with relay-optocoupler drivers and a Zero Crossing Detector (ZCD) for auto-phase-angle illumination voltage optimization, the system synchronizes fan and air-conditioning loads to eliminate idle wastage and achieves an average electrical power reduction of 30.06%.',
     keywords: ['energy conservation', 'embedded systems', 'sensors', 'IoT'],
     topics: ['IoT'],
     highlights: [

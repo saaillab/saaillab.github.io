@@ -6,8 +6,8 @@ import { PROJECTS } from '../data/projects';
 ---
 
 <Layout
-	title="Active Projects & Grants | SAAIL Lab | IIT Madras Zanzibar"
-	description="Funded research programs and dedicated project websites at SAAIL Lab, IIT Madras Zanzibar: CultureSEEDS East Africa, Dira Swahili Corpus, Ubora-AI, CropGuardNet, CashewAI, Seaweed Blue Economy, and PlacentaVision."
+	title="AI Projects & Grants in Zanzibar | SAAIL Lab · IIT Madras Zanzibar"
+	description="Active AI, deep learning, agricultural computer vision, Swahili NLP, and healthcare ML research programs led by Innocent Nyalala at SAAIL Lab, IIT Madras Zanzibar, Tanzania and East Africa."
 	canonical="https://saaillab.github.io/projects/"
 >
 	<ModernHeader currentPage="research" />
@@ -15,10 +15,10 @@ import { PROJECTS } from '../data/projects';
 	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
-				<span class="page-eyebrow">Funded Initiatives &amp; Dedicated Project Sites</span>
-				<h1 class="page-title">Active Projects &amp; Grants</h1>
+				<span class="page-eyebrow">Funded Initiatives &amp; Dedicated Project Sites · Zanzibar, Tanzania</span>
+				<h1 class="page-title">Active AI Projects &amp; Grants</h1>
 				<p class="page-lead">
-					Every major SAAIL Lab research stream at IIT Madras Zanzibar has a dedicated project website documenting teams, partner institutions, open datasets, and peer-reviewed outputs.
+					Every major SAAIL Lab research program at IIT Madras Zanzibar maintains a dedicated project site documenting partner institutions, open East African datasets, deep learning pipelines, and peer-reviewed outputs.
 				</p>
 			</div>
 		</section>
@@ -42,7 +42,9 @@ import { PROJECTS } from '../data/projects';
 								<p class="card-summary">{proj.summary}</p>
 								<div class="card-meta">
 									<div><strong>Lead:</strong> {proj.lead}</div>
-									<div><strong>Team:</strong> {proj.team.slice(0, 5).join(', ')}{proj.team.length > 5 ? ` (+${proj.team.length - 5})` : ''}</div>
+									{proj.team.length > 0 && (
+										<div><strong>Team:</strong> {proj.team.slice(0, 5).join(', ')}{proj.team.length > 5 ? ` (+${proj.team.length - 5})` : ''}</div>
+									)}
 								</div>
 								<div class="card-actions">
 									<a href={`/projects/${proj.slug}/`} class="btn btn-primary">Open Project Website &rarr;</a>

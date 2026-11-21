@@ -7,10 +7,10 @@ export interface Props {
 }
 
 const {
-	title = "SAAIL Lab | IIT Madras Zanzibar",
-	description = "Sustainable AI for Agriculture & Intelligent Livelihoods Lab (SAAIL Lab) at the School of Engineering and Science, IIT Madras Zanzibar. Research in precision agriculture, Swahili NLP and AI safety (CultureSEEDS), responsible AI, and healthcare ML.",
+	title = "SAAIL Lab | AI Research Lab at IIT Madras Zanzibar",
+	description = "Sustainable AI for Agriculture and Intelligent Livelihoods Lab (SAAIL Lab) at the School of Engineering and Science, IIT Madras Zanzibar, led by Innocent Nyalala. Flagship AI, deep learning, machine learning, computer vision, Swahili NLP, agricultural AI, and healthcare AI research in Zanzibar, Tanzania, and East Africa.",
 	canonical = "https://saaillab.github.io/",
-	ogImage = "https://saaillab.github.io/images/logo/saail-logo.png"
+	ogImage = "https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg"
 } = Astro.props;
 ---
 
@@ -19,8 +19,19 @@ const {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-		<link rel="icon" type="image/png" href="/images/logo/saail-crest.png" />
-		<link rel="apple-touch-icon" href="/images/logo/saail-crest.png" />
+		<link rel="icon" href="/favicon.ico" sizes="48x48" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
+		<meta name="theme-color" content="#14532d" />
+		<meta name="thumbnail" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="geo.region" content="TZ-07" />
+		<meta name="geo.placename" content="Zanzibar, Tanzania" />
+		<meta name="geo.position" content="-6.1659;39.2026" />
+		<meta name="ICBM" content="-6.1659, 39.2026" />
 
 		<!-- Performance Optimization -->
 		<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -33,7 +44,7 @@ const {
 		<meta name="description" content={description} />
 
 		<!-- Academic & Research SEO -->
-		<meta name="keywords" content="SAAIL Lab, Sustainable AI for Agriculture and Intelligent Livelihoods, IIT Madras Zanzibar, Innocent Nyalala, CropGuardNet, DGS-Bench, CLOVES-4603, ZSTC-Clove-V1, CARA-FM, ETRI Journal, CultureSEEDS, Google DeepMind, Swahili NLP, Zanzibar Swahili Corpus, CashewAI, SeaweedAI, PlacentaVision, Responsible AI, Explainable AI, East Africa AI, 1270 citations, h-index 15" />
+		<meta name="keywords" content="SAAIL Lab, AI labs in Zanzibar, AI lab Zanzibar, AI research Zanzibar, deep learning Zanzibar, machine learning Zanzibar, computer vision Zanzibar, Swahili NLP Zanzibar, AI for agriculture Zanzibar, AI for healthcare Zanzibar, East Africa AI research lab, Tanzania AI research, IIT Madras Zanzibar, IIT Madras Zanzibar AI Lab, Innocent Nyalala, Sustainable AI for Agriculture and Intelligent Livelihoods, CropGuardNet, DGS-Bench, CLOVES-4603, ZSTC-Clove-V1, CARA-FM, ETRI Journal, Zanzibar Swahili Corpus, Dira Benchmark, CashewAI, SeaweedAI, PlacentaVision, Responsible AI, Explainable AI, 1270 citations, h-index 15" />
 		<meta name="author" content="SAAIL Lab" />
 		<meta name="dc.creator" content="SAAIL Lab" />
 		<meta name="dc.title" content={title} />
@@ -93,32 +104,60 @@ const {
 		      "@type": "ResearchOrganization",
 		      "@id": "https://saaillab.github.io/#organization",
 		      "name": "SAAIL Lab",
-		      "alternateName": ["Sustainable AI for Agriculture & Intelligent Livelihoods", "SAAIL Laboratory"],
-		      "description": "Research laboratory at the School of Engineering and Science, Indian Institute of Technology Madras Zanzibar advancing precision agriculture, Swahili NLP and AI safety (CultureSEEDS), responsible AI governance, and clinical healthcare ML.",
+		      "alternateName": [
+		        "Sustainable AI for Agriculture & Intelligent Livelihoods",
+		        "SAAIL Laboratory",
+		        "IIT Madras Zanzibar AI Lab",
+		        "Zanzibar AI Research Lab"
+		      ],
+		      "description": "Leading artificial intelligence, deep learning, machine learning, computer vision, and Swahili NLP research laboratory at IIT Madras Zanzibar in Tanzania, East Africa. Directed by Innocent Nyalala across precision agriculture, blue economy sensing, responsible AI, and clinical healthcare ML.",
 		      "url": "https://saaillab.github.io/",
 		      "logo": {
 		        "@type": "ImageObject",
 		        "url": "https://saaillab.github.io/images/logo/saail-crest.png"
 		      },
-		      "image": "https://saaillab.github.io/images/logo/saail-logo.png",
+		      "image": [
+		        "https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg",
+		        "https://saaillab.github.io/images/people/innocent-nyalala-saail-lab-zanzibar.jpg",
+		        "https://saaillab.github.io/images/logo/saail-logo.png"
+		      ],
 		      "email": "saail_lab@iitmz.ac.in",
+		      "foundingDate": "2024-10",
+		      "founder": { "@id": "https://inyalala.github.io/#person" },
+		      "director": { "@id": "https://inyalala.github.io/#person" },
+		      "address": {
+		        "@type": "PostalAddress",
+		        "streetAddress": "IIT Madras Zanzibar Campus, Bweleo",
+		        "addressLocality": "Zanzibar",
+		        "addressRegion": "Zanzibar Urban/West",
+		        "addressCountry": "TZ"
+		      },
+		      "geo": {
+		        "@type": "GeoCoordinates",
+		        "latitude": -6.1659,
+		        "longitude": 39.2026
+		      },
 		      "parentOrganization": {
-		        "@type": "EducationalOrganization",
+		        "@type": "CollegeOrUniversity",
 		        "name": "Indian Institute of Technology Madras Zanzibar",
 		        "url": "https://www.iitmz.ac.in"
 		      },
 		      "areaServed": [
+		        {"@type": "Place", "name": "Zanzibar"},
 		        {"@type": "Country", "name": "Tanzania"},
 		        {"@type": "Country", "name": "Kenya"},
 		        {"@type": "Place", "name": "East Africa"}
 		      ],
 		      "knowsAbout": [
-		        "Sustainable Agriculture AI",
+		        "Artificial Intelligence in Zanzibar",
+		        "Deep Learning Research",
+		        "Machine Learning",
+		        "Computer Vision",
+		        "AI for Agriculture and Blue Economy",
+		        "AI for Healthcare and Clinical Imaging",
 		        "Swahili Natural Language Processing",
-		        "Multilingual AI Safety Evaluation",
-		        "Computer Vision for Commodity Grading",
 		        "Explainable and Responsible AI",
-		        "Healthcare and Placental Imaging"
+		        "Zanzibar Commodity Grading"
 		      ],
 		      "sameAs": [
 		        "https://github.com/saaillab",
@@ -132,14 +171,31 @@ const {
 		      "@type": "Person",
 		      "@id": "https://inyalala.github.io/#person",
 		      "name": "Innocent Nyalala",
-		      "honorificPrefix": "Dr",
 		      "jobTitle": "Assistant Professor & Principal Investigator, SAAIL Lab",
+		      "worksFor": { "@id": "https://saaillab.github.io/#organization" },
+		      "affiliation": [
+		        { "@type": "CollegeOrUniversity", "name": "Indian Institute of Technology Madras Zanzibar", "url": "https://www.iitmz.ac.in/" },
+		        { "@type": "CollegeOrUniversity", "name": "Wadhwani School of Data Science and Artificial Intelligence, Indian Institute of Technology Madras" }
+		      ],
+		      "image": {
+		        "@type": "ImageObject",
+		        "@id": "https://saaillab.github.io/images/people/innocent-nyalala-saail-lab-zanzibar.jpg#image",
+		        "url": "https://saaillab.github.io/images/people/innocent-nyalala-saail-lab-zanzibar.jpg",
+		        "caption": "Innocent Nyalala, Principal Investigator of SAAIL Lab at IIT Madras Zanzibar"
+		      },
+		      "knowsAbout": [
+		        "Artificial Intelligence",
+		        "Deep Learning",
+		        "Machine Learning",
+		        "Computer Vision",
+		        "Precision Agriculture AI",
+		        "Healthcare Artificial Intelligence",
+		        "Swahili Natural Language Processing",
+		        "Explainable and Responsible AI",
+		        "Zanzibar and East Africa AI Research"
+		      ],
 		      "url": "https://inyalala.github.io/",
 		      "email": "innocent@iitmz.ac.in",
-		      "affiliation": [
-		        "Indian Institute of Technology Madras Zanzibar, Zanzibar, Tanzania",
-		        "Wadhwani School of Data Science and Artificial Intelligence, Indian Institute of Technology Madras, Chennai, India"
-		      ],
 		      "sameAs": [
 		        "https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en",
 		        "https://orcid.org/0000-0002-7969-437X",
@@ -151,8 +207,11 @@ const {
 		      "@type": "WebSite",
 		      "@id": "https://saaillab.github.io/#website",
 		      "url": "https://saaillab.github.io/",
-		      "name": "SAAIL Lab | IIT Madras Zanzibar",
+		      "name": "SAAIL Lab | AI Research Lab at IIT Madras Zanzibar",
+		      "alternateName": "Sustainable AI for Agriculture and Intelligent Livelihoods Lab",
+		      "description": "Official research portal of SAAIL Lab at IIT Madras Zanzibar, East Africa.",
 		      "publisher": {"@id": "https://saaillab.github.io/#organization"},
+		      "about": {"@id": "https://saaillab.github.io/#organization"},
 		      "inLanguage": "en-US"
 		    }
 		  ]

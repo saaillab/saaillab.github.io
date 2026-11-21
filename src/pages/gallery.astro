@@ -74,9 +74,9 @@ const ALBUMS: EventAlbum[] = [
 				caption: 'Technical exchange on open datasets, field protocols, and edge-ready agricultural vision.'
 			},
 			{
-				src: '/images/gallery/dsa-day-4-61.jpg',
-				title: 'Collaborative Networking Across African ML Labs',
-				caption: 'Building regional benchmarks and co-mentoring pipelines during DSA 2026 Day 4 sessions.'
+				src: '/images/gallery/dsa-day-3-58.jpg',
+				title: 'Faculty & Researchers at DSA 2026 Kampala Banner',
+				caption: 'Presenting SAAIL Lab empirical cassava and dataset-auditing findings during Data Science Africa 2026 at Makerere University.'
 			}
 		]
 	},
@@ -147,69 +147,131 @@ const ALBUMS: EventAlbum[] = [
 		]
 	},
 	{
-		id: 'cvpr-iclr-2026',
+		id: 'cvpr-2026',
 		category: 'posters',
-		tag: 'CVPR & ICLR Workshops',
-		title: 'CVPR 2026 V4A & ICLR 2026 Trustworthy AI',
-		venue: 'Denver, USA & Rio de Janeiro, Brazil',
-		date: 'May 2026',
-		summary: 'SAAIL Lab flagship dataset and fairness studies at CVPR 2026 (7th Workshop on Vision for Agriculture) introducing CLOVES-4603 and ICLR 2026 Workshop on Principled Design for Trustworthy AI introducing unified learning bias mitigation.',
+		tag: 'CVPR 2026 Workshop · Denver',
+		title: 'CVPR 2026 Workshop on Vision for Agriculture (CV4A)',
+		venue: 'Denver, Colorado, USA',
+		date: 'June 2026',
+		summary: 'Accepted benchmark study at the 7th Workshop on Vision for Agriculture (CVPR 2026) introducing CLOVES-4603, comparing classical GLCM+GLRLM+LBP texture pipelines (92.94%) against fine-tuned deep architectures (99.67%) under lot-aware stratified splits.',
 		cover: '/images/papers/posters/cvpr-cloves-2026.webp',
 		links: [
-			{ label: 'CLOVES-4603 (CVPR)', href: '/papers/cloves-4603/' },
-			{ label: 'Trustworthy AI (ICLR)', href: '/papers/trustworthy-ai-iclr2026/' }
+			{ label: 'CLOVES-4603 Paper Page', href: '/papers/cloves-4603/' },
+			{ label: 'GitHub Repository', href: 'https://github.com/saaillab/CLOVES-4603' }
 		],
 		slides: [
 			{
 				src: '/images/papers/posters/cvpr-cloves-2026.webp',
 				title: 'CLOVES-4603 Acceptance at CVPR 2026 V4A Workshop',
-				caption: 'First public 4,603-image Zanzibar commercial clove grading benchmark comparing texture pipelines (92.94%) and deep models (99.67%).',
+				caption: 'First public 4,603-image Zanzibar commercial clove grading benchmark comparing texture pipelines and deep models.',
 				paperLink: '/papers/cloves-4603/'
 			},
+			{
+				src: '/images/papers/cloves/cloves4603_pipeline.png',
+				title: 'CLOVES-4603 Texture & Deep Benchmark Pipeline',
+				caption: 'End-to-end preprocessing, GLCM+GLRLM+LBP feature fusion, and deep baseline comparison workflow.',
+				paperLink: '/papers/cloves-4603/'
+			},
+			{
+				src: '/images/papers/cloves/cloves4603_benchmark.png',
+				title: 'Held-Out Clove Grading Benchmark Results (n = 921)',
+				caption: 'ResNet-50 reaches 99.67% accuracy alongside strong MobileNetV3-Large (99.35%) and frozen DINOv2 (94.90%) probes.',
+				paperLink: '/papers/cloves-4603/'
+			}
+		]
+	},
+	{
+		id: 'iclr-2026',
+		category: 'posters',
+		tag: 'ICLR 2026 Workshop · Rio',
+		title: 'ICLR 2026 Workshop on Trustworthy AI',
+		venue: 'Rio de Janeiro, Brazil',
+		date: 'April 2026',
+		summary: 'Accepted study at the ICLR 2026 Workshop on Principled Design for Trustworthy AI demonstrating Dynamic Data Re-weighting (DDR) to unify subgroup fairness, shortcut resistance, and out-of-distribution generalization without group labels.',
+		cover: '/images/papers/posters/iclr-2026-trustworthy-ai.webp',
+		links: [
+			{ label: 'ICLR 2026 Paper Page', href: '/papers/trustworthy-ai-iclr2026/' },
+			{ label: 'OpenReview Forum ↗', href: 'https://openreview.net/forum?id=RCEEHTbSDk' }
+		],
+		slides: [
 			{
 				src: '/images/papers/posters/iclr-2026-trustworthy-ai.webp',
 				title: 'Unifying Perspectives on Learning Biases at ICLR 2026',
 				caption: 'Data-centric intervention unifying fairness, robustness, and cross-domain generalization across constrained datasets.',
 				paperLink: '/papers/trustworthy-ai-iclr2026/'
+			},
+			{
+				src: '/images/papers/iclr2026/ddr_framework.png',
+				title: 'Dynamic Data Re-weighting (DDR) Conceptual Framework',
+				caption: 'Adversarial introspection automatically prioritizes shortcut-resistant samples to improve Worst-Group Accuracy.',
+				paperLink: '/papers/trustworthy-ai-iclr2026/'
 			}
 		]
 	},
 	{
-		id: 'oxford-eac-2026',
+		id: 'oxford-tais-2026',
 		category: 'posters',
-		tag: 'Policy & Regional Impact',
-		title: 'Oxford TAIS 2026 & EAC STI / AI4EAC 2026',
-		venue: 'University of Oxford, UK & Kigali, Rwanda',
-		date: 'March 2026',
-		summary: 'Bridging AI governance and regional commodity standards: comparative policy analysis across Ethiopia, Kenya, and Rwanda at the 3rd Technical AI Safety Conference (Oxford), alongside a competitive travel grant win at EAC STI / AI4EAC 2026 in Kigali.',
+		tag: 'AI Safety Policy · Oxford',
+		title: '3rd Technical AI Safety Conference (TAIS 2026)',
+		venue: 'Oxford Martin School · University of Oxford, UK',
+		date: 'May 2026',
+		summary: 'Policy harmonization research presented at Oxford Martin School comparing national AI strategies across Ethiopia (2022), Kenya (2025), and Rwanda (2023) while anchoring regional coordination in Ubuntu, Harambee, and Ujamaa principles.',
 		cover: '/images/papers/posters/tais2026-oxford-poster.png',
 		links: [
-			{ label: 'Oxford TAIS Policy Paper', href: '/papers/ai-policy-harmonization-tais2026/' },
-			{ label: 'ZSTC-Clove-V1 (EAC STI)', href: '/papers/zstc-clove-v1/' }
+			{ label: 'TAIS 2026 Policy Paper', href: '/papers/ai-policy-harmonization-tais2026/' },
+			{ label: 'Responsible AI Project', href: '/projects/responsible-ai-global-south/' }
 		],
 		slides: [
 			{
 				src: '/images/papers/posters/tais2026-oxford-poster.png',
 				title: 'A2 Poster at TAIS 2026 · University of Oxford',
-				caption: 'AI Policy Harmonization in East Africa: anchoring compute, water, energy, and indigenous language governance in Harambee and Ujamaa values.',
+				caption: 'AI Policy Harmonization in East Africa: anchoring water, power, language AI, and regional oversight in Ubuntu, Harambee, and Ujamaa.',
 				paperLink: '/papers/ai-policy-harmonization-tais2026/'
 			},
+			{
+				src: '/images/projects/responsible_ai_framework.png',
+				title: 'East African Cultural Values & Harmonization Architecture',
+				caption: 'Connecting communal philosophical foundations to shared regional AI infrastructure and governance.',
+				paperLink: '/projects/responsible-ai-global-south/'
+			}
+		]
+	},
+	{
+		id: 'eac-sti-2026',
+		category: 'awards',
+		tag: 'Travel Grant · AI4EAC 2026',
+		title: '4th EAC STI & AI for East Africa Conference',
+		venue: 'Kigali, Rwanda',
+		date: 'March 2026',
+		summary: 'Competitive AI4EAC travel grant awarded to Patrick Vincent Ndowo to present ZSTC-Clove-V1, benchmarking 18 deep vision architectures on 5,298 expert-graded Zanzibar clove images aligned with ZSTC regulatory grades.',
+		cover: '/images/papers/posters/eac-sti-2026-clove-grading.webp',
+		links: [
+			{ label: 'ZSTC-Clove-V1 Paper Page', href: '/papers/zstc-clove-v1/' },
+			{ label: 'Ubora-AI Project Site', href: '/projects/ubora-ai/' }
+		],
+		slides: [
 			{
 				src: '/images/papers/posters/eac-sti-2026-clove-grading.webp',
 				title: 'EAC STI & AI4EAC 2026 Travel Grant Spotlight',
 				caption: 'Patrick Vincent Ndowo representing SAAIL Lab ($980 competitive travel grant) on ZSTC-Clove-V1 deep learning quality inspection.',
 				paperLink: '/papers/zstc-clove-v1/'
+			},
+			{
+				src: '/images/papers/cloves/graphical_abstract.png',
+				title: 'ZSTC-Clove-V1 Benchmark Graphical Overview',
+				caption: 'Four-grade commercial dataset acquisition, classical vs. deep benchmarking, and 99.45% compositional rule pipeline.',
+				paperLink: '/papers/zstc-clove-v1/'
 			}
 		]
 	},
 	{
-		id: 'africhi-spotlight',
+		id: 'africhi-2025',
 		category: 'conferences',
-		tag: 'HCI Co-Design & Keynote',
-		title: 'ACM AfriCHI 2025 & Invited Faculty Lectures',
-		venue: 'Zanzibar & East African Research Forums',
-		date: '2025 - 2026',
-		summary: 'Participatory co-design with ZSTC clove inspectors at ACM AfriCHI 2025 alongside invited talks on resource-constrained agricultural AI for East Africa.',
+		tag: 'HCI Co-Design · ACM',
+		title: 'ACM AfriCHI 2025 Workshop on Indigenous AI Co-Design',
+		venue: 'Cairo, Egypt',
+		date: 'November 2025',
+		summary: 'Participatory human-computer interaction study presented at ACM AfriCHI 2025 in Cairo uniting segmentation-first clove grading vision (99.0% single-clove accuracy) with Zanzibar Saateni inspector ethnography.',
 		cover: '/images/papers/posters/africhi-2025-poster.webp',
 		links: [
 			{ label: 'AfriCHI Co-Design Paper', href: '/papers/clove-codesign-africhi2025/' },
@@ -218,13 +280,35 @@ const ALBUMS: EventAlbum[] = [
 		slides: [
 			{
 				src: '/images/papers/posters/africhi-2025-poster.webp',
-				title: 'ACM AfriCHI 2025 Co-Designing Clove Grading AI',
+				title: 'ACM AfriCHI 2025 · Cairo, Egypt',
 				caption: 'From Art to Algorithms: participatory co-design uniting indigenous Zanzibar grading criteria with auditable segmentation pipelines.',
 				paperLink: '/papers/clove-codesign-africhi2025/'
 			},
 			{
+				src: '/images/papers/cloves/africhi2025_codesign.png',
+				title: 'Socio-Technical Co-Design Feedback Architecture',
+				caption: 'Iterative calibration pairing ZSTC expert ethnography with offline smartphone inspection deployment.',
+				paperLink: '/papers/clove-codesign-africhi2025/'
+			}
+		]
+	},
+	{
+		id: 'aaiac-2026',
+		category: 'conferences',
+		tag: 'Regional Forum · Dar es Salaam',
+		title: 'AAIAC 2026 Conference Keynote & Engagement',
+		venue: 'Dar es Salaam, Tanzania',
+		date: '2026',
+		summary: '2nd International Conference on Advancements of Artificial Intelligence in the African Context (AAIAC 2026) exploring regional AI strategy harmonization and sovereign digital agriculture.',
+		cover: '/images/papers/posters/aaiac2026-poster.png',
+		links: [
+			{ label: 'Responsible AI Project', href: '/projects/responsible-ai-global-south/' },
+			{ label: 'All Lab Publications', href: '/publications/' }
+		],
+		slides: [
+			{
 				src: '/images/papers/posters/aaiac2026-poster.png',
-				title: 'AAIAC 2026 Conference Keynote & Engagement',
+				title: 'AAIAC 2026 Conference Presentation · Dar es Salaam',
 				caption: '2nd International Conference on Advancements of Artificial Intelligence in the African Context (Dar es Salaam, Tanzania).'
 			}
 		]
