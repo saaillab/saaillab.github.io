@@ -60,12 +60,11 @@ const weekKey = `${isoYear}-W${pad2(isoWeek)}`;
 					<li><a href="/collaborations/">Global Collaborations</a></li>
 					<li><a href="/hiring/">Join SAAIL Lab</a></li>
 					<li><a href="/contact/">Contact</a></li>
-					<li><a href="https://www.iitmz.ac.in/labs" target="_blank" rel="noopener">IITMZ Research Labs ↗</a></li>
 					<li><a href="https://www.iitmz.ac.in/schools/engineering-and-science/faculty/prof-innocent-nyalala" target="_blank" rel="noopener">PI IITMZ Profile ↗</a></li>
 				</ul>
 				<p class="footer-address">
 					Room 105 (F1), School of Engineering &amp; Science<br />
-					<a href="https://www.iitmz.ac.in/" target="_blank" rel="noopener">IIT Madras Zanzibar</a>, Bweleo, Zanzibar
+					IIT Madras Zanzibar, Bweleo, Zanzibar
 				</p>
 			</div>
 		</div>
@@ -119,7 +118,7 @@ const weekKey = `${isoYear}-W${pad2(isoWeek)}`;
 		</div>
 
 		<div class="footer-bottom">
-			<p>&copy; 2026 SAAIL Lab · School of Engineering &amp; Science, IIT Madras Zanzibar.</p>
+			<p>&copy; 2026 Innocent Nyalala &amp; SAAIL Lab · School of Engineering &amp; Science, IIT Madras Zanzibar · Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener" class="footer-license-link">CC BY-NC 4.0</a>.</p>
 			<div class="footer-bottom-links">
 				<a href="/publications/">Publications</a>
 				<a href="/github/">Open-Source Code</a>
@@ -346,6 +345,17 @@ const weekKey = `${isoYear}-W${pad2(isoWeek)}`;
 	}
 
 	.footer-bottom-links a:hover {
+		color: var(--accent-primary);
+	}
+
+	.footer-license-link {
+		color: var(--text-muted);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.footer-license-link:hover {
 		color: var(--accent-primary);
 	}
 

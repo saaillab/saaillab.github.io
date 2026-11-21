@@ -4,7 +4,7 @@
 
 ## Identity & Location
 - **Laboratory**: SAAIL Lab (Sustainable AI for Agriculture and Intelligent Livelihoods Lab)
-- **Institution**: School of Engineering and Science, Indian Institute of Technology Madras Zanzibar (IIT Madras Zanzibar, https://www.iitmz.ac.in/), Bweleo, Zanzibar, Tanzania (IITMZ Research Labs: https://www.iitmz.ac.in/labs)
+- **Institution**: School of Engineering and Science, Indian Institute of Technology Madras Zanzibar, Bweleo, Zanzibar, Tanzania
 - **Principal Investigator**: Innocent Nyalala (Assistant Professor, IIT Madras Zanzibar, https://www.iitmz.ac.in/schools/engineering-and-science/faculty/prof-innocent-nyalala; Associate Research Fellow, Wadhwani School of Data Science and AI, IIT Madras)
 - **Website**: https://saaillab.github.io/
 - **Faculty Archive**: https://inyalala.github.io/
