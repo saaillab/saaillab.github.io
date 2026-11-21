@@ -26,7 +26,7 @@
     <priority>0.80</priority>
     <image:image>
       <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
-      <image:caption>AI Research Collaborations | SAAIL Lab · IIT Madras Zanzibar</image:caption>
+      <image:caption>Research Collaborations | SAAIL Lab at IIT Madras Zanzibar</image:caption>
     </image:image>
   </url>
   <url>
@@ -146,7 +146,7 @@
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://saaillab.github.io/images/projects/cashew_ai_samples.jpg</image:loc>
-      <image:caption>CashewAI Monitoring | SAAIL Lab Projects</image:caption>
+      <image:caption>CashewAI Orchard Monitoring | SAAIL Lab Projects</image:caption>
     </image:image>
   </url>
   <url>
@@ -175,7 +175,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://saaillab.github.io/images/projects/responsible_ai_framework.png</image:loc>
+      <image:loc>https://saaillab.github.io/images/papers/dgs2026/fig1_dgs_bar.png</image:loc>
       <image:caption>Responsible AI &amp; Sovereignty | SAAIL Lab Projects</image:caption>
     </image:image>
   </url>
@@ -225,7 +225,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://saaillab.github.io/images/projects/responsible_ai_framework.png</image:loc>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
       <image:caption>AI Policy Harmonization in East Africa (TAIS 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
     </image:image>
   </url>
@@ -235,7 +235,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://saaillab.github.io/images/papers/sovereignty/sovereignty_7d_framework.png</image:loc>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
       <image:caption>AI Sovereignty in the Global South (AAAI 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
     </image:image>
   </url>
@@ -335,7 +335,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://saaillab.github.io/images/papers/cloves/africhi2025_codesign.png</image:loc>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
       <image:caption>Co-Designing Clove Grading AI (AfriCHI 2025) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
     </image:image>
   </url>
@@ -415,7 +415,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://saaillab.github.io/images/papers/sovereignty/sovereignty_7d_framework.png</image:loc>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
       <image:caption>Digital Sovereignty vs. Digital Serfdom (EurIPS/NeurIPS 2025) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
     </image:image>
   </url>
@@ -465,7 +465,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://saaillab.github.io/images/papers/govtech/figure_01_framework.png</image:loc>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
       <image:caption>Institutional Barriers in SSA Digital Ag | SAAIL Lab · IIT Madras Zanzibar</image:caption>
     </image:image>
   </url>
@@ -595,7 +595,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://saaillab.github.io/images/papers/iclr2026/ddr_framework.png</image:loc>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
       <image:caption>Trustworthy AI &amp; Bias Unification (ICLR 2026) | SAAIL Lab · IIT Madras Zanzibar</image:caption>
     </image:image>
   </url>

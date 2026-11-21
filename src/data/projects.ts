@@ -49,8 +49,8 @@ export const PROJECTS: LabProject[] = [
       'Seven-dimensional AI sovereignty governance framework (AAAI 2026 EGSAI & EurIPS PAIG)',
       'Empirically grounded resistant digital citizenship taxonomy (Information Technology for Development)'
     ],
-    heroImage: '/images/projects/responsible_ai_framework.png',
-    heroAlt: 'Conceptual diagram of Ubuntu, Harambee, and Ujamaa values linked to East African AI policy harmonization and Global South sovereignty metrics',
+    heroImage: '/images/papers/dgs2026/fig1_dgs_bar.png',
+    heroAlt: 'DGS-Bench balanced deployment gap chart comparing raw accuracy against macro-F1 across field cassava benchmarks',
     relatedPapers: [
       {
         title: 'AI Policy Harmonization in East Africa: Cultural Sustainability in the New Technological Age',
@@ -83,7 +83,7 @@ export const PROJECTS: LabProject[] = [
     status: 'Active Curation',
     funding: 'SAAIL Lab Core Research · IIT Madras Zanzibar',
     lead: 'Innocent Nyalala',
-    team: ['Saleh Salim Abdulla', 'Saleh Haji Othman', 'Sri Advaita'],
+    team: ['Saleh Salim Abdulla', 'Sri Advaita'],
     partners: ['School of Engineering and Science, IIT Madras Zanzibar'],
     summary:
       'Building authentic coastal Kiunguja Swahili text and spoken domain QA paired with the Dira benchmark to detect machine-translated translationese from genuinely authored Swahili prose.',
@@ -226,20 +226,20 @@ export const PROJECTS: LabProject[] = [
   },
   {
     slug: 'cashew-ai',
-    title: 'CashewAI: Phenology-Aware Precision Orchard Monitoring',
-    shortTitle: 'CashewAI Monitoring',
+    title: 'CashewAI: Phenology-Aware Dual-Stream Deep Learning for Integrated Disease Detection, Pest Identification, and Yield Prediction in Smallholder Cashew Orchards of East Africa',
+    shortTitle: 'CashewAI Orchard Monitoring',
     pillar: 'Precision Agriculture',
-    badge: 'IITMZ ICSR Seed Grant · Rs. 5.00 Lakhs',
-    status: 'Active Field Deployment',
-    funding: 'IIT Madras Zanzibar ICSR Seed Research Grant (Rs. 5.00 lakhs)',
+    badge: 'ICSR Grant · IC&SR, IIT Madras',
+    status: 'Active Field Deployment (Aug 2026 - Jul 2027)',
+    funding: 'Exploratory Research Project (ERP 2026-27), IC&SR (Industrial Consultancy & Sponsored Research), IIT Madras (Rs. 9.35 lakhs, Aug 2026 - Jul 2027)',
     lead: 'Innocent Nyalala',
     team: [],
-    partners: ['Tanzania Cashew Grower Networks', 'IIT Madras Zanzibar'],
+    partners: ['IC&SR (Industrial Consultancy & Sponsored Research), IIT Madras', 'Tanzania Cashew Grower Networks', 'IIT Madras Zanzibar'],
     summary:
-      'Spatiotemporal orchard monitoring uniting phenology stage tracking, canopy lesion detection, and smallholder advisory decision support across Tanzanian cashew belts.',
+      'Dual-stream phenology-aware computer vision for integrated foliar/nut disease detection, pest identification, and yield forecasting across smallholder Tanzanian cashew orchards.',
     description: [
       'Cashew is a cornerstone export crop for southern Tanzania and coastal regions, yet orchard management suffers from delayed scouting of fungal blight, gummosis, anthracnose, and red rust infestations across irregular phenological transitions.',
-      'Funded by the IIT Madras Zanzibar ICSR Seed Grant, CashewAI develops lightweight multi-temporal vision models and leaf/canopy diagnostic protocols suited for offline mobile scouting in smallholder cashew orchards.'
+      'Funded by IC&SR (Industrial Consultancy & Sponsored Research), IIT Madras under Exploratory Research Project ERP 2026-27 (Rs. 9.35 lakhs, August 2026 to July 2027), CashewAI develops phenology-aware dual-stream deep learning models suited for offline mobile scouting in smallholder cashew orchards.'
     ],
     objectives: [
       'Collect geographically stratified multi-season cashew leaf, bark, nut, and panicle imagery across coastal Tanzanian orchards.',

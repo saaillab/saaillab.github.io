@@ -19,7 +19,12 @@ const ogImageUrl = pub.teaserImage
   ? `https://saaillab.github.io${pub.teaserImage}`
   : 'https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg';
 
-const citedPubs = PUBLICATIONS.filter((p) => p.slug !== pub.slug).slice(0, 8);
+const saailDropdownPubs = PUBLICATIONS.filter((p) => p.isSaailLab !== false).sort((a, b) => {
+  if (a.slug === 'cropguardnet') return -1;
+  if (b.slug === 'cropguardnet') return 1;
+  if (b.year !== a.year) return b.year - a.year;
+  return b.dateISO.localeCompare(a.dateISO);
+});
 
 // Remap affiliations sequentially 1..k so numbers never skip (e.g. 1, 2, 5, 6 -> 1, 2, 3, 4)
 const rawUsedIndices: number[] = [];
@@ -217,30 +222,22 @@ const breadcrumbLd = {
 
       <div id="moreWorksDropdown" class="more-works-dropdown" hidden>
         <div class="dropdown-head">
-          <span>SAAIL Lab · Research Directory</span>
+          <span>SAAIL Lab · All {saailDropdownPubs.length} Papers</span>
           <button id="closeMoreWorks" type="button" class="close-btn" aria-label="Close">&times;</button>
         </div>
         <div class="dropdown-links">
-          <a href="/" class="dropdown-item dropdown-home">
-            <span class="item-kicker">Lab Homepage</span>
-            <span class="item-title">SAAIL Lab · IIT Madras Zanzibar</span>
-          </a>
-          <a href="/publications/" class="dropdown-item dropdown-home">
-            <span class="item-kicker">Full Archive</span>
-            <span class="item-title">View All {PUBLICATIONS.length} Papers &amp; Preprints</span>
-          </a>
-          <a href="/projects/" class="dropdown-item dropdown-home">
-            <span class="item-kicker">Grants &amp; Systems</span>
-            <span class="item-title">Active Lab Projects</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          {citedPubs.map((item) => {
+          {saailDropdownPubs.map((item) => {
             const kickerLabel = item.venueShort.includes(String(item.year))
               ? item.venueShort
               : `${item.venueShort} · ${item.year}`;
+            const isCurrent = item.slug === pub.slug;
             return (
-              <a href={`/papers/${item.slug}/`} class="dropdown-item">
-                <span class="item-kicker">{kickerLabel}</span>
+              <a
+                href={`/papers/${item.slug}/`}
+                class:list={['dropdown-item', { 'dropdown-item-active': isCurrent }]}
+                aria-current={isCurrent ? 'page' : undefined}
+              >
+                <span class="item-kicker">{kickerLabel}{isCurrent ? ' · Current' : ''}</span>
                 <span class="item-title">{item.shortTitle || item.title}</span>
               </a>
             );
@@ -522,7 +519,7 @@ const breadcrumbLd = {
         )}
       </div>
       <p class="template-credit">
-        Layout adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener">CC BY-SA 4.0 License</a>.
+        Code, datasets, and research content &copy; 2025&ndash;2026 Innocent Nyalala &amp; SAAIL Lab under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener">CC BY-NC 4.0</a> (non-commercial research with mandatory attribution; commercialization prohibited without author inclusion). Layout adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>).
       </p>
       <div class="footer-links">
         <a href="/">SAAIL Lab Home</a>
@@ -553,6 +550,7 @@ const breadcrumbLd = {
         if (!btn || !dropdown) return;
         dropdown.hidden = !open;
         btn.setAttribute('aria-expanded', String(open));
+        document.body.classList.toggle('more-works-open', open);
         if (chevron) {
           chevron.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
         }
@@ -727,9 +725,20 @@ const breadcrumbLd = {
       align-items: center;
       flex-wrap: wrap;
       gap: 0.75rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.1rem 1.5rem 0;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding: 1rem 1.75rem 0;
+    }
+
+    main {
+      transition: padding-right 0.18s ease;
+    }
+
+    @media (min-width: 960px) {
+      :global(body.more-works-open) main {
+        padding-right: 340px;
+      }
     }
 
     .zoom-trigger {
@@ -741,7 +750,7 @@ const breadcrumbLd = {
       cursor: zoom-in;
     }
 
-    .more-works-wrap { position: relative; }
+    .more-works-wrap { position: relative; margin-left: auto; }
 
     .more-works-btn {
       display: inline-flex;
@@ -768,13 +777,23 @@ const breadcrumbLd = {
       top: calc(100% + 0.5rem);
       right: 0;
       left: auto;
-      width: min(360px, 88vw);
+      width: min(315px, 88vw);
       background: #ffffff;
       border: 1px solid var(--border-light);
       border-radius: 0.75rem;
       box-shadow: 0 16px 36px rgba(17, 24, 39, 0.14);
       z-index: 90;
       overflow: hidden;
+    }
+
+    .more-works-dropdown .dropdown-links {
+      max-height: min(68vh, 520px);
+      overflow-y: auto;
+    }
+
+    .dropdown-item-active {
+      background: #eef6f0;
+      border-left: 3px solid var(--accent-primary);
     }
 
     .dropdown-head {

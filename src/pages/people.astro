@@ -34,11 +34,11 @@ import metrics from '../data/scholar-metrics.json';
 						<span class="role-badge">Principal Investigator</span>
 						<h2>Innocent Nyalala</h2>
 						<div class="pi-titles">
-							<div>Assistant Professor, School of Engineering &amp; Science, IIT Madras Zanzibar</div>
+							<div>Assistant Professor, <a href="https://www.iitmz.ac.in/schools/engineering-and-science/faculty/prof-innocent-nyalala" target="_blank" rel="noopener">School of Engineering &amp; Science, IIT Madras Zanzibar</a></div>
 							<div>Associate Research Fellow, <a href="https://wsai.iitm.ac.in/" target="_blank" rel="noopener">Wadhwani School of Data Science and AI</a>, IIT Madras</div>
 						</div>
 						<p class="pi-bio">
-							Innocent Nyalala founded SAAIL Lab at IIT Madras Zanzibar in October 2024. His work spans lightweight computer vision for agricultural commodities and field crop pathology, culturally grounded multilingual AI safety evaluation, deployment gap auditing, and clinical healthcare machine learning. He serves on the Editorial Board of <em>Discover Artificial Intelligence</em> (Springer Nature) and as a reviewer for ICML and NeurIPS.
+							Innocent Nyalala founded SAAIL Lab at <a href="https://www.iitmz.ac.in/labs" target="_blank" rel="noopener">IIT Madras Zanzibar</a> in October 2024. His work spans lightweight computer vision for agricultural commodities and field crop pathology, culturally grounded multilingual AI safety evaluation, deployment gap auditing, and clinical healthcare machine learning. He serves on the Editorial Board of <em>Discover Artificial Intelligence</em> (Springer Nature) and as a reviewer for ICML and NeurIPS.
 						</p>
 						<div class="pi-stats">
 							<div><strong>{metrics.citations.toLocaleString()}</strong><span>Citations</span></div>
@@ -47,7 +47,9 @@ import metrics from '../data/scholar-metrics.json';
 							<div><strong>{metrics.saailPublishedCount} + {metrics.saailUnderReviewCount}</strong><span>SAAIL Lab Papers</span></div>
 						</div>
 						<div class="pi-links">
-							<a href="https://inyalala.github.io/" target="_blank" rel="noopener" class="btn btn-primary">Personal Portfolio ↗</a>
+							<a href="https://www.iitmz.ac.in/schools/engineering-and-science/faculty/prof-innocent-nyalala" target="_blank" rel="noopener" class="btn btn-primary">IITMZ Faculty Profile ↗</a>
+							<a href="https://www.iitmz.ac.in/labs" target="_blank" rel="noopener" class="btn btn-secondary">IITMZ Research Labs ↗</a>
+							<a href="https://inyalala.github.io/" target="_blank" rel="noopener" class="btn btn-secondary">Personal Portfolio ↗</a>
 							<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" rel="noopener" class="btn btn-secondary">Google Scholar ↗</a>
 							<a href="https://orcid.org/0000-0002-7969-437X" target="_blank" rel="noopener" class="btn btn-secondary">ORCID ↗</a>
 							<a href="mailto:innocent@iitmz.ac.in" class="btn btn-secondary">innocent@iitmz.ac.in</a>
@@ -132,14 +134,14 @@ import metrics from '../data/scholar-metrics.json';
 			</div>
 		</section>
 
-		<!-- BS Undergraduate Researchers (4) -->
+		<!-- BS Undergraduate Researchers (3) -->
 		<section class="section alt-band">
 			<div class="container">
 				<div class="group-head">
-					<h2>BS Undergraduate Researchers (4)</h2>
+					<h2>BS Undergraduate Researchers (3)</h2>
 					<p>IIT Madras Zanzibar BS in Data Science &amp; AI student researchers contributing to the Zanzibar Swahili Corpus, Dira provenance detection, and coastal blue economy sensing.</p>
 				</div>
-				<div class="cards-grid cols-4">
+				<div class="cards-grid cols-3">
 					<article class="member-card member-compact">
 						<div class="member-head">
 							<div class="member-avatar-initials" aria-hidden="true">UM</div>
@@ -169,16 +171,6 @@ import metrics from '../data/scholar-metrics.json';
 							</div>
 						</div>
 						<p class="focus">Zanzibar Swahili Corpus, Spoken QA &amp; Dialect Annotation</p>
-					</article>
-					<article class="member-card member-compact">
-						<div class="member-head">
-							<div class="member-avatar-initials" aria-hidden="true">SO</div>
-							<div>
-								<span class="cohort-tag tag-gold">Swahili Corpus</span>
-								<h3>Saleh Haji Othman</h3>
-							</div>
-						</div>
-						<p class="focus">Swahili Dialect Validation &amp; Provenance Agreement Auditing</p>
 					</article>
 				</div>
 			</div>
@@ -272,7 +264,9 @@ import metrics from '../data/scholar-metrics.json';
 	.pi-photo {
 		width: 100%;
 		aspect-ratio: 1;
-		object-fit: cover;
+		object-fit: contain;
+		object-position: center top;
+		background: #ffffff;
 		border-radius: 1rem;
 		border: 1px solid var(--border-color);
 	}
@@ -399,6 +393,7 @@ import metrics from '../data/scholar-metrics.json';
 		height: 56px;
 		border-radius: 50%;
 		object-fit: cover;
+		object-position: center top;
 		flex-shrink: 0;
 		border: 2px solid var(--border-color);
 	}
