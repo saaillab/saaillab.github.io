@@ -6,8 +6,8 @@ import metrics from '../data/scholar-metrics.json';
 import { PUBLICATIONS } from '../data/publications';
 
 const saailPubs = PUBLICATIONS.filter((p) => p.isSaailLab !== false).sort((a, b) => {
-	if (a.category === 'preprint' && b.category !== 'preprint') return 1;
-	if (a.category !== 'preprint' && b.category === 'preprint') return -1;
+	if (a.slug === 'cropguardnet') return -1;
+	if (b.slug === 'cropguardnet') return 1;
 	if (b.year !== a.year) return b.year - a.year;
 	return b.dateISO.localeCompare(a.dateISO);
 });
@@ -24,17 +24,17 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 <Layout
 	title="Publications | SAAIL Lab | IIT Madras Zanzibar"
 	description="Peer-reviewed journal articles, conference papers, and under-review manuscripts from SAAIL Lab at IIT Madras Zanzibar, plus the founding PI pre-IITMZ scholarly archive."
-	canonical="https://saaillab.github.io/publications"
+	canonical="https://saaillab.github.io/publications/"
 >
 	<ModernHeader currentPage="publications" />
 
-	<main>
+	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
 				<span class="page-eyebrow">Scholarly Record</span>
 				<h1 class="page-title">SAAIL Lab Publications</h1>
 				<p class="page-lead">
-					Peer-reviewed publications and active manuscripts authored at SAAIL Lab (IIT Madras Zanzibar &amp; WSDSAI IIT Madras, 2025 to Present), spanning precision agriculture, computer vision, Responsible AI, AI Policy &amp; GovTech, and healthcare AI.
+					Peer-reviewed publications and active manuscripts authored at SAAIL Lab (IIT Madras Zanzibar, 2025 to Present), spanning precision agriculture, computer vision, Responsible AI, AI Policy &amp; GovTech, and healthcare AI.
 				</p>
 
 				<div class="metrics-strip">
@@ -53,23 +53,23 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 			<div class="container">
 				<div class="controls-bar">
 					<div class="filter-tabs" role="tablist" aria-label="Filter SAAIL Lab publications">
-						<button type="button" class="tab-btn is-active" data-filter="all">All SAAIL Lab ({saailPubs.length})</button>
-						<button type="button" class="tab-btn" data-filter="published">Published ({publishedCount})</button>
-						<button type="button" class="tab-btn" data-filter="preprint">Under Review ({underReviewCount})</button>
-						<button type="button" class="tab-btn" data-filter="policy">Responsible AI, Policy &amp; GovTech</button>
-						<button type="button" class="tab-btn" data-filter="agri">Agriculture &amp; Vision</button>
+						<button type="button" role="tab" aria-selected="true" aria-controls="saailList" tabindex="0" class="tab-btn is-active" data-filter="all">All SAAIL Lab ({saailPubs.length})</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="saailList" tabindex="-1" class="tab-btn" data-filter="published">Published ({publishedCount})</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="saailList" tabindex="-1" class="tab-btn" data-filter="preprint">Under Review ({underReviewCount})</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="saailList" tabindex="-1" class="tab-btn" data-filter="policy">Responsible AI, Policy &amp; GovTech</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="saailList" tabindex="-1" class="tab-btn" data-filter="agri">Agriculture &amp; Vision</button>
 					</div>
 
 					<input
 						id="pubSearch"
 						type="search"
-						placeholder="Search title, author, DOI, keyword..."
+						placeholder="Search title, year, author, DOI, keyword..."
 						aria-label="Search SAAIL Lab publications"
 						class="search-input"
 					/>
 				</div>
 
-				<div class="result-count" id="resultCount">Showing {saailPubs.length} SAAIL Lab works</div>
+				<div class="result-count" id="resultCount" aria-live="polite">Showing {saailPubs.length} of {saailPubs.length} SAAIL Lab works</div>
 
 				<div class="pubs-list" id="saailList">
 					{saailPubs.map((pub) => {
@@ -83,8 +83,11 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 							t.toLowerCase().includes('agriculture') || t.toLowerCase().includes('clove') || t.toLowerCase().includes('cassava')
 						);
 						const searchText = [
+							String(pub.year),
+							pub.venueShort,
+							pub.award || '',
 							pub.title,
-							isUnderReview ? 'under review' : pub.venue,
+							isUnderReview ? 'under review manuscript' : pub.venue,
 							pub.authors.map((a) => a.name).join(' '),
 							pub.keywords.join(' '),
 							pub.topics.join(' '),
@@ -100,67 +103,73 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 								data-agri={isAgri ? 'yes' : 'no'}
 								data-search={searchText}
 							>
-								<div class="pub-badges">
-									<span class="badge-year">{pub.year}</span>
-									<span class={isUnderReview ? 'badge-review' : 'badge-venue'}>
-										{isUnderReview ? 'Under Peer Review' : pub.venueShort}
-									</span>
-									{pub.award && <span class="badge-award">{pub.award}</span>}
-									{!isUnderReview && pub.impactFactor && <span class="badge-if">{pub.impactFactor}</span>}
-									{typeof pub.citations === 'number' && pub.citations > 0 && (
-										<span class="badge-cite">{pub.citations} Citations</span>
-									)}
-								</div>
-
-								<h2 class="pub-title">
-									<a href={`/papers/${pub.slug}/`}>{pub.title}</a>
-								</h2>
-
-								<p class="pub-authors">{pub.authors.map((a) => a.name).join(', ')}</p>
-								<p class="pub-venue-line">
-									{isUnderReview ? `Manuscript Under Peer Review (${pub.year})` : `${pub.venue} (${pub.month} ${pub.year})`}
-								</p>
-								<p class="pub-tldr">{pub.tldr}</p>
-
-								{pub.highlights && pub.highlights.length > 0 && (
-									<div class="pub-highlights-row">
-										{pub.highlights.slice(0, 4).map((h) => (
-											<span class="hi-pill">
-												<strong>{h.value}</strong> {h.label}
-											</span>
-										))}
+								<div class="saail-row-grid">
+									<div class="saail-meta-col">
+										<span class="badge-year">{pub.year}</span>
+										<span class={isUnderReview ? 'badge-review' : 'badge-venue'}>
+											{isUnderReview ? 'Under Peer Review' : pub.venueShort}
+										</span>
+										{pub.award && <span class="badge-award">{pub.award}</span>}
 									</div>
-								)}
 
-								<div class="pub-actions">
-									<a href={`/papers/${pub.slug}/`} class="act-btn act-primary">Project Page &amp; Results &rarr;</a>
-									{!isUnderReview && doiHref && (
-										<a href={doiHref} target="_blank" rel="noopener" class="act-btn act-doi">
-											DOI: {cleanDoi} ↗
-										</a>
-									)}
-									{!isUnderReview && pub.paperUrl && pub.paperUrl !== doiHref && (
-										<a href={pub.paperUrl} target="_blank" rel="noopener" class="act-btn">Paper / PDF ↗</a>
-									)}
-									{pub.codeUrl && (
-										<a href={pub.codeUrl} target="_blank" rel="noopener" class="act-btn">Code ↗</a>
-									)}
-									{pub.posterUrl && (
-										<a href={pub.posterUrl} target="_blank" rel="noopener" class="act-btn">Poster ↗</a>
-									)}
-									<button type="button" class="act-btn bib-toggle-btn" data-bib-target={`bib-${pub.slug}`}>BibTeX</button>
+									<div class="saail-main-col">
+										<h2 class="pub-title">
+											<a href={`/papers/${pub.slug}/`}>{pub.title}</a>
+										</h2>
+
+										<p class="pub-authors">
+											{pub.authors.map((a, i) => (
+												<>
+													{a.name === 'Innocent Nyalala' ? (
+														<strong class="pi-name">{a.name}</strong>
+													) : (
+														<span>{a.name}</span>
+													)}
+													{i < pub.authors.length - 1 ? ', ' : ''}
+												</>
+											))}
+										</p>
+										<p class="pub-venue-line">
+											{isUnderReview ? `Manuscript Under Peer Review (${pub.year})` : `${pub.venue} (${pub.month} ${pub.year})`}
+											{!isUnderReview && pub.impactFactor ? ` · ${pub.impactFactor}` : ''}
+											{typeof pub.citations === 'number' && pub.citations > 0 ? ` · ${pub.citations} ${pub.citations === 1 ? 'Citation' : 'Citations'}` : ''}
+										</p>
+										<p class="pub-tldr">{pub.tldr}</p>
+									</div>
+
+									<div class="pub-actions">
+										<a href={`/papers/${pub.slug}/`} class="act-btn act-primary">Summary &amp; Results &rarr;</a>
+										{!isUnderReview && doiHref && (
+											<a href={doiHref} target="_blank" rel="noopener" class="act-btn">
+												DOI ↗
+											</a>
+										)}
+										{!isUnderReview && pub.paperUrl && pub.paperUrl !== doiHref && (
+											<a href={pub.paperUrl} target="_blank" rel="noopener" class="act-btn">Paper ↗</a>
+										)}
+										{pub.codeUrl && (
+											<a href={pub.codeUrl} target="_blank" rel="noopener" class="act-btn">Code ↗</a>
+										)}
+										{pub.posterUrl && (
+											<a href={pub.posterUrl} target="_blank" rel="noopener" class="act-btn">Poster ↗</a>
+										)}
+										<button type="button" class="act-btn bib-toggle-btn" aria-expanded="false" aria-controls={`bib-${pub.slug}`} data-bib-target={`bib-${pub.slug}`}>BibTeX</button>
+									</div>
 								</div>
 
 								<div id={`bib-${pub.slug}`} class="bib-drawer" hidden>
 									<div class="bib-drawer-top">
 										<span>BibTeX Record</span>
-										<button type="button" class="copy-bib-inline" data-bib-code={`code-${pub.slug}`}>Copy</button>
+										<button type="button" class="copy-bib-inline" data-orig-label="Copy" data-bib-code={`code-${pub.slug}`}>Copy</button>
 									</div>
 									<pre><code id={`code-${pub.slug}`}>{pub.bibtex}</code></pre>
 								</div>
 							</article>
 						);
 					})}
+					<div id="noPubResults" class="no-pub-results" hidden>
+						No SAAIL Lab works match the selected filter and search terms.
+					</div>
 				</div>
 			</div>
 		</section>
@@ -172,7 +181,7 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 					<span class="page-eyebrow">Scholarly Archive · Pre-IITMZ (2015-2024)</span>
 					<h2>Founding PI Prior Publications (Nanjing Agricultural University Era)</h2>
 					<p>
-						The {priorPubs.length} peer-reviewed works below were published by Dr. Innocent Nyalala during his doctoral and MSc research at Nanjing Agricultural University prior to founding SAAIL Lab at IIT Madras Zanzibar in October 2024. They carry original historical affiliations and are linked here alongside his personal archive at <a href="https://inyalala.github.io" target="_blank" rel="noopener">inyalala.github.io</a>.
+						The {priorPubs.length} peer-reviewed works below were published by Dr. Innocent Nyalala during his doctoral and MSc research at Nanjing Agricultural University prior to founding SAAIL Lab at IIT Madras Zanzibar in October 2024. They carry original historical affiliations and are linked here alongside his personal archive at <a href="https://inyalala.github.io/" target="_blank" rel="noopener">inyalala.github.io</a>.
 					</p>
 				</div>
 
@@ -188,7 +197,16 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 										<a href={`/papers/${pub.slug}/`}>{pub.title}</a>
 									</h3>
 									<p class="prior-meta">
-										{pub.authors.map((a) => a.name).join(', ')} · <em>{pub.venue}</em>
+										{pub.authors.map((a, i) => (
+											<>
+												{a.name === 'Innocent Nyalala' ? (
+													<strong class="pi-name">{a.name}</strong>
+												) : (
+													<span>{a.name}</span>
+												)}
+												{i < pub.authors.length - 1 ? ', ' : ''}
+											</>
+										))} · <em>{pub.venue}</em>
 										{typeof pub.citations === 'number' && pub.citations > 0 ? ` · ${pub.citations}+ citations` : ''}
 									</p>
 									<p class="prior-tldr">{pub.tldr}</p>
@@ -196,7 +214,7 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 								<div class="prior-actions">
 									<a href={`/papers/${pub.slug}/`} class="act-btn">Summary &amp; Results &rarr;</a>
 									{doiHref && (
-										<a href={doiHref} target="_blank" rel="noopener" class="act-btn act-doi">DOI ↗</a>
+										<a href={doiHref} target="_blank" rel="noopener" class="act-btn">DOI ↗</a>
 									)}
 								</div>
 							</article>
@@ -216,13 +234,16 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 		const searchInput = document.getElementById('pubSearch') as HTMLInputElement | null;
 		const items = Array.from(document.querySelectorAll('#saailList .pub-item')) as HTMLElement[];
 		const countEl = document.getElementById('resultCount');
+		const emptyEl = document.getElementById('noPubResults');
 		let activeFilter = 'all';
 
 		function applyFilter() {
 			const q = (searchInput?.value || '').trim().toLowerCase();
+			let lastVisible: HTMLElement | null = null;
 			let shown = 0;
 
 			items.forEach((item) => {
+				item.classList.remove('is-last-visible');
 				const st = item.getAttribute('data-status') || '';
 				const pol = item.getAttribute('data-policy') === 'yes';
 				const agr = item.getAttribute('data-agri') === 'yes';
@@ -237,22 +258,56 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 				const qOk = !q || hay.includes(q);
 				const vis = fOk && qOk;
 				item.style.display = vis ? 'block' : 'none';
-				if (vis) shown++;
+				if (vis) {
+					shown++;
+					lastVisible = item;
+				}
 			});
 
+			if (lastVisible) {
+				(lastVisible as HTMLElement).classList.add('is-last-visible');
+			}
+			if (emptyEl) {
+				emptyEl.hidden = shown > 0;
+			}
+
 			if (countEl) {
-				countEl.textContent = `Showing ${shown} of ${items.length} SAAIL Lab works`;
+				const nextText = `Showing ${shown} of ${items.length} SAAIL Lab works`;
+				if (countEl.textContent !== nextText) {
+					countEl.textContent = nextText;
+				}
 			}
 		}
 
-		tabs.forEach((tab) => {
+		tabs.forEach((tab, idx) => {
 			tab.addEventListener('click', () => {
-				tabs.forEach((t) => t.classList.remove('is-active'));
+				tabs.forEach((t) => {
+					t.classList.remove('is-active');
+					t.setAttribute('aria-selected', 'false');
+					t.setAttribute('tabindex', '-1');
+				});
 				tab.classList.add('is-active');
+				tab.setAttribute('aria-selected', 'true');
+				tab.setAttribute('tabindex', '0');
 				activeFilter = tab.getAttribute('data-filter') || 'all';
 				applyFilter();
 			});
+			tab.addEventListener('keydown', (e: Event) => {
+				const ke = e as KeyboardEvent;
+				let nextIdx: number | null = null;
+				if (ke.key === 'ArrowRight') nextIdx = (idx + 1) % tabs.length;
+				else if (ke.key === 'ArrowLeft') nextIdx = (idx - 1 + tabs.length) % tabs.length;
+				else if (ke.key === 'Home') nextIdx = 0;
+				else if (ke.key === 'End') nextIdx = tabs.length - 1;
+				if (nextIdx === null) return;
+				ke.preventDefault();
+				const nextTab = tabs[nextIdx] as HTMLElement;
+				nextTab.focus();
+				nextTab.click();
+			});
 		});
+
+		applyFilter();
 
 		searchInput?.addEventListener('input', applyFilter);
 
@@ -260,7 +315,10 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 			btn.addEventListener('click', () => {
 				const id = btn.getAttribute('data-bib-target') || '';
 				const drawer = document.getElementById(id);
-				if (drawer) drawer.hidden = !drawer.hidden;
+				if (drawer) {
+					drawer.hidden = !drawer.hidden;
+					btn.setAttribute('aria-expanded', String(!drawer.hidden));
+				}
 			});
 		});
 
@@ -270,10 +328,25 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 				const codeEl = document.getElementById(id);
 				const txt = codeEl?.textContent?.trim() || '';
 				if (!txt) return;
-				await navigator.clipboard.writeText(txt);
-				const orig = btn.textContent;
-				btn.textContent = 'Copied!';
-				setTimeout(() => { btn.textContent = orig; }, 1600);
+				let copied = false;
+				try {
+					await navigator.clipboard.writeText(txt);
+					copied = true;
+				} catch (_err) {
+					const area = document.createElement('textarea');
+					area.value = txt;
+					area.style.position = 'fixed';
+					area.style.opacity = '0';
+					document.body.appendChild(area);
+					area.select();
+					try { copied = document.execCommand('copy'); } catch (_e2) {}
+					document.body.removeChild(area);
+				}
+				if (copied) {
+					const orig = btn.getAttribute('data-orig-label') || 'Copy';
+					btn.textContent = 'Copied!';
+					setTimeout(() => { btn.textContent = orig; }, 1600);
+				}
 			});
 		});
 	});
@@ -358,67 +431,61 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 	}
 
 	.pubs-list {
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
-	}
-
-	.pub-item {
 		background: var(--bg-card);
 		border: 1px solid var(--border-color);
 		border-radius: 1rem;
-		padding: 1.5rem 1.75rem;
-		box-shadow: 0 2px 10px var(--shadow-light);
+		overflow: hidden;
 	}
 
-	.pub-badges {
+	.pub-item {
+		padding: 1.3rem 1.5rem;
+		border-bottom: 1px solid var(--border-color);
+	}
+	.pub-item:last-of-type, .pub-item.is-last-visible { border-bottom: none; }
+	.no-pub-results {
+		padding: 2rem 1.5rem;
+		text-align: center;
+		color: var(--text-muted);
+		font-weight: 600;
+	}
+	.no-pub-results[hidden] { display: none; }
+
+	.saail-row-grid {
+		display: grid;
+		grid-template-columns: 190px 1fr auto;
+		gap: 1.35rem;
+		align-items: start;
+	}
+
+	.saail-meta-col {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-		margin-bottom: 0.7rem;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.35rem;
 	}
 
-	.pub-badges span {
+	.saail-meta-col span {
 		font-size: 0.72rem;
 		font-weight: 700;
 		padding: 0.18rem 0.6rem;
 		border-radius: 999px;
 	}
 
-	.badge-year { background: var(--accent-primary); color: #ffffff; }
+	.badge-year { background: var(--accent-primary); color: #ffffff; font-family: 'JetBrains Mono', monospace; }
 	:global([data-theme="dark"]) .badge-year { color: #062111; }
 	.badge-venue { background: #ecfdf5; color: #14532d; border: 1px solid #bbf7d0; }
 	.badge-review { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-	.badge-award { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-	.badge-if { background: #f3f4f6; color: #1f2937; }
-	.badge-cite { background: #eff6ff; color: #1e40af; }
+	.badge-award { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 6px; }
 
-	.pub-title { font-size: 1.2rem; line-height: 1.35; margin-bottom: 0.35rem; }
+	.pub-title { font-size: 1.08rem; line-height: 1.35; margin-bottom: 0.3rem; }
 	.pub-title a { color: var(--text-primary); text-decoration: none; }
 	.pub-title a:hover { color: var(--accent-primary); text-decoration: underline; }
 
-	.pub-authors { font-size: 0.88rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 0.2rem; }
-	.pub-venue-line { font-size: 0.82rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.65rem; }
-	.pub-tldr { font-size: 0.94rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.85rem; }
+	.pub-authors { font-size: 0.86rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 0.2rem; }
+	.pub-venue-line { font-size: 0.82rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.45rem; }
+	.pub-tldr { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0; }
 
-	.pub-highlights-row {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.45rem;
-		margin-bottom: 1rem;
-	}
-
-	.hi-pill {
-		font-size: 0.78rem;
-		color: var(--text-secondary);
-		background: var(--bg-secondary);
-		border: 1px solid var(--border-color);
-		border-radius: 6px;
-		padding: 0.22rem 0.6rem;
-	}
-	.hi-pill strong { color: var(--accent-primary); margin-right: 0.2rem; }
-
-	.pub-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+	.pub-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: flex-end; max-width: 290px; }
 
 	.act-btn {
 		display: inline-flex;
@@ -434,11 +501,12 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 		color: var(--text-primary);
 		cursor: pointer;
 	}
-	.act-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+	.act-btn:not(.act-primary):hover { border-color: var(--accent-primary); color: var(--accent-primary); }
 
 	.act-primary { background: var(--accent-primary); border-color: var(--accent-primary); color: #ffffff; }
-	:global([data-theme="dark"]) .act-primary { color: #062111; }
-	.act-doi { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+	.act-primary:hover { background: var(--accent-secondary); border-color: var(--accent-secondary); color: #ffffff; }
+	:global([data-theme="dark"]) .act-primary,
+	:global([data-theme="dark"]) .act-primary:hover { color: #062111; }
 
 	.bib-drawer {
 		margin-top: 1rem;
@@ -482,8 +550,13 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 		border-top: 1px solid var(--border-color);
 	}
 	.prior-header {
-		max-width: 820px;
+		max-width: 100%;
 		margin-bottom: 2rem;
+	}
+
+	.pi-name {
+		color: var(--accent-primary);
+		font-weight: 800;
 	}
 	.prior-header h2 {
 		font-size: 1.65rem;
@@ -527,7 +600,9 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 	.prior-tldr { font-size: 0.88rem; color: var(--text-secondary); }
 	.prior-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
-	@media (max-width: 820px) {
-		.prior-row { grid-template-columns: 1fr; gap: 0.6rem; }
+	@media (max-width: 860px) {
+		.saail-row-grid, .prior-row { grid-template-columns: 1fr; gap: 0.65rem; }
+		.pub-actions { justify-content: flex-start; max-width: none; }
+		.search-input { min-width: 0; width: 100%; }
 	}
 </style>

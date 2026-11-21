@@ -5,22 +5,20 @@ import ModernFooter from '../components/ModernFooter.astro';
 ---
 
 <Layout 
-	title="Resources - SAAIL Lab"
-	description="Access our research resources including GitHub repositories, datasets, PhD guides, tools, and software developed at SAAIL Lab for AI in agriculture and healthcare."
+	title="Resources | SAAIL Lab | IIT Madras Zanzibar"
+	description="Access research resources at SAAIL Lab, IIT Madras Zanzibar: GitHub repositories, open datasets, PhD guides, tools, and software for sustainable AI."
+	canonical="https://saaillab.github.io/resources/"
 >
-	<ModernHeader />
+	<ModernHeader currentPage="resources" />
 	
-	<main class="resources-page">
-		<!-- Hero Section -->
-		<section class="resources-hero">
+	<main id="main-content" class="resources-page">
+		<section class="page-hero">
 			<div class="container">
-				<div class="hero-content">
-					<h1>Research Resources</h1>
-					<p class="hero-description">
-						Access our comprehensive collection of research resources, including code repositories, 
-						datasets, tools, and guides to support AI research in agriculture and healthcare.
-					</p>
-				</div>
+				<span class="page-eyebrow">Open Benchmarks &amp; Infrastructure</span>
+				<h1 class="page-title">Research Resources</h1>
+				<p class="page-lead">
+					Access our open-source GitHub codebases, agricultural and Swahili benchmarks, mobile field prototypes, and academic mentorship guides.
+				</p>
 			</div>
 		</section>
 
@@ -32,20 +30,19 @@ import ModernFooter from '../components/ModernFooter.astro';
 					<div class="resource-card featured">
 						<div class="resource-header">
 							<div class="resource-icon github">
-								<svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+								<svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
 								</svg>
 							</div>
-							<h3>GitHub Repository</h3>
+							<h2>GitHub Repository</h2>
 						</div>
 						<p class="resource-description">
-							Access our open-source code, research implementations, and collaborative projects. 
-							Contribute to our AI for agriculture and healthcare initiatives.
+							Access our open-source code, research implementations, and collaborative projects supporting sustainable AI across East Africa.
 						</p>
 						<div class="resource-stats">
 							<div class="stat-item">
-								<span class="stat-number">15+</span>
-								<span class="stat-label">Repositories</span>
+								<span class="stat-number">7</span>
+								<span class="stat-label">Core Repositories</span>
 							</div>
 							<div class="stat-item">
 								<span class="stat-number">Open Source</span>
@@ -53,8 +50,8 @@ import ModernFooter from '../components/ModernFooter.astro';
 							</div>
 						</div>
 						<div class="resource-links">
-							<a href="https://github.com/saaillab" target="_blank" class="resource-btn primary">
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+							<a href="https://github.com/saaillab" target="_blank" rel="noopener" class="resource-btn primary">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
 								</svg>
 								Visit GitHub
@@ -66,7 +63,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 					<div class="resource-card">
 						<div class="resource-header">
 							<div class="resource-icon datasets">
-								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
 									<polyline points="14,2 14,8 20,8"></polyline>
 									<line x1="16" y1="13" x2="8" y2="13"></line>
@@ -74,7 +71,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 									<polyline points="10,9 9,9 8,9"></polyline>
 								</svg>
 							</div>
-							<h3>Research Datasets</h3>
+							<h2>Research Datasets</h2>
 						</div>
 						<p class="resource-description">
 							Curated datasets for agricultural AI research, including crop images, 
@@ -82,24 +79,24 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</p>
 						<div class="dataset-list">
 							<div class="dataset-item">
-								<h4>CLOVES-4603 &amp; ZSTC-Clove-V1</h4>
+								<h3>CLOVES-4603 &amp; ZSTC-Clove-V1</h3>
 								<p>Public 4,603-image (CVPR 2026 V4A) and 5,298-image commercial clove grading benchmarks</p>
 								<span class="dataset-status">Released Open Access</span>
 							</div>
 							<div class="dataset-item">
-								<h4>CropGuard &amp; DGS-Bench Splits</h4>
+								<h3>CropGuard &amp; DGS-Bench Splits</h3>
 								<p>35,420 UUID/pHash-deduplicated leaf images and DLI 2026 deployment gap suites</p>
 								<span class="dataset-status">Public Manifests</span>
 							</div>
 							<div class="dataset-item">
-								<h4>CultureSEEDS Swahili &amp; Dira</h4>
+								<h3>CultureSEEDS Swahili &amp; Dira</h3>
 								<p>Culturally grounded East African safety, dialect QA, and provenance corpus</p>
 								<span class="dataset-status">Active Benchmark</span>
 							</div>
 						</div>
 						<div class="resource-links">
-							<a href="/datasets" class="resource-btn primary">Explore All Datasets</a>
-							<a href="/contact" class="resource-btn secondary">Request Access</a>
+							<a href="/datasets/" class="resource-btn primary">Explore All Datasets</a>
+							<a href="/contact/" class="resource-btn secondary">Request Access</a>
 						</div>
 					</div>
 
@@ -107,12 +104,12 @@ import ModernFooter from '../components/ModernFooter.astro';
 					<div class="resource-card">
 						<div class="resource-header">
 							<div class="resource-icon phd">
-								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 									<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
 									<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
 								</svg>
 							</div>
-							<h3>PhD Application Guide</h3>
+							<h2>PhD Application Guide</h2>
 						</div>
 						<p class="resource-description">
 							Comprehensive guide for applying to our PhD programs, including Cotutelle 
@@ -120,23 +117,21 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</p>
 						<div class="guide-sections">
 							<div class="guide-item">
-								<h4>Application Requirements</h4>
+								<h3>Application Requirements</h3>
 								<p>Academic qualifications, research experience, and documentation needed</p>
 							</div>
 							<div class="guide-item">
-								<h4>Research Areas</h4>
+								<h3>Research Areas</h3>
 								<p>Available PhD topics in AI for agriculture and healthcare</p>
 							</div>
 							<div class="guide-item">
-								<h4>Cotutelle Program</h4>
-								<p>Joint PhD with Deakin University, Australia - application process</p>
+								<h3>Cotutelle Program</h3>
+								<p>Joint PhD with Deakin University, Australia &ndash; recent Cohort 1 position is filled and closed</p>
 							</div>
 						</div>
 						<div class="resource-links">
-							<a href="https://ge.iitm.ac.in/iitmdu/project/an-agentic-artificial-intelligence-framework-for-agricultural-technologies" target="_blank" class="resource-btn primary">
-								Apply for PhD
-							</a>
-							<a href="/contact" class="resource-btn secondary">Get Guidance</a>
+							<a href="/hiring/" class="resource-btn primary">Explore Positions</a>
+							<a href="/contact/" class="resource-btn secondary">Get Guidance</a>
 						</div>
 					</div>
 
@@ -144,11 +139,11 @@ import ModernFooter from '../components/ModernFooter.astro';
 					<div class="resource-card">
 						<div class="resource-header">
 							<div class="resource-icon tools">
-								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 									<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
 								</svg>
 							</div>
-							<h3>Tools & Software</h3>
+							<h2>Tools & Software</h2>
 						</div>
 						<p class="resource-description">
 							Custom tools, software packages, and utilities developed for AI research 
@@ -156,32 +151,32 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</p>
 						<div class="tools-list">
 							<div class="tool-item">
-								<h4>Agricultural AI Toolkit</h4>
-								<p>Python package for crop analysis and quality assessment</p>
+								<h3>Agricultural AI Toolkit</h3>
+								<p>Python package for crop analysis, CropGuardNet ONNX export, and XAI evaluation</p>
 								<div class="tool-tags">
 									<span class="tag">Python</span>
 									<span class="tag">Computer Vision</span>
 								</div>
 							</div>
 							<div class="tool-item">
-								<h4>Medical Imaging Utils</h4>
-								<p>Utilities for placental image analysis and processing</p>
+								<h3>Medical Imaging Utils</h3>
+								<p>Utilities for placental ultrasound weight estimation and BAFNet segmentation</p>
 								<div class="tool-tags">
 									<span class="tag">Medical AI</span>
 									<span class="tag">Image Processing</span>
 								</div>
 							</div>
 							<div class="tool-item">
-								<h4>E-Vision Framework</h4>
-								<p>Edge AI framework for assistive technologies</p>
+								<h3>Ubora-AI Mobile Grader</h3>
+								<p>Offline Flutter and TFLite INT8 commercial clove quality grading application</p>
 								<div class="tool-tags">
 									<span class="tag">Edge AI</span>
-									<span class="tag">Accessibility</span>
+									<span class="tag">TFLite INT8</span>
 								</div>
 							</div>
 						</div>
 						<div class="resource-links">
-							<a href="/tools" class="resource-btn primary">View Mobile &amp; Software Tools</a>
+							<a href="/tools/" class="resource-btn primary">View Mobile &amp; Software Tools</a>
 						</div>
 					</div>
 
@@ -189,12 +184,12 @@ import ModernFooter from '../components/ModernFooter.astro';
 					<div class="resource-card">
 						<div class="resource-header">
 							<div class="resource-icon publications">
-								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 									<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
 									<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
 								</svg>
 							</div>
-							<h3>Publication Resources</h3>
+							<h2>Publication Resources</h2>
 						</div>
 						<p class="resource-description">
 							Templates, guidelines, and resources for academic writing, paper submissions, 
@@ -202,21 +197,21 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</p>
 						<div class="publication-resources">
 							<div class="pub-resource-item">
-								<h4>Paper Templates</h4>
+								<h3>Paper Templates</h3>
 								<p>LaTeX and Word templates for journal submissions</p>
 							</div>
 							<div class="pub-resource-item">
-								<h4>Writing Guidelines</h4>
+								<h3>Writing Guidelines</h3>
 								<p>Best practices for academic writing and paper structure</p>
 							</div>
 							<div class="pub-resource-item">
-								<h4>Citation Formats</h4>
+								<h3>Citation Formats</h3>
 								<p>BibTeX entries and citation formats for our publications</p>
 							</div>
 						</div>
 						<div class="resource-links">
-							<a href="/publications" class="resource-btn primary">View Publications</a>
-							<a href="/contact" class="resource-btn secondary">Request Templates</a>
+							<a href="/publications/" class="resource-btn primary">View Publications</a>
+							<a href="/contact/" class="resource-btn secondary">Request Templates</a>
 						</div>
 					</div>
 
@@ -224,14 +219,14 @@ import ModernFooter from '../components/ModernFooter.astro';
 					<div class="resource-card">
 						<div class="resource-header">
 							<div class="resource-icon collaboration">
-								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 									<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
 									<circle cx="9" cy="7" r="4"></circle>
 									<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
 									<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
 								</svg>
 							</div>
-							<h3>Collaboration Hub</h3>
+							<h2>Collaboration Hub</h2>
 						</div>
 						<p class="resource-description">
 							Resources for research collaboration, partnership opportunities, 
@@ -239,52 +234,52 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</p>
 						<div class="collaboration-info">
 							<div class="collab-item">
-								<h4>Partnership Opportunities</h4>
+								<h3>Partnership Opportunities</h3>
 								<p>Information on research partnerships and joint projects</p>
 							</div>
 							<div class="collab-item">
-								<h4>Visiting Researcher Program</h4>
+								<h3>Visiting Researcher Program</h3>
 								<p>Guidelines for visiting researchers and exchange programs</p>
 							</div>
 							<div class="collab-item">
-								<h4>International Collaborations</h4>
+								<h3>International Collaborations</h3>
 								<p>Current partnerships with universities worldwide</p>
 							</div>
 						</div>
 						<div class="resource-links">
-							<a href="/people" class="resource-btn primary">View Team</a>
-							<a href="/contact" class="resource-btn secondary">Propose Collaboration</a>
+							<a href="/people/" class="resource-btn primary">View Team</a>
+							<a href="/contact/" class="resource-btn secondary">Propose Collaboration</a>
 						</div>
 					</div>
 				</div>
 
 				<!-- Quick Access Section -->
-				<section class="quick-access">
+				<div class="quick-access" role="region" aria-labelledby="quickAccessHeading">
 					<div class="quick-access-content">
-						<h2>Quick Access</h2>
+						<h2 id="quickAccessHeading">Quick Access</h2>
 						<p>Frequently accessed resources and important links</p>
 						<div class="quick-links">
-							<a href="https://github.com/saaillab" target="_blank" class="quick-link">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+							<a href="https://github.com/saaillab" target="_blank" rel="noopener" class="quick-link">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
 								</svg>
 								GitHub
 							</a>
-							<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" class="quick-link">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+							<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" rel="noopener" class="quick-link">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 									<path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
 								</svg>
 								Google Scholar
 							</a>
-							<a href="https://ge.iitm.ac.in/iitmdu/project/an-agentic-artificial-intelligence-framework-for-agricultural-technologies" target="_blank" class="quick-link">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<a href="/projects/" class="quick-link">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 									<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
 									<path d="M6 12v5c3 3 9 3 12 0v-5"></path>
 								</svg>
 								PhD Program
 							</a>
-							<a href="/publications" class="quick-link">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<a href="/publications/" class="quick-link">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 									<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
 									<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
 								</svg>
@@ -292,7 +287,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 							</a>
 						</div>
 					</div>
-				</section>
+				</div>
 			</div>
 		</section>
 	</main>
@@ -301,46 +296,21 @@ import ModernFooter from '../components/ModernFooter.astro';
 </Layout>
 
 <style>
-	.resources-page {
-		padding-top: 0;
-	}
-
-	.resources-hero {
-		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-		padding: 4rem 0;
-		text-align: center;
-	}
-
-	.hero-content h1 {
-		font-size: 3rem;
-		font-weight: 700;
-		color: var(--accent-blue);
-		margin-bottom: 1.5rem;
-	}
-
-	.hero-description {
-		font-size: 1.25rem;
-		color: var(--text-secondary);
-		max-width: 800px;
-		margin: 0 auto;
-		line-height: 1.7;
-	}
-
 	.resources-content {
-		padding: 5rem 0;
+		padding: 4.5rem 0;
 		background: var(--bg-primary);
 	}
 
 	.resources-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
 		gap: 2rem;
 		margin-bottom: 4rem;
 	}
 
 	.resource-card {
-		background: var(--bg-secondary);
-		border-radius: 1.5rem;
+		background: var(--bg-card);
+		border-radius: 1.25rem;
 		padding: 2rem;
 		box-shadow: 0 4px 12px var(--shadow-light);
 		border: 1px solid var(--border-color);
@@ -365,6 +335,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 	}
 
 	.resource-icon {
+		flex-shrink: 0;
 		width: 60px;
 		height: 60px;
 		border-radius: 1rem;
@@ -379,7 +350,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 	}
 
 	.resource-icon.datasets {
-		background: linear-gradient(135deg, var(--accent-primary) 0%, #15803d 100%);
+		background: linear-gradient(135deg, #14532d 0%, #15803d 100%);
 	}
 
 	.resource-icon.phd {
@@ -398,7 +369,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 		background: linear-gradient(135deg, #b45309 0%, #78350f 100%);
 	}
 
-	.resource-header h3 {
+	.resource-header h2 {
 		font-size: 1.5rem;
 		font-weight: 600;
 		color: var(--text-primary);
@@ -453,11 +424,11 @@ import ModernFooter from '../components/ModernFooter.astro';
 		border: 1px solid var(--border-color);
 	}
 
-	.dataset-item h4,
-	.guide-item h4,
-	.tool-item h4,
-	.pub-resource-item h4,
-	.collab-item h4 {
+	.dataset-item h3,
+	.guide-item h3,
+	.tool-item h3,
+	.pub-resource-item h3,
+	.collab-item h3 {
 		font-size: 1rem;
 		font-weight: 600;
 		color: var(--text-primary);
@@ -521,32 +492,37 @@ import ModernFooter from '../components/ModernFooter.astro';
 	}
 
 	.resource-btn.primary {
-		background: var(--accent-blue);
-		color: white;
+		background: var(--accent-primary);
+		color: #ffffff;
+	}
+	:global([data-theme="dark"]) .resource-btn.primary,
+	:global([data-theme="dark"]) .resource-btn.secondary:hover,
+	:global([data-theme="dark"]) .dataset-status {
+		color: #062111;
 	}
 
 	.resource-btn.primary:hover {
-		background: var(--accent-green);
+		background: var(--accent-secondary);
 		transform: translateY(-2px);
 	}
 
 	.resource-btn.secondary {
 		background: var(--bg-primary);
-		color: var(--accent-blue);
-		border-color: var(--accent-blue);
+		color: var(--accent-primary);
+		border-color: var(--accent-primary);
 	}
 
 	.resource-btn.secondary:hover {
-		background: var(--accent-blue);
-		color: white;
+		background: var(--accent-primary);
+		color: #ffffff;
 		transform: translateY(-2px);
 	}
 
 	.quick-access {
-		background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%);
-		border-radius: 1.5rem;
+		background: linear-gradient(135deg, #0d3b22 0%, #166534 100%);
+		border-radius: 1.25rem;
 		padding: 3rem;
-		color: white;
+		color: #ffffff;
 		text-align: center;
 	}
 
@@ -574,24 +550,29 @@ import ModernFooter from '../components/ModernFooter.astro';
 		align-items: center;
 		gap: 0.5rem;
 		padding: 0.75rem 1.5rem;
-		background: rgba(255, 255, 255, 0.1);
+		background: rgba(0, 0, 0, 0.22);
 		color: white;
 		text-decoration: none;
 		border-radius: 0.75rem;
 		font-weight: 500;
 		transition: all 0.3s ease;
 		backdrop-filter: blur(10px);
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		border: 1px solid rgba(255, 255, 255, 0.28);
 	}
 
 	.quick-link:hover {
-		background: rgba(255, 255, 255, 0.2);
+		background: rgba(0, 0, 0, 0.38);
 		transform: translateY(-2px);
 	}
 
+	.quick-link:focus-visible {
+		outline: 2px solid #ffffff;
+		outline-offset: 2px;
+	}
+
 	@media (max-width: 768px) {
-		.hero-content h1 {
-			font-size: 2.5rem;
+		.quick-access {
+			padding: 1.5rem;
 		}
 
 		.resources-grid {

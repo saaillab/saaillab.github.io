@@ -5,22 +5,21 @@ import ModernFooter from '../components/ModernFooter.astro';
 ---
 
 <Layout 
-	title="Collaborations - SAAIL Lab"
-	description="Explore our international research collaborations and partnerships with leading universities worldwide at SAAIL Lab, IIT Madras Zanzibar."
+	title="Collaborations | SAAIL Lab | IIT Madras Zanzibar"
+	description="International research collaborations and academic partnerships at SAAIL Lab, School of Engineering and Science, IIT Madras Zanzibar."
+	canonical="https://saaillab.github.io/collaborations/"
 >
-	<ModernHeader />
+	<ModernHeader currentPage="research" />
 	
-	<main class="collaborations-page">
+	<main id="main-content" class="collaborations-page">
 		<!-- Hero Section -->
-		<section class="collaborations-hero">
+		<section class="page-hero">
 			<div class="container">
-				<div class="hero-content">
-					<h1>International Collaborations</h1>
-					<p class="hero-description">
-						SAAIL Lab maintains active research partnerships with leading universities worldwide, 
-						fostering innovation through international collaboration and knowledge exchange.
-					</p>
-				</div>
+				<span class="page-eyebrow">Global Network</span>
+				<h1 class="page-title">International Collaborations</h1>
+				<p class="page-lead">
+					SAAIL Lab at IIT Madras Zanzibar maintains active research partnerships with universities and clinical institutes across Australia, the United States, the United Kingdom, China, and East Africa.
+				</p>
 			</div>
 		</section>
 
@@ -29,54 +28,50 @@ import ModernFooter from '../components/ModernFooter.astro';
 			<div class="container">
 				<div class="collaborations-grid">
 					<div class="collaboration-card">
-						<div class="collab-flag">🇦🇺</div>
-						<h3>Deakin University</h3>
+						<div class="collab-flag">AU</div>
+						<h2>Deakin University</h2>
 						<p class="collab-location">Australia</p>
 						<p class="collab-project">
-							Cotutelle PhD Program in "Agentic AI Framework for Agricultural Technologies" 
-							with Prof. Sunil Aryal and Dr. Kallol Krishna Karmakar.
+							Cotutelle PhD collaboration on agentic AI frameworks for agricultural technologies with A/Prof. Sunil Aryal and Dr. Kallol Krishna Karmakar.
 						</p>
 						<div class="collab-details">
 							<span class="collab-status active">Active</span>
-							<span class="collab-type">PhD Program</span>
+							<span class="collab-type">Joint PhD Supervision</span>
 						</div>
 					</div>
 
 					<div class="collaboration-card">
-						<div class="collab-flag">🇺🇸</div>
-						<h3>Penn State University</h3>
-						<p class="collab-location">USA</p>
+						<div class="collab-flag">US</div>
+						<h2>Penn State University</h2>
+						<p class="collab-location">United States</p>
 						<p class="collab-project">
-							PlacentaVision medical imaging collaboration focusing on placental weight and volume 
-							estimation from 2D ultrasound for neonatal outcome prediction.
+							PlacentaVision clinical imaging consortium with Prof. Alison Gernand focusing on placental weight, perfusion, and maternal neonatal health risk prediction.
 						</p>
 						<div class="collab-details">
 							<span class="collab-status active">Active</span>
-							<span class="collab-type">Medical Imaging</span>
+							<span class="collab-type">Clinical Imaging</span>
 						</div>
 					</div>
 
 					<div class="collaboration-card">
-						<div class="collab-flag">🇺🇸</div>
-						<h3>Columbia University</h3>
-						<p class="collab-location">USA</p>
+						<div class="collab-flag">US</div>
+						<h2>Columbia University</h2>
+						<p class="collab-location">United States</p>
 						<p class="collab-project">
-							AI-driven air quality index monitoring research with Dr. Sathish R. S., 
-							focusing on environmental health applications.
+							AI-driven air quality index monitoring research with Dr. Sathish R. S., focusing on environmental sensing and public health analytics.
 						</p>
 						<div class="collab-details">
-							<span class="collab-status initiating">Initiating</span>
+							<span class="collab-status active">Active</span>
 							<span class="collab-type">Environmental AI</span>
 						</div>
 					</div>
 
 					<div class="collaboration-card">
-						<div class="collab-flag">🇬🇧</div>
-						<h3>University of Cambridge</h3>
+						<div class="collab-flag">UK</div>
+						<h2>University of Cambridge</h2>
 						<p class="collab-location">United Kingdom</p>
 						<p class="collab-project">
-							Responsible AI framework development with Dr. Soumya Banerjee, 
-							focusing on ethical AI guidelines for African contexts.
+							Responsible AI sovereignty and ethical governance frameworks with Dr. Soumya Banerjee (AAAI 2026 EGSAI and NeurIPS 2025 PAIG).
 						</p>
 						<div class="collab-details">
 							<span class="collab-status active">Active</span>
@@ -85,30 +80,28 @@ import ModernFooter from '../components/ModernFooter.astro';
 					</div>
 
 					<div class="collaboration-card">
-						<div class="collab-flag">🇨🇳</div>
-						<h3>Nanjing Agricultural University</h3>
+						<div class="collab-flag">CN</div>
+						<h2>Nanjing Agricultural University</h2>
 						<p class="collab-location">China</p>
 						<p class="collab-project">
-							Ongoing agricultural technology research collaboration building on Dr. Nyalala's 
-							PhD research and continued partnership.
+							Long-standing precision agriculture and plant pathology vision research partnership extending from Dr. Nyalala's doctoral studies.
 						</p>
 						<div class="collab-details">
 							<span class="collab-status ongoing">Ongoing</span>
-							<span class="collab-type">Agriculture Tech</span>
+							<span class="collab-type">Agricultural Vision</span>
 						</div>
 					</div>
 
 					<div class="collaboration-card">
-						<div class="collab-flag">🇬🇧</div>
-						<h3>University of Salford</h3>
+						<div class="collab-flag">UK</div>
+						<h2>University of Salford</h2>
 						<p class="collab-location">United Kingdom</p>
 						<p class="collab-project">
-							Responsible AI development research with Dr. Vikranth Nagaraja, 
-							contributing to ethical AI frameworks.
+							Co-authored research on Global South AI sovereignty and trustworthy technological futures with Dr. Vikranth H. Nagaraja.
 						</p>
 						<div class="collab-details">
 							<span class="collab-status active">Active</span>
-							<span class="collab-type">AI Ethics</span>
+							<span class="collab-type">AI Policy &amp; Ethics</span>
 						</div>
 					</div>
 				</div>
@@ -120,45 +113,20 @@ import ModernFooter from '../components/ModernFooter.astro';
 </Layout>
 
 <style>
-	.collaborations-page {
-		padding-top: 0;
-	}
-
-	.collaborations-hero {
-		background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-		padding: 4rem 0;
-		text-align: center;
-	}
-
-	.hero-content h1 {
-		font-size: 3rem;
-		font-weight: 700;
-		color: var(--accent-blue);
-		margin-bottom: 1.5rem;
-	}
-
-	.hero-description {
-		font-size: 1.25rem;
-		color: var(--text-secondary);
-		max-width: 800px;
-		margin: 0 auto;
-		line-height: 1.7;
-	}
-
 	.collaborations-content {
-		padding: 5rem 0;
+		padding: 4.5rem 0;
 		background: var(--bg-primary);
 	}
 
 	.collaborations-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-		gap: 2rem;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+		gap: 1.75rem;
 	}
 
 	.collaboration-card {
-		background: var(--bg-secondary);
-		border-radius: 1.5rem;
+		background: var(--bg-card);
+		border-radius: 1.25rem;
 		padding: 2rem;
 		text-align: center;
 		box-shadow: 0 4px 12px var(--shadow-light);
@@ -172,15 +140,25 @@ import ModernFooter from '../components/ModernFooter.astro';
 	}
 
 	.collab-flag {
-		font-size: 3rem;
-		margin-bottom: 1rem;
+		display: inline-grid;
+		place-items: center;
+		width: 48px;
+		height: 48px;
+		border-radius: 12px;
+		background: rgba(20, 83, 45, 0.1);
+		color: var(--accent-primary);
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.92rem;
+		font-weight: 800;
+		letter-spacing: 0.05em;
+		margin: 0 auto 1rem;
 	}
 
-	.collaboration-card h3 {
+	.collaboration-card h2 {
 		font-size: 1.25rem;
-		font-weight: 600;
+		font-weight: 700;
 		color: var(--text-primary);
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.45rem;
 	}
 
 	.collab-location {
@@ -218,11 +196,6 @@ import ModernFooter from '../components/ModernFooter.astro';
 		color: #166534;
 	}
 
-	.collab-status.initiating {
-		background: #fef3c7;
-		color: #d97706;
-	}
-
 	.collab-status.ongoing {
 		background: #e0f2fe;
 		color: #0369a1;
@@ -234,10 +207,6 @@ import ModernFooter from '../components/ModernFooter.astro';
 	}
 
 	@media (max-width: 768px) {
-		.hero-content h1 {
-			font-size: 2.5rem;
-		}
-
 		.collaborations-grid {
 			grid-template-columns: 1fr;
 		}

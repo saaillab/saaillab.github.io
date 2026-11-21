@@ -6,10 +6,10 @@ import metrics from '../data/scholar-metrics.json';
 import { PUBLICATIONS } from '../data/publications';
 
 const featuredSlugs = [
+	'cropguardnet',
 	'clove-xai-etri2026',
 	'dgs-bench',
 	'cloves-4603',
-	'cropguardnet',
 	'cara-fm',
 	'cassava-weakened-signals-2025',
 	'bafnet-polyp-2025'
@@ -22,19 +22,20 @@ const featuredPubs = featuredSlugs
 
 <Layout
 	title="SAAIL Lab | Sustainable AI for Agriculture & Intelligent Livelihoods"
-	description="SAAIL Lab at IIT Madras Zanzibar and WSDSAI IIT Madras. Research in precision agriculture, Swahili NLP and AI safety (CultureSEEDS), responsible computer vision, and healthcare AI."
+	description="SAAIL Lab at IIT Madras Zanzibar. Advancing precision agricultural AI, Swahili NLP and AI safety (CultureSEEDS), responsible computer vision, and clinical healthcare ML."
+	canonical="https://saaillab.github.io/"
 >
 	<ModernHeader currentPage="home" />
 
-	<main>
-		<!-- Swiss Architectural Hero -->
+	<main id="main-content">
+		<!-- Balanced Architectural Hero -->
 		<section class="hero">
 			<div class="container">
 				<div class="hero-grid">
 					<div class="hero-copy">
 						<div class="hero-pill">
 							<img src="/images/logo/saail-crest.png" alt="SAAIL Crest" width="22" height="22" />
-							<span>IIT Madras Zanzibar &amp; WSDSAI IIT Madras</span>
+							<span>School of Engineering &amp; Science · IIT Madras Zanzibar</span>
 						</div>
 
 						<h1 class="hero-title">
@@ -42,90 +43,112 @@ const featuredPubs = featuredSlugs
 						</h1>
 
 						<p class="hero-lead">
-							The Sustainable AI for Agriculture &amp; Intelligent Livelihoods (SAAIL) Lab designs compact, explainable computer vision systems, culturally grounded Swahili language benchmarks, and reliable clinical models engineered for real-world deployment across Africa and the Global South.
+							The Sustainable AI for Agriculture &amp; Intelligent Livelihoods (SAAIL) Lab engineers lightweight explainable vision models, culturally grounded Swahili language benchmarks, deployment audits, and reliable clinical systems built for resource-constrained hardware across East Africa and the Global South.
 						</p>
 
 						<div class="hero-actions">
-							<a href="/research" class="btn btn-primary">Explore Research Pillars &rarr;</a>
-							<a href="/publications" class="btn btn-secondary">All {saailPubCount} SAAIL Lab Papers</a>
-							<a href="/projects" class="hero-text-link">Active Grants &amp; Projects &rarr;</a>
-						</div>
-
-						<!-- Auto-Synced Scholar & Lab Impact Bar -->
-						<div class="impact-bar" aria-label="Verified Research Impact">
-							<a
-								href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en"
-								target="_blank"
-								rel="noopener"
-								class="impact-stat impact-stat-link"
-								title={`Auto-synced from Google Scholar (${metrics.updatedAt})`}
-							>
-								<span class="impact-num">{metrics.citations.toLocaleString()}</span>
-								<span class="impact-lbl">Scholar Citations</span>
-								<span class="impact-sub">h-index {metrics.hIndex} · i10 {metrics.i10Index}</span>
-							</a>
-							<div class="impact-stat">
-								<span class="impact-num">{metrics.saailPublishedCount} + {metrics.saailUnderReviewCount}</span>
-								<span class="impact-lbl">SAAIL Lab Papers</span>
-								<span class="impact-sub">Published · Under Review</span>
-							</div>
-							<div class="impact-stat">
-								<span class="impact-num">US$120K+</span>
-								<span class="impact-lbl">Funded Grants</span>
-								<span class="impact-sub">Google · ICSR · IITMZ</span>
-							</div>
-							<div class="impact-stat">
-								<span class="impact-num">2x Best</span>
-								<span class="impact-lbl">DL Indaba Posters</span>
-								<span class="impact-sub">Kigali 2025 · Lagos 2026</span>
-							</div>
+							<a href="/research/" class="btn btn-primary">Explore Research Pillars &rarr;</a>
+							<a href="/publications/" class="btn btn-secondary">All {saailPubCount} SAAIL Lab Papers</a>
+							<a href="/projects/" class="hero-text-link">Active Grants &amp; Projects &rarr;</a>
 						</div>
 					</div>
 
-					<!-- Visual Evidence Column: True Submitted Architecture + Flagship Highlights -->
+					<!-- Prominent Full-Visibility Hero Visual (NOT squished by sub-cards) -->
 					<div class="hero-visual">
 						<a href="/papers/cropguardnet/" class="architecture-frame" aria-label="View CropGuardNet project page">
 							<div class="frame-header">
-								<span class="frame-tag">Flagship System · Under Peer Review</span>
-								<span class="frame-spec">481.6K Params · 5.00 ms ONNX</span>
+								<span class="frame-tag">Flagship System · Manuscript Under Review</span>
+								<span class="frame-spec">481.6K Params · 63.8M FLOPs · 5.00 ms ONNX</span>
 							</div>
-							<img
-								src="/images/papers/cropguardnet/architecture.png"
-								alt="CropGuardNet Unified Lightweight CNN-Transformer Architecture"
-								class="architecture-img"
-								loading="eager"
-							/>
+							<div class="frame-img-wrap">
+								<img
+									src="/images/papers/cropguardnet/architecture.png"
+									alt="CropGuardNet Unified Lightweight CNN-Transformer Architecture"
+									class="architecture-img"
+									loading="eager"
+								/>
+							</div>
 							<div class="frame-footer">
 								<span>CropGuardNet: Leak-free cross-crop diagnostics across 35,420 unique leaf images</span>
-								<span class="frame-link">Project Page &rarr;</span>
+								<span class="frame-link">Open Paper Page &rarr;</span>
 							</div>
 						</a>
-
-						<div class="mini-highlights">
-							<a href="/papers/clove-xai-etri2026/" class="mini-card">
-								<span class="mini-kicker">ETRI Journal 2026 · Q2 SCI</span>
-								<strong>Explainable Clove Grading (EER 100%)</strong>
-								<span>DOI: 10.4218/etrij.2026-0225</span>
-							</a>
-							<a href="/projects#cultureseeds" class="mini-card mini-card-gold">
-								<span class="mini-kicker">Google Award · US$100,000</span>
-								<strong>CultureSEEDS East Africa &amp; Swahili</strong>
-								<span>Safety &amp; Cultural Evaluation across 10 Languages</span>
-							</a>
-						</div>
 					</div>
+				</div>
+
+				<!-- Full-Width Verified Impact Bar (Zero cramping, zero dead left whitespace) -->
+				<div class="impact-bar" aria-label="Verified Research Impact">
+					<a
+						href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en"
+						target="_blank"
+						rel="noopener"
+						class="impact-stat impact-stat-link"
+						title={`Google Scholar Live Profile (${metrics.updatedAt})`}
+					>
+						<span class="impact-num">{metrics.citations.toLocaleString()}</span>
+						<span class="impact-lbl">Scholar Citations ↗</span>
+						<span class="impact-sub">h-index {metrics.hIndex} · i10 {metrics.i10Index}</span>
+					</a>
+					<a href="/publications/" class="impact-stat impact-stat-link">
+						<span class="impact-num">{metrics.saailPublishedCount} + {metrics.saailUnderReviewCount}</span>
+						<span class="impact-lbl">SAAIL Lab Papers</span>
+						<span class="impact-sub">Published · Under Review</span>
+					</a>
+					<a href="/projects/" class="impact-stat impact-stat-link">
+						<span class="impact-num">US$120K+</span>
+						<span class="impact-lbl">Funded Grants</span>
+						<span class="impact-sub">Google · ICSR · IITMZ</span>
+					</a>
+					<a href="/gallery/" class="impact-stat impact-stat-link">
+						<span class="impact-num">2x Best</span>
+						<span class="impact-lbl">DL Indaba Posters</span>
+						<span class="impact-sub">Kigali 2025 · Lagos 2026</span>
+					</a>
+				</div>
+
+				<!-- Full-Width Featured Milestones Strip (moved cleanly below Hero as requested) -->
+				<div class="milestones-strip">
+					<a href="/papers/clove-xai-etri2026/" class="milestone-card">
+						<div class="ms-meta">
+							<span class="ms-kicker">ETRI Journal 2026 · Q2 SCI</span>
+							<span class="ms-arrow">&rarr;</span>
+						</div>
+						<strong>Explainable Clove Quality Grading (EER 100%)</strong>
+						<p>Segmentation-first compositional vision eliminates background shortcuts across Zanzibar cloves.</p>
+						<span class="ms-foot">DOI ↗ · Paper Summary</span>
+					</a>
+
+					<a href="/projects/cultureseeds/" class="milestone-card milestone-card-gold">
+						<div class="ms-meta">
+							<span class="ms-kicker">Google Award · US$100,000</span>
+							<span class="ms-arrow">&rarr;</span>
+						</div>
+						<strong>CultureSEEDS East Africa &amp; Swahili Safety</strong>
+						<p>Co-leading community-grounded AI safety evaluation across Swahili and 9 regional languages.</p>
+						<span class="ms-foot">Dedicated Project Website</span>
+					</a>
+
+					<a href="/papers/dgs-bench/" class="milestone-card">
+						<div class="ms-meta">
+							<span class="ms-kicker">Deep Learning Indaba 2026 · Best Poster</span>
+							<span class="ms-arrow">&rarr;</span>
+						</div>
+						<strong>DGS-Bench: Balanced Deployment Gap Metrics</strong>
+						<p>Selected 18 of 114 submissions; exposes -5.96 pp accuracy mirages on smallholder cassava fields.</p>
+						<span class="ms-foot">Poster &amp; Code</span>
+					</a>
 				</div>
 			</div>
 		</section>
 
-		<!-- Four Core Research Pillars -->
+		<!-- Four Core Research Pillars (Preserved 2x2 Editorial Grid) -->
 		<section class="section pillars-band">
 			<div class="container">
 				<div class="section-head">
 					<span class="page-eyebrow">Scientific Agenda</span>
 					<h2 class="section-title-left">Four Integrated Research Pillars</h2>
 					<p class="section-lead">
-						Our work bridges agricultural sensing, Swahili language technology, verifiable AI alignment, and maternal healthcare under severe compute and data constraints.
+						Our work bridges agricultural sensing, Swahili language technology, verifiable AI alignment, and maternal clinical modeling under real-world resource constraints.
 					</p>
 				</div>
 
@@ -142,7 +165,7 @@ const featuredPubs = featuredSlugs
 						<div class="pillar-meta">
 							<span>Cashew</span><span>Cloves</span><span>Seaweed</span><span>Cassava &amp; Maize</span>
 						</div>
-						<a href="/research#agriculture" class="pillar-link">Explore Agriculture &amp; Blue Economy &rarr;</a>
+						<a href="/projects/cropguard-pathology/" class="pillar-link">Explore Agriculture &amp; Pathology Projects &rarr;</a>
 					</article>
 
 					<article class="pillar-card">
@@ -157,7 +180,7 @@ const featuredPubs = featuredSlugs
 						<div class="pillar-meta">
 							<span>CultureSEEDS</span><span>Swahili Corpus</span><span>Dira Benchmark</span><span>Spoken QA</span>
 						</div>
-						<a href="/research#language" class="pillar-link">Explore Language &amp; Safety &rarr;</a>
+						<a href="/projects/cultureseeds/" class="pillar-link">Explore CultureSEEDS &amp; Swahili Projects &rarr;</a>
 					</article>
 
 					<article class="pillar-card">
@@ -172,22 +195,22 @@ const featuredPubs = featuredSlugs
 						<div class="pillar-meta">
 							<span>DGS-Bench</span><span>EER Audit</span><span>CARA-FM</span><span>EAC Sovereignty</span>
 						</div>
-						<a href="/research#responsible" class="pillar-link">Explore Responsible AI &rarr;</a>
+						<a href="/papers/dgs-bench/" class="pillar-link">Explore DGS-Bench &amp; Audits &rarr;</a>
 					</article>
 
 					<article class="pillar-card">
 						<div class="pillar-top">
 							<span class="pillar-num">04</span>
-							<span class="pillar-tag">Clinical &amp; Assistive</span>
+							<span class="pillar-tag">Clinical &amp; Public Health</span>
 						</div>
-						<h3>Healthcare AI &amp; Assistive Technologies</h3>
+						<h3>Healthcare &amp; Clinical AI</h3>
 						<p>
-							Multi-institutional clinical machine learning with Penn State University (PlacentaVision imaging), Pemba Center for Public Health Kinetics (preterm birth biomarkers), colorectal polyp boundary segmentation (BAFNet, ESWA 2025), and E-Vision on-device spatial assistance.
+							Multi-institutional clinical machine learning with Penn State University (PlacentaVision imaging), Pemba Center for Public Health Kinetics (preterm birth serum biomarkers), colorectal polyp boundary segmentation (BAFNet, ESWA 2025), and privacy-preserving federated training.
 						</p>
 						<div class="pillar-meta">
-							<span>PlacentaVision</span><span>BAFNet (IF 7.5)</span><span>Preterm ML</span><span>E-Vision App</span>
+							<span>PlacentaVision</span><span>BAFNet (IF 7.5)</span><span>Preterm ML</span><span>Clinical Privacy</span>
 						</div>
-						<a href="/research#healthcare" class="pillar-link">Explore Healthcare &amp; Assistive AI &rarr;</a>
+						<a href="/projects/placentavision/" class="pillar-link">Explore Clinical AI Consortium &rarr;</a>
 					</article>
 				</div>
 			</div>
@@ -201,7 +224,7 @@ const featuredPubs = featuredSlugs
 						<span class="page-eyebrow">Peer-Reviewed Outputs</span>
 						<h2 class="section-title-left">Selected Recent Publications</h2>
 					</div>
-					<a href="/publications" class="btn btn-secondary">Explore All {saailPubCount} Lab &amp; {PUBLICATIONS.length - saailPubCount} Prior Papers &rarr;</a>
+					<a href="/publications/" class="btn btn-secondary">Explore All {saailPubCount} Lab &amp; {PUBLICATIONS.length - saailPubCount} Prior Papers &rarr;</a>
 				</div>
 
 				<div class="pub-ledger">
@@ -218,16 +241,27 @@ const featuredPubs = featuredSlugs
 									<h3>
 										<a href={`/papers/${pub.slug}/`}>{pub.title}</a>
 									</h3>
-									<p class="ledger-authors">{pub.authors.map((a) => a.name).join(', ')}</p>
+									<p class="ledger-authors">
+										{pub.authors.map((a, i) => (
+											<>
+												{a.name === 'Innocent Nyalala' ? (
+													<strong class="pi-name">{a.name}</strong>
+												) : (
+													<span>{a.name}</span>
+												)}
+												{i < pub.authors.length - 1 ? ', ' : ''}
+											</>
+										))}
+									</p>
 									<p class="ledger-tldr">{pub.tldr}</p>
 								</div>
 								<div class="ledger-links">
 									<a href={`/papers/${pub.slug}/`} class="pill-btn pill-primary">Project Page</a>
 									{cleanDoi && (
-										<a href={`https://doi.org/${cleanDoi}`} target="_blank" rel="noopener" class="pill-btn">DOI</a>
+										<a href={`https://doi.org/${cleanDoi}`} target="_blank" rel="noopener" class="pill-btn">DOI ↗</a>
 									)}
 									{pub.codeUrl && (
-										<a href={pub.codeUrl} target="_blank" rel="noopener" class="pill-btn">Code</a>
+										<a href={pub.codeUrl} target="_blank" rel="noopener" class="pill-btn">Code ↗</a>
 									)}
 								</div>
 							</article>
@@ -237,33 +271,31 @@ const featuredPubs = featuredSlugs
 			</div>
 		</section>
 
-		<!-- Institutional Lockup & Collaborations Band -->
+		<!-- IITMZ Institutional Band -->
 		<section class="section closing-band">
-			<div class="container">
-				<div class="closing-grid">
-					<div class="closing-left">
-						<span class="page-eyebrow">Campus &amp; Partnerships</span>
-						<h2>Anchored in Zanzibar, Collaborating Globally</h2>
-						<p>
-							SAAIL Lab operates jointly across IIT Madras Zanzibar and WSDSAI IIT Madras Chennai, uniting MTech and BTech researchers with partners at Google DeepMind, Penn State University, University of Cambridge, Deakin University, and the Zanzibar State Trading Corporation (ZSTC).
-						</p>
-						<div class="logo-lockup">
-							<img src="/images/logo/iitmz-logo.png" alt="IIT Madras Zanzibar" />
-							<img src="/images/logo/wsai-logo.png" alt="Wadhwani School of Data Science and AI IIT Madras" />
-						</div>
+			<div class="container closing-grid">
+				<div class="closing-left">
+					<span class="page-eyebrow">Research Group &amp; Training</span>
+					<h2>Built in Zanzibar for East African Impact</h2>
+					<p>
+						Founded in October 2024 by <a href="https://inyalala.github.io/" target="_blank" rel="author noopener" class="inline-link">Dr. Innocent Nyalala</a> at the School of Engineering and Science, Indian Institute of Technology Madras Zanzibar, SAAIL Lab brings together doctoral candidates, MTech researchers, BS undergraduate fellows, and global academic collaborators.
+					</p>
+					<div class="logo-lockup">
+						<img src="/images/logo/iitmz-logo.png" alt="IIT Madras Zanzibar" />
+						<img src="/images/logo/saail-logo.png" alt="SAAIL Lab" />
 					</div>
-					<div class="closing-right">
-						<div class="closing-stats">
-							<div><strong>5</strong><span>PhD Candidates</span></div>
-							<div><strong>3</strong><span>Current MTech</span></div>
-							<div><strong>8</strong><span>BS / BTech Researchers</span></div>
-							<div><strong>4</strong><span>Graduated Alumni</span></div>
-						</div>
-						<div class="closing-btns">
-							<a href="/people" class="btn btn-primary">Meet Our People</a>
-							<a href="/tools" class="btn btn-secondary">Mobile Apps &amp; Software</a>
-							<a href="/hiring" class="btn btn-secondary">Open Positions</a>
-						</div>
+				</div>
+				<div class="closing-right">
+					<div class="closing-stats">
+						<div><strong>5</strong><span>Co-Supervised PhD</span></div>
+						<div><strong>3</strong><span>Current MTech DSAI</span></div>
+						<div><strong>4</strong><span>BS DSAI Researchers</span></div>
+						<div><strong>4</strong><span>Graduated MTech Alumni</span></div>
+					</div>
+					<div class="closing-btns">
+						<a href="/people/" class="btn btn-primary">Meet Team &amp; Alumni</a>
+						<a href="/gallery/" class="btn btn-secondary">Conference Gallery</a>
+						<a href="/hiring/" class="btn btn-secondary">Join SAAIL Lab</a>
 					</div>
 				</div>
 			</div>
@@ -275,145 +307,94 @@ const featuredPubs = featuredSlugs
 
 <style>
 	.hero {
-		padding: 3.75rem 0 4rem;
-		background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+		padding: 2.75rem 0 3.75rem;
+		background: radial-gradient(circle at 82% 16%, rgba(20, 83, 45, 0.06), transparent 48%), var(--bg-primary);
 		border-bottom: 1px solid var(--border-color);
 	}
 
 	.hero-grid {
 		display: grid;
-		grid-template-columns: 1.05fr 0.95fr;
-		gap: 3rem;
-		align-items: start;
+		grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+		gap: 2.75rem;
+		align-items: center;
+		margin-bottom: 2.25rem;
 	}
 
 	.hero-pill {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.55rem;
-		padding: 0.35rem 0.9rem 0.35rem 0.5rem;
-		background: var(--bg-card);
-		border: 1px solid var(--border-color);
+		padding: 0.35rem 0.95rem 0.35rem 0.55rem;
 		border-radius: 999px;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
 		font-size: 0.82rem;
-		font-weight: 700;
+		font-weight: 600;
 		color: var(--accent-primary);
 		margin-bottom: 1.25rem;
 	}
 
-	.hero-pill img {
-		border-radius: 50%;
-	}
+	.hero-pill img { border-radius: 50%; }
 
 	.hero-title {
-		font-size: clamp(2.1rem, 4vw, 3.1rem);
+		font-size: clamp(2.05rem, 3.6vw, 3.15rem);
 		font-weight: 800;
 		line-height: 1.12;
 		color: var(--text-primary);
-		margin-bottom: 1.25rem;
+		margin-bottom: 1.15rem;
 	}
 
 	.hero-lead {
-		font-size: 1.08rem;
-		line-height: 1.7;
+		font-size: 1.06rem;
+		line-height: 1.68;
 		color: var(--text-secondary);
-		margin-bottom: 1.75rem;
+		margin-bottom: 1.6rem;
 	}
 
 	.hero-actions {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 0.85rem;
-		margin-bottom: 2.25rem;
+		gap: 0.75rem;
 	}
 
 	.hero-text-link {
-		font-size: 0.94rem;
+		font-size: 0.92rem;
 		font-weight: 600;
 		color: var(--accent-primary);
 		text-decoration: none;
-		padding: 0.4rem 0.5rem;
+		padding: 0.5rem 0.4rem;
 	}
 
-	.hero-text-link:hover {
-		text-decoration: underline;
-	}
+	.hero-text-link:hover { text-decoration: underline; }
 
-	.impact-bar {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 0.75rem;
-		padding-top: 1.5rem;
-		border-top: 1px solid var(--border-color);
-	}
-
-	.impact-stat {
-		display: flex;
-		flex-direction: column;
-		text-decoration: none;
-		padding: 0.65rem 0.75rem;
-		border-radius: 0.75rem;
-		background: var(--bg-card);
-		border: 1px solid var(--border-color);
-	}
-
-	.impact-stat-link:hover {
-		border-color: var(--accent-primary);
-	}
-
-	.impact-num {
-		font-family: 'Plus Jakarta Sans', sans-serif;
-		font-size: 1.35rem;
-		font-weight: 800;
-		color: var(--accent-primary);
-		font-variant-numeric: tabular-nums;
-	}
-
-	.impact-lbl {
-		font-size: 0.78rem;
-		font-weight: 700;
-		color: var(--text-primary);
-		margin-top: 0.1rem;
-	}
-
-	.impact-sub {
-		font-size: 0.7rem;
-		color: var(--text-muted);
-	}
-
-	/* Visual Showcase */
-	.hero-visual {
-		display: flex;
-		flex-direction: column;
-		gap: 0.9rem;
-	}
-
+	/* Prominent Right-Column Architecture Visual */
 	.architecture-frame {
 		display: block;
 		background: #ffffff;
 		border: 1px solid var(--border-color);
-		border-radius: 1rem;
+		border-radius: 1.1rem;
 		overflow: hidden;
 		text-decoration: none;
-		box-shadow: 0 12px 30px var(--shadow-light);
+		box-shadow: 0 14px 36px var(--shadow-light);
 		transition: transform 0.22s ease, box-shadow 0.22s ease;
 	}
 
 	.architecture-frame:hover {
 		transform: translateY(-3px);
-		box-shadow: 0 18px 36px var(--shadow-medium);
+		box-shadow: 0 20px 44px var(--shadow-medium);
 	}
 
 	.frame-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		flex-wrap: wrap;
 		gap: 0.5rem;
-		padding: 0.65rem 1rem;
+		padding: 0.72rem 1.15rem;
 		background: #f7f7f2;
 		border-bottom: 1px solid #e5e8e1;
-		font-size: 0.75rem;
+		font-size: 0.78rem;
 		font-weight: 700;
 		color: #0c1a12;
 	}
@@ -423,23 +404,29 @@ const featuredPubs = featuredSlugs
 		font-family: 'JetBrains Mono', monospace;
 	}
 
+	.frame-img-wrap {
+		background: #ffffff;
+		padding: 1rem 1.1rem;
+	}
+
 	.architecture-img {
 		width: 100%;
 		height: auto;
-		max-height: 290px;
+		max-height: 460px;
 		object-fit: contain;
-		padding: 0.65rem;
-		background: #ffffff;
+		display: block;
+		margin: 0 auto;
 	}
 
 	.frame-footer {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		gap: 0.75rem;
-		padding: 0.65rem 1rem;
+		flex-wrap: wrap;
+		gap: 0.45rem 0.75rem;
+		padding: 0.72rem 1.15rem;
 		border-top: 1px solid #e5e8e1;
-		font-size: 0.78rem;
+		font-size: 0.82rem;
 		color: #2b3a32;
 	}
 
@@ -449,62 +436,127 @@ const featuredPubs = featuredSlugs
 		white-space: nowrap;
 	}
 
-	.mini-highlights {
+	/* Full-Width Verified Impact Bar */
+	.impact-bar {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 0.85rem;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+		padding: 1.35rem 0;
+		border-top: 1px solid var(--border-color);
 	}
 
-	.mini-card {
+	.impact-stat {
 		display: flex;
 		flex-direction: column;
-		gap: 0.2rem;
-		padding: 0.9rem 1rem;
-		background: var(--bg-card);
+		padding: 1rem 1.15rem;
+		border-radius: 0.85rem;
+		background: var(--bg-secondary);
 		border: 1px solid var(--border-color);
-		border-left: 3px solid var(--accent-primary);
-		border-radius: 0.75rem;
 		text-decoration: none;
-		color: var(--text-primary);
-		transition: transform 0.18s ease, border-color 0.18s ease;
+		color: inherit;
+		transition: border-color 0.16s ease, transform 0.16s ease;
 	}
 
-	.mini-card:hover {
+	.impact-stat-link:hover {
+		border-color: var(--accent-primary);
 		transform: translateY(-2px);
+	}
+
+	.impact-num {
+		font-family: 'Plus Jakarta Sans', sans-serif;
+		font-size: clamp(1.25rem, 2.5vw, 1.55rem);
+		font-weight: 800;
+		color: var(--accent-primary);
+		line-height: 1.12;
+	}
+
+	.impact-lbl {
+		font-size: 0.84rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-top: 0.25rem;
+	}
+
+	.impact-sub {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		margin-top: 0.1rem;
+	}
+
+	/* Full-Width 3-Card Featured Milestones Strip */
+	.milestones-strip {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.15rem;
+		margin-top: 0.65rem;
+	}
+
+	.milestone-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		padding: 1.15rem 1.3rem;
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-top: 3px solid var(--accent-primary);
+		border-radius: 0.9rem;
+		text-decoration: none;
+		color: var(--text-primary);
+		box-shadow: 0 4px 12px var(--shadow-light);
+		transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+	}
+
+	.milestone-card:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 24px var(--shadow-medium);
 		border-color: var(--accent-primary);
 	}
 
-	.mini-card-gold {
-		border-left-color: var(--accent-gold);
+	.milestone-card-gold { border-top-color: var(--accent-gold); }
+
+	.ms-meta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 
-	.mini-kicker {
-		font-size: 0.7rem;
-		font-weight: 700;
+	.ms-kicker {
+		font-size: 0.72rem;
+		font-weight: 800;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		color: var(--accent-primary);
 	}
 
-	.mini-card-gold .mini-kicker {
-		color: var(--accent-gold);
-	}
+	.milestone-card-gold .ms-kicker { color: var(--accent-gold); }
 
-	.mini-card strong {
-		font-size: 0.88rem;
-		line-height: 1.3;
-	}
-
-	.mini-card span:last-child {
-		font-size: 0.75rem;
+	.ms-arrow {
+		font-weight: 700;
 		color: var(--text-muted);
 	}
 
-	/* Section Helpers */
-	.section-head {
-		max-width: 720px;
-		margin-bottom: 2.5rem;
+	.milestone-card strong {
+		font-size: 1rem;
+		line-height: 1.32;
+		color: var(--text-primary);
 	}
+
+	.milestone-card p {
+		font-size: 0.85rem;
+		line-height: 1.5;
+		color: var(--text-secondary);
+		flex: 1;
+	}
+
+	.ms-foot {
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--accent-primary);
+		padding-top: 0.2rem;
+	}
+
+	/* Section Helpers */
+	.section-head { max-width: 760px; margin-bottom: 2.5rem; }
 
 	.section-title-left {
 		font-size: clamp(1.75rem, 3vw, 2.3rem);
@@ -570,14 +622,15 @@ const featuredPubs = featuredSlugs
 	}
 
 	.pillar-tag-gold {
-		background: rgba(180, 83, 9, 0.12);
-		color: var(--accent-gold);
+		background: rgba(180, 83, 9, 0.14);
+		color: #92400e;
+	}
+	:global([data-theme="dark"]) .pillar-tag-gold {
+		background: rgba(245, 158, 11, 0.18);
+		color: #fbbf24;
 	}
 
-	.pillar-card h3 {
-		font-size: 1.25rem;
-		color: var(--text-primary);
-	}
+	.pillar-card h3 { font-size: 1.25rem; color: var(--text-primary); }
 
 	.pillar-card p {
 		font-size: 0.95rem;
@@ -586,11 +639,7 @@ const featuredPubs = featuredSlugs
 		flex: 1;
 	}
 
-	.pillar-meta {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-	}
+	.pillar-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
 	.pillar-meta span {
 		font-size: 0.74rem;
@@ -610,9 +659,7 @@ const featuredPubs = featuredSlugs
 		padding-top: 0.35rem;
 	}
 
-	.pillar-link:hover {
-		text-decoration: underline;
-	}
+	.pillar-link:hover { text-decoration: underline; }
 
 	/* Publication Ledger */
 	.ledger-header {
@@ -640,15 +687,9 @@ const featuredPubs = featuredSlugs
 		border-bottom: 1px solid var(--border-color);
 	}
 
-	.ledger-row:last-child {
-		border-bottom: none;
-	}
+	.ledger-row:last-child { border-bottom: none; }
 
-	.ledger-meta {
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
+	.ledger-meta { display: flex; flex-direction: column; gap: 0.35rem; }
 
 	.ledger-year {
 		font-family: 'JetBrains Mono', monospace;
@@ -670,8 +711,12 @@ const featuredPubs = featuredSlugs
 		font-weight: 700;
 		padding: 0.15rem 0.5rem;
 		border-radius: 6px;
-		background: rgba(180, 83, 9, 0.12);
-		color: var(--accent-gold);
+		background: rgba(180, 83, 9, 0.14);
+		color: #92400e;
+	}
+	:global([data-theme="dark"]) .ledger-award {
+		background: rgba(245, 158, 11, 0.18);
+		color: #fbbf24;
 	}
 
 	.ledger-main h3 {
@@ -694,6 +739,11 @@ const featuredPubs = featuredSlugs
 		font-size: 0.84rem;
 		color: var(--text-muted);
 		margin-bottom: 0.4rem;
+	}
+
+	.pi-name {
+		color: var(--accent-primary);
+		font-weight: 700;
 	}
 
 	.ledger-tldr {
@@ -721,7 +771,7 @@ const featuredPubs = featuredSlugs
 		background: var(--bg-secondary);
 	}
 
-	.pill-btn:hover {
+	.pill-btn:not(.pill-primary):hover {
 		border-color: var(--accent-primary);
 		color: var(--accent-primary);
 	}
@@ -732,9 +782,14 @@ const featuredPubs = featuredSlugs
 		color: #ffffff;
 	}
 
-	[data-theme="dark"] .pill-primary {
-		color: #062111;
+	.pill-primary:hover {
+		background: var(--accent-secondary);
+		border-color: var(--accent-secondary);
+		color: #ffffff;
 	}
+
+	:global([data-theme="dark"]) .pill-primary,
+	:global([data-theme="dark"]) .pill-primary:hover { color: #062111; }
 
 	/* Closing Band */
 	.closing-band {
@@ -760,6 +815,13 @@ const featuredPubs = featuredSlugs
 		margin-bottom: 1.25rem;
 	}
 
+	.inline-link {
+		color: var(--accent-primary);
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.inline-link:hover { text-decoration: underline; }
+
 	.logo-lockup {
 		display: flex;
 		flex-wrap: wrap;
@@ -779,7 +841,7 @@ const featuredPubs = featuredSlugs
 
 	.closing-stats {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 0.9rem;
 		margin-bottom: 1.4rem;
 	}
@@ -815,7 +877,8 @@ const featuredPubs = featuredSlugs
 	@media (max-width: 1024px) {
 		.hero-grid,
 		.pillars-grid,
-		.closing-grid {
+		.closing-grid,
+		.milestones-strip {
 			grid-template-columns: 1fr;
 		}
 		.ledger-row {
@@ -831,8 +894,14 @@ const featuredPubs = featuredSlugs
 		.impact-bar {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
-		.mini-highlights {
+	}
+
+	@media (max-width: 380px) {
+		.closing-stats {
 			grid-template-columns: 1fr;
+		}
+		.impact-stat {
+			padding: 0.78rem;
 		}
 	}
 </style>

@@ -3,199 +3,280 @@ import Layout from '../layouts/Layout.astro';
 import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
 
-interface GalleryItem {
+interface SlideItem {
 	src: string;
-	category: 'posters' | 'conferences' | 'awards';
+	title: string;
+	caption: string;
+	paperLink?: string;
+}
+
+interface EventAlbum {
+	id: string;
+	category: 'conferences' | 'posters' | 'awards';
+	tag: string;
 	title: string;
 	venue: string;
 	date: string;
-	caption: string;
-	link?: string;
+	summary: string;
+	cover: string;
+	slides: SlideItem[];
+	links?: { label: string; href: string }[];
 }
 
-const ITEMS: GalleryItem[] = [
+const ALBUMS: EventAlbum[] = [
 	{
-		src: '/images/papers/posters/dgs-bench-poster-dli2026.png',
-		category: 'posters',
-		title: 'DGS-Bench: Deployment Gap in African Agricultural AI',
-		venue: 'Deep Learning Indaba 2026 · Pan-Atlantic University, Lagos',
-		date: 'August 2026',
-		caption: 'Best Poster Award winner (18/114 accepted). Exposes negative raw-accuracy evaluation mirages under smallholder cassava field shift.',
-		link: '/papers/dgs-bench/'
-	},
-	{
-		src: '/images/papers/posters/cara-fm-poster-dli2025.png',
-		category: 'posters',
-		title: 'CARA-FM: Resource-Aware Foundation Models for East Africa',
-		venue: 'Deep Learning Indaba 2025 · Kigali, Rwanda (PMLR Vol. 302)',
-		date: 'August 2025',
-		caption: 'Best Poster Award (Publication & Dataset category). Formulates community-driven data, indigenous knowledge, and Tiny/Lite/Edge architectures.',
-		link: '/papers/cara-fm/'
-	},
-	{
-		src: '/images/papers/posters/tais2026-oxford-poster.png',
-		category: 'posters',
-		title: 'AI Policy Harmonization in East Africa',
-		venue: '3rd Technical AI Safety Conference (TAIS 2026) · University of Oxford',
-		date: 'May 2026',
-		caption: 'A2 poster comparing national strategies of Ethiopia, Kenya, and Rwanda under Ubuntu and Ujamaa stewardship.',
-		link: '/papers/ai-policy-harmonization-tais2026/'
-	},
-	{
-		src: '/images/papers/posters/dsa2026-fewshot-poster.png',
-		category: 'posters',
-		title: 'Few-Shot Transfer Learning for Cassava Pathology',
-		venue: 'Data Science Africa (DSA) 2026 · Makerere University, Kampala',
-		date: 'July 2026',
-		caption: 'Systematic 21,397-image Ugandan field benchmark showing ViT-B/16 full fine-tuning reaches +28.5 pp gain at 50 shots/class.',
-		link: '/papers/few-shot-cassava-dsa2026/'
-	},
-	{
-		src: '/images/papers/posters/dsa2026-dcgan-poster.png',
-		category: 'posters',
-		title: 'When Synthetic Data Hurts: DCGAN Failure Under Scarcity',
-		venue: 'Data Science Africa (DSA) 2026 · Oral & Poster · Kampala',
-		date: 'July 2026',
-		caption: 'Empirical warning across 45 runs showing unregularized GAN images poison classifiers at 25-100 images/class.',
-		link: '/papers/dcgan-cassava-dsa2026/'
-	},
-	{
-		src: '/images/papers/posters/dsa2026-auditing-poster.png',
-		category: 'posters',
-		title: 'Auditing Representation in Crop Disease Benchmarks',
-		venue: 'Data Science Africa (DSA) 2026 · Kampala, Uganda',
-		date: 'July 2026',
-		caption: 'Five-dimension representativeness audit contrasting PlantVillage (4/10) with iCassava and iBean (9/10).',
-		link: '/papers/auditing-crop-datasets-dsa2026/'
-	},
-	{
-		src: '/images/papers/posters/africhi-2025-poster.webp',
-		category: 'posters',
-		title: 'From Art to Algorithms: Co-Designing Clove Grading AI',
-		venue: 'ACM AfriCHI 2025 Conference',
-		date: '2025',
-		caption: 'Participatory co-design workshop pairing segmentation-first grading with Zanzibar clove farmers and inspectors.',
-		link: '/papers/clove-codesign-africhi2025/'
-	},
-	{
-		src: '/images/papers/posters/dli-2026-award-photo.webp',
-		category: 'awards',
-		title: 'Deep Learning Indaba 2026 Presentation & Award',
-		venue: 'Pan-Atlantic University · Lagos, Nigeria',
-		date: 'August 2026',
-		caption: 'Presenting DGS-Bench during the Deep Learning Indaba 2026 poster session where it received a Best Poster Award.'
-	},
-	{
-		src: '/images/papers/posters/dli-2026-award-graphic.webp',
-		category: 'awards',
-		title: 'IIT Madras Zanzibar Recognition: DLI 2026 Best Poster',
-		venue: 'IIT Madras Zanzibar Campus',
-		date: 'August 2026',
-		caption: 'Official campus highlight recognizing SAAIL Lab’s second consecutive Deep Learning Indaba Best Poster Award.'
-	},
-	{
-		src: '/images/papers/posters/cara-fm-dli-spotlight.webp',
-		category: 'awards',
-		title: 'Deep Learning Indaba 2025 Best Poster Award',
-		venue: 'Kigali, Rwanda',
-		date: 'August 2025',
-		caption: 'Award certificate and recognition for CARA-FM at Deep Learning Indaba 2025.'
-	},
-	{
-		src: '/images/papers/posters/wsai-faculty-talks-poster.webp',
-		category: 'awards',
-		title: 'NPTEL / IIT Madras Faculty Spotlight Lecture',
-		venue: 'WSDSAI IIT Madras · Chennai, India',
-		date: '2025',
-		caption: 'Faculty lecture: Computing at the Edge of Possibility, Building Agricultural AI for Resource-Constrained East Africa.'
-	},
-	{
-		src: '/images/papers/posters/aaiac2026-poster.png',
-		category: 'awards',
-		title: 'AAIAC 2026 International Conference Announcement',
-		venue: 'Dar es Salaam, Tanzania',
-		date: 'July 2026',
-		caption: '2nd International Conference on Advancements of Artificial Intelligence in the African Context (AAIAC 2026).'
-	},
-	{
-		src: '/images/gallery/dsa-day-3-55.jpg',
+		id: 'dsa-2026',
 		category: 'conferences',
-		title: 'Data Science Africa 2026 Sessions & Talks',
+		tag: 'Oral & 3 Posters · 7 Photos',
+		title: 'Data Science Africa (DSA) 2026 Workshop',
 		venue: 'Makerere University · Kampala, Uganda',
 		date: 'July 2026',
-		caption: 'SAAIL Lab presenting oral and poster research across the Data Science Africa 2026 Workshop.'
+		summary: 'SAAIL Lab presented one oral talk and three technical studies at Makerere University examining dataset representativeness across African crop benchmarks (AgriAI Bias Card), low-shot transfer scaling across 21,397 Ugandan cassava field images, and DCGAN augmentation failure modes under data scarcity.',
+		cover: '/images/papers/posters/dsa-2026-kampala.webp',
+		links: [
+			{ label: 'Few-Shot Cassava Paper', href: '/papers/few-shot-cassava-dsa2026/' },
+			{ label: 'DCGAN Failure Paper', href: '/papers/dcgan-cassava-dsa2026/' },
+			{ label: 'AgriAI Dataset Audit', href: '/papers/auditing-crop-datasets-dsa2026/' }
+		],
+		slides: [
+			{
+				src: '/images/papers/posters/dsa-2026-kampala.webp',
+				title: 'SAAIL Lab Research Team at DSA 2026, Kampala',
+				caption: 'Oral presentation and cohort engagement on Ugandan field cassava pathology benchmarks at Makerere University.',
+				paperLink: '/papers/few-shot-cassava-dsa2026/'
+			},
+			{
+				src: '/images/papers/posters/dsa-2026-poster-few-shot-cassava.webp',
+				title: 'Easel Poster: Few-Shot Transfer Learning for Cassava Leaf Disease',
+				caption: 'Live poster presentation comparing ViT-B/16, ResNet-50, EfficientNet-B3, and MobileNetV3 across 10 to 100 shots/class on iCassava.',
+				paperLink: '/papers/few-shot-cassava-dsa2026/'
+			},
+			{
+				src: '/images/papers/posters/dsa-2026-poster-auditing-representation.webp',
+				title: 'Easel Poster: Auditing Crop Disease Benchmark Datasets',
+				caption: 'Demonstrating the five-dimension representativeness rubric (PlantVillage 4/10 vs. iCassava & iBean 9/10) and AgriAI Bias Card.',
+				paperLink: '/papers/auditing-crop-datasets-dsa2026/'
+			},
+			{
+				src: '/images/papers/posters/dsa2026-dcgan-poster.png',
+				title: 'When Synthetic Data Hurts: DCGAN Failure Under Scarcity',
+				caption: 'Empirical oral presentation showing unregularized DCGAN samples degrade field classification by up to -23.2 pp at 25 shots/class.',
+				paperLink: '/papers/dcgan-cassava-dsa2026/'
+			},
+			{
+				src: '/images/gallery/dsa-day-3-55.jpg',
+				title: 'Data Science Africa 2026 Workshop Sessions',
+				caption: 'Engaging researchers and smallholder agricultural practitioners across East and West Africa.'
+			},
+			{
+				src: '/images/gallery/dsa-day-3-57.jpg',
+				title: 'Agricultural AI Dialogue at Makerere University',
+				caption: 'Technical exchange on open datasets, field protocols, and edge-ready agricultural vision.'
+			},
+			{
+				src: '/images/gallery/dsa-day-4-61.jpg',
+				title: 'Collaborative Networking Across African ML Labs',
+				caption: 'Building regional benchmarks and co-mentoring pipelines during DSA 2026 Day 4 sessions.'
+			}
+		]
 	},
 	{
-		src: '/images/gallery/dsa-day-3-57.jpg',
-		category: 'conferences',
-		title: 'Agricultural AI Dialogue at DSA 2026',
-		venue: 'Kampala, Uganda',
-		date: 'July 2026',
-		caption: 'Engaging researchers and practitioners from Uganda, Kenya, Tanzania, and Nigeria on African field benchmarks.'
+		id: 'dli-2026',
+		category: 'awards',
+		tag: 'Best Poster · 4 Photos',
+		title: 'Deep Learning Indaba (DLI) 2026',
+		venue: 'Pan-Atlantic University · Lagos, Nigeria',
+		date: 'August 2026',
+		summary: 'DGS-Bench (by Innocent Nyalala, Surabhi Gudla, and Patrick Vincent Ndowo) earned a Best Poster Award out of 114 submissions (18 accepted, 15.79% acceptance rate), proving how imbalanced field splits conceal minority-disease failures behind inflated aggregate accuracy.',
+		cover: '/images/papers/posters/dli-2026-award-photo.webp',
+		links: [
+			{ label: 'DGS-Bench Paper Page', href: '/papers/dgs-bench/' },
+			{ label: 'GitHub Repository', href: 'https://github.com/saaillab/dgs-bench' }
+		],
+		slides: [
+			{
+				src: '/images/papers/posters/dli-2026-award-photo.webp',
+				title: 'Deep Learning Indaba 2026 Best Poster Presentation',
+				caption: 'Presenting DGS-Bench during the Deep Learning Indaba 2026 poster session in Lagos, Nigeria.',
+				paperLink: '/papers/dgs-bench/'
+			},
+			{
+				src: '/images/papers/posters/dgs-bench-poster-dli2026.png',
+				title: 'Camera-Ready Poster PP-01: DGS-Bench',
+				caption: 'High-resolution poster detailing the +8.19 pp mean Macro-F1 deployment gap across ResNet-50, EfficientNet-B3, MobileNetV3-S, and ViT-Small/16.',
+				paperLink: '/papers/dgs-bench/'
+			},
+			{
+				src: '/images/papers/posters/dli-2026-lagos-poster.webp',
+				title: 'Poster Exchanges at Pan-Atlantic University, Lagos',
+				caption: 'Discussing balanced deployment gap metrics with African computer vision researchers.',
+				paperLink: '/papers/dgs-bench/'
+			},
+			{
+				src: '/images/papers/posters/dli-2026-award-graphic.webp',
+				title: 'IIT Madras Zanzibar Recognition: 2x Consecutive DLI Best Poster',
+				caption: 'Institutional highlight celebrating back-to-back Best Poster honors at DLI 2025 (Kigali) and DLI 2026 (Lagos).'
+			}
+		]
 	},
 	{
-		src: '/images/gallery/dsa-day-3-58.jpg',
-		category: 'conferences',
-		title: 'Poster Exchanges at Makerere University',
-		venue: 'Kampala, Uganda',
-		date: 'July 2026',
-		caption: 'Discussing dataset representativeness and low-shot transfer bounds with the DSA community.'
+		id: 'dli-2025',
+		category: 'awards',
+		tag: 'Best Poster · PMLR 302',
+		title: 'Deep Learning Indaba (DLI) 2025',
+		venue: 'Kigali, Rwanda',
+		date: 'August 2025',
+		summary: 'CARA-FM (Culturally Attuned and Resource-Aware Foundation Models for East African Agriculture) won Best Poster Award in the Publication & Dataset Category at DLI 2025 and was published in Proceedings of Machine Learning Research (PMLR Vol. 302, 2026).',
+		cover: '/images/papers/posters/cara-fm-dli-spotlight.webp',
+		links: [
+			{ label: 'CARA-FM Paper Page', href: '/papers/cara-fm/' }
+		],
+		slides: [
+			{
+				src: '/images/papers/posters/cara-fm-dli-spotlight.webp',
+				title: 'Best Poster Award Spotlight: DLI 2025 Kigali',
+				caption: 'Official recognition of CARA-FM in the Publication & Dataset Category at Deep Learning Indaba 2025.',
+				paperLink: '/papers/cara-fm/'
+			},
+			{
+				src: '/images/papers/posters/cara-fm-poster-dli2025.png',
+				title: 'CARA-FM Architectural Framework Poster',
+				caption: 'Outlining community-driven data, indigenous knowledge integration, and 5M-50M edge-first architectures for 1-3 GB hardware.',
+				paperLink: '/papers/cara-fm/'
+			}
+		]
 	},
 	{
-		src: '/images/gallery/dsa-day-4-61.jpg',
+		id: 'cvpr-iclr-2026',
+		category: 'posters',
+		tag: 'CVPR & ICLR Workshops',
+		title: 'CVPR 2026 V4A & ICLR 2026 Trustworthy AI',
+		venue: 'Denver, USA & Rio de Janeiro, Brazil',
+		date: 'May 2026',
+		summary: 'SAAIL Lab flagship dataset and fairness studies at CVPR 2026 (7th Workshop on Vision for Agriculture) introducing CLOVES-4603 and ICLR 2026 Workshop on Principled Design for Trustworthy AI introducing unified learning bias mitigation.',
+		cover: '/images/papers/posters/cvpr-cloves-2026.webp',
+		links: [
+			{ label: 'CLOVES-4603 (CVPR)', href: '/papers/cloves-4603/' },
+			{ label: 'Trustworthy AI (ICLR)', href: '/papers/trustworthy-ai-iclr2026/' }
+		],
+		slides: [
+			{
+				src: '/images/papers/posters/cvpr-cloves-2026.webp',
+				title: 'CLOVES-4603 Acceptance at CVPR 2026 V4A Workshop',
+				caption: 'First public 4,603-image Zanzibar commercial clove grading benchmark comparing texture pipelines (92.94%) and deep models (99.67%).',
+				paperLink: '/papers/cloves-4603/'
+			},
+			{
+				src: '/images/papers/posters/iclr-2026-trustworthy-ai.webp',
+				title: 'Unifying Perspectives on Learning Biases at ICLR 2026',
+				caption: 'Data-centric intervention unifying fairness, robustness, and cross-domain generalization across constrained datasets.',
+				paperLink: '/papers/trustworthy-ai-iclr2026/'
+			}
+		]
+	},
+	{
+		id: 'oxford-eac-2026',
+		category: 'posters',
+		tag: 'Policy & Regional Impact',
+		title: 'Oxford TAIS 2026 & EAC STI / AI4EAC 2026',
+		venue: 'University of Oxford, UK & Kigali, Rwanda',
+		date: 'March 2026',
+		summary: 'Bridging AI governance and regional commodity standards: comparative policy analysis across Ethiopia, Kenya, and Rwanda at the 3rd Technical AI Safety Conference (Oxford), alongside a competitive travel grant win at EAC STI / AI4EAC 2026 in Kigali.',
+		cover: '/images/papers/posters/tais2026-oxford-poster.png',
+		links: [
+			{ label: 'Oxford TAIS Policy Paper', href: '/papers/ai-policy-harmonization-tais2026/' },
+			{ label: 'ZSTC-Clove-V1 (EAC STI)', href: '/papers/zstc-clove-v1/' }
+		],
+		slides: [
+			{
+				src: '/images/papers/posters/tais2026-oxford-poster.png',
+				title: 'A2 Poster at TAIS 2026 · University of Oxford',
+				caption: 'AI Policy Harmonization in East Africa: anchoring compute, water, energy, and indigenous language governance in Harambee and Ujamaa values.',
+				paperLink: '/papers/ai-policy-harmonization-tais2026/'
+			},
+			{
+				src: '/images/papers/posters/eac-sti-2026-clove-grading.webp',
+				title: 'EAC STI & AI4EAC 2026 Travel Grant Spotlight',
+				caption: 'Patrick Vincent Ndowo representing SAAIL Lab ($980 competitive travel grant) on ZSTC-Clove-V1 deep learning quality inspection.',
+				paperLink: '/papers/zstc-clove-v1/'
+			}
+		]
+	},
+	{
+		id: 'africhi-spotlight',
 		category: 'conferences',
-		title: 'Regional AI Collaboration Building (DSA 2026)',
-		venue: 'Kampala, Uganda',
-		date: 'July 2026',
-		caption: 'Collaborative networking across East and West African machine learning research groups.'
+		tag: 'HCI Co-Design & Keynote',
+		title: 'ACM AfriCHI 2025 & Invited Faculty Lectures',
+		venue: 'Zanzibar & East African Research Forums',
+		date: '2025 - 2026',
+		summary: 'Participatory co-design with ZSTC clove inspectors at ACM AfriCHI 2025 alongside invited talks on resource-constrained agricultural AI for East Africa.',
+		cover: '/images/papers/posters/africhi-2025-poster.webp',
+		links: [
+			{ label: 'AfriCHI Co-Design Paper', href: '/papers/clove-codesign-africhi2025/' },
+			{ label: 'Ubora-AI Project Site', href: '/projects/ubora-ai/' }
+		],
+		slides: [
+			{
+				src: '/images/papers/posters/africhi-2025-poster.webp',
+				title: 'ACM AfriCHI 2025 Co-Designing Clove Grading AI',
+				caption: 'From Art to Algorithms: participatory co-design uniting indigenous Zanzibar grading criteria with auditable segmentation pipelines.',
+				paperLink: '/papers/clove-codesign-africhi2025/'
+			},
+			{
+				src: '/images/papers/posters/aaiac2026-poster.png',
+				title: 'AAIAC 2026 Conference Keynote & Engagement',
+				caption: '2nd International Conference on Advancements of Artificial Intelligence in the African Context (Dar es Salaam, Tanzania).'
+			}
+		]
 	}
 ];
 ---
 
 <Layout
-	title="Gallery & Conference Posters | SAAIL Lab | IIT Madras Zanzibar"
-	description="Conference posters, field presentations, award announcements, and workshop photos from SAAIL Lab at Deep Learning Indaba, Oxford TAIS, CVPR, Data Science Africa, and IIT Madras Zanzibar."
-	canonical="https://saaillab.github.io/gallery"
+	title="Event Gallery & Posters | SAAIL Lab | IIT Madras Zanzibar"
+	description="Interactive conference albums, slideshows, posters, and award recognitions from SAAIL Lab across Deep Learning Indaba, Data Science Africa, CVPR, ICLR, Oxford TAIS, and ACM AfriCHI."
+	canonical="https://saaillab.github.io/gallery/"
 >
 	<ModernHeader currentPage="gallery" />
 
-	<main>
+	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
-				<span class="page-eyebrow">Visual Archive</span>
-				<h1 class="page-title">Conference Posters, Awards &amp; Field Moments</h1>
+				<span class="page-eyebrow">Conferences, Fieldwork &amp; Awards</span>
+				<h1 class="page-title">Event Gallery &amp; Poster Slideshows</h1>
 				<p class="page-lead">
-					High-resolution conference posters, award certificates, invited talks, and symposium photos across Lagos, Kigali, Kampala, Oxford, and Zanzibar.
+					Click any conference event below to read the session summary, inspect high-resolution posters, and step through the photo slideshow.
 				</p>
-
-				<div class="gallery-filters" role="tablist" aria-label="Filter gallery items">
-					<button type="button" class="g-pill is-active" data-filter="all">All Items ({ITEMS.length})</button>
-					<button type="button" class="g-pill" data-filter="posters">Conference Posters ({ITEMS.filter((i) => i.category === 'posters').length})</button>
-					<button type="button" class="g-pill" data-filter="conferences">Conference Photos ({ITEMS.filter((i) => i.category === 'conferences').length})</button>
-					<button type="button" class="g-pill" data-filter="awards">Awards &amp; Talks ({ITEMS.filter((i) => i.category === 'awards').length})</button>
-				</div>
 			</div>
 		</section>
 
 		<section class="section">
 			<div class="container">
-				<div class="gallery-grid" id="galleryGrid">
-					{ITEMS.map((item) => (
-						<article class="g-card" data-cat={item.category}>
-							<div class="g-media">
-								<img src={item.src} alt={item.title} loading="lazy" class="g-img" />
-							</div>
-							<div class="g-body">
-								<div class="g-meta">
-									<span class="g-cat">{item.category.toUpperCase()}</span>
-									<span class="g-date">{item.date}</span>
+				<div class="gallery-filters" role="tablist" aria-label="Filter albums">
+					<button type="button" role="tab" aria-selected="true" aria-controls="albumsGrid" tabindex="0" class="g-tab active" data-filter="all">All Events ({ALBUMS.length})</button>
+					<button type="button" role="tab" aria-selected="false" aria-controls="albumsGrid" tabindex="-1" class="g-tab" data-filter="conferences">Workshops &amp; Talks</button>
+					<button type="button" role="tab" aria-selected="false" aria-controls="albumsGrid" tabindex="-1" class="g-tab" data-filter="awards">Best Poster Awards</button>
+					<button type="button" role="tab" aria-selected="false" aria-controls="albumsGrid" tabindex="-1" class="g-tab" data-filter="posters">Technical Posters</button>
+				</div>
+
+				<div class="albums-grid" id="albumsGrid">
+					{ALBUMS.map((album, idx) => (
+						<article class="album-card" data-category={album.category}>
+							<button type="button" class="album-cover-btn" data-album-idx={idx} aria-label={`Open ${album.title} slideshow (${album.slides.length} items)`}>
+								<img src={album.cover} alt={album.title} class="album-cover" loading="lazy" />
+								<span class="slide-count-badge">{album.slides.length} slides</span>
+							</button>
+							<div class="album-body">
+								<div class="album-top">
+									<span class="album-tag">{album.tag}</span>
+									<span class="album-date">{album.date}</span>
 								</div>
-								<h3>{item.title}</h3>
-								<p class="g-venue">{item.venue}</p>
-								<p class="g-caption">{item.caption}</p>
-								{item.link && (
-									<a href={item.link} class="g-link">View Project Page &rarr;</a>
-								)}
+								<h2>{album.title}</h2>
+								<p class="album-venue">{album.venue}</p>
+								<p class="album-summary">{album.summary}</p>
+								<button type="button" class="open-album-cta" data-album-idx={idx} aria-label={`Open event slideshow and summary for ${album.title}`}>
+									Open Event Slideshow &amp; Summary &rarr;
+								</button>
 							</div>
 						</article>
 					))}
@@ -204,52 +285,227 @@ const ITEMS: GalleryItem[] = [
 		</section>
 	</main>
 
-	<!-- Lightbox for Full Resolution Poster Reading -->
-	<div id="gLightbox" class="g-lightbox" hidden role="dialog" aria-modal="true" aria-label="Enlarged poster viewer">
-		<button id="gClose" type="button" class="g-close" aria-label="Close viewer">&times;</button>
-		<img id="gLightboxImg" src="" alt="" />
-		<p id="gLightboxCap"></p>
+	<!-- Interactive Event Slideshow Modal -->
+	<div id="albumModal" class="album-modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalAlbumTitle">
+		<div class="modal-backdrop"></div>
+		<div class="modal-panel">
+			<div class="modal-head">
+				<div>
+					<span id="modalAlbumMeta" class="modal-kicker"></span>
+					<h2 id="modalAlbumTitle">Event Slideshow</h2>
+				</div>
+				<button id="closeAlbumBtn" type="button" class="modal-close" aria-label="Close slideshow">&times;</button>
+			</div>
+
+			<div class="modal-layout">
+				<div class="modal-stage">
+					<button id="prevSlideBtn" type="button" class="nav-arrow nav-prev" aria-label="Previous slide">&#10094;</button>
+					<div class="stage-frame">
+						<img id="stageImg" alt="" />
+					</div>
+					<button id="nextSlideBtn" type="button" class="nav-arrow nav-next" aria-label="Next slide">&#10095;</button>
+					<div class="stage-caption-bar">
+						<div>
+							<strong id="stageTitle"></strong>
+							<p id="stageCaption"></p>
+							<a id="stagePaperLink" class="stage-paper-link" hidden>Read Linked Paper &rarr;</a>
+						</div>
+						<span id="stageCounter" class="stage-counter"></span>
+					</div>
+					<div id="stageThumbs" class="stage-thumbs"></div>
+				</div>
+
+				<aside class="modal-info">
+					<h3>Event Summary</h3>
+					<p id="modalSummary" class="modal-summary-text"></p>
+					<div id="modalLinksWrap" class="modal-links"></div>
+				</aside>
+			</div>
+		</div>
 	</div>
 
 	<ModernFooter />
 </Layout>
 
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const pills = document.querySelectorAll('.g-pill');
-		const cards = document.querySelectorAll('.g-card');
+<script define:vars={{ ALBUMS }}>
+	document.addEventListener('DOMContentLoaded', function () {
+		const tabs = document.querySelectorAll('.g-tab');
+		const cards = document.querySelectorAll('.album-card');
 
-		pills.forEach((p) => {
-			p.addEventListener('click', () => {
-				pills.forEach((x) => x.classList.remove('is-active'));
-				p.classList.add('is-active');
-				const f = p.getAttribute('data-filter') || 'all';
-				cards.forEach((c) => {
-					const el = c as HTMLElement;
-					el.style.display = f === 'all' || el.getAttribute('data-cat') === f ? 'flex' : 'none';
+		tabs.forEach((tab, idx) => {
+			tab.addEventListener('click', () => {
+				tabs.forEach((t) => {
+					t.classList.remove('active');
+					t.setAttribute('aria-selected', 'false');
+					t.setAttribute('tabindex', '-1');
+				});
+				tab.classList.add('active');
+				tab.setAttribute('aria-selected', 'true');
+				tab.setAttribute('tabindex', '0');
+				const filter = tab.getAttribute('data-filter');
+				cards.forEach((card) => {
+					const cat = card.getAttribute('data-category');
+					card.style.display = filter === 'all' || cat === filter ? 'flex' : 'none';
 				});
 			});
-		});
-
-		const lb = document.getElementById('gLightbox');
-		const lbImg = document.getElementById('gLightboxImg') as HTMLImageElement | null;
-		const lbCap = document.getElementById('gLightboxCap');
-		const lbClose = document.getElementById('gClose');
-
-		document.querySelectorAll('.g-img').forEach((img) => {
-			img.addEventListener('click', () => {
-				const el = img as HTMLImageElement;
-				if (!lb || !lbImg || !lbCap) return;
-				lbImg.src = el.src;
-				lbImg.alt = el.alt;
-				lbCap.textContent = el.alt;
-				lb.hidden = false;
+			tab.addEventListener('keydown', (e) => {
+				let nextIdx = null;
+				if (e.key === 'ArrowRight') nextIdx = (idx + 1) % tabs.length;
+				else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + tabs.length) % tabs.length;
+				else if (e.key === 'Home') nextIdx = 0;
+				else if (e.key === 'End') nextIdx = tabs.length - 1;
+				if (nextIdx === null) return;
+				e.preventDefault();
+				const nextTab = tabs[nextIdx];
+				nextTab.focus();
+				nextTab.click();
 			});
 		});
 
-		lbClose?.addEventListener('click', () => { if (lb) lb.hidden = true; });
-		lb?.addEventListener('click', (e) => { if (e.target === lb) lb.hidden = true; });
-		document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb && !lb.hidden) lb.hidden = true; });
+		const modal = document.getElementById('albumModal');
+		const closeBtn = document.getElementById('closeAlbumBtn');
+		const backdrop = modal?.querySelector('.modal-backdrop');
+		const prevBtn = document.getElementById('prevSlideBtn');
+		const nextBtn = document.getElementById('nextSlideBtn');
+		const stageImg = document.getElementById('stageImg');
+		const stageTitle = document.getElementById('stageTitle');
+		const stageCaption = document.getElementById('stageCaption');
+		const stagePaperLink = document.getElementById('stagePaperLink');
+		const stageCounter = document.getElementById('stageCounter');
+		const stageThumbs = document.getElementById('stageThumbs');
+		const modalMeta = document.getElementById('modalAlbumMeta');
+		const modalTitle = document.getElementById('modalAlbumTitle');
+		const modalSummary = document.getElementById('modalSummary');
+		const modalLinksWrap = document.getElementById('modalLinksWrap');
+
+		let activeAlbum = null;
+		let slideIndex = 0;
+		let lastTriggerEl = null;
+
+		function renderSlide() {
+			if (!activeAlbum || !stageImg || !stageTitle || !stageCaption || !stageCounter || !stageThumbs) return;
+			const slides = activeAlbum.slides;
+			if (slideIndex < 0) slideIndex = slides.length - 1;
+			if (slideIndex >= slides.length) slideIndex = 0;
+			const current = slides[slideIndex];
+
+			stageImg.src = current.src;
+			stageImg.alt = current.title;
+			stageTitle.textContent = current.title;
+			stageCaption.textContent = current.caption;
+			stageCounter.textContent = `${slideIndex + 1} / ${slides.length}`;
+
+			if (stagePaperLink instanceof HTMLAnchorElement) {
+				if (current.paperLink) {
+					stagePaperLink.href = current.paperLink;
+					stagePaperLink.hidden = false;
+				} else {
+					stagePaperLink.hidden = true;
+				}
+			}
+
+			Array.from(stageThumbs.children).forEach((thumb, i) => {
+				thumb.classList.toggle('active', i === slideIndex);
+				thumb.setAttribute('aria-pressed', String(i === slideIndex));
+			});
+		}
+
+		function openAlbum(idx, triggerEl) {
+			activeAlbum = ALBUMS[idx];
+			if (!activeAlbum || !modal) return;
+			lastTriggerEl = triggerEl || document.activeElement;
+			slideIndex = 0;
+
+			if (modalMeta) modalMeta.textContent = `${activeAlbum.venue} · ${activeAlbum.date}`;
+			if (modalTitle) modalTitle.textContent = activeAlbum.title;
+			if (modalSummary) modalSummary.textContent = activeAlbum.summary;
+
+			if (modalLinksWrap) {
+				modalLinksWrap.innerHTML = '';
+				(activeAlbum.links || []).forEach((lnk) => {
+					const a = document.createElement('a');
+					a.href = lnk.href;
+					a.textContent = lnk.label + ' →';
+					a.className = 'modal-link-btn';
+					if (lnk.href.startsWith('http')) {
+						a.target = '_blank';
+						a.rel = 'noopener';
+					}
+					modalLinksWrap.appendChild(a);
+				});
+			}
+
+			if (stageThumbs) {
+				stageThumbs.innerHTML = '';
+				activeAlbum.slides.forEach((s, i) => {
+					const btn = document.createElement('button');
+					btn.type = 'button';
+					btn.className = 'thumb-btn';
+					btn.setAttribute('aria-label', `Slide ${i + 1}: ${s.title}`);
+					btn.setAttribute('aria-pressed', String(i === 0));
+					const img = document.createElement('img');
+					img.src = s.src;
+					img.alt = s.title;
+					btn.appendChild(img);
+					btn.addEventListener('click', () => {
+						slideIndex = i;
+						renderSlide();
+					});
+					stageThumbs.appendChild(btn);
+				});
+			}
+
+			renderSlide();
+			modal.hidden = false;
+			document.body.style.overflow = 'hidden';
+			closeBtn?.focus();
+		}
+
+		function closeModal() {
+			if (!modal) return;
+			modal.hidden = true;
+			document.body.style.overflow = '';
+			if (lastTriggerEl && typeof lastTriggerEl.focus === 'function') {
+				lastTriggerEl.focus();
+			}
+		}
+
+		document.querySelectorAll('[data-album-idx]').forEach((trigger) => {
+			trigger.addEventListener('click', () => {
+				const idx = Number(trigger.getAttribute('data-album-idx'));
+				if (!Number.isNaN(idx)) openAlbum(idx, trigger);
+			});
+		});
+
+		prevBtn?.addEventListener('click', () => { slideIndex--; renderSlide(); });
+		nextBtn?.addEventListener('click', () => { slideIndex++; renderSlide(); });
+		closeBtn?.addEventListener('click', closeModal);
+		backdrop?.addEventListener('click', closeModal);
+
+		document.addEventListener('keydown', (e) => {
+			if (!modal || modal.hidden) return;
+			if (e.key === 'Escape') { closeModal(); return; }
+			if (e.key === 'ArrowLeft') { e.preventDefault(); slideIndex--; renderSlide(); return; }
+			if (e.key === 'ArrowRight') { e.preventDefault(); slideIndex++; renderSlide(); return; }
+			if (e.key === 'Tab') {
+				const focusables = Array.from(modal.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')).filter((el) => !el.hidden && el.offsetParent !== null);
+				if (focusables.length === 0) return;
+				const first = focusables[0];
+				const last = focusables[focusables.length - 1];
+				if (!modal.contains(document.activeElement)) {
+					e.preventDefault();
+					first.focus();
+					return;
+				}
+				if (e.shiftKey && document.activeElement === first) {
+					e.preventDefault();
+					last.focus();
+				} else if (!e.shiftKey && document.activeElement === last) {
+					e.preventDefault();
+					first.focus();
+				}
+			}
+		});
 	});
 </script>
 
@@ -257,175 +513,331 @@ const ITEMS: GalleryItem[] = [
 	.gallery-filters {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
 		gap: 0.55rem;
-		margin-top: 1.75rem;
+		margin-bottom: 2rem;
 	}
 
-	.g-pill {
-		padding: 0.48rem 1rem;
+	.g-tab {
+		padding: 0.5rem 1.05rem;
 		border-radius: 999px;
-		border: 1.5px solid var(--border-color);
-		background: var(--bg-card);
-		color: var(--text-primary);
-		font-family: inherit;
-		font-size: 0.85rem;
+		border: 1px solid var(--border-color);
+		background: var(--bg-secondary);
+		color: var(--text-secondary);
 		font-weight: 600;
+		font-size: 0.88rem;
 		cursor: pointer;
 	}
 
-	.g-pill:hover {
-		border-color: var(--accent-primary);
-		color: var(--accent-primary);
-	}
-
-	.g-pill.is-active {
+	.g-tab.active, .g-tab:hover {
 		background: var(--accent-primary);
 		border-color: var(--accent-primary);
 		color: #ffffff;
 	}
+	:global([data-theme="dark"]) .g-tab.active,
+	:global([data-theme="dark"]) .g-tab:hover { color: #062111; }
 
-	:global([data-theme="dark"]) .g-pill.is-active { color: #062111; }
-
-	.gallery-grid {
+	.albums-grid {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1.65rem;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.75rem;
 	}
 
-	.g-card {
+	.album-card {
 		background: var(--bg-card);
 		border: 1px solid var(--border-color);
-		border-radius: 1rem;
+		border-radius: 1.1rem;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
-		box-shadow: 0 4px 14px var(--shadow-light);
+		box-shadow: 0 6px 18px var(--shadow-light);
+		transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 	}
 
-	.g-media {
-		background: var(--bg-secondary);
+	.album-card:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 14px 30px var(--shadow-medium);
+		border-color: var(--accent-primary);
+	}
+
+	.album-cover-btn {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 290px;
+		padding: 0;
+		border: none;
 		border-bottom: 1px solid var(--border-color);
-		height: 240px;
+		background: #ffffff;
 		overflow: hidden;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.65rem;
+		cursor: pointer;
 	}
 
-	.g-img {
+	.album-cover-btn:focus-visible {
+		outline: 2px solid #14532d;
+		outline-offset: -3px;
+	}
+
+	.album-cover {
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
-		cursor: zoom-in;
-		border-radius: 0.5rem;
-		transition: transform 0.25s ease;
+		object-position: center;
+		padding: 0.35rem;
+		display: block;
 	}
 
-	.g-card:hover .g-img {
-		transform: scale(1.02);
+	.slide-count-badge {
+		position: absolute;
+		bottom: 0.75rem;
+		right: 0.75rem;
+		background: rgba(12, 26, 18, 0.85);
+		color: #ffffff;
+		font-size: 0.76rem;
+		font-weight: 700;
+		padding: 0.28rem 0.72rem;
+		border-radius: 999px;
 	}
 
-	.g-body {
-		padding: 1.25rem;
+	.album-body {
+		padding: 1.5rem;
 		display: flex;
 		flex-direction: column;
-		gap: 0.4rem;
+		gap: 0.5rem;
 		flex: 1;
 	}
 
-	.g-meta {
+	.album-top {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.4rem 0.5rem;
+	}
+
+	.album-tag {
 		font-size: 0.72rem;
-		font-weight: 700;
-	}
-
-	.g-cat {
+		font-weight: 800;
+		text-transform: uppercase;
 		color: var(--accent-primary);
-		letter-spacing: 0.05em;
+		background: rgba(20, 83, 45, 0.1);
+		padding: 0.22rem 0.65rem;
+		border-radius: 999px;
 	}
 
-	.g-date {
-		color: var(--text-muted);
+	.album-date { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+	.album-card h2 { font-size: 1.28rem; color: var(--text-primary); line-height: 1.3; }
+	.album-venue { font-size: 0.84rem; font-weight: 700; color: var(--accent-primary); }
+	.album-summary { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.62; flex: 1; }
+	.open-album-cta {
+		align-self: flex-start;
+		background: none;
+		border: none;
+		padding: 0.25rem 0;
+		font-family: inherit;
+		font-size: 0.88rem;
+		font-weight: 700;
+		color: var(--accent-primary);
+		margin-top: 0.35rem;
+		cursor: pointer;
+		text-align: left;
+	}
+	.open-album-cta:hover { text-decoration: underline; }
+
+	/* Event Slideshow Modal (Above sticky navbar z-index: 1000) */
+	.album-modal[hidden] { display: none; }
+	.album-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 1200;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.25rem;
 	}
 
-	.g-body h3 {
-		font-size: 1.06rem;
+	.modal-backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(8, 18, 12, 0.88);
+	}
+
+	.modal-panel {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		max-width: 1180px;
+		max-height: 92vh;
+		background: var(--bg-card);
+		border-radius: 1.15rem;
+		border: 1px solid var(--border-color);
+		overflow-y: auto;
+		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+	}
+
+	.modal-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+		padding: 1.25rem 1.65rem;
+		border-bottom: 1px solid var(--border-color);
+		background: var(--bg-secondary);
+	}
+
+	.modal-kicker {
+		display: block;
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--accent-primary);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		margin-bottom: 0.2rem;
+	}
+
+	.modal-head h2 { font-size: 1.4rem; color: var(--text-primary); }
+
+	.modal-close {
+		flex-shrink: 0;
+		background: none;
+		border: 1px solid var(--border-color);
+		width: 38px;
+		height: 38px;
+		border-radius: 50%;
+		font-size: 1.5rem;
+		line-height: 1;
 		color: var(--text-primary);
-		line-height: 1.35;
+		cursor: pointer;
 	}
 
-	.g-venue {
+	.modal-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.85fr);
+		gap: 1.5rem;
+		padding: 1.5rem;
+	}
+
+	.modal-stage {
+		position: relative;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.stage-frame {
+		background: #0c1a12;
+		border-radius: 0.85rem;
+		height: 440px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.stage-frame img {
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+	}
+
+	.nav-arrow {
+		position: absolute;
+		top: 200px;
+		background: rgba(12, 26, 18, 0.78);
+		color: #ffffff;
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		width: 42px;
+		height: 42px;
+		border-radius: 50%;
+		font-size: 1.2rem;
+		cursor: pointer;
+		z-index: 3;
+	}
+
+	.nav-prev { left: 0.75rem; }
+	.nav-next { right: 0.75rem; }
+	.nav-arrow:hover { background: var(--accent-primary); }
+	:global([data-theme="dark"]) .nav-arrow:hover { color: #062111; }
+	.nav-arrow:focus-visible {
+		outline: 2px solid #ffffff;
+		outline-offset: 2px;
+	}
+
+	.stage-caption-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+		padding: 0.85rem 1rem;
+		background: var(--bg-secondary);
+		border-radius: 0.75rem;
+		border: 1px solid var(--border-color);
+	}
+
+	.stage-caption-bar strong { display: block; font-size: 0.96rem; color: var(--text-primary); margin-bottom: 0.2rem; }
+	.stage-caption-bar p { font-size: 0.86rem; color: var(--text-secondary); margin: 0; line-height: 1.5; }
+	.stage-paper-link {
+		display: inline-block;
+		margin-top: 0.45rem;
 		font-size: 0.82rem;
-		font-weight: 600;
-		color: var(--accent-gold);
-	}
-
-	.g-caption {
-		font-size: 0.86rem;
-		color: var(--text-secondary);
-		line-height: 1.55;
-		flex: 1;
-	}
-
-	.g-link {
-		margin-top: 0.4rem;
-		font-size: 0.84rem;
 		font-weight: 700;
 		color: var(--accent-primary);
 		text-decoration: none;
 	}
+	.stage-paper-link:hover { text-decoration: underline; }
+	.stage-paper-link[hidden] { display: none; }
+	.stage-counter { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: 700; color: var(--accent-primary); white-space: nowrap; }
 
-	.g-link:hover { text-decoration: underline; }
+	.stage-thumbs {
+		display: flex;
+		gap: 0.5rem;
+		overflow-x: auto;
+		max-width: 100%;
+		padding: 0.25rem 0;
+	}
 
-	.g-lightbox {
-		position: fixed;
-		inset: 0;
-		z-index: 1200;
-		background: rgba(8, 18, 12, 0.92);
+	:global(.thumb-btn) {
+		width: 68px;
+		height: 50px;
+		padding: 2px;
+		border: 2px solid var(--border-color);
+		border-radius: 0.45rem;
+		background: #ffffff;
+		cursor: pointer;
+		flex-shrink: 0;
+		overflow: hidden;
+	}
+	:global(.thumb-btn.active) { border-color: var(--accent-primary); }
+	:global(.thumb-btn img) { width: 100%; height: 100%; object-fit: contain; border-radius: 0.25rem; }
+
+	.modal-info {
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 0.85rem;
+		padding: 1.25rem;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		padding: 2rem;
-	}
-	.g-lightbox[hidden] { display: none; }
-	.g-lightbox img {
-		max-width: 92vw;
-		max-height: 82vh;
-		object-fit: contain;
-		border-radius: 8px;
-		background: #ffffff;
-		padding: 0.35rem;
-	}
-	.g-lightbox p {
-		color: #ffffff;
-		margin-top: 0.85rem;
-		font-weight: 600;
-		font-size: 0.95rem;
-		text-align: center;
-	}
-	.g-close {
-		position: fixed;
-		top: 1.25rem;
-		right: 1.5rem;
-		width: 40px;
-		height: 40px;
-		border-radius: 999px;
-		border: none;
-		background: #ffffff;
-		color: #0c1a12;
-		font-size: 1.5rem;
-		cursor: pointer;
+		gap: 0.85rem;
 	}
 
-	@media (max-width: 1024px) {
-		.gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.modal-info h3 { font-size: 1.05rem; color: var(--text-primary); }
+	.modal-summary-text { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.68; }
+	.modal-links { display: flex; flex-direction: column; gap: 0.55rem; }
+	:global(.modal-link-btn) {
+		display: block;
+		padding: 0.6rem 0.9rem;
+		background: var(--accent-primary);
+		color: #ffffff;
+		text-decoration: none;
+		border-radius: 0.6rem;
+		font-size: 0.86rem;
+		font-weight: 700;
 	}
-	@media (max-width: 640px) {
-		.gallery-grid { grid-template-columns: 1fr; }
+	:global([data-theme="dark"] .modal-link-btn) { color: #062111; }
+
+	@media (max-width: 900px) {
+		.albums-grid, .modal-layout { grid-template-columns: 1fr; }
+		.stage-frame { height: 300px; }
+		.nav-arrow { top: 130px; }
 	}
 </style>

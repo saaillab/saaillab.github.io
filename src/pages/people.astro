@@ -7,18 +7,18 @@ import metrics from '../data/scholar-metrics.json';
 
 <Layout
 	title="People & Alumni | SAAIL Lab | IIT Madras Zanzibar"
-	description="Principal Investigator, PhD candidates, MTech researchers, BS/BTech undergraduate researchers, and graduated alumni of SAAIL Lab at IIT Madras Zanzibar and WSDSAI IIT Madras."
-	canonical="https://saaillab.github.io/people"
+	description="Principal Investigator, PhD candidates, MTech researchers, BS undergraduate researchers, and graduated alumni of SAAIL Lab at IIT Madras Zanzibar."
+	canonical="https://saaillab.github.io/people/"
 >
 	<ModernHeader currentPage="people" />
 
-	<main>
+	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
 				<span class="page-eyebrow">Research Team &amp; Alumni</span>
 				<h1 class="page-title">People at SAAIL Lab</h1>
 				<p class="page-lead">
-					A collaborative research group across IIT Madras Zanzibar and WSDSAI IIT Madras advancing agricultural vision, Swahili language safety, responsible AI governance, and clinical machine learning.
+					A collaborative research group at the School of Engineering and Science, IIT Madras Zanzibar advancing agricultural vision, Swahili language safety, responsible AI governance, and clinical machine learning.
 				</p>
 			</div>
 		</section>
@@ -35,7 +35,7 @@ import metrics from '../data/scholar-metrics.json';
 						<h2>Dr. Innocent Nyalala</h2>
 						<div class="pi-titles">
 							<div>Assistant Professor, School of Engineering &amp; Science, IIT Madras Zanzibar</div>
-							<div>Associate Researcher, Wadhwani School of Data Science and AI (WSDSAI), IIT Madras, Chennai</div>
+							<div>Associate Research Fellow, <a href="https://wsai.iitm.ac.in/" target="_blank" rel="noopener">Wadhwani School of Data Science and AI (WSDSAI)</a>, IIT Madras</div>
 						</div>
 						<p class="pi-bio">
 							Dr. Innocent Nyalala founded SAAIL Lab at IIT Madras Zanzibar in October 2024. His work spans lightweight computer vision for agricultural commodities and field crop pathology, culturally grounded multilingual AI safety evaluation (East Africa Lead, Google CultureSEEDS award), deployment gap auditing, and clinical healthcare machine learning. He serves on the Editorial Board of <em>Discover Artificial Intelligence</em> (Springer Nature) and as a reviewer for ICML and NeurIPS.
@@ -47,7 +47,7 @@ import metrics from '../data/scholar-metrics.json';
 							<div><strong>{metrics.saailPublishedCount} + {metrics.saailUnderReviewCount}</strong><span>SAAIL Lab Papers</span></div>
 						</div>
 						<div class="pi-links">
-							<a href="https://inyalala.github.io" target="_blank" rel="noopener" class="btn btn-primary">Personal Portfolio ↗</a>
+							<a href="https://inyalala.github.io/" target="_blank" rel="noopener" class="btn btn-primary">Personal Portfolio ↗</a>
 							<a href="https://scholar.google.com/citations?user=jYVzIZUAAAAJ&hl=en" target="_blank" rel="noopener" class="btn btn-secondary">Google Scholar ↗</a>
 							<a href="https://orcid.org/0000-0002-7969-437X" target="_blank" rel="noopener" class="btn btn-secondary">ORCID ↗</a>
 							<a href="mailto:innocent@iitmz.ac.in" class="btn btn-secondary">innocent@iitmz.ac.in</a>
@@ -132,12 +132,12 @@ import metrics from '../data/scholar-metrics.json';
 			</div>
 		</section>
 
-		<!-- BS / BTech Undergraduate Researchers (8) -->
+		<!-- BS Undergraduate Researchers (4) -->
 		<section class="section alt-band">
 			<div class="container">
 				<div class="group-head">
-					<h2>BS / BTech Undergraduate Researchers (8)</h2>
-					<p>IIT Madras Zanzibar BS in Data Science &amp; AI student researchers contributing to CultureSEEDS Swahili safety, Dira provenance, trustworthy AI evaluation, and coastal blue economy sensing.</p>
+					<h2>BS Undergraduate Researchers (4)</h2>
+					<p>IIT Madras Zanzibar BS in Data Science &amp; AI student researchers contributing to CultureSEEDS Swahili safety, Dira provenance, and coastal blue economy sensing.</p>
 				</div>
 				<div class="cards-grid cols-4">
 					<article class="member-card member-compact">
@@ -151,16 +151,6 @@ import metrics from '../data/scholar-metrics.json';
 						<p class="focus">Dira Native vs. Translated Swahili Provenance Detection Models</p>
 					</article>
 					<article class="member-card member-compact">
-						<span class="cohort-tag">BS DSAI · ZDA24B005</span>
-						<h3>Shambhavi Srivastava</h3>
-						<p class="focus">Trustworthy AI Benchmarking &amp; Responsible Evaluation Pipelines</p>
-					</article>
-					<article class="member-card member-compact">
-						<span class="cohort-tag tag-gold">Swahili Corpus</span>
-						<h3>Amina</h3>
-						<p class="focus">Coastal Swahili Domain QA &amp; Community Safety Seeds</p>
-					</article>
-					<article class="member-card member-compact">
 						<span class="cohort-tag tag-gold">Swahili Corpus</span>
 						<h3>Yussuf</h3>
 						<p class="focus">Swahili Dialect Validation &amp; Provenance Agreement Auditing</p>
@@ -169,16 +159,6 @@ import metrics from '../data/scholar-metrics.json';
 						<span class="cohort-tag">Blue Economy</span>
 						<h3>Ayman Hamza Haji</h3>
 						<p class="focus">Coastal Seaweed &amp; Environmental Telemetry Analysis</p>
-					</article>
-					<article class="member-card member-compact">
-						<span class="cohort-tag">Agri &amp; Marine AI</span>
-						<h3>Nasbah Khamis Issa</h3>
-						<p class="focus">Applied Agricultural &amp; Coastal Computer Vision</p>
-					</article>
-					<article class="member-card member-compact">
-						<span class="cohort-tag">Agri &amp; Marine AI</span>
-						<h3>Zakariya Yahya Ally</h3>
-						<p class="focus">Applied Agricultural &amp; Coastal Computer Vision</p>
 					</article>
 				</div>
 			</div>
@@ -241,7 +221,7 @@ import metrics from '../data/scholar-metrics.json';
 				<div class="join-callout">
 					<h3>Join SAAIL Lab</h3>
 					<p>We welcome prospective PhD, MTech, and undergraduate researchers interested in agricultural AI, Swahili NLP/safety, and healthcare vision.</p>
-					<a href="/hiring" class="btn btn-primary">Explore Open Positions &rarr;</a>
+					<a href="/hiring/" class="btn btn-primary">Explore Open Positions &rarr;</a>
 				</div>
 			</div>
 		</section>
@@ -304,6 +284,12 @@ import metrics from '../data/scholar-metrics.json';
 		flex-direction: column;
 		gap: 0.2rem;
 		margin-bottom: 1rem;
+	}
+
+	.pi-titles a {
+		color: inherit;
+		text-decoration: underline;
+		text-underline-offset: 2px;
 	}
 
 	.pi-bio {
@@ -425,8 +411,12 @@ import metrics from '../data/scholar-metrics.json';
 	}
 
 	.tag-gold {
-		background: rgba(180, 83, 9, 0.12);
-		color: var(--accent-gold);
+		background: rgba(180, 83, 9, 0.14);
+		color: #92400e;
+	}
+	:global([data-theme="dark"]) .tag-gold {
+		background: rgba(245, 158, 11, 0.18);
+		color: #fbbf24;
 	}
 
 	.member-card h3 {
@@ -469,12 +459,17 @@ import metrics from '../data/scholar-metrics.json';
 	@media (max-width: 1024px) {
 		.cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 		.cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-		.pi-card { grid-template-columns: 1fr; }
+		.pi-card { grid-template-columns: minmax(0, 1fr); }
 		.pi-photo-wrap { max-width: 240px; }
 	}
 
 	@media (max-width: 640px) {
-		.cols-4, .cols-3, .cols-2, .pi-stats { grid-template-columns: 1fr; }
-		.pi-stats { grid-template-columns: repeat(2, 1fr); }
+		.cols-4, .cols-3, .cols-2, .pi-stats { grid-template-columns: minmax(0, 1fr); }
+		.pi-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	}
+
+	@media (max-width: 420px) {
+		.pi-card { padding: 1.25rem; gap: 1.35rem; }
+		.member-card { padding: 1.2rem; }
 	}
 </style>

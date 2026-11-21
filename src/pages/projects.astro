@@ -2,220 +2,54 @@
 import Layout from '../layouts/Layout.astro';
 import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
-
-interface ProjectItem {
-	id: string;
-	domain: 'agriculture' | 'language' | 'responsible' | 'healthcare';
-	domainLabel: string;
-	status: string;
-	funding?: string;
-	title: string;
-	summary: string;
-	team: string;
-	partners: string;
-	tags: string[];
-	links: { label: string; href: string; external?: boolean }[];
-}
-
-const PROJECTS: ProjectItem[] = [
-	{
-		id: 'cultureseeds',
-		domain: 'language',
-		domainLabel: 'Language & AI Safety',
-		status: 'Funded · Active (2026-2027)',
-		funding: 'US$100,000 Google Research Award',
-		title: 'CultureSEEDS East Africa: Culturally Grounded Multilingual AI Safety Evaluation',
-		summary:
-			'Co-leading East African cultural safety and linguistic evaluation within the international CultureSEEDS initiative. Constructs 100+ community-validated cultural evaluation seeds distinguishing benign local cultural practices from genuine safety harms across Swahili and 9 regional African languages.',
-		team: 'Prof. Innocent Nyalala (EA Lead), Saleh, Amina, Yussuf, Sri Advaita',
-		partners: 'Google DeepMind · Google.org · WSDSAI IIT Madras · McGill/Mila',
-		tags: ['CultureSEEDS', 'Swahili NLP', 'AI Safety', 'Gemini Eval', '10 Languages'],
-		links: [
-			{ label: 'Language Pillar', href: '/research#language' },
-			{ label: 'Swahili Corpora', href: '/datasets#language' }
-		]
-	},
-	{
-		id: 'swahili-dira',
-		domain: 'language',
-		domainLabel: 'Language & Culture',
-		status: 'Active Grant · IITMZ',
-		funding: 'IITMZ Seed Grant (Rs. 10.00 Lakhs)',
-		title: 'Zanzibar Swahili Corpus, Spoken QA & Dira Native-vs-Translated Benchmark',
-		summary:
-			'Combines the Storytelling and ML cultural preservation project with technical Kiswahili resource engineering: building coastal Swahili spoken health/agricultural QA datasets and training Dira, a provenance benchmark detecting machine-translated translationese across modern LLMs.',
-		team: 'Saleh, Sri Advaita, Amina, Yussuf · Co-PI Hope K. McCoy · Prof. Nirav Bhatt',
-		partners: 'IIT Madras Zanzibar · WSDSAI IIT Madras',
-		tags: ['Zanzibar Swahili', 'Dira Provenance', 'Spoken QA', 'Cultural Preservation'],
-		links: [
-			{ label: 'Datasets Index', href: '/datasets#language' },
-			{ label: 'Meet the Team', href: '/people' }
-		]
-	},
-	{
-		id: 'cashew-ai',
-		domain: 'agriculture',
-		domainLabel: 'Precision Agriculture',
-		status: 'Funded · Active (2026-2027)',
-		funding: 'ICSR IIT Madras Grant (Rs. 9.35 Lakhs)',
-		title: 'CashewAI: Phenology-Aware Dual-Stream Deep Learning for Smallholder Orchards',
-		summary:
-			'Connects canopy-level multispectral imagery and leaf lesion vision into dual-stream models predicting seasonal pest outbreaks, anthracnose/powdery mildew onset, and nut yield for East African and Indian smallholder cashew farmers.',
-		team: 'Prof. Innocent Nyalala (PI), B. C. Bhattarai, SAAIL Agri Team',
-		partners: 'ICSR IIT Madras · Deakin University · Coastal Tanzanian Orchards',
-		tags: ['CashewAI', 'Phenology Modeling', 'Pest Forecast', 'Yield Estimation'],
-		links: [
-			{ label: 'Agriculture Pillar', href: '/research#agriculture' }
-		]
-	},
-	{
-		id: 'seaweed-blue-economy',
-		domain: 'agriculture',
-		domainLabel: 'Blue Economy & Climate',
-		status: 'Active Field Initiative',
-		title: 'Zanzibar Seaweed Ice-Ice Disease & Marine Heatwave Early Warning',
-		summary:
-			'Applies shallow-water spectral monitoring and coastal sea-surface temperature telemetry to detect Ice-Ice disease stressors affecting Zanzibar Eucheuma and Kappaphycus seaweed farmers, alongside computer vision health indexing for coastal coral and aquaculture habitats.',
-		team: 'Khamis K. Haji, Ayman Hamza Haji, Nasbah Khamis Issa, Zakariya Yahya Ally',
-		partners: 'Zanzibar Coastal Farmers · Marine & Aquaculture Partners',
-		tags: ['Seaweed Ice-Ice', 'Marine Heatwaves', 'Blue Economy', 'Climate Resilience'],
-		links: [
-			{ label: 'Research Pillar 1', href: '/research#agriculture' },
-			{ label: 'Team Directory', href: '/people' }
-		]
-	},
-	{
-		id: 'zstc-clove-grading',
-		domain: 'agriculture',
-		domainLabel: 'Precision Agriculture',
-		status: 'Deployed Prototypes · 4 Papers',
-		title: 'ZSTC Automated Clove Quality Grading & Mobile Inspection Suite (Ubora-AI)',
-		summary:
-			'Long-running technical partnership with the Zanzibar State Trading Corporation producing ZSTC-Clove-V1 (5,298 single cloves), CLOVES-4603 (4,603 warehouse images, 99.67%), the ETRI Journal 2026 compositional EER 100% pipeline, and the Ubora-AI INT8 Flutter Android app.',
-		team: 'Patrick Vincent Ndowo (MTech Alum), Prof. Innocent Nyalala',
-		partners: 'Zanzibar State Trading Corporation (ZSTC), Saateni Unguja',
-		tags: ['ETRI 2026', 'CVPR 2026 V4A', 'CLOVES-4603', 'Ubora-AI Android'],
-		links: [
-			{ label: 'ETRI 2026 Paper', href: '/papers/clove-xai-etri2026/' },
-			{ label: 'Mobile Apps', href: '/tools' },
-			{ label: 'GitHub Repo', href: 'https://github.com/saaillab/CLOVES-4603', external: true }
-		]
-	},
-	{
-		id: 'cropguard-cross-crop',
-		domain: 'agriculture',
-		domainLabel: 'Precision Agriculture',
-		status: 'Active · Under Review & Mobile',
-		title: 'CropGuard Cross-Crop Pathology & Mobile Field Diagnostics (Maize & Cassava)',
-		summary:
-			'Inside our AI for Agriculture pillar, unifies leak-free UUID/pHash deduplicated training (35,420 unique leaf images, 80,238 duplicates purged) with lightweight CNN-Transformer models (481.6K params, 5.00 ms ONNX) and the student-built Android DeepLabV3+/MobileViT maize field app.',
-		team: 'Prof. Innocent Nyalala, Duen Michael Chombo (MTech Alum), Surabhi Gudla',
-		partners: 'WSDSAI IIT Madras · East African Extension Partners',
-		tags: ['CropGuardNet', '5.00 ms ONNX', 'Maize Android App', 'XAI Faithfulness'],
-		links: [
-			{ label: 'CropGuardNet Paper', href: '/papers/cropguardnet/' },
-			{ label: 'Maize Android App', href: '/tools' },
-			{ label: 'GitHub', href: 'https://github.com/saaillab/CropGuardNet', external: true }
-		]
-	},
-	{
-		id: 'responsible-ai-eval',
-		domain: 'responsible',
-		domainLabel: 'Responsible & Sovereign AI',
-		status: '2x DLI Best Poster Winner',
-		title: 'Deployment Gap Benchmarking, Foundation Edge Tiers (CARA-FM) & EA Policy',
-		summary:
-			'Audits why high lab accuracy creates deployment mirages under field shift (DGS-Bench, DLI 2026 Best Poster), when generative GAN augmentation harms training (DSA 2026), and how CARA-FM plus Ujamaa/Harambee policy harmonization (Oxford TAIS 2026) safeguard African sovereignty.',
-		team: 'Prof. Innocent Nyalala, Hope K. McCoy, Patrick V. Ndowo, Surabhi Gudla, Shambhavi Srivastava',
-		partners: 'University of Cambridge · University of Salford · WSDSAI IIT Madras',
-		tags: ['DGS-Bench', 'CARA-FM', 'Oxford TAIS 2026', 'AgriAI Bias Card'],
-		links: [
-			{ label: 'DGS-Bench Paper', href: '/papers/dgs-bench/' },
-			{ label: 'GitHub Code', href: 'https://github.com/saaillab/dgs-bench', external: true }
-		]
-	},
-	{
-		id: 'placentavision-health',
-		domain: 'healthcare',
-		domainLabel: 'Healthcare & Assistive',
-		status: 'Active International Consortium',
-		title: 'PlacentaVision, Maternal Biomarkers & E-Vision Assistive Navigation',
-		summary:
-			'Combines international PlacentaVision placental morphology imaging with metabolomic preterm birth modeling at Pemba CPHK, boundary-aware colonoscopy polyp segmentation (BAFNet, ESWA 2025), and E-Vision on-device smartphone audio guidance for visually impaired users.',
-		team: 'Twamaa Hababuu Makame, Makame M. Haji (Alum), Shivam Vyas (Alum), 4 PhD Health Scholars',
-		partners: 'Penn State University · Center for Public Health Kinetics (Pemba)',
-		tags: ['PlacentaVision', 'Preterm Risk ML', 'BAFNet (IF 7.5)', 'E-Vision App'],
-		links: [
-			{ label: 'Healthcare Pillar', href: '/research#healthcare' },
-			{ label: 'BAFNet Paper', href: '/papers/bafnet-polyp-2025/' },
-			{ label: 'E-Vision App', href: '/tools' }
-		]
-	}
-];
+import { PROJECTS } from '../data/projects';
 ---
 
 <Layout
 	title="Active Projects & Grants | SAAIL Lab | IIT Madras Zanzibar"
-	description="Funded grants and active research engineering projects at SAAIL Lab spanning CultureSEEDS (Google), Zanzibar Swahili Corpus & Dira, CashewAI, SeaweedAI, ZSTC Cloves, CropGuard, and PlacentaVision."
-	canonical="https://saaillab.github.io/projects"
+	description="Funded research programs and dedicated project websites at SAAIL Lab, IIT Madras Zanzibar: CultureSEEDS East Africa, Dira Swahili Corpus, Ubora-AI, CropGuardNet, CashewAI, Seaweed Blue Economy, and PlacentaVision."
+	canonical="https://saaillab.github.io/projects/"
 >
-	<ModernHeader currentPage="projects" />
+	<ModernHeader currentPage="research" />
 
-	<main>
+	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
-				<span class="page-eyebrow">Funded Research &amp; Applied Systems</span>
-				<h1 class="page-title">Active Lab Projects &amp; Grants</h1>
+				<span class="page-eyebrow">Funded Initiatives &amp; Dedicated Project Sites</span>
+				<h1 class="page-title">Active Projects &amp; Grants</h1>
 				<p class="page-lead">
-					Eight ongoing multi-institution grants, field benchmarks, and mobile deployments spanning East African agriculture, coastal blue economy, Swahili AI safety, responsible evaluation, and maternal healthcare.
+					Every major SAAIL Lab research stream at IIT Madras Zanzibar has a dedicated project website documenting teams, partner institutions, open datasets, and peer-reviewed outputs.
 				</p>
 			</div>
 		</section>
 
 		<section class="section">
 			<div class="container">
-				<!-- Accessible Category Filter Pills -->
-				<div class="filter-bar" role="tablist" aria-label="Filter projects by domain">
-					<button type="button" class="filter-pill is-active" data-filter="all">All Projects ({PROJECTS.length})</button>
-					<button type="button" class="filter-pill" data-filter="agriculture">Agriculture &amp; Blue Economy</button>
-					<button type="button" class="filter-pill" data-filter="language">Swahili NLP &amp; CultureSEEDS</button>
-					<button type="button" class="filter-pill" data-filter="responsible">Responsible AI &amp; Policy</button>
-					<button type="button" class="filter-pill" data-filter="healthcare">Healthcare &amp; Assistive</button>
-				</div>
-
-				<div class="projects-grid" id="projectsGrid">
+				<div class="projects-grid">
 					{PROJECTS.map((proj) => (
-						<article id={proj.id} class="project-card" data-domain={proj.domain}>
-							<div class="project-top">
-								<span class={`domain-badge domain-${proj.domain}`}>{proj.domainLabel}</span>
-								<span class="status-tag">{proj.status}</span>
-							</div>
-
-							{proj.funding && <div class="funding-banner">{proj.funding}</div>}
-
-							<h2 class="project-title">{proj.title}</h2>
-							<p class="project-summary">{proj.summary}</p>
-
-							<div class="project-meta">
-								<div><strong>Contributors:</strong> {proj.team}</div>
-								<div><strong>Partners:</strong> {proj.partners}</div>
-							</div>
-
-							<div class="tag-row">
-								{proj.tags.map((t) => <span class="tag-chip">{t}</span>)}
-							</div>
-
-							<div class="project-links">
-								{proj.links.map((lk, idx) => (
-									<a
-										href={lk.href}
-										target={lk.external ? '_blank' : undefined}
-										rel={lk.external ? 'noopener' : undefined}
-										class={`proj-btn ${idx === 0 ? 'proj-btn-primary' : ''}`}
-									>
-										{lk.label} {lk.external ? '↗' : '→'}
-									</a>
-								))}
+						<article class="project-card">
+							<a href={`/projects/${proj.slug}/`} class="card-thumb-link" tabindex="-1" aria-hidden="true">
+								<img src={proj.heroImage} alt={proj.heroAlt} class="card-thumb" loading="lazy" />
+							</a>
+							<div class="card-body">
+								<div class="card-top">
+									<span class="pillar-badge">{proj.pillar}</span>
+									<span class="badge-note">{proj.badge}</span>
+								</div>
+								<h2>
+									<a href={`/projects/${proj.slug}/`}>{proj.title}</a>
+								</h2>
+								<p class="card-summary">{proj.summary}</p>
+								<div class="card-meta">
+									<div><strong>Lead:</strong> {proj.lead}</div>
+									<div><strong>Team:</strong> {proj.team.slice(0, 5).join(', ')}{proj.team.length > 5 ? ` (+${proj.team.length - 5})` : ''}</div>
+								</div>
+								<div class="card-actions">
+									<a href={`/projects/${proj.slug}/`} class="btn btn-primary">Open Project Website &rarr;</a>
+									{proj.githubUrl && (
+										<a href={proj.githubUrl} target="_blank" rel="noopener" class="btn btn-secondary">GitHub ↗</a>
+									)}
+								</div>
 							</div>
 						</article>
 					))}
@@ -227,86 +61,60 @@ const PROJECTS: ProjectItem[] = [
 	<ModernFooter />
 </Layout>
 
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const pills = document.querySelectorAll('.filter-pill');
-		const cards = document.querySelectorAll('.project-card');
-
-		pills.forEach((pill) => {
-			pill.addEventListener('click', () => {
-				pills.forEach((p) => p.classList.remove('is-active'));
-				pill.classList.add('is-active');
-				const target = pill.getAttribute('data-filter') || 'all';
-				cards.forEach((c) => {
-					const el = c as HTMLElement;
-					el.style.display = target === 'all' || el.getAttribute('data-domain') === target ? 'flex' : 'none';
-				});
-			});
-		});
-	});
-</script>
-
 <style>
-	.filter-bar {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.6rem;
-		margin-bottom: 2.5rem;
-	}
-
-	.filter-pill {
-		padding: 0.55rem 1.15rem;
-		border-radius: 999px;
-		border: 1.5px solid var(--border-color);
-		background: var(--bg-card);
-		color: var(--text-primary);
-		font-family: inherit;
-		font-size: 0.88rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.18s ease;
-	}
-
-	.filter-pill:hover {
-		border-color: var(--accent-primary);
-		color: var(--accent-primary);
-	}
-
-	.filter-pill.is-active {
-		background: var(--accent-primary);
-		border-color: var(--accent-primary);
-		color: #ffffff;
-	}
-
-	:global([data-theme="dark"]) .filter-pill.is-active {
-		color: #062111;
-	}
-
 	.projects-grid {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1.65rem;
+		gap: 2rem;
 	}
 
 	.project-card {
 		background: var(--bg-card);
 		border: 1px solid var(--border-color);
-		border-radius: 1rem;
-		padding: 1.75rem;
+		border-radius: 1.15rem;
+		overflow: hidden;
 		display: flex;
 		flex-direction: column;
-		gap: 0.9rem;
-		box-shadow: 0 4px 14px var(--shadow-light);
+		box-shadow: 0 6px 20px var(--shadow-light);
 		transition: transform 0.2s ease, box-shadow 0.2s ease;
 	}
 
 	.project-card:hover {
 		transform: translateY(-3px);
-		box-shadow: 0 14px 28px var(--shadow-medium);
+		box-shadow: 0 12px 28px var(--shadow-medium);
 	}
 
-	.project-top {
+	.card-thumb-link {
+		display: block;
+		background: #ffffff;
+		border-bottom: 1px solid var(--border-color);
+		height: 240px;
+		padding: 0.5rem;
+		overflow: hidden;
+	}
+
+	.card-thumb-link:focus-visible {
+		outline: 2px solid #14532d;
+		outline-offset: -3px;
+	}
+
+	.card-thumb {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		object-position: center;
+		display: block;
+	}
+
+	.card-body {
+		padding: 1.65rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		flex: 1;
+	}
+
+	.card-top {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -314,117 +122,62 @@ const PROJECTS: ProjectItem[] = [
 		gap: 0.5rem;
 	}
 
-	.domain-badge {
+	.pillar-badge {
 		font-size: 0.72rem;
 		font-weight: 800;
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
+		letter-spacing: 0.05em;
 		padding: 0.22rem 0.65rem;
 		border-radius: 999px;
+		background: #ecfdf5;
+		color: #14532d;
 	}
 
-	.domain-agriculture { background: #dcfce7; color: #14532d; }
-	.domain-language { background: #fef3c7; color: #92400e; }
-	.domain-responsible { background: #e2e8f0; color: #0f172a; }
-	.domain-healthcare { background: #ccfbf1; color: #115e59; }
-
-	.status-tag {
+	.badge-note {
 		font-size: 0.76rem;
-		font-weight: 600;
-		color: var(--text-muted);
-	}
-
-	.funding-banner {
-		font-size: 0.8rem;
 		font-weight: 700;
-		color: #92400e;
-		background: #fffbeb;
-		border: 1px solid #fde68a;
-		padding: 0.35rem 0.75rem;
-		border-radius: 8px;
-		width: fit-content;
+		color: var(--accent-gold);
 	}
 
-	.project-title {
-		font-size: 1.24rem;
+	.project-card h2 {
+		font-size: 1.25rem;
 		line-height: 1.32;
-		color: var(--text-primary);
 	}
 
-	.project-summary {
+	.project-card h2 a {
+		color: var(--text-primary);
+		text-decoration: none;
+	}
+
+	.project-card h2 a:hover { color: var(--accent-primary); }
+
+	.card-summary {
 		font-size: 0.94rem;
-		line-height: 1.65;
 		color: var(--text-secondary);
+		line-height: 1.65;
 		flex: 1;
 	}
 
-	.project-meta {
+	.card-meta {
 		background: var(--bg-secondary);
 		border: 1px solid var(--border-color);
 		border-radius: 0.75rem;
-		padding: 0.75rem 0.95rem;
-		font-size: 0.82rem;
+		padding: 0.85rem 1rem;
+		font-size: 0.84rem;
 		color: var(--text-secondary);
-		line-height: 1.55;
 		display: flex;
 		flex-direction: column;
-		gap: 0.25rem;
+		gap: 0.35rem;
 	}
 
-	.tag-row {
+	.card-actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.4rem;
-	}
-
-	.tag-chip {
-		font-size: 0.74rem;
-		font-weight: 600;
-		padding: 0.18rem 0.55rem;
-		border-radius: 6px;
-		background: var(--bg-secondary);
-		border: 1px solid var(--border-color);
-		color: var(--text-secondary);
-	}
-
-	.project-links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.55rem;
+		gap: 0.6rem;
 		padding-top: 0.35rem;
 	}
 
-	.proj-btn {
-		display: inline-flex;
-		align-items: center;
-		padding: 0.45rem 0.9rem;
-		border-radius: 999px;
-		font-size: 0.82rem;
-		font-weight: 600;
-		text-decoration: none;
-		border: 1px solid var(--border-color);
-		background: var(--bg-secondary);
-		color: var(--text-primary);
-	}
-
-	.proj-btn:hover {
-		border-color: var(--accent-primary);
-		color: var(--accent-primary);
-	}
-
-	.proj-btn-primary {
-		background: var(--accent-primary);
-		border-color: var(--accent-primary);
-		color: #ffffff;
-	}
-
-	:global([data-theme="dark"]) .proj-btn-primary {
-		color: #062111;
-	}
-
 	@media (max-width: 900px) {
-		.projects-grid {
-			grid-template-columns: 1fr;
-		}
+		.projects-grid { grid-template-columns: 1fr; }
 	}
 </style>

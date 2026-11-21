@@ -6,12 +6,12 @@ import ModernFooter from '../components/ModernFooter.astro';
 
 <Layout
 	title="Mobile Apps & Software | SAAIL Lab | IIT Madras Zanzibar"
-	description="On-device Android and Flutter field applications (Ubora-AI Clove Grading, Maize Disease Segmentation, E-Vision Assistive Audio) and open-source ML benchmarks from SAAIL Lab."
-	canonical="https://saaillab.github.io/tools"
+	description="On-device Android and Flutter field applications (Ubora-AI Clove Grading and Maize Disease Segmentation) alongside open-source ML benchmarks from SAAIL Lab."
+	canonical="https://saaillab.github.io/tools/"
 >
 	<ModernHeader currentPage="resources" />
 
-	<main>
+	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
 				<span class="page-eyebrow">Engineering &amp; Field Prototypes</span>
@@ -27,11 +27,11 @@ import ModernFooter from '../components/ModernFooter.astro';
 			<div class="container">
 				<div class="group-head">
 					<span class="page-eyebrow">Android &amp; Flutter Prototypes</span>
-					<h2>On-Device Field &amp; Assistive Mobile Applications</h2>
+					<h2>On-Device Field Mobile Applications</h2>
 					<p>Student-developed mobile prototypes running quantized TensorFlow Lite (TFLite INT8) and lightweight vision models locally without internet connectivity.</p>
 				</div>
 
-				<div class="apps-grid">
+				<div class="apps-grid apps-grid-2">
 					<article class="tool-card app-card">
 						<div class="tool-top">
 							<span class="tool-badge badge-mobile">Flutter · TFLite INT8</span>
@@ -48,7 +48,8 @@ import ModernFooter from '../components/ModernFooter.astro';
 							<li><strong>Companion Benchmarks:</strong> ZSTC-Clove-V1, CLOVES-4603, ETRI Journal 2026</li>
 						</ul>
 						<div class="tool-links">
-							<a href="/papers/clove-codesign-africhi2025/" class="btn btn-primary">AfriCHI Co-Design Paper</a>
+							<a href="/projects/ubora-ai/" class="btn btn-primary">Ubora-AI Project Page</a>
+							<a href="/papers/clove-codesign-africhi2025/" class="btn btn-secondary">AfriCHI Co-Design Paper</a>
 							<a href="https://github.com/saaillab/zstc-clove-v1" target="_blank" rel="noopener" class="btn btn-secondary">Companion Repo ↗</a>
 						</div>
 					</article>
@@ -69,28 +70,8 @@ import ModernFooter from '../components/ModernFooter.astro';
 							<li><strong>Target Users:</strong> East African extension officers &amp; smallholder scouts</li>
 						</ul>
 						<div class="tool-links">
-							<a href="/research#agriculture" class="btn btn-primary">Agriculture Pillar</a>
-							<a href="/people" class="btn btn-secondary">MTech Research Team</a>
-						</div>
-					</article>
-
-					<article class="tool-card app-card">
-						<div class="tool-top">
-							<span class="tool-badge badge-assistive">Android · Edge Audio</span>
-							<span class="tool-status">Completed Thesis Prototype</span>
-						</div>
-						<h3>E-Vision: Spatial Assistive Navigation</h3>
-						<p class="tool-author">Developer: Shivam Vyas (MTech Alum) &amp; SAAIL Lab</p>
-						<p class="tool-desc">
-							Smartphone-based spatial navigation assistant combining real-time monocular depth estimation and lightweight object detection with bilingual spoken obstacle warnings for visually impaired users operating offline.
-						</p>
-						<ul class="spec-list">
-							<li><strong>Pipeline:</strong> On-device depth cueing + obstacle detection</li>
-							<li><strong>Feedback Mode:</strong> Low-latency bilingual audio distance cues</li>
-							<li><strong>Constraint Profile:</strong> Zero cloud dependency on consumer Android</li>
-						</ul>
-						<div class="tool-links">
-							<a href="/projects#placentavision-health" class="btn btn-primary">Project Details</a>
+							<a href="/projects/cropguard-pathology/" class="btn btn-primary">Crop Pathology Project</a>
+							<a href="/papers/cropguardnet/" class="btn btn-secondary">CropGuardNet Paper</a>
 						</div>
 					</article>
 				</div>
@@ -174,6 +155,9 @@ import ModernFooter from '../components/ModernFooter.astro';
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1.5rem;
 	}
+	.apps-grid-2 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
 
 	.tool-card {
 		background: var(--bg-card);
@@ -203,7 +187,6 @@ import ModernFooter from '../components/ModernFooter.astro';
 		border-radius: 999px;
 	}
 	.badge-mobile { background: #ecfdf5; color: #14532d; }
-	.badge-assistive { background: #ccfbf1; color: #115e59; }
 	.badge-code { background: #fef3c7; color: #92400e; }
 
 	.tool-status { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); }
@@ -214,7 +197,6 @@ import ModernFooter from '../components/ModernFooter.astro';
 
 	.spec-list {
 		margin: 0;
-		padding-left: 1.15rem;
 		font-size: 0.84rem;
 		color: var(--text-secondary);
 		line-height: 1.55;

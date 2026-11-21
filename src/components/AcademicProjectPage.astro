@@ -1,5 +1,6 @@
 ---
-import { getRelatedWorks, PUBLICATIONS, type Publication } from '../data/publications';
+import type { Publication } from '../data/publications';
+import { PUBLICATIONS } from '../data/publications';
 
 export interface Props {
   pub: Publication;
@@ -7,127 +8,133 @@ export interface Props {
 
 const { pub } = Astro.props;
 
+const cleanDoi = pub.doi ? pub.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').trim() : '';
+const doiUrl = cleanDoi ? `https://doi.org/${cleanDoi}` : '';
+const isPriorWork = pub.isSaailLab === false;
+const isPreprint = pub.category === 'preprint';
+const isThesis = pub.slug === 'intelligent-greenhouse-arduino-2016';
+const isPdfUrl = Boolean(pub.paperUrl && (/\.pdf($|\?)/i.test(pub.paperUrl) || /openreview\.net\/pdf/i.test(pub.paperUrl)));
 const canonicalUrl = `https://saaillab.github.io/papers/${pub.slug}/`;
-const relatedWorks = getRelatedWorks(pub.slug, 6);
-const cleanDoi = pub.doi
-  ? pub.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').trim()
-  : '';
-const doiUrl = cleanDoi ? `https://doi.org/${cleanDoi}` : undefined;
-const ogImage = pub.teaserImage
+const ogImageUrl = pub.teaserImage
   ? `https://saaillab.github.io${pub.teaserImage}`
   : 'https://saaillab.github.io/images/logo/saail-logo.png';
-const hasEqualAuthors = pub.authors.some((a) => a.equal);
 
-const isPriorWork = pub.isSaailLab === false;
-const isUnderReview = pub.category === 'preprint';
+const citedPubs = PUBLICATIONS.filter((p) => p.slug !== pub.slug).slice(0, 8);
 
-// Anonymize venue text for active under-review manuscripts to protect peer review
-const displayVenueShort = isUnderReview ? `Under Peer Review · ${pub.year}` : pub.venueShort;
-const displayVenueFull = isUnderReview ? `Manuscript Under Peer Review (${pub.year})` : `${pub.venue} (${pub.month} ${pub.year})`;
-const displayStatus = isUnderReview ? 'Under Peer Review' : pub.status;
+// Remap affiliations sequentially 1..k so numbers never skip (e.g. 1, 2, 5, 6 -> 1, 2, 3, 4)
+const rawUsedIndices: number[] = [];
+pub.authors.forEach((a) => {
+  (a.affiliations || []).forEach((idx) => {
+    if (!rawUsedIndices.includes(idx)) rawUsedIndices.push(idx);
+  });
+});
+rawUsedIndices.sort((a, b) => a - b);
 
-// One primary result figure per section (matching horwitz.ai/probex layout discipline)
-const primaryFigure = pub.figures && pub.figures.length > 0 ? pub.figures[0] : undefined;
+const remapAff = new Map<number, number>();
+const visibleAffiliations: { num: number; label: string }[] = [];
+if (rawUsedIndices.length > 0) {
+  rawUsedIndices.forEach((origIdx) => {
+    const label = pub.affiliations[origIdx - 1];
+    if (label) {
+      const seq = visibleAffiliations.length + 1;
+      remapAff.set(origIdx, seq);
+      visibleAffiliations.push({ num: seq, label });
+    }
+  });
+} else {
+  pub.affiliations.forEach((label, idx) => {
+    visibleAffiliations.push({ num: idx + 1, label });
+  });
+}
 
-const schemaJson = JSON.stringify({
+const hasFigures = Boolean(pub.figures && pub.figures.length > 0);
+const hasResults = Boolean(
+  (pub.tables && pub.tables.length > 0) || (pub.contributions && pub.contributions.length > 0)
+);
+const resultsAltBand = hasFigures ? 'section-band' : 'section-white';
+const bibtexAltBand =
+  hasResults
+    ? resultsAltBand === 'section-band'
+      ? 'section-white'
+      : 'section-band'
+    : hasFigures
+      ? 'section-band'
+      : 'section-white';
+
+const scholarLd: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'ScholarlyArticle',
   headline: pub.title,
   name: pub.title,
-  description: pub.tldr || pub.abstract,
   datePublished: pub.dateISO,
+  description: pub.tldr,
   url: canonicalUrl,
-  image: ogImage,
-  keywords: pub.keywords.join(', '),
-  inLanguage: 'en',
-  isAccessibleForFree: true,
+  image: ogImageUrl,
   author: pub.authors.map((a) => ({
     '@type': 'Person',
     name: a.name,
     ...(a.url ? { url: a.url } : {})
   })),
-  publisher: {
-    '@type': 'Organization',
-    name: isUnderReview ? 'Under Peer Review' : pub.venue
-  },
   ...(doiUrl ? { sameAs: doiUrl, identifier: cleanDoi } : {})
-});
+};
 
-const breadcrumbJson = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'SAAIL Lab',
-      item: 'https://saaillab.github.io/'
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Publications',
-      item: 'https://saaillab.github.io/publications/'
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: pub.shortTitle || pub.title,
-      item: canonicalUrl
-    }
-  ]
-});
-
-const totalPapersCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).length;
+if (!isPreprint && !isThesis) {
+  scholarLd.isPartOf = {
+    '@type': pub.category === 'journal' ? 'Periodical' : 'PublicationVolume',
+    name: pub.venue
+  };
+}
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{pub.shortTitle ? `${pub.shortTitle} | ` : ''}{pub.title}</title>
-  <meta name="description" content={pub.tldr || pub.abstract.slice(0, 160)} />
+  <title>{pub.shortTitle || pub.title} | SAAIL Lab</title>
+  <meta name="description" content={pub.tldr} />
   <meta name="keywords" content={pub.keywords.join(', ')} />
-  <meta name="author" content={pub.authors.map((a) => a.name).join(', ')} />
-  <link rel="icon" type="image/png" href="/images/logo/saail-crest.png" />
   <link rel="canonical" href={canonicalUrl} />
+  <link rel="alternate" hreflang="en" href={canonicalUrl} />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="icon" type="image/png" href="/images/logo/saail-crest.png" />
+  <link rel="apple-touch-icon" href="/images/logo/saail-crest.png" />
 
-  <!-- Highwire Press / Google Scholar Academic Meta Tags -->
-  <meta name="citation_title" content={pub.title} />
-  {pub.authors.map((author) => (
-    <meta name="citation_author" content={author.name} />
-  ))}
-  <meta name="citation_publication_date" content={pub.dateISO.replace(/-/g, '/')} />
-  {!isUnderReview && (pub.category === 'conference' || pub.category === 'workshop' ? (
-    <meta name="citation_conference_title" content={pub.venue} />
-  ) : (
-    <meta name="citation_journal_title" content={pub.venue} />
-  ))}
-  {cleanDoi && <meta name="citation_doi" content={cleanDoi} />}
-  {pub.paperUrl && pub.paperUrl.toLowerCase().endsWith('.pdf') && (
-    <meta name="citation_pdf_url" content={pub.paperUrl} />
-  )}
-  <meta name="citation_public_url" content={canonicalUrl} />
-
-  <!-- Open Graph & Social Previews -->
   <meta property="og:type" content="article" />
-  <meta property="og:site_name" content={isPriorWork ? 'Innocent Nyalala · Publication Archive' : 'SAAIL Lab · IIT Madras Zanzibar'} />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:title" content={pub.title} />
   <meta property="og:description" content={pub.tldr} />
   <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content={pub.shortTitle || pub.title} />
-  <meta property="twitter:description" content={pub.tldr} />
-  <meta property="twitter:image" content={ogImage} />
+  <meta property="og:site_name" content="SAAIL Lab | IIT Madras Zanzibar" />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:alt" content={pub.title} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@saaillab" />
+  <meta name="twitter:title" content={pub.title} />
+  <meta name="twitter:description" content={pub.tldr} />
+  <meta name="twitter:image" content={ogImageUrl} />
 
-  <!-- Fonts -->
+  <meta name="citation_title" content={pub.title} />
+  {pub.authors.map((a) => (
+    <meta name="citation_author" content={a.name} />
+  ))}
+  <meta name="citation_publication_date" content={String(pub.year)} />
+  {pub.category === 'journal' && !isThesis && (
+    <meta name="citation_journal_title" content={pub.venue} />
+  )}
+  {(pub.category === 'conference' || pub.category === 'workshop') && (
+    <meta name="citation_conference_title" content={pub.venue} />
+  )}
+  {isThesis && <meta name="citation_dissertation_institution" content="Nanjing Agricultural University" />}
+  {cleanDoi && <meta name="citation_doi" content={cleanDoi} />}
+  {isPdfUrl && pub.paperUrl && <meta name="citation_pdf_url" content={pub.paperUrl} />}
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Google Analytics -->
+  <script type="application/ld+json" set:html={JSON.stringify(scholarLd)} />
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MEPY7MLVN"></script>
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
@@ -135,155 +142,141 @@ const totalPapersCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).leng
     gtag('js', new Date());
     gtag('config', 'G-4MEPY7MLVN');
   </script>
-
-  <!-- Structured Data -->
-  <script type="application/ld+json" set:html={schemaJson} />
-  <script type="application/ld+json" set:html={breadcrumbJson} />
 </head>
 <body>
-  <!-- Clean Floating Controls (horwitz.ai/probex minimalist header chrome) -->
-  <a href="/publications" class="floating-back-btn" aria-label="Back to Publications">
-    <img src="/images/logo/saail-crest.png" alt="SAAIL Lab" width="22" height="22" class="floating-crest" />
-    <span>{isPriorWork ? 'Publications' : 'SAAIL Lab'}</span>
-  </a>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <div class="more-works-container">
-    <button
-      id="moreWorksBtn"
-      class="more-works-btn"
-      type="button"
-      aria-expanded="false"
-      aria-controls="moreWorksDropdown"
-    >
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M9 3h6v2l-1 1v4.5l4.8 7.6A2 2 0 0 1 17.1 21H6.9a2 2 0 0 1-1.7-2.9L10 10.5V6L9 5V3z"/>
-      </svg>
-      <span>More Works</span>
-      <svg id="moreWorksChevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-        <path d="M6 9l6 6 6-6"/>
-      </svg>
-    </button>
+  <nav class="top-utility" aria-label="Paper navigation">
+    <div class="more-works-wrap">
+      <button id="moreWorksBtn" type="button" class="more-works-btn" aria-expanded="false" aria-controls="moreWorksDropdown">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        <span>More Research</span>
+        <svg id="moreWorksChevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
 
-    <div id="moreWorksDropdown" class="more-works-dropdown" role="menu" hidden>
-      <div class="dropdown-header">
-        <span>{isPriorWork ? 'Related Publications' : 'More Works from SAAIL Lab'}</span>
-        <button id="closeMoreWorks" type="button" class="close-dropdown" aria-label="Close menu">&times;</button>
-      </div>
-      <div class="dropdown-list">
-        {relatedWorks.map((work) => (
-          <a href={`/papers/${work.slug}/`} class="dropdown-item" role="menuitem">
-            <div class="dropdown-item-title">{work.shortTitle || work.title}</div>
-            <div class="dropdown-item-meta">
-              <span>{work.category === 'preprint' ? `Under Review · ${work.year}` : work.venueShort}</span>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
-              </svg>
-            </div>
+      <div id="moreWorksDropdown" class="more-works-dropdown" hidden>
+        <div class="dropdown-head">
+          <span>SAAIL Lab · Research Directory</span>
+          <button id="closeMoreWorks" type="button" class="close-btn" aria-label="Close">&times;</button>
+        </div>
+        <div class="dropdown-links">
+          <a href="/" class="dropdown-item dropdown-home">
+            <span class="item-kicker">Lab Homepage</span>
+            <span class="item-title">SAAIL Lab · IIT Madras Zanzibar</span>
           </a>
-        ))}
+          <a href="/publications/" class="dropdown-item dropdown-home">
+            <span class="item-kicker">Full Archive</span>
+            <span class="item-title">View All {PUBLICATIONS.length} Papers &amp; Preprints</span>
+          </a>
+          <a href="/projects/" class="dropdown-item dropdown-home">
+            <span class="item-kicker">Grants &amp; Systems</span>
+            <span class="item-title">Active Lab Projects</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          {citedPubs.map((item) => {
+            const kickerLabel = item.venueShort.includes(String(item.year))
+              ? item.venueShort
+              : `${item.venueShort} · ${item.year}`;
+            return (
+              <a href={`/papers/${item.slug}/`} class="dropdown-item">
+                <span class="item-kicker">{kickerLabel}</span>
+                <span class="item-title">{item.shortTitle || item.title}</span>
+              </a>
+            );
+          })}
+        </div>
       </div>
-      <a href="/publications" class="dropdown-footer-link">Browse all {totalPapersCount} SAAIL Lab publications &rarr;</a>
     </div>
-  </div>
 
-  <main>
-    <!-- Hero Section -->
-    <section class="hero-section">
+    <a href="/publications/" class="back-pub-link">&larr; All Publications</a>
+  </nav>
+
+  <main id="main-content">
+    <!-- Hero Block (horwitz.ai/probex clean white layout) -->
+    <header class="paper-hero">
       <div class="container">
-        <div class="hero-badges">
-          <span class="venue-badge">{displayVenueShort}</span>
-          {pub.award && <span class="award-badge">{pub.award}</span>}
-          {!isUnderReview && pub.impactFactor && <span class="metric-pill">{pub.impactFactor}</span>}
-          {typeof pub.citations === 'number' && pub.citations > 0 && (
-            <span class="metric-pill">{pub.citations}+ Citations</span>
-          )}
-          {isPriorWork ? (
-            <span class="prior-badge">Prior Institutional Research · Pre-IITMZ ({pub.year})</span>
-          ) : (
-            <span class="status-pill">{displayStatus}</span>
-          )}
+        <h1 class="paper-title">{pub.title}</h1>
+
+        <div class="authors-row">
+          {pub.authors.map((author, idx) => {
+            const mappedAffs = (author.affiliations || [])
+              .map((num) => remapAff.get(num))
+              .filter((n): n is number => typeof n === 'number');
+            const supText = mappedAffs.join(',');
+            const comma = idx < pub.authors.length - 1 ? ', ' : '';
+            const authorClass = author.name === 'Innocent Nyalala' ? 'author-link pi-link' : 'author-link';
+            const spanClass = author.name === 'Innocent Nyalala' ? 'author-name pi-link' : 'author-name';
+            return (
+              <span class="author-token">{author.url ? <a href={author.url} target="_blank" rel="noopener" class={authorClass}>{author.name}</a> : <span class={spanClass}>{author.name}</span>}{supText && <sup class="aff-sup">{supText}</sup>}{comma}</span>
+            );
+          })}
         </div>
 
-        <h1 class="publication-title">{pub.title}</h1>
-
-        <div class="publication-authors">
-          {pub.authors.map((author, idx) => (
-            <span class="author-block">
-              {author.url ? (
-                <a href={author.url} target="_blank" rel="noopener">{author.name}</a>
-              ) : (
-                <span>{author.name}</span>
-              )}
-              {author.affiliations && author.affiliations.length > 0 && (
-                <sup>{author.affiliations.join(',')}</sup>
-              )}
-              {author.equal && <sup>*</sup>}
-              {idx < pub.authors.length - 1 && <span class="author-comma">, </span>}
-            </span>
-          ))}
-        </div>
-
-        <div class="publication-affiliations">
-          {pub.affiliations.map((aff, i) => (
-            <div class="affiliation-line">
-              <sup>{i + 1}</sup><span>{aff}</span>
+        <div class="affiliations-stack">
+          {visibleAffiliations.map((aff) => (
+            <div class="aff-line">
+              <sup>{aff.num}</sup>{aff.label}
             </div>
           ))}
         </div>
 
-        <div class="publication-venue-full">
-          <span>{displayVenueFull}</span>
-          {hasEqualAuthors && <span class="equal-note"> · *Indicates Equal Contribution</span>}
+        <div class="venue-line">
+          {isPreprint ? (
+            <span>Manuscript Under Peer Review ({pub.year})</span>
+          ) : (
+            <span>{pub.venue}</span>
+          )}
         </div>
+        {pub.award && <div class="award-line">{pub.award}</div>}
 
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-          {!isUnderReview && pub.paperUrl && (
-            <a href={pub.paperUrl} target="_blank" rel="noopener" class="action-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <div class="action-buttons" role="navigation" aria-label="Paper resources">
+          {pub.paperUrl && pub.paperUrl !== doiUrl && (
+            <a href={pub.paperUrl} target="_blank" rel="noopener" class="action-pill">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 <polyline points="14 2 14 8 20 8"/>
-                <line x1="16" y1="13" x2="8" y2="13"/>
-                <line x1="16" y1="17" x2="8" y2="17"/>
               </svg>
               <span>Paper</span>
             </a>
           )}
-
-          {!isUnderReview && doiUrl && (
-            <a href={doiUrl} target="_blank" rel="noopener" class="action-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          {doiUrl && (
+            <a href={doiUrl} target="_blank" rel="noopener" class="action-pill">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
               </svg>
               <span>DOI</span>
             </a>
           )}
-
           {pub.codeUrl && (
-            <a href={pub.codeUrl} target="_blank" rel="noopener" class="action-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            <a href={pub.codeUrl} target="_blank" rel="noopener" class="action-pill">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.31.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .322.216.698.825.576C20.565 21.795 24 17.298 24 12c0-6.63-5.37-12-12-12z"/>
               </svg>
               <span>Code</span>
             </a>
           )}
-
-          {pub.datasetUrl && (
-            <a href={pub.datasetUrl} target="_blank" rel="noopener" class="action-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          {pub.datasetUrl && pub.datasetUrl !== pub.codeUrl && (
+            <a href={pub.datasetUrl} target="_blank" rel="noopener" class="action-pill">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <ellipse cx="12" cy="5" rx="9" ry="3"/>
                 <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
                 <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
               </svg>
-              <span>Dataset / Split</span>
+              <span>Dataset</span>
             </a>
           )}
-
           {pub.posterUrl && (
-            <a href={pub.posterUrl} target="_blank" rel="noopener" class="action-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <a href={pub.posterUrl} target="_blank" rel="noopener" class="action-pill">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <rect x="3" y="3" width="18" height="18" rx="2"/>
                 <circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
@@ -291,133 +284,151 @@ const totalPapersCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).leng
               <span>Poster</span>
             </a>
           )}
-
-          <a href="#BibTeX" class="action-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M6 17h3l2-4V7H5v6h3M15 17h3l2-4V7h-6v6h3"/>
+          <a href="#bibtex" class="action-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M10 11H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v6c0 2.667-1.333 4.333-4 5"/>
+              <path d="M19 11h-4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v6c0 2.667-1.333 4.333-4 5"/>
             </svg>
             <span>BibTeX</span>
           </a>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- Teaser Visual + Summary (Single Clean Visual per Section, horwitz.ai/probex style) -->
-    <section class="teaser-section">
-      <div class="container container-narrow">
+    <!-- Teaser Figure + Plain Editorial Summary Paragraph -->
+    <section class:list={['teaser-section', { 'teaser-compact': !pub.teaserImage }]}>
+      <div class="container container-wide">
         {pub.teaserImage && (
           <figure class="teaser-figure">
-            <img
-              src={pub.teaserImage}
-              alt={pub.title}
-              loading="eager"
-              class="teaser-img zoomable-img"
-            />
+            <button
+              type="button"
+              class="zoom-trigger"
+              aria-label={`View full size: ${pub.title}`}
+            >
+              <img
+                src={pub.teaserImage}
+                alt={pub.title}
+                class="teaser-img zoomable-img"
+                loading="eager"
+              />
+            </button>
           </figure>
         )}
-        <div class={`tldr-block ${pub.teaserImage ? '' : 'tldr-standalone'}`}>
-          <p>
-            <strong>Summary:</strong> {pub.teaserCaption || pub.tldr}
-          </p>
-        </div>
+        <p class="teaser-summary">{pub.tldr}</p>
       </div>
     </section>
 
-    <!-- Abstract Section -->
-    <section class="band-section band-light" id="Abstract">
+    <!-- Abstract Band -->
+    <section id="abstract" class="section-band">
       <div class="container container-reading">
-        <h2 class="section-heading">Abstract</h2>
-        <div class="abstract-text">
+        <div class="section-title-block">
+          <h2>Abstract</h2>
+          <div class="title-bar"></div>
+        </div>
+        <div class="abstract-prose">
           <p>{pub.abstract}</p>
         </div>
-        <div class="keywords-row">
-          <span class="keywords-label">Keywords:</span>
-          {pub.keywords.map((kw) => (
-            <span class="keyword-chip">{kw}</span>
-          ))}
-        </div>
       </div>
     </section>
 
-    <!-- Quantitative Highlights & Contributions -->
-    {((pub.highlights && pub.highlights.length > 0) || (pub.contributions && pub.contributions.length > 0)) && (
-      <section class="band-section" id="Findings">
-        <div class="container container-reading">
-          <h2 class="section-heading">Key Findings &amp; Contributions</h2>
+    <!-- Descriptive Visual Figure Section -->
+    {hasFigures && (
+      <section id="methodology" class="section-white">
+        <div class="container container-wide">
+          <div class="section-title-block">
+            <h2>{pub.figureHeading || 'Visual Methodology & Analysis'}</h2>
+            <div class="title-bar"></div>
+          </div>
 
-          {pub.highlights && pub.highlights.length > 0 && (
-            <div class="highlights-grid">
-              {pub.highlights.map((item) => (
-                <div class="highlight-card">
-                  <div class="highlight-value">{item.value}</div>
-                  <div class="highlight-label">{item.label}</div>
-                  {item.sublabel && <div class="highlight-sub">{item.sublabel}</div>}
+          <div class="figures-stack">
+            {pub.figures!.map((fig) => (
+              <figure class="analysis-figure">
+                <button
+                  type="button"
+                  class="zoom-trigger"
+                  aria-label={`View full size: ${fig.alt || fig.caption}`}
+                >
+                  <img
+                    src={fig.src}
+                    alt={fig.alt || fig.caption}
+                    class="analysis-img zoomable-img"
+                    loading="lazy"
+                  />
+                </button>
+                <figcaption class="analysis-caption">{fig.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Results Section -->
+    {hasResults && (
+      <section id="results" class={resultsAltBand}>
+        <div class="container container-wide">
+          <div class="section-title-block">
+            <h2>Results</h2>
+            <div class="title-bar"></div>
+          </div>
+
+          {pub.contributions && pub.contributions.length > 0 && (
+            <div class="results-narrative">
+              <ul>
+                {pub.contributions.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {pub.tables && pub.tables.length > 0 && (
+            <div class="tables-stack">
+              {pub.tables.map((table) => (
+                <div class="table-block">
+                  <div class="table-header-text">
+                    <h3>{table.title}</h3>
+                    {table.caption && <p>{table.caption}</p>}
+                  </div>
+                  <div class="table-scroll">
+                    <table>
+                      <thead>
+                        <tr>
+                          {table.headers.map((h) => (
+                            <th>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {table.rows.map((row) => {
+                          const cell0 = row[0] || '';
+                          const isOurs =
+                            cell0.includes('(Ours)') ||
+                            cell0.startsWith('Total') ||
+                            cell0.includes('CropGuardNet') ||
+                            cell0.startsWith('Compositional') ||
+                            cell0.includes('(Decomposed)');
+                          return (
+                            <tr class:list={[{ 'row-highlight': isOurs }]}>
+                              {row.map((cell) => (
+                                <td>{cell}</td>
+                              ))}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               ))}
             </div>
           )}
-
-          {pub.contributions && pub.contributions.length > 0 && (
-            <ol class="contributions-list">
-              {pub.contributions.map((c) => (
-                <li>{c}</li>
-              ))}
-            </ol>
-          )}
         </div>
       </section>
     )}
 
-    <!-- Single Primary Result Visual Section (One image per section) -->
-    {primaryFigure && (
-      <section class="band-section band-light" id="Results">
-        <div class="container container-narrow">
-          <h2 class="section-heading">Key Empirical Figure</h2>
-          <figure class="single-result-figure">
-            <div class="single-img-frame">
-              <img src={primaryFigure.src} alt={primaryFigure.alt || primaryFigure.caption} loading="lazy" class="zoomable-img" />
-            </div>
-            <figcaption class="single-caption">{primaryFigure.caption}</figcaption>
-          </figure>
-        </div>
-      </section>
-    )}
-
-    <!-- Quantitative Benchmark Tables -->
-    {pub.tables && pub.tables.length > 0 && (
-      <section class={`band-section ${primaryFigure ? '' : 'band-light'}`} id="Benchmarks">
-        <div class="container container-reading">
-          <h2 class="section-heading">Benchmark Results</h2>
-          {pub.tables.slice(0, 2).map((tbl) => (
-            <div class="table-block">
-              <h3 class="table-title">{tbl.title}</h3>
-              {tbl.caption && <p class="table-caption">{tbl.caption}</p>}
-              <div class="table-scroll">
-                <table class="academic-table">
-                  <thead>
-                    <tr>
-                      {tbl.headers.map((h) => <th>{h}</th>)}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {tbl.rows.map((row) => (
-                      <tr>
-                        {row.map((cell, ci) => (
-                          <td class={ci === 0 ? 'cell-lead' : ''}>{cell}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
-
-    <!-- BibTeX Citation Section -->
-    <section class={`band-section ${(primaryFigure && !(pub.tables && pub.tables.length > 0)) ? '' : 'band-light'}`} id="BibTeX">
+    <!-- BibTeX & Citation -->
+    <section id="bibtex" class={bibtexAltBand}>
       <div class="container container-reading">
         <div class="bibtex-header">
           <h2>BibTeX</h2>
@@ -444,40 +455,39 @@ const totalPapersCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).leng
     </section>
   </main>
 
-  <!-- Minimalist Clean Footer (horwitz.ai/probex inspired) -->
   <footer class="project-footer">
     <div class="container container-reading">
       <div class="footer-brand">
         <img src="/images/logo/saail-crest.png" alt="SAAIL Lab Crest" width="24" height="24" />
         {isPriorWork ? (
           <span>
-            Prior institutional publication by <a href="https://inyalala.github.io" target="_blank" rel="noopener">Dr. Innocent Nyalala</a> ({pub.year}, prior to joining IIT Madras Zanzibar)
+            Prior institutional publication by <a href="https://inyalala.github.io/" target="_blank" rel="noopener">Dr. Innocent Nyalala</a> ({pub.year}, prior to joining IIT Madras Zanzibar)
           </span>
         ) : (
           <span>
-            <a href="/">SAAIL Lab</a> · Indian Institute of Technology Madras Zanzibar &amp; WSDSAI IIT Madras
+            <a href="/">SAAIL Lab</a> · School of Engineering and Science, Indian Institute of Technology Madras Zanzibar
           </span>
         )}
       </div>
       <p class="template-credit">
-        This page was adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> and is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+        Layout adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener">CC BY-SA 4.0 License</a>.
       </p>
       <div class="footer-links">
         <a href="/">SAAIL Lab Home</a>
         <span>·</span>
-        <a href="/publications">Publications</a>
+        <a href="/publications/">Publications</a>
         <span>·</span>
-        <a href="/projects">Projects</a>
+        <a href="/projects/">Projects</a>
         <span>·</span>
         <a href="https://github.com/saaillab" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>
 
-  <!-- Lightbox Modal for Full-Resolution Figure Inspection -->
+  <!-- Full-Resolution Figure Lightbox -->
   <div id="imgLightbox" class="img-lightbox" hidden role="dialog" aria-modal="true" aria-label="Enlarged figure preview">
     <button id="closeLightbox" type="button" class="lightbox-close" aria-label="Close enlarged view">&times;</button>
-    <img id="lightboxImg" src="" alt="" />
+    <img id="lightboxImg" alt="" />
   </div>
 
   <script is:inline>
@@ -502,7 +512,10 @@ const totalPapersCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).leng
           setOpen(dropdown.hidden);
         });
         if (closeBtn) {
-          closeBtn.addEventListener('click', function () { setOpen(false); });
+          closeBtn.addEventListener('click', function () {
+            setOpen(false);
+            btn.focus();
+          });
         }
         document.addEventListener('click', function (e) {
           if (!dropdown.hidden && !dropdown.contains(e.target) && !btn.contains(e.target)) {
@@ -514,53 +527,86 @@ const totalPapersCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).leng
       const lightbox = document.getElementById('imgLightbox');
       const lightboxImg = document.getElementById('lightboxImg');
       const closeLightbox = document.getElementById('closeLightbox');
-      document.querySelectorAll('.zoomable-img').forEach(function (imgEl) {
-        imgEl.title = 'Click to view full size';
-        imgEl.addEventListener('click', function () {
-          if (!lightbox || !lightboxImg) return;
-          lightboxImg.src = imgEl.src;
-          lightboxImg.alt = imgEl.alt || 'Figure';
-          lightbox.hidden = false;
-        });
+      let lastFocusEl = null;
+
+      function openLightbox(triggerEl, imgEl) {
+        if (!lightbox || !lightboxImg || !imgEl) return;
+        lastFocusEl = triggerEl;
+        lightboxImg.src = imgEl.src;
+        lightboxImg.alt = imgEl.alt || 'Figure';
+        lightbox.hidden = false;
+        document.body.style.overflow = 'hidden';
+        if (closeLightbox) closeLightbox.focus();
+      }
+
+      function hideLightbox() {
+        if (!lightbox) return;
+        lightbox.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocusEl && typeof lastFocusEl.focus === 'function') {
+          lastFocusEl.focus();
+        }
+      }
+
+      document.querySelectorAll('.zoom-trigger').forEach(function (triggerEl) {
+        const imgEl = triggerEl.querySelector('img');
+        if (!imgEl) return;
+        triggerEl.title = 'Click to view full size';
+        triggerEl.addEventListener('click', function () { openLightbox(triggerEl, imgEl); });
       });
+
       if (closeLightbox && lightbox) {
-        closeLightbox.addEventListener('click', function () { lightbox.hidden = true; });
+        closeLightbox.addEventListener('click', hideLightbox);
         lightbox.addEventListener('click', function (e) {
-          if (e.target === lightbox) lightbox.hidden = true;
+          if (e.target === lightbox) hideLightbox();
         });
       }
 
       document.addEventListener('keydown', function (e) {
+        if (e.key === 'Tab' && lightbox && !lightbox.hidden && closeLightbox) {
+          e.preventDefault();
+          closeLightbox.focus();
+        }
         if (e.key === 'Escape') {
-          if (dropdown && !dropdown.hidden) setOpen(false);
-          if (lightbox && !lightbox.hidden) lightbox.hidden = true;
+          if (dropdown && !dropdown.hidden) {
+            setOpen(false);
+            if (btn) btn.focus();
+          }
+          if (lightbox && !lightbox.hidden) hideLightbox();
         }
       });
 
       function attachCopy(btnId) {
         const copyBtn = document.getElementById(btnId);
         if (!copyBtn) return;
-        const originalHtml = copyBtn.innerHTML;
+        const originalHtml = copyBtn.getAttribute('data-orig-html') || copyBtn.innerHTML;
+        copyBtn.setAttribute('data-orig-html', originalHtml);
         copyBtn.addEventListener('click', async function () {
           const targetId = copyBtn.getAttribute('data-copy-target');
           const el = targetId ? document.getElementById(targetId) : null;
           const text = el ? (el.textContent || '').trim() : '';
           if (!text) return;
+          let copied = false;
           try {
             await navigator.clipboard.writeText(text);
+            copied = true;
+          } catch (_err) {
+            const area = document.createElement('textarea');
+            area.value = text;
+            area.style.position = 'fixed';
+            area.style.opacity = '0';
+            document.body.appendChild(area);
+            area.select();
+            try { copied = document.execCommand('copy'); } catch (_e2) {}
+            document.body.removeChild(area);
+          }
+          if (copied) {
             copyBtn.classList.add('copied');
             copyBtn.innerHTML = '<span>&#10003; Copied</span>';
             setTimeout(function () {
               copyBtn.classList.remove('copied');
-              copyBtn.innerHTML = originalHtml;
+              copyBtn.innerHTML = copyBtn.getAttribute('data-orig-html') || originalHtml;
             }, 1800);
-          } catch (_err) {
-            const area = document.createElement('textarea');
-            area.value = text;
-            document.body.appendChild(area);
-            area.select();
-            document.execCommand('copy');
-            document.body.removeChild(area);
           }
         });
       }
@@ -572,19 +618,15 @@ const totalPapersCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).leng
   <style>
     :root {
       --bg-page: #ffffff;
-      --bg-band: #f7f7f2;
-      --bg-card: #ffffff;
-      --text-main: #0c1a12;
-      --text-secondary: #2b3a32;
-      --text-muted: #5a6b61;
-      --border-light: #e2e6e0;
+      --bg-band: #f6f8fa;
+      --text-main: #111827;
+      --text-secondary: #374151;
+      --text-muted: #6b7280;
+      --border-light: #e5e7eb;
       --accent-primary: #14532d;
       --accent-hover: #0f3f22;
       --accent-gold: #b45309;
-      --btn-dark: #132219;
-      --shadow-sm: 0 2px 8px rgba(12, 26, 18, 0.05);
-      --shadow-md: 0 10px 28px rgba(12, 26, 18, 0.08);
-      --shadow-lg: 0 18px 42px rgba(12, 26, 18, 0.14);
+      --btn-dark: #24292f;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -593,671 +635,630 @@ const totalPapersCount = PUBLICATIONS.filter((p) => p.isSaailLab !== false).leng
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: var(--bg-page);
       color: var(--text-main);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
     }
 
-    a { color: var(--accent-primary); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--accent-primary);
+      color: #ffffff;
+      padding: 0.65rem 1.1rem;
+      font-weight: 700;
+      z-index: 999;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      border-radius: 0.5rem;
+    }
 
     .container {
       width: 100%;
-      max-width: 1020px;
+      max-width: 1040px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
-    .container-narrow { max-width: 920px; }
+
+    .container-wide { max-width: 980px; }
     .container-reading { max-width: 820px; }
 
-    /* Floating Controls */
-    .floating-back-btn {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      z-index: 60;
-      display: inline-flex;
+    .top-utility {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 0.45rem;
-      padding: 0.42rem 0.9rem 0.42rem 0.55rem;
-      background: rgba(255, 255, 255, 0.96);
-      color: var(--text-main);
-      border: 1px solid var(--border-light);
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      box-shadow: var(--shadow-sm);
-      backdrop-filter: blur(8px);
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    .floating-crest {
-      display: block;
-      border-radius: 50%;
-      object-fit: contain;
-    }
-    .floating-back-btn:hover {
-      background: #ffffff;
-      border-color: var(--accent-primary);
-      color: var(--accent-primary);
-      text-decoration: none;
-      transform: translateY(-1px);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.1rem 1.5rem 0;
     }
 
-    .more-works-container {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      z-index: 60;
+    .zoom-trigger {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: zoom-in;
     }
+
+    .more-works-wrap { position: relative; }
 
     .more-works-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.52rem 1rem;
-      background: rgba(255, 255, 255, 0.96);
-      color: var(--text-main);
-      border: 1px solid var(--border-light);
+      padding: 0.45rem 0.9rem;
       border-radius: 999px;
-      font-family: inherit;
+      border: 1px solid var(--border-light);
+      background: #ffffff;
+      color: var(--text-main);
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: var(--shadow-sm);
-      backdrop-filter: blur(8px);
-      transition: all 0.2s ease;
+      transition: all 0.16s ease;
     }
+
     .more-works-btn:hover {
       border-color: var(--accent-primary);
       color: var(--accent-primary);
-      box-shadow: var(--shadow-md);
     }
 
     .more-works-dropdown {
       position: absolute;
-      top: calc(100% + 0.55rem);
-      right: 0;
-      width: 340px;
-      max-width: calc(100vw - 2rem);
+      top: calc(100% + 0.5rem);
+      left: 0;
+      width: min(360px, 88vw);
       background: #ffffff;
       border: 1px solid var(--border-light);
-      border-radius: 14px;
-      box-shadow: var(--shadow-lg);
+      border-radius: 0.75rem;
+      box-shadow: 0 16px 36px rgba(17, 24, 39, 0.14);
+      z-index: 90;
       overflow: hidden;
     }
 
-    .dropdown-header {
+    .dropdown-head {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 0.8rem 1rem;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text-main);
-      border-bottom: 1px solid var(--border-light);
+      align-items: center;
+      padding: 0.75rem 1rem;
       background: var(--bg-band);
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
     }
 
-    .close-dropdown {
+    .close-btn {
+      background: none;
       border: none;
-      background: transparent;
-      color: var(--text-muted);
       font-size: 1.2rem;
       line-height: 1;
       cursor: pointer;
+      color: var(--text-muted);
     }
 
-    .dropdown-list {
-      max-height: 360px;
+    .dropdown-links {
+      max-height: 400px;
       overflow-y: auto;
       padding: 0.4rem;
     }
 
     .dropdown-item {
-      display: block;
-      padding: 0.65rem 0.75rem;
-      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
       color: var(--text-main);
-      text-decoration: none;
-      transition: background 0.15s ease;
     }
-    .dropdown-item:hover {
-      background: #ecfdf5;
-      text-decoration: none;
+
+    .dropdown-item:hover { background: var(--bg-band); }
+
+    .item-kicker {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent-primary);
     }
-    .dropdown-item-title {
+
+    .item-title {
       font-size: 0.86rem;
       font-weight: 600;
-      color: var(--text-main);
-      line-height: 1.35;
-    }
-    .dropdown-item-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.25rem;
-      font-size: 0.75rem;
-      color: var(--accent-primary);
+      line-height: 1.32;
     }
 
-    .dropdown-footer-link {
-      display: block;
-      text-align: center;
-      padding: 0.7rem 1rem;
-      font-size: 0.8rem;
+    .dropdown-divider {
+      height: 1px;
+      background: var(--border-light);
+      margin: 0.35rem 0;
+    }
+
+    .back-pub-link {
+      font-size: 0.88rem;
       font-weight: 600;
-      background: var(--bg-band);
-      border-top: 1px solid var(--border-light);
-      color: var(--accent-primary);
+      color: var(--text-secondary);
+      text-decoration: none;
     }
 
-    /* Hero */
-    .hero-section {
-      padding: 5.25rem 0 2rem;
+    .back-pub-link:hover { color: var(--accent-primary); }
+
+    .paper-hero {
+      padding: 2.5rem 0 1.75rem;
       text-align: center;
+      background: #ffffff;
     }
 
-    .hero-badges {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .venue-badge, .award-badge, .metric-pill, .status-pill, .prior-badge {
-      display: inline-block;
-      padding: 0.26rem 0.78rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-    }
-    .venue-badge {
-      background: #ecfdf5;
-      color: #14532d;
-      border: 1px solid #bbf7d0;
-    }
-    .award-badge {
-      background: #fef3c7;
-      color: #92400e;
-      border: 1px solid #fde68a;
-    }
-    .metric-pill {
-      background: #f4f4ef;
-      color: #1c2d23;
-      border: 1px solid #d7dcd5;
-    }
-    .status-pill {
-      background: #f8faf8;
-      color: #4b5c52;
-      border: 1px solid var(--border-light);
-    }
-    .prior-badge {
-      background: #f1f5f9;
-      color: #334155;
-      border: 1px solid #cbd5e1;
-    }
-
-    .publication-title {
-      font-size: clamp(1.65rem, 3.1vw, 2.55rem);
+    .paper-title {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      font-size: clamp(1.85rem, 3.6vw, 2.75rem);
       font-weight: 800;
-      line-height: 1.22;
-      letter-spacing: -0.02em;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
       color: var(--text-main);
-      margin: 0 auto 1.35rem;
+      margin: 0 auto 1.4rem;
       max-width: 920px;
     }
 
-    .publication-authors {
+    .authors-row {
       font-size: 1.12rem;
-      line-height: 1.75;
-      margin-bottom: 0.75rem;
-      color: var(--text-secondary);
-    }
-    .publication-authors a {
-      color: var(--accent-primary);
-      font-weight: 600;
-    }
-    .publication-authors sup {
-      font-size: 0.72em;
-      color: var(--text-muted);
-      margin-left: 1px;
+      line-height: 1.65;
+      color: var(--text-main);
+      margin: 0 auto 0.75rem;
+      max-width: 840px;
     }
 
-    /* Affiliations: each affiliation strictly on its own dedicated line */
-    .publication-affiliations {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.25rem;
-      font-size: 0.93rem;
-      color: var(--text-secondary);
-      max-width: 820px;
-      margin: 0 auto 0.75rem;
+    .author-token { white-space: nowrap; }
+    @media (max-width: 640px) { .author-token { white-space: normal; } }
+
+    .author-link {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-weight: 500;
     }
-    .affiliation-line {
-      line-height: 1.45;
-    }
-    .affiliation-line sup {
-      margin-right: 4px;
+
+    .author-link:hover { text-decoration: underline; }
+
+    .pi-link {
       font-weight: 700;
       color: var(--accent-primary);
     }
 
-    .publication-venue-full {
-      font-size: 0.98rem;
+    .author-name { font-weight: 500; }
+
+    .aff-sup {
+      font-size: 0.72em;
+      margin-left: 1px;
+      color: var(--text-muted);
+    }
+
+    .affiliations-stack {
+      font-size: 0.96rem;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin-bottom: 0.85rem;
+    }
+
+    .aff-line sup {
+      margin-right: 3px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .venue-line {
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text-main);
-      margin-bottom: 1.65rem;
+      margin-bottom: 0.35rem;
     }
-    .equal-note {
-      font-weight: 400;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-style: italic;
+
+    .award-line {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #b45309;
+      margin-bottom: 0.5rem;
     }
 
     .action-buttons {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.65rem;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
     }
-    .action-btn {
+
+    .action-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.6rem 1.25rem;
+      padding: 0.6rem 1.15rem;
+      border-radius: 999px;
       background: var(--btn-dark);
       color: #ffffff;
-      border-radius: 999px;
+      text-decoration: none;
       font-size: 0.9rem;
       font-weight: 600;
-      text-decoration: none;
-      transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
-    }
-    .action-btn:hover {
-      background: var(--accent-primary);
-      color: #ffffff;
-      text-decoration: none;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      transition: background 0.16s ease, transform 0.16s ease;
     }
 
-    /* Teaser */
+    .action-pill:hover {
+      background: var(--accent-primary);
+      transform: translateY(-1px);
+    }
+
     .teaser-section {
       padding: 1.25rem 0 3.25rem;
-    }
-    .teaser-figure {
-      margin: 0 0 1.25rem;
       background: #ffffff;
-      border: 1px solid var(--border-light);
-      border-radius: 14px;
-      padding: 0.9rem;
-      box-shadow: var(--shadow-sm);
     }
+
+    .teaser-compact {
+      padding: 0.5rem 0 2.25rem;
+    }
+
+    .teaser-figure {
+      margin: 0 auto 1.75rem;
+      text-align: center;
+    }
+
     .teaser-img {
       display: block;
       width: 100%;
-      max-height: 520px;
-      object-fit: contain;
-      border-radius: 8px;
+      max-width: 960px;
+      max-height: 1120px;
+      height: auto;
       margin: 0 auto;
-    }
-    .zoomable-img {
+      object-fit: contain;
+      border-radius: 0.5rem;
+      background: #ffffff;
       cursor: zoom-in;
     }
-    .tldr-block {
-      font-size: 1.03rem;
-      line-height: 1.72;
+
+    .teaser-summary {
+      max-width: 820px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 1.74;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    .section-band {
+      background: var(--bg-band);
+      padding: 3.75rem 0;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .section-white {
+      background: #ffffff;
+      padding: 3.75rem 0;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .section-title-block {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-title-block h2 {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      font-size: clamp(1.65rem, 2.5vw, 2.05rem);
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0 0 0.65rem;
+    }
+
+    .title-bar {
+      width: 48px;
+      height: 3px;
+      background: var(--accent-primary);
+      border-radius: 999px;
+      margin: 0 auto;
+    }
+
+    .abstract-prose p {
+      font-size: 1.06rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin: 0;
+      text-align: justify;
+    }
+
+    .figures-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .analysis-figure {
+      margin: 0;
+      text-align: center;
+    }
+
+    .analysis-img {
+      display: block;
+      width: 100%;
+      max-width: 960px;
+      max-height: 1180px;
+      height: auto;
+      margin: 0 auto 1.15rem;
+      object-fit: contain;
+      background: #ffffff;
+      border-radius: 0.5rem;
+      cursor: zoom-in;
+    }
+
+    .analysis-caption {
+      max-width: 820px;
+      margin: 0 auto;
+      font-size: 1.02rem;
+      line-height: 1.7;
       color: var(--text-secondary);
       text-align: left;
     }
-    .tldr-standalone {
-      background: var(--bg-band);
-      border: 1px solid var(--border-light);
-      border-left: 4px solid var(--accent-primary);
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-    }
-    .tldr-block p { margin: 0; }
 
-    /* Bands */
-    .band-section { padding: 3.5rem 0; }
-    .band-light { background: var(--bg-band); border-top: 1px solid #ebece6; border-bottom: 1px solid #ebece6; }
-
-    .section-heading {
-      font-size: 1.85rem;
-      font-weight: 800;
-      text-align: center;
-      color: var(--text-main);
-      margin: 0 0 2rem;
-      position: relative;
-      letter-spacing: -0.015em;
-    }
-    .section-heading::after {
-      content: '';
-      display: block;
-      width: 48px;
-      height: 3px;
-      margin: 0.65rem auto 0;
-      border-radius: 2px;
-      background: var(--accent-primary);
+    .results-narrative {
+      max-width: 820px;
+      margin: 0 auto 2.5rem;
     }
 
-    .abstract-text {
-      font-size: 1.04rem;
-      line-height: 1.82;
-      color: var(--text-secondary);
-      text-align: justify;
-    }
-    .abstract-text p { margin: 0 0 1rem; }
-
-    .keywords-row {
+    .results-narrative ul {
+      margin: 0;
+      padding-left: 1.25rem;
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.45rem;
-      margin-top: 1.5rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--border-light);
-    }
-    .keywords-label {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-right: 0.25rem;
-    }
-    .keyword-chip {
-      padding: 0.25rem 0.65rem;
-      background: #ffffff;
-      border: 1px solid var(--border-light);
-      border-radius: 6px;
-      font-size: 0.8rem;
+      flex-direction: column;
+      gap: 0.7rem;
+      font-size: 1.02rem;
+      line-height: 1.68;
       color: var(--text-secondary);
     }
 
-    /* Highlights & Contributions */
-    .highlights-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .highlight-card {
-      background: var(--bg-band);
-      border: 1px solid var(--border-light);
-      border-radius: 12px;
-      padding: 1.2rem 1rem;
-      text-align: center;
-    }
-    .highlight-value {
-      font-size: 1.45rem;
-      font-weight: 800;
-      color: var(--accent-primary);
-      line-height: 1.2;
-      margin-bottom: 0.3rem;
-      font-variant-numeric: tabular-nums;
-    }
-    .highlight-label {
-      font-size: 0.86rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-    .highlight-sub {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
+    .tables-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
     }
 
-    .contributions-list {
-      margin: 0;
-      padding-left: 1.35rem;
-      color: var(--text-secondary);
-      font-size: 1rem;
-      line-height: 1.72;
-    }
-    .contributions-list li {
-      margin-bottom: 0.75rem;
-    }
-
-    /* Single Clean Empirical Figure */
-    .single-result-figure {
-      margin: 0;
-      background: #ffffff;
-      border: 1px solid var(--border-light);
-      border-radius: 14px;
-      padding: 1.15rem;
-      box-shadow: var(--shadow-sm);
-    }
-    .single-img-frame {
-      text-align: center;
-      background: #ffffff;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .single-img-frame img {
-      max-width: 100%;
-      max-height: 520px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-    .single-caption {
-      margin-top: 1rem;
-      padding: 0.85rem 1rem;
-      background: var(--bg-band);
-      border-radius: 10px;
-      font-size: 0.94rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* Tables */
     .table-block {
-      margin-bottom: 2.25rem;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 0.65rem;
+      padding: 1.5rem;
     }
-    .table-block:last-child { margin-bottom: 0; }
-    .table-title {
-      font-size: 1.05rem;
+
+    .table-header-text h3 {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--text-main);
-      margin: 0 0 0.3rem;
+      margin: 0 0 0.35rem;
     }
-    .table-caption {
-      font-size: 0.88rem;
+
+    .table-header-text p {
+      font-size: 0.9rem;
       color: var(--text-muted);
-      margin: 0 0 0.75rem;
+      margin: 0 0 1rem;
     }
-    .table-scroll {
-      overflow-x: auto;
-      border: 1px solid var(--border-light);
-      border-radius: 12px;
-      background: #ffffff;
-    }
-    .academic-table {
+
+    .table-scroll { overflow-x: auto; }
+
+    table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.9rem;
       font-variant-numeric: tabular-nums;
     }
-    .academic-table th {
-      background: var(--bg-band);
-      color: var(--text-main);
-      font-weight: 700;
-      text-align: left;
-      padding: 0.75rem 0.95rem;
-      border-bottom: 2px solid var(--border-light);
-      white-space: nowrap;
-    }
-    .academic-table td {
-      padding: 0.7rem 0.95rem;
-      border-bottom: 1px solid #eef1ec;
-      color: var(--text-secondary);
-      white-space: nowrap;
-    }
-    .academic-table tbody tr:last-child td { border-bottom: none; }
-    .academic-table tbody tr:hover { background: #f8faf8; }
-    .academic-table .cell-lead { font-weight: 600; color: var(--text-main); }
 
-    /* BibTeX */
+    th {
+      text-align: left;
+      padding: 0.65rem 0.75rem;
+      background: var(--bg-band);
+      border-bottom: 2px solid var(--border-light);
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+
+    .row-highlight {
+      background: rgba(20, 83, 45, 0.06);
+      font-weight: 700;
+    }
+
+    .row-highlight td { color: var(--text-main); }
+
     .bibtex-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.85rem;
+      align-items: center;
+      margin-bottom: 0.9rem;
     }
+
     .bibtex-header h2 {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 700;
       margin: 0;
-      font-size: 1.55rem;
-      font-weight: 800;
-      color: var(--text-main);
     }
+
     .copy-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.45rem 0.95rem;
-      background: var(--accent-primary);
-      color: #ffffff;
-      border: none;
-      border-radius: 8px;
-      font-family: inherit;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 0.45rem;
+      border: 1px solid var(--border-light);
+      background: #ffffff;
+      color: var(--text-main);
       font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.16s ease;
     }
-    .copy-btn:hover { background: var(--accent-hover); }
-    .copy-btn.copied { background: var(--accent-gold); }
-    .copy-btn-subtle {
-      background: #e5e8e2;
-      color: var(--text-main);
-      padding: 0.3rem 0.75rem;
-      font-size: 0.78rem;
+
+    .copy-btn:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
     }
-    .copy-btn-subtle:hover { background: #d5dad1; }
+
+    .copy-btn.copied {
+      background: var(--accent-primary);
+      color: #ffffff;
+      border-color: var(--accent-primary);
+    }
 
     .bibtex-pre {
-      margin: 0 0 1.25rem;
-      padding: 1.25rem;
-      background: #ffffff;
+      margin: 0 0 1.4rem;
+      padding: 1.2rem 1.35rem;
+      border-radius: 0.6rem;
+      background: #f3f4f6;
       border: 1px solid var(--border-light);
-      border-radius: 12px;
       overflow-x: auto;
-      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.84rem;
       line-height: 1.6;
       color: var(--text-main);
     }
 
     .apa-box {
-      background: #ffffff;
-      border: 1px solid var(--border-light);
-      border-radius: 12px;
       padding: 1rem 1.25rem;
-    }
-    .apa-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.4rem;
-    }
-    .apa-label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-    }
-    .apa-text {
-      margin: 0;
-      font-size: 0.92rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
+      border-radius: 0.6rem;
+      border: 1px solid var(--border-light);
+      background: #ffffff;
     }
 
-    /* Footer */
-    .project-footer {
-      padding: 2.5rem 0 2.75rem;
-      text-align: center;
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-light);
-      background: #ffffff;
+    .apa-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
     }
+
+    .apa-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .apa-text {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      overflow-wrap: anywhere;
+    }
+
+    .project-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border-light);
+      padding: 2.5rem 0;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
     .footer-brand {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 0.55rem;
-      margin-bottom: 0.65rem;
       font-weight: 600;
       color: var(--text-main);
-    }
-    .footer-brand img {
-      border-radius: 50%;
-    }
-    .template-credit {
-      max-width: 680px;
-      margin: 0 auto 0.85rem;
-      line-height: 1.55;
-      font-size: 0.8rem;
-    }
-    .footer-links {
-      display: flex;
+      margin-bottom: 0.75rem;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.6rem;
-      font-weight: 600;
-      font-size: 0.84rem;
     }
 
-    /* Lightbox */
+    .footer-brand a, .template-credit a, .footer-links a {
+      color: var(--accent-primary);
+      text-decoration: none;
+    }
+
+    .footer-brand a:hover, .template-credit a:hover, .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .template-credit {
+      margin: 0 0 0.75rem;
+      font-size: 0.82rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      font-weight: 600;
+    }
+
     .img-lightbox {
       position: fixed;
       inset: 0;
-      z-index: 100;
-      background: rgba(9, 19, 13, 0.88);
+      background: rgba(17, 24, 39, 0.92);
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      padding: 1.5rem;
     }
+
     .img-lightbox[hidden] { display: none; }
+
     .img-lightbox img {
-      max-width: 94vw;
-      max-height: 90vh;
+      max-width: 96vw;
+      max-height: 92vh;
       object-fit: contain;
-      border-radius: 8px;
       background: #ffffff;
+      border-radius: 0.45rem;
       padding: 0.4rem;
     }
+
     .lightbox-close {
       position: fixed;
       top: 1rem;
-      right: 1.25rem;
-      background: #ffffff;
-      color: var(--text-main);
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.16);
       border: none;
-      width: 38px;
-      height: 38px;
-      border-radius: 999px;
-      font-size: 1.45rem;
-      line-height: 1;
+      color: #ffffff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.8rem;
       cursor: pointer;
     }
 
-    @media (max-width: 768px) {
-      .hero-section { padding-top: 4.5rem; }
-      .abstract-text { text-align: left; }
-      .floating-back-btn span { display: none; }
-      .floating-back-btn { padding: 0.42rem; }
+    :focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+
+    .lightbox-close:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .abstract-prose p { text-align: left; }
+      .teaser-summary { text-align: left; font-size: 1.02rem; }
+      .action-pill { padding: 0.5rem 0.95rem; font-size: 0.85rem; }
     }
   </style>
 </body>

@@ -7,11 +7,11 @@ import ModernFooter from '../components/ModernFooter.astro';
 <Layout
 	title="Research Pillars | SAAIL Lab | IIT Madras Zanzibar"
 	description="Scientific pillars of SAAIL Lab across Precision Agriculture and the Blue Economy (CashewAI, Cloves, Seaweed, CropGuardNet), Swahili NLP and CultureSEEDS AI Safety, Responsible AI, and Healthcare."
-	canonical="https://saaillab.github.io/research"
+	canonical="https://saaillab.github.io/research/"
 >
 	<ModernHeader currentPage="research" />
 
-	<main>
+	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
 				<span class="page-eyebrow">Research Agenda</span>
@@ -45,7 +45,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</p>
 						<div class="subgrid">
 							<div class="subbox">
-								<h4>Commodity &amp; Crop Systems</h4>
+								<h3>Commodity &amp; Crop Systems</h3>
 								<ul>
 									<li><strong>Clove Quality Grading:</strong> ETRI Journal (2026) compositional XAI grading (99.45% F1, 100% EER), CVPR 2026 V4A CLOVES-4603 benchmark (4,603 images, 99.67% ResNet-50), ZSTC-Clove-V1 feasibility (5,298 single cloves), and participatory AfriCHI co-design.</li>
 									<li><strong>CropGuard Cross-Crop Diagnostics:</strong> CropGuardNet (481,574 params, 5.00 ms CPU ONNX) unites leak-free UUID/pHash deduplication (35,420 unique leaf images across 8 crops, 38 classes) with four-method XAI faithfulness.</li>
@@ -53,18 +53,19 @@ import ModernFooter from '../components/ModernFooter.astro';
 								</ul>
 							</div>
 							<div class="subbox">
-								<h4>Coastal Blue Economy &amp; Telemetry</h4>
+								<h3>Coastal Blue Economy &amp; Telemetry</h3>
 								<ul>
 									<li><strong>Seaweed Heatwave &amp; Disease Early Warning:</strong> Tracking <em>Eucheuma</em> and <em>Kappaphycus</em> Ice-Ice disease outbreaks triggered by sea-surface heatwaves across Zanzibar coastal farms.</li>
 									<li><strong>Aquaculture &amp; Coral Restoration:</strong> Computer vision monitoring for coastal mariculture and reef biodiversity health in partnership with Zafiri and regional marine institutions.</li>
-									<li><strong>3D Livestock &amp; Horticultural Grading:</strong> Kinect v2 depth reconstruction (`Poultry Science 2024`, `R² = 0.9988`), tomato/egg volume grading under occlusion, and RuTAG IoT crop hubs.</li>
+									<li><strong>3D Livestock &amp; Horticultural Grading:</strong> Kinect v2 depth reconstruction (Poultry Science 2024, R² = 0.9988), tomato and egg volume grading under occlusion, and RuTAG IoT crop hubs.</li>
 								</ul>
 							</div>
 						</div>
 						<div class="panel-actions">
-							<a href="/papers/clove-xai-etri2026/" class="btn btn-primary">ETRI 2026 Clove XAI</a>
-							<a href="/papers/cropguardnet/" class="btn btn-secondary">CropGuardNet Paper</a>
-							<a href="/projects#agri" class="btn btn-secondary">Funded Ag Projects &rarr;</a>
+							<a href="/projects/cropguard-pathology/" class="btn btn-primary">CropGuardNet Project Site</a>
+							<a href="/projects/ubora-ai/" class="btn btn-secondary">Ubora-AI Clove Grading</a>
+							<a href="/projects/cashew-ai/" class="btn btn-secondary">CashewAI</a>
+							<a href="/projects/seaweed-blue-economy/" class="btn btn-secondary">Seaweed Blue Economy</a>
 						</div>
 					</div>
 				</article>
@@ -89,23 +90,24 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</p>
 						<div class="subgrid">
 							<div class="subbox">
-								<h4>CultureSEEDS &amp; East African Evaluation</h4>
+								<h3>CultureSEEDS &amp; East African Evaluation</h3>
 								<ul>
 									<li><strong>CultureSEEDS East Africa Track:</strong> Designing culturally grounded safety vs. appropriateness evaluation datasets across 10+ African languages anchored in Swahili (Kiunguja/standard variants), Dholuo, Gikuyu, and regional speech registers.</li>
 									<li><strong>Multimodal &amp; Domain Spoken QA:</strong> Joint work with Prof. Nirav Bhatt and student teams developing spoken health and agricultural advisory benchmarks across Kiswahili dialects.</li>
 								</ul>
 							</div>
 							<div class="subbox">
-								<h4>Zanzibar Swahili Corpus &amp; Dira</h4>
+								<h3>Zanzibar Swahili Corpus &amp; Dira</h3>
 								<ul>
-									<li><strong>Dira Native vs. Translated Detector:</strong> Built with BTech researchers to measure and detect machine-translated ("translationese") Swahili vs. authentic coastal native prose across zero-shot, prompted, and fine-tuned LLMs.</li>
+									<li><strong>Dira Native vs. Translated Detector:</strong> Built with BS researchers to measure and detect machine-translated ("translationese") Swahili vs. authentic coastal native prose across zero-shot, prompted, and fine-tuned LLMs.</li>
 									<li><strong>Storytelling &amp; Cultural Preservation:</strong> IITMZ grant (Rs. 10.00 lakhs with Co-PI Hope K. McCoy) preserving East African oral and community narratives through participatory machine learning.</li>
 								</ul>
 							</div>
 						</div>
 						<div class="panel-actions">
-							<a href="/projects#cultureseeds" class="btn btn-primary">CultureSEEDS Project</a>
-							<a href="/datasets#language" class="btn btn-secondary">Swahili Datasets</a>
+							<a href="/projects/cultureseeds/" class="btn btn-primary">CultureSEEDS Project Website</a>
+							<a href="/projects/swahili-dira/" class="btn btn-secondary">Swahili &amp; Dira Project</a>
+							<a href="/datasets/#language" class="btn btn-secondary">Swahili Datasets</a>
 						</div>
 					</div>
 				</article>
@@ -131,14 +133,14 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</p>
 						<div class="subgrid">
 							<div class="subbox">
-								<h4>Technical Auditing &amp; Edge Compression</h4>
+								<h3>Technical Auditing &amp; Edge Compression</h3>
 								<ul>
 									<li><strong>Deployment Gap Score (DGS-Bench):</strong> Best Poster Award at Deep Learning Indaba 2026 (18/114 accepted); exposes negative raw-accuracy mirages (-5.96 pp) where macro-F1 confirms +8.19 pp field degradation.</li>
 									<li><strong>Procedural &amp; Data Boundaries:</strong> Documenting DCGAN failure modes (-23.2 pp at n=25), few-shot budget curves (DSA 2026), and the AgriAI Bias Card across PlantVillage (4/10) vs. iCassava (9/10).</li>
 								</ul>
 							</div>
 							<div class="subbox">
-								<h4>African AI Governance &amp; CARA-FM</h4>
+								<h3>African AI Governance &amp; CARA-FM</h3>
 								<ul>
 									<li><strong>CARA-FM Theoretical Agenda:</strong> Best Poster at DLI 2025 (PMLR Vol. 302), defining 5M-50M Tiny/Lite/Edge architectures matching 1-3 GB East African hardware.</li>
 									<li><strong>Policy Harmonization:</strong> Comparative national strategy analysis across Ethiopia, Kenya, and Rwanda (Oxford TAIS 2026), the Draft EAC Strategy (AAIAC 2026), and AU-ASEAN AI sovereignty (AAAI 2026, NeurIPS 2025).</li>
@@ -153,44 +155,43 @@ import ModernFooter from '../components/ModernFooter.astro';
 					</div>
 				</article>
 
-				<!-- Pillar 4: Healthcare & Assistive AI -->
+				<!-- Pillar 4: Healthcare & Clinical AI -->
 				<article id="healthcare" class="pillar-panel">
 					<div class="panel-header panel-health">
 						<div class="panel-header-inner">
 							<span class="panel-index">Pillar 04</span>
-							<h2>Maternal Healthcare AI &amp; Assistive Systems</h2>
+							<h2>Healthcare &amp; Clinical AI</h2>
 							<div class="panel-tags">
 								<span>PlacentaVision</span>
 								<span>BAFNet Polyp Seg.</span>
 								<span>Preterm Risk ML</span>
-								<span>E-Vision Assistive App</span>
+								<span>Federated Privacy</span>
 							</div>
 						</div>
 					</div>
 					<div class="panel-body">
 						<p class="panel-intro">
-							High-stakes clinical AI requires tight anatomical boundary fidelity and calibrated risk scoring in low-resource clinics. Through international partnerships, we advance maternal ultrasound/optical analysis, endoscopic segmentation, and mobile assistive tools.
+							High-stakes clinical AI requires tight anatomical boundary fidelity, privacy preservation, and calibrated risk scoring in low-resource hospitals. Through international clinical consortia, we advance maternal ultrasound/optical analysis and endoscopic segmentation.
 						</p>
 						<div class="subgrid">
 							<div class="subbox">
-								<h4>Clinical Imaging &amp; Biomarker Modeling</h4>
+								<h3>Clinical Imaging &amp; Biomarker Modeling</h3>
 								<ul>
 									<li><strong>PlacentaVision Consortium:</strong> International collaboration with Prof. Alison Gernand (Penn State University) and maternal health clinics predicting placental weight, perfusion, and dysfunction risk non-invasively.</li>
 									<li><strong>BAFNet Colorectal Segmentation:</strong> Published in <em>Expert Systems with Applications</em> (2025, IF 7.5), reaching 0.914 EndoScene Dice in 5.98M params (3.59 GFLOPs).</li>
-									<li><strong>Maternal &amp; Neonatal Risk ML:</strong> Metabolomic preterm birth prediction with Center for Public Health Kinetics (Pemba) and 4 co-supervised PhD researchers.</li>
 								</ul>
 							</div>
 							<div class="subbox">
-								<h4>Privacy-Preserving &amp; Assistive Mobile Systems</h4>
+								<h3>Maternal Cohorts &amp; Federated Privacy</h3>
 								<ul>
-									<li><strong>E-Vision Spatial Navigation:</strong> On-device Android depth estimation and object detection delivering low-latency voice guidance for visually impaired users without internet reliance.</li>
-									<li><strong>Federated Facial Privacy:</strong> MTech research protecting sensitive identity biometrics under distributed federated training.</li>
+									<li><strong>Maternal &amp; Neonatal Risk ML:</strong> Metabolomic preterm birth prediction with Center for Public Health Kinetics (Pemba) and 4 co-supervised PhD researchers alongside MTech SHAP biomarker pipelines.</li>
+									<li><strong>Privacy-Preserving Learning:</strong> Federated optimization protocols protecting sensitive biomedical and field edge-device data across distributed institutions.</li>
 								</ul>
 							</div>
 						</div>
 						<div class="panel-actions">
-							<a href="/papers/bafnet-polyp-2025/" class="btn btn-primary">BAFNet Paper</a>
-							<a href="/tools" class="btn btn-secondary">Assistive &amp; Field Apps &rarr;</a>
+							<a href="/projects/placentavision/" class="btn btn-primary">PlacentaVision Project Site</a>
+							<a href="/papers/bafnet-polyp-2025/" class="btn btn-secondary">BAFNet Paper (ESWA)</a>
 						</div>
 					</div>
 				</article>
@@ -221,10 +222,10 @@ import ModernFooter from '../components/ModernFooter.astro';
 		color: #ffffff;
 	}
 
-	.panel-agri { background: linear-gradient(125deg, #0d3b22 0%, #166534 100%); }
-	.panel-lang { background: linear-gradient(125deg, #451a03 0%, #b45309 100%); }
+	.panel-agri { background: linear-gradient(125deg, #0d3b22 0%, #14532d 100%); }
+	.panel-lang { background: linear-gradient(125deg, #451a03 0%, #92400e 100%); }
 	.panel-resp { background: linear-gradient(125deg, #0c1a12 0%, #1e3a2f 100%); }
-	.panel-health { background: linear-gradient(125deg, #133845 0%, #0f766e 100%); }
+	.panel-health { background: linear-gradient(125deg, #0f2d38 0%, #115e59 100%); }
 
 	.panel-index {
 		display: inline-block;
@@ -254,9 +255,9 @@ import ModernFooter from '../components/ModernFooter.astro';
 		font-weight: 600;
 		padding: 0.22rem 0.68rem;
 		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.16);
+		background: rgba(0, 0, 0, 0.24);
 		color: #ffffff;
-		border: 1px solid rgba(255, 255, 255, 0.25);
+		border: 1px solid rgba(255, 255, 255, 0.32);
 	}
 
 	.panel-body {
@@ -284,7 +285,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 		padding: 1.35rem 1.45rem;
 	}
 
-	.subbox h4 {
+	.subbox h3 {
 		font-size: 1rem;
 		color: var(--accent-primary);
 		margin-bottom: 0.75rem;

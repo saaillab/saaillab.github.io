@@ -62,7 +62,7 @@ const repositories = [
     badge: 'ICLR 2026 Workshop',
     language: 'Markdown / Governance',
     description:
-      'Governance audit templates and community-participatory validation protocols accompanying our ICLR 2026 Workshop paper on Trustworthy AI in Africa.',
+      'Data-centric learning bias intervention unifying fairness, robustness, and out-of-distribution generalization at the ICLR 2026 Workshop on Principled Design for Trustworthy AI.',
     repoUrl: 'https://github.com/saaillab/trustworthy-ai-iclr2026',
     pagesUrl: 'https://saaillab.github.io/trustworthy-ai-iclr2026/',
     projectUrl: '/papers/trustworthy-ai-iclr2026/'
@@ -87,22 +87,24 @@ const repositories = [
 >
   <ModernHeader currentPage="resources" />
 
-  <main class="gh-main">
-    <section class="gh-hero">
-      <div class="gh-container">
-        <span class="gh-eyebrow">OPEN-SOURCE CODE &amp; REPRODUCIBILITY · GITHUB.COM/SAAILLAB</span>
-        <h1>Open-Source GitHub Repositories</h1>
-        <p class="gh-lead">
+  <main id="main-content" class="gh-main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="page-eyebrow">Open-Source Code &amp; Reproducibility · github.com/saaillab</span>
+        <h1 class="page-title">Open-Source GitHub Repositories</h1>
+        <p class="page-lead">
           Published SAAIL Lab systems release modular PyTorch/ONNX code, CITATION.cff metadata, deduplication manifests, and standalone project documentation under open licenses.
         </p>
-        <a href="https://github.com/saaillab" target="_blank" rel="noopener" class="gh-org-btn">
-          Visit github.com/saaillab &rarr;
-        </a>
+        <div class="gh-hero-cta">
+          <a href="https://github.com/saaillab" target="_blank" rel="noopener" class="gh-org-btn">
+            Visit github.com/saaillab &rarr;
+          </a>
+        </div>
       </div>
     </section>
 
     <section class="gh-list-band">
-      <div class="gh-container">
+      <div class="container">
         <div class="gh-grid">
           {repositories.map((repo) => (
             <article class="gh-card">
@@ -131,16 +133,7 @@ const repositories = [
 
 <style>
   .gh-main { background: var(--bg-primary); color: var(--text-primary); }
-  .gh-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-  .gh-hero {
-    padding: 4rem 0 2.75rem;
-    text-align: center;
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
-  }
-  .gh-eyebrow { font-size: 0.78rem; font-weight: 800; color: var(--accent-primary); letter-spacing: 0.06em; }
-  .gh-hero h1 { font-size: clamp(2rem, 4vw, 2.85rem); font-weight: 800; margin: 0.5rem 0 0.85rem; }
-  .gh-lead { max-width: 720px; margin: 0 auto 1.5rem; color: var(--text-secondary); font-size: 1.05rem; }
+  .gh-hero-cta { margin-top: 1.5rem; }
   .gh-org-btn {
     display: inline-flex;
     padding: 0.72rem 1.4rem;
@@ -150,12 +143,15 @@ const repositories = [
     font-weight: 600;
     text-decoration: none;
   }
+  :global([data-theme="dark"]) .gh-org-btn,
+  :global([data-theme="dark"]) .g-btn-primary,
+  :global([data-theme="dark"]) .g-btn-primary:hover { color: #062111; }
   .gh-org-btn:hover { background: var(--accent-secondary); }
 
   .gh-list-band { padding: 3rem 0 4.5rem; }
   .gh-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: 1.35rem;
   }
   .gh-card {
@@ -170,7 +166,8 @@ const repositories = [
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.5rem;
     margin-bottom: 0.65rem;
   }
   .gh-lang { font-size: 0.76rem; font-weight: 700; color: var(--accent-primary); }

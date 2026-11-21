@@ -19,67 +19,67 @@ const { currentPage = '' } = Astro.props;
 
 				<div class="nav-menu">
 					<div class="nav-item">
-						<a href="/" class="nav-link">Home</a>
+						<a href="/" class:list={['nav-link', { active: currentPage === 'home' }]}>Home</a>
 					</div>
 
 					<div class="nav-item dropdown">
-						<a href="/research" class="nav-link">
+						<a href="/research/" class:list={['nav-link', { active: currentPage === 'research' }]} aria-haspopup="true" aria-expanded="false">
 							Research
 							<svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
 								<path d="M6 9l6 6 6-6"/>
 							</svg>
 						</a>
 						<div class="dropdown-menu">
-							<a href="/research" class="dropdown-link">Research Pillars</a>
-							<a href="/projects" class="dropdown-link">Active Projects &amp; Grants</a>
-							<a href="/collaborations" class="dropdown-link">Global Collaborations</a>
+							<a href="/research/" class="dropdown-link">Research Pillars</a>
+							<a href="/projects/" class="dropdown-link">Active Projects &amp; Grants</a>
+							<a href="/collaborations/" class="dropdown-link">Global Collaborations</a>
 						</div>
 					</div>
 
 					<div class="nav-item">
-						<a href="/publications" class="nav-link">Publications</a>
+						<a href="/publications/" class:list={['nav-link', { active: currentPage === 'publications' }]}>Publications</a>
 					</div>
 
 					<div class="nav-item">
-						<a href="/people" class="nav-link">People</a>
+						<a href="/people/" class:list={['nav-link', { active: currentPage === 'people' }]}>People</a>
 					</div>
 
 					<div class="nav-item dropdown">
-						<a href="/resources" class="nav-link">
+						<a href="/resources/" class:list={['nav-link', { active: currentPage === 'resources' || currentPage === 'gallery' }]} aria-haspopup="true" aria-expanded="false">
 							Resources
 							<svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
 								<path d="M6 9l6 6 6-6"/>
 							</svg>
 						</a>
 						<div class="dropdown-menu">
-							<a href="/datasets" class="dropdown-link">Datasets &amp; Benchmarks</a>
-							<a href="/tools" class="dropdown-link">Mobile Apps &amp; Software</a>
-							<a href="/github" class="dropdown-link">Open-Source GitHub</a>
-							<a href="/gallery" class="dropdown-link">Gallery &amp; Posters</a>
+							<a href="/datasets/" class="dropdown-link">Datasets &amp; Benchmarks</a>
+							<a href="/tools/" class="dropdown-link">Mobile Apps &amp; Software</a>
+							<a href="/github/" class="dropdown-link">Open-Source GitHub</a>
+							<a href="/gallery/" class="dropdown-link">Gallery &amp; Posters</a>
 						</div>
 					</div>
 
 					<div class="nav-item">
-						<a href="/hiring" class="nav-link">Join Us</a>
+						<a href="/hiring/" class:list={['nav-link', { active: currentPage === 'hiring' }]}>Join Us</a>
 					</div>
 
 					<div class="nav-item">
-						<a href="/contact" class="nav-link">Contact</a>
+						<a href="/contact/" class:list={['nav-link', { active: currentPage === 'contact' }]}>Contact</a>
 					</div>
 				</div>
 
 				<div class="nav-actions">
-					<button id="themeToggle" class="theme-toggle" aria-label="Toggle color theme" type="button">
-						<svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<button id="themeToggle" class="theme-toggle" aria-label="Toggle color theme" aria-pressed="false" type="button">
+						<svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 							<circle cx="12" cy="12" r="5"></circle>
 							<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
 						</svg>
-						<svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 							<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
 						</svg>
 					</button>
 
-					<button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Open menu">
+					<button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
 						<span></span>
 						<span></span>
 						<span></span>
@@ -89,17 +89,18 @@ const { currentPage = '' } = Astro.props;
 
 			<div class="mobile-menu" id="mobileMenu">
 				<a href="/" class="mobile-link">Home</a>
-				<a href="/research" class="mobile-link">Research Pillars</a>
-				<a href="/projects" class="mobile-link">Active Projects &amp; Grants</a>
-				<a href="/publications" class="mobile-link">Publications</a>
-				<a href="/people" class="mobile-link">People</a>
-				<a href="/datasets" class="mobile-link">Datasets &amp; Benchmarks</a>
-				<a href="/tools" class="mobile-link">Mobile Apps &amp; Software</a>
-				<a href="/gallery" class="mobile-link">Gallery &amp; Posters</a>
-				<a href="/github" class="mobile-link">GitHub</a>
-				<a href="/collaborations" class="mobile-link">Collaborations</a>
-				<a href="/hiring" class="mobile-link">Join Us</a>
-				<a href="/contact" class="mobile-link">Contact</a>
+				<a href="/research/" class="mobile-link">Research Pillars</a>
+				<a href="/projects/" class="mobile-link">Active Projects &amp; Grants</a>
+				<a href="/publications/" class="mobile-link">Publications</a>
+				<a href="/people/" class="mobile-link">People</a>
+				<a href="/datasets/" class="mobile-link">Datasets &amp; Benchmarks</a>
+				<a href="/tools/" class="mobile-link">Mobile Apps &amp; Software</a>
+				<a href="/gallery/" class="mobile-link">Gallery &amp; Posters</a>
+				<a href="/github/" class="mobile-link">GitHub</a>
+				<a href="/collaborations/" class="mobile-link">Collaborations</a>
+				<a href="/resources/" class="mobile-link">Resources</a>
+				<a href="/hiring/" class="mobile-link">Join Us</a>
+				<a href="/contact/" class="mobile-link">Contact</a>
 			</div>
 		</div>
 	</nav>
@@ -238,11 +239,17 @@ const { currentPage = '' } = Astro.props;
 		z-index: 1002;
 	}
 
-	.dropdown:hover .dropdown-menu,
-	.dropdown:focus-within .dropdown-menu {
+	.dropdown:not(.is-dismissed):hover .dropdown-menu,
+	.dropdown:not(.is-dismissed):focus-within .dropdown-menu {
 		opacity: 1;
 		visibility: visible;
 		transform: translateY(0);
+	}
+
+	.dropdown.is-dismissed .dropdown-menu {
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
 	}
 
 	.dropdown-link {
@@ -256,9 +263,15 @@ const { currentPage = '' } = Astro.props;
 		transition: background 0.15s ease, color 0.15s ease;
 	}
 
-	.dropdown-link:hover {
+	.dropdown-link:hover,
+	.dropdown-link.active {
 		background: var(--bg-secondary);
 		color: var(--accent-primary);
+		font-weight: 700;
+	}
+	:global([data-theme="dark"]) .dropdown-link:hover,
+	:global([data-theme="dark"]) .dropdown-link.active {
+		background: var(--bg-tertiary);
 	}
 
 	.nav-actions {
@@ -328,30 +341,41 @@ const { currentPage = '' } = Astro.props;
 		overflow-y: auto;
 	}
 
-	.mobile-menu.active {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 0.4rem;
-	}
-
 	.mobile-link {
 		display: block;
-		padding: 0.6rem 0.75rem;
+		padding: 0.65rem 0.8rem;
 		color: var(--text-secondary);
 		text-decoration: none;
 		font-size: 0.9rem;
 		font-weight: 600;
 		border-radius: 0.5rem;
+		transition: background 0.15s ease, color 0.15s ease;
 	}
 
-	.mobile-link:hover {
+	.mobile-link:hover,
+	.mobile-link.active {
 		background: var(--bg-secondary);
 		color: var(--accent-primary);
+		font-weight: 700;
+	}
+
+	:global([data-theme="dark"]) .mobile-link:hover,
+	:global([data-theme="dark"]) .mobile-link.active {
+		background: var(--bg-tertiary);
 	}
 
 	@media (max-width: 1024px) {
 		.nav-menu { display: none; }
 		.mobile-menu-btn { display: flex; }
+		.mobile-menu.active {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0.4rem;
+		}
+	}
+
+	@media (min-width: 1025px) {
+		.mobile-menu.active { display: none; }
 	}
 </style>
 
@@ -362,28 +386,87 @@ const { currentPage = '' } = Astro.props;
 		const themeToggle = document.getElementById('themeToggle');
 
 		const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
-		document.querySelectorAll('.nav-link').forEach((link) => {
+		document.querySelectorAll('.nav-link, .dropdown-link, .mobile-link').forEach((link) => {
 			const href = (link.getAttribute('href') || '').replace(/\/$/, '') || '/';
-			if (href === currentPath || (href !== '/' && currentPath.startsWith(href))) {
+			if (href === currentPath) {
 				link.classList.add('active');
+				link.setAttribute('aria-current', 'page');
+			}
+		});
+
+		document.querySelectorAll('.nav-item.dropdown').forEach((dropdown) => {
+			const trigger = dropdown.querySelector('.nav-link');
+			const syncExpanded = (open: boolean) => trigger?.setAttribute('aria-expanded', String(open));
+			dropdown.addEventListener('mouseenter', () => {
+				dropdown.classList.remove('is-dismissed');
+				syncExpanded(true);
+			});
+			dropdown.addEventListener('mouseleave', () => {
+				dropdown.classList.remove('is-dismissed');
+				syncExpanded(false);
+			});
+			dropdown.addEventListener('focusin', () => {
+				if (!dropdown.classList.contains('is-dismissed')) syncExpanded(true);
+			});
+			dropdown.addEventListener('focusout', (e) => {
+				const fe = e as FocusEvent;
+				if (!dropdown.contains(fe.relatedTarget as Node | null)) {
+					dropdown.classList.remove('is-dismissed');
+					syncExpanded(false);
+				}
+			});
+		});
+
+		const desktopMq = window.matchMedia('(min-width: 1025px)');
+		desktopMq.addEventListener('change', (e) => {
+			if (e.matches && mobileMenu?.classList.contains('active')) {
+				mobileMenu.classList.remove('active');
+				mobileMenuBtn?.setAttribute('aria-expanded', 'false');
 			}
 		});
 
 		mobileMenuBtn?.addEventListener('click', function(e) {
 			e.stopPropagation();
-			mobileMenu?.classList.toggle('active');
+			const isOpen = mobileMenu?.classList.toggle('active') || false;
+			mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
 		});
+
+		const syncThemePressed = () => {
+			const isDark = (document.documentElement.getAttribute('data-theme') || 'light') === 'dark';
+			themeToggle?.setAttribute('aria-pressed', String(isDark));
+		};
+		syncThemePressed();
 
 		themeToggle?.addEventListener('click', function() {
 			const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
 			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 			document.documentElement.setAttribute('data-theme', newTheme);
 			localStorage.setItem('theme', newTheme);
+			syncThemePressed();
 		});
 
 		document.addEventListener('click', function(e) {
 			if (mobileMenu?.classList.contains('active') && !mobileMenu.contains(e.target as Node) && !mobileMenuBtn?.contains(e.target as Node)) {
 				mobileMenu.classList.remove('active');
+				mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+			}
+		});
+
+		document.addEventListener('keydown', function(e) {
+			if (e.key === 'Escape') {
+				if (mobileMenu?.classList.contains('active')) {
+					mobileMenu.classList.remove('active');
+					mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+					mobileMenuBtn?.focus();
+				}
+				document.querySelectorAll('.nav-item.dropdown').forEach((dd) => {
+					if (dd.matches(':hover') || dd.contains(document.activeElement)) {
+						dd.classList.add('is-dismissed');
+						const trigger = dd.querySelector('.nav-link') as HTMLElement | null;
+						trigger?.setAttribute('aria-expanded', 'false');
+						if (dd.contains(document.activeElement)) trigger?.focus();
+					}
+				});
 			}
 		});
 	});
