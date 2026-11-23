@@ -13,10 +13,78 @@ const doiUrl = cleanDoi ? `https://doi.org/${cleanDoi}` : '';
 const isPreprint = pub.category === 'preprint';
 const isThesis = pub.slug === 'intelligent-greenhouse-arduino-2016';
 const isPdfUrl = Boolean(pub.paperUrl && (/\.pdf($|\?)/i.test(pub.paperUrl) || /openreview\.net\/pdf/i.test(pub.paperUrl)));
+const pdfTarget = pub.pdfUrl || (isPdfUrl ? pub.paperUrl : '');
+const absPdfUrl = pdfTarget
+  ? (pdfTarget.startsWith('http') ? pdfTarget : `https://saaillab.github.io${pdfTarget}`)
+  : '';
 const canonicalUrl = `https://saaillab.github.io/papers/${pub.slug}/`;
 const ogImageUrl = pub.teaserImage
-  ? `https://saaillab.github.io${pub.teaserImage}`
+  ? (pub.teaserImage.endsWith('.svg')
+      ? 'https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg'
+      : `https://saaillab.github.io${pub.teaserImage}`)
   : 'https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg';
+const isSvgTeaser = Boolean(pub.teaserImage && pub.teaserImage.endsWith('.svg'));
+
+function escapeHtmlAttr(val: string): string {
+  return String(val)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+const keywordsMeta = [...pub.keywords, 'SAAIL Lab', 'IIT Madras Zanzibar', 'Innocent Nyalala', 'Zanzibar AI'].join(', ');
+const authorsMeta = pub.authors.map((a) => a.name).join(', ');
+const headMetaLines: string[] = [
+  `<meta name="description" content="${escapeHtmlAttr(pub.tldr)}" />`,
+  `<meta name="keywords" content="${escapeHtmlAttr(keywordsMeta)}" />`,
+  `<meta name="author" content="${escapeHtmlAttr(authorsMeta)}" />`,
+  `<link rel="canonical" href="${escapeHtmlAttr(canonicalUrl)}" />`,
+  `<link rel="alternate" hreflang="en" href="${escapeHtmlAttr(canonicalUrl)}" />`,
+  `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />`,
+  `<meta name="theme-color" content="#2563eb" />`,
+  `<meta name="thumbnail" content="${escapeHtmlAttr(ogImageUrl)}" />`,
+  `<meta property="og:type" content="article" />`,
+  `<meta property="og:locale" content="en_US" />`,
+  `<meta property="og:title" content="${escapeHtmlAttr(pub.title)}" />`,
+  `<meta property="og:description" content="${escapeHtmlAttr(pub.tldr)}" />`,
+  `<meta property="og:url" content="${escapeHtmlAttr(canonicalUrl)}" />`,
+  `<meta property="og:site_name" content="SAAIL Lab | IIT Madras Zanzibar" />`,
+  `<meta property="og:image" content="${escapeHtmlAttr(ogImageUrl)}" />`,
+  `<meta property="og:image:alt" content="${escapeHtmlAttr(pub.title)}" />`,
+  `<meta name="twitter:card" content="summary_large_image" />`,
+  `<meta name="twitter:site" content="@saaillab" />`,
+  `<meta name="twitter:title" content="${escapeHtmlAttr(pub.title)}" />`,
+  `<meta name="twitter:description" content="${escapeHtmlAttr(pub.tldr)}" />`,
+  `<meta name="twitter:image" content="${escapeHtmlAttr(ogImageUrl)}" />`,
+  `<meta name="citation_title" content="${escapeHtmlAttr(pub.title)}" />`,
+  ...pub.authors.map((a) => `<meta name="citation_author" content="${escapeHtmlAttr(a.name)}" />`),
+  ...pub.affiliations.map((aff) => `<meta name="citation_author_institution" content="${escapeHtmlAttr(aff)}" />`),
+  `<meta name="citation_publication_date" content="${escapeHtmlAttr(pub.dateISO || String(pub.year))}" />`,
+  `<meta name="citation_public_url" content="${escapeHtmlAttr(canonicalUrl)}" />`,
+  `<meta name="citation_language" content="en" />`,
+  `<meta name="citation_abstract" content="${escapeHtmlAttr(pub.abstract)}" />`,
+  `<meta name="citation_keywords" content="${escapeHtmlAttr(pub.keywords.join('; '))}" />`,
+];
+if (pub.category === 'journal' && !isThesis) {
+  headMetaLines.push(`<meta name="citation_journal_title" content="${escapeHtmlAttr(pub.venue)}" />`);
+}
+if (pub.category === 'conference' || pub.category === 'workshop') {
+  headMetaLines.push(`<meta name="citation_conference_title" content="${escapeHtmlAttr(pub.venue)}" />`);
+}
+if (isThesis) {
+  headMetaLines.push(`<meta name="citation_dissertation_institution" content="Nanjing Agricultural University" />`);
+}
+if (cleanDoi) {
+  headMetaLines.push(`<meta name="citation_doi" content="${escapeHtmlAttr(cleanDoi)}" />`);
+}
+if (absPdfUrl) {
+  headMetaLines.push(`<meta name="citation_pdf_url" content="${escapeHtmlAttr(absPdfUrl)}" />`);
+}
+headMetaLines.push(`<meta name="DC.title" content="${escapeHtmlAttr(pub.title)}" />`);
+headMetaLines.push(`<meta name="DC.date" content="${escapeHtmlAttr(pub.dateISO || String(pub.year))}" />`);
+headMetaLines.push(`<meta name="DC.publisher" content="SAAIL Lab, IIT Madras Zanzibar" />`);
+const headMetaHtml = headMetaLines.join('\n  ');
 
 const saailDropdownPubs = PUBLICATIONS.filter((p) => p.isSaailLab !== false).sort((a, b) => {
   if (a.slug === 'cropguardnet') return -1;
@@ -98,8 +166,9 @@ const resultsNarrative =
     ? pub.contributions.map((c, idx) => formatContributionSentence(c, idx)).join(' ')
     : '');
 const hasResults = Boolean(
-  resultsNarrative || resultsFig || (pub.tables && pub.tables.length > 0)
+  resultsNarrative || resultsFig || pub.protocolBox || (pub.tables && pub.tables.length > 0)
 );
+const extraDetails = pub.detailSections || [];
 
 // Band alternation after light Abstract band:
 // Abstract = light, bodyFigs[0] = white, bodyFigs[1] = light, ...
@@ -109,7 +178,8 @@ const resultsBand = hasResults
     : 'section-light'
   : '';
 const afterResultsIndex = bodyFigs.length + (hasResults ? 1 : 0);
-const bibtexBand = afterResultsIndex % 2 === 0 ? 'section-white' : 'section-light';
+const afterDetailsIndex = afterResultsIndex + extraDetails.length;
+const bibtexBand = afterDetailsIndex % 2 === 0 ? 'section-white' : 'section-light';
 const footerBand = bibtexBand === 'section-white' ? 'footer-light' : 'footer-white';
 
 const scholarLd: Record<string, unknown> = {
@@ -178,58 +248,12 @@ const breadcrumbLd = {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{pub.shortTitle || pub.title} | SAAIL Lab · IIT Madras Zanzibar</title>
-  <meta name="description" content={pub.tldr} />
-  <meta name="keywords" content={[...pub.keywords, 'SAAIL Lab', 'IIT Madras Zanzibar', 'Innocent Nyalala', 'Zanzibar AI'].join(', ')} />
-  <meta name="author" content={pub.authors.map((a) => a.name).join(', ')} />
-  <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="en" href={canonicalUrl} />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <Fragment set:html={headMetaHtml} />
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <meta name="theme-color" content="#2563eb" />
-  <meta name="thumbnail" content={ogImageUrl} />
-
-  <meta property="og:type" content="article" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:title" content={pub.title} />
-  <meta property="og:description" content={pub.tldr} />
-  <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:site_name" content="SAAIL Lab | IIT Madras Zanzibar" />
-  <meta property="og:image" content={ogImageUrl} />
-  <meta property="og:image:alt" content={pub.title} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@saaillab" />
-  <meta name="twitter:title" content={pub.title} />
-  <meta name="twitter:description" content={pub.tldr} />
-  <meta name="twitter:image" content={ogImageUrl} />
-
-  <meta name="citation_title" content={pub.title} />
-  {pub.authors.map((a) => (
-    <meta name="citation_author" content={a.name} />
-  ))}
-  {pub.affiliations.map((aff) => (
-    <meta name="citation_author_institution" content={aff} />
-  ))}
-  <meta name="citation_publication_date" content={pub.dateISO || String(pub.year)} />
-  <meta name="citation_public_url" content={canonicalUrl} />
-  <meta name="citation_language" content="en" />
-  <meta name="citation_abstract" content={pub.abstract} />
-  <meta name="citation_keywords" content={pub.keywords.join('; ')} />
-  {pub.category === 'journal' && !isThesis && (
-    <meta name="citation_journal_title" content={pub.venue} />
-  )}
-  {(pub.category === 'conference' || pub.category === 'workshop') && (
-    <meta name="citation_conference_title" content={pub.venue} />
-  )}
-  {isThesis && <meta name="citation_dissertation_institution" content="Nanjing Agricultural University" />}
-  {cleanDoi && <meta name="citation_doi" content={cleanDoi} />}
-  {isPdfUrl && pub.paperUrl && <meta name="citation_pdf_url" content={pub.paperUrl} />}
-  <meta name="DC.title" content={pub.title} />
-  <meta name="DC.date" content={pub.dateISO || String(pub.year)} />
-  <meta name="DC.publisher" content="SAAIL Lab, IIT Madras Zanzibar" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -348,6 +372,16 @@ const breadcrumbLd = {
               <span>Paper</span>
             </a>
           )}
+          {pub.pdfUrl && pub.pdfUrl !== pub.paperUrl && (
+            <a href={pub.pdfUrl} target="_blank" rel="noopener" class="action-pill">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span>PDF</span>
+            </a>
+          )}
           {doiUrl && (
             <a href={doiUrl} target="_blank" rel="noopener" class="action-pill">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -403,7 +437,7 @@ const breadcrumbLd = {
               <img
                 src={pub.teaserImage}
                 alt={pub.title}
-                class="teaser-img zoomable-img"
+                class:list={['teaser-img', 'zoomable-img', { 'teaser-svg': isSvgTeaser }]}
                 loading="eager"
               />
             </button>
@@ -488,6 +522,21 @@ const breadcrumbLd = {
             </figure>
           )}
 
+          {pub.protocolBox && (
+            <div class="protocol-card">
+              <h3>{pub.protocolBox.title}</h3>
+              {pub.protocolBox.subtitle && <p class="protocol-sub">{pub.protocolBox.subtitle}</p>}
+              {pub.protocolBox.formula && (
+                <pre class="protocol-formula"><code>{pub.protocolBox.formula}</code></pre>
+              )}
+              <ol class="protocol-steps">
+                {pub.protocolBox.steps.map((step) => (
+                  <li>{step}</li>
+                ))}
+              </ol>
+            </div>
+          )}
+
           {pub.tables && pub.tables.length > 0 && (
             <div class="tables-stack">
               {pub.tables.map((table) => (
@@ -532,6 +581,83 @@ const breadcrumbLd = {
         </div>
       </section>
     )}
+
+    <!-- Opt-in Detailed Technical Sections (used by DGS-Bench & CARA-FM showcases) -->
+    {extraDetails.map((sec, idx) => {
+      const bandCls = (afterResultsIndex + idx) % 2 === 0 ? 'section-white' : 'section-light';
+      return (
+        <section id={sec.id} class:list={['section-band', bandCls]}>
+          <div class="container-desktop">
+            <div class="section-title-block section-title-left">
+              <h2>{sec.title}</h2>
+              <div class="title-bar title-bar-left"></div>
+            </div>
+
+            {sec.paragraphs && sec.paragraphs.map((p) => (
+              <p class="section-prose">{p}</p>
+            ))}
+
+            {sec.items && sec.items.length > 0 && (
+              <div class="detail-cards-grid">
+                {sec.items.map((item) => (
+                  <div class="detail-card">
+                    <h3>{item.heading}</h3>
+                    <p>{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {sec.figure && (
+              <figure class="analysis-figure results-figure">
+                <button
+                  type="button"
+                  class="zoom-trigger"
+                  aria-label={`View full size: ${sec.figure.alt || sec.figure.caption}`}
+                >
+                  <img
+                    src={sec.figure.src}
+                    alt={sec.figure.alt || sec.figure.caption}
+                    class="analysis-img zoomable-img"
+                    loading="lazy"
+                  />
+                </button>
+                <figcaption class="figure-prose">{sec.figure.caption}</figcaption>
+              </figure>
+            )}
+
+            {sec.table && (
+              <div class="table-block">
+                <div class="table-header-text">
+                  <h3>{sec.table.title}</h3>
+                  {sec.table.caption && <p>{sec.table.caption}</p>}
+                </div>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        {sec.table.headers.map((h) => (
+                          <th>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sec.table.rows.map((row) => (
+                        <tr>
+                          {row.map((cell) => (
+                            <td>{cell}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      );
+    })}
 
     <!-- BibTeX Citation (full width, un-scrolled, no APA box) -->
     <section id="bibtex" class:list={['section-band', bibtexBand]}>
@@ -997,6 +1123,15 @@ const breadcrumbLd = {
       cursor: zoom-in;
     }
 
+    .teaser-svg {
+      max-width: 700px;
+      mix-blend-mode: normal;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.75rem;
+    }
+
     .teaser-summary {
       margin: 0;
       font-size: 1.06rem;
@@ -1096,7 +1231,87 @@ const breadcrumbLd = {
     }
 
     .section-prose {
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .protocol-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.35rem 1.5rem;
+      margin: 0 0 2rem;
+    }
+
+    .protocol-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.35rem;
+      text-align: left;
+    }
+
+    .protocol-sub {
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+      margin: 0 0 0.9rem;
+      text-align: left;
+    }
+
+    .protocol-formula {
+      margin: 0 0 1rem;
+      padding: 0.85rem 1rem;
+      background: var(--background-accent);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-family: 'SF Mono', 'Monaco', 'Cascadia Code', ui-monospace, monospace;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    .protocol-steps {
+      margin: 0;
+      padding-left: 1.35rem;
+      color: var(--text-secondary);
+      font-size: 0.96rem;
+      line-height: 1.68;
+      text-align: left;
+    }
+
+    .protocol-steps li + li {
+      margin-top: 0.35rem;
+    }
+
+    .detail-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 0 0 1.75rem;
+    }
+
+    .detail-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      text-align: left;
+    }
+
+    .detail-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.4rem;
+    }
+
+    .detail-card p {
+      margin: 0;
+      font-size: 0.93rem;
+      line-height: 1.62;
+      color: var(--text-secondary);
     }
 
     /* Tables: single-line rows across desktop 960px */

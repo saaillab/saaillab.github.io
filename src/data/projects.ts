@@ -49,7 +49,7 @@ export const PROJECTS: LabProject[] = [
       'Seven-dimensional AI sovereignty governance framework (AAAI 2026 EGSAI & EurIPS PAIG)',
       'Empirically grounded resistant digital citizenship taxonomy (Information Technology for Development)'
     ],
-    heroImage: '/images/papers/dgs2026/fig1_dgs_bar.png',
+    heroImage: '/images/papers/dgs2026/fig_multiseed_dgs.png',
     heroAlt: 'DGS-Bench balanced deployment gap chart comparing raw accuracy against macro-F1 across field cassava benchmarks',
     relatedPapers: [
       {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="616" height="416" viewBox="-8 -6 616 416" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle">CARA-FM FRAMEWORK</text>
+  
+  <!-- Vertical Arrow to Split -->
+  <path d="M300 40 V80" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Horizontal Line (Split) -->
+  <line x1="150" y1="80" x2="450" y2="80" stroke="black" stroke-width="2"/>
+  
+  <!-- Data-Centric AI Box -->
+  <rect x="50" y="100" width="200" height="120" fill="none" stroke="black" stroke-width="2"/>
+  <text x="150" y="130" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">DATA-CENTRIC AI</text>
+  <text x="60" y="160" font-family="Arial" font-size="14">• Community driven</text>
+  <text x="60" y="180" font-family="Arial" font-size="14">• 5M images</text>
+  <text x="60" y="200" font-family="Arial" font-size="14">• 25 languages</text>
+  
+  <!-- Arrow to Resource Aware -->
+  <path d="M150 220 V260" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Cultural Attunement Box -->
+  <rect x="350" y="100" width="200" height="120" fill="none" stroke="black" stroke-width="2"/>
+  <text x="450" y="130" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">CULTURAL ATTUNEMENT</text>
+  <text x="360" y="160" font-family="Arial" font-size="14">• IKS graphs</text>
+  <text x="360" y="180" font-family="Arial" font-size="14">• Elder validation</text>
+  
+  <!-- Arrow to Ethical AI -->
+  <path d="M450 220 V260" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Resource Aware Box -->
+  <rect x="50" y="280" width="200" height="120" fill="none" stroke="black" stroke-width="2"/>
+  <text x="150" y="310" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">RESOURCE AWARE</text>
+  <text x="60" y="340" font-family="Arial" font-size="14">• 5MB models</text>
+  <text x="60" y="360" font-family="Arial" font-size="14">• Edge-first</text>
+  <text x="60" y="380" font-family="Arial" font-size="14">• Solar-aware</text>
+  
+  <!-- Ethical AI Box -->
+  <rect x="350" y="280" width="200" height="120" fill="none" stroke="black" stroke-width="2"/>
+  <text x="450" y="310" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">ETHICAL AI</text>
+  <text x="360" y="340" font-family="Arial" font-size="14">• Community governance</text>
+  <text x="360" y="360" font-family="Arial" font-size="14">• Fair benefits</text>
+  
+  <!-- Feedback Loop (Bidirectional Arrow) -->
+  <path d="M250 340 H350" stroke="black" stroke-width="2" marker-end="url(#arrowhead)" marker-start="url(#arrowhead)"/>
+  <text x="300" y="330" font-family="Arial" font-size="12" text-anchor="middle">Feedback Loop</text>
+  
+  <!-- Arrowhead Definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+</svg>

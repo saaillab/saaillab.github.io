@@ -25,6 +25,27 @@ export interface TableBlock {
   rows: string[][];
 }
 
+export interface ProtocolBox {
+  title: string;
+  subtitle?: string;
+  formula?: string;
+  steps: string[];
+}
+
+export interface DetailCardItem {
+  heading: string;
+  text: string;
+}
+
+export interface DetailSection {
+  id: string;
+  title: string;
+  paragraphs?: string[];
+  items?: DetailCardItem[];
+  table?: TableBlock;
+  figure?: FigureItem;
+}
+
 export interface Publication {
   slug: string;
   repoSlug?: string;
@@ -47,6 +68,7 @@ export interface Publication {
   openAccess?: boolean;
   doi?: string;
   paperUrl?: string;
+  pdfUrl?: string;
   codeUrl?: string;
   datasetUrl?: string;
   posterUrl?: string;
@@ -65,6 +87,8 @@ export interface Publication {
   highlights?: MetricHighlight[];
   contributions?: string[];
   tables?: TableBlock[];
+  protocolBox?: ProtocolBox;
+  detailSections?: DetailSection[];
   bibtex: string;
   apa: string;
 }
@@ -437,61 +461,196 @@ export const PUBLICATIONS: Publication[] = [
     status: 'Published · 18/114 Accepted (15.79%)',
     award: 'Best Poster Award, Deep Learning Indaba 2026 (Lagos, Nigeria)',
     openAccess: true,
-    paperUrl: 'https://deeplearningindaba.com/2026/',
+    paperUrl: '/papers/dgs-bench/dgs_bench_dli2026.pdf',
+    pdfUrl: '/papers/dgs-bench/dgs_bench_dli2026.pdf',
     posterUrl: '/images/papers/posters/dgs-bench-poster-dli2026.png',
     codeUrl: 'https://github.com/saaillab/dgs-bench',
-    teaserImage: '/images/papers/dgs2026/fig1_dgs_bar.png',
-    teaserCaption: 'DGS-Bench exposes an Evaluation Mirage on African smallholder field data: raw aggregate accuracy makes every tested architecture appear to gain performance when moving from balanced lab splits to natural Ugandan cassava fields (-6.00 pp negative DGS). Replacing raw accuracy with class-balanced Macro-F1 reveals the opposite trend (+8.16 pp true deployment gap), proving majority-class prevalence masks silent minority-disease collapse.',
-    teaserSummary: 'Agricultural vision models evaluated on balanced laboratory test sets often appear to improve when tested on naturally imbalanced African field data, misleading practitioners about deployment readiness. Across 40 controlled experiments spanning four architectures (ResNet-50, EfficientNet-B3, MobileNetV3-S, ViT-Small/16) and 10 random seeds on Ugandan field cassava imagery (65.8% CMD dominance), DGS-Bench exposes this artifact as an Evaluation Mirage: raw-accuracy Deployment Gap Score turns negative (-6.00 ± 2.38 pp) while Macro-F1 exposes a true +8.16 ± 2.34 pp degradation. Pixel-space GrabCut background removal and cross-dataset validation on Tomato and Rice show how majority-class skew and background clutter conceal silent minority-class failures.',
-    resultsSummary: 'Across all 40 seed-architecture runs on Ugandan field cassava data, raw accuracy appears higher in the field (-6.00 ± 2.38 pp DGS_Acc, t = -15.8, p < 1e-6), whereas balanced Macro-F1 exposes consistent deployment loss across every model (+8.16 ± 2.34 pp DGS_F1, t = 21.7, p < 1e-6), with Healthy leaf recall dropping from 52.5% to 47.7%. Background scrambling reduces accuracy by 13.6 to 21.3 percentage points across CNNs and Vision Transformers compared with less than 1.7 percentage points under brightness changes, and cross-crop replication confirms the mirage appears whenever severe imbalance coincides with moderate lab accuracy.',
-    tldr: 'Demonstrates that aggregate accuracy hides catastrophic minority-disease failures under field shift in African cassava diagnostics, introducing balanced deployment-gap evaluation metrics (Best Poster Award, DLI 2026).',
-    abstract: 'Agricultural AI models trained on balanced laboratory datasets routinely report moderate linear-probe accuracy (~55%), yet the same models appear to improve when evaluated on naturally imbalanced African field data. We show that this apparent improvement is an Evaluation Mirage: class imbalance inflates aggregate accuracy while minority-class performance degrades. We introduce DGS-Bench, a reproducible evaluation framework using the public Kaggle cassava disease dataset, and demonstrate the mirage across 40 independent experiments (10 random seeds x 4 pretrained architectures): raw-accuracy DGS is negative in all 40 cases (mean -6.00 +/- 2.38 pp; t = -15.8, p < 1e-6), while macro-F1 DGS is positive in all 40 (mean +8.16 +/- 2.34 pp; t = 21.7, p < 1e-6). Three additional lines of evidence strengthen the finding: (1) image-space background removal via GrabCut segmentation collapses field accuracy by 20-35 pp, confirming feature-space perturbation results with direct pixel-level evidence; (2) fine-tuning ResNet-50 (full and last-block) amplifies the mirage rather than eliminating it; and (3) cross-architecture threshold analysis reveals that the mirage onset varies from 20% to 50% dominant-class prevalence depending on architecture. Macro-AUPRC DGS is positive for all architectures (mean +8.3 pp), confirming the F1 finding; macro-AUROC DGS diverges (negative), highlighting the critical distinction between ranking and threshold-dependent metrics under imbalance. Cross-dataset validation on PlantVillage Tomato (10 classes) and Rice Leaf Disease (4 classes) confirms that the mirage requires both severe class imbalance and moderate model uncertainty; it does not appear when frozen features achieve >90% lab accuracy. All code is available on Kaggle.',
+    teaserImage: '/images/papers/dgs2026/fig_multiseed_dgs.png',
+    teaserCaption: 'DGS-Bench exposes an Evaluation Mirage on African smallholder field data across 40 seed-architecture runs: raw aggregate accuracy makes every tested architecture appear to improve from balanced lab splits to natural Ugandan cassava fields (-6.00 pp negative DGS_Acc, t = -15.8, p < 1e-6), whereas balanced Macro-F1 reveals the opposite trend (+8.16 pp true deployment gap, t = 21.7, p < 1e-6).',
+    teaserSummary: 'Agricultural vision models evaluated on balanced laboratory test sets often appear to improve when tested on naturally imbalanced African field data, misleading practitioners about deployment readiness. Across 40 controlled experiments spanning four architectures (ResNet-50, EfficientNet-B3, MobileNetV3-S, ViT-Small/16) and 10 random seeds on Ugandan field cassava imagery (65.8% CMD prevalence), DGS-Bench exposes this artifact as an Evaluation Mirage: raw-accuracy Deployment Gap Score turns negative (-6.00 +/- 2.38 pp) whereas Macro-F1 exposes a true +8.16 +/- 2.34 pp degradation. Pixel-space GrabCut background removal, Grad-CAM attribution overlays, Temperature Scaling with Saerens EM prior-shift adaptation, and cross-crop validation on Tomato and Rice demonstrate how majority-class skew and background clutter conceal silent minority-class failures.',
+    resultsSummary: 'Across all 40 seed-architecture runs on Ugandan field cassava data, raw accuracy appears higher in the field (-6.00 +/- 2.38 pp DGS_Acc, t = -15.8, p < 1e-6), whereas balanced Macro-F1 exposes consistent deployment loss across every model (+8.16 +/- 2.34 pp DGS_F1, t = 21.7, p < 1e-6), with Healthy leaf recall dropping from 52.5% to 47.7% and Cassava Bacterial Blight (5.1% field share) reaching only 28.4% AP against 93.8% AP on CMD. Background scrambling reduces accuracy by 13.6 to 21.3 percentage points across CNNs and Vision Transformers compared with less than 1.7 percentage points under brightness shifts, and v1.1 calibration plus multi-backbone fine-tuning extensions confirm 12/12 mirage persistence and up to -16.87 pp raw accuracy illusion under EM prior adaptation.',
+    tldr: 'Demonstrates that aggregate accuracy hides catastrophic minority-disease failures under field shift in African cassava diagnostics, introducing balanced deployment-gap evaluation metrics, closed-form mirage onset analysis, and v1.1 calibration/Grad-CAM extensions (Best Poster Award, DLI 2026).',
+    abstract: 'Agricultural AI models trained on balanced laboratory datasets routinely report moderate linear-probe accuracy (~55%), yet the same models appear to improve when evaluated on naturally imbalanced African field data. We show that this apparent improvement is an Evaluation Mirage: class imbalance inflates aggregate accuracy even as minority-class performance degrades. We introduce DGS-Bench, a reproducible evaluation framework using the public Kaggle cassava disease dataset, and demonstrate the mirage across 40 independent experiments (10 random seeds x 4 pretrained architectures): raw-accuracy DGS is negative in all 40 cases (mean -6.00 +/- 2.38 pp; t = -15.8, p < 1e-6), whereas macro-F1 DGS is positive in all 40 (mean +8.16 +/- 2.34 pp; t = 21.7, p < 1e-6). Three additional lines of evidence strengthen the finding: (1) image-space background removal via GrabCut segmentation collapses field accuracy by 20-35 pp, confirming feature-space perturbation results with direct pixel-level evidence; (2) fine-tuning ResNet-50 (full and last-block) amplifies the mirage rather than eliminating it; and (3) cross-architecture threshold analysis reveals that the mirage onset varies from 20% to 50% dominant-class prevalence depending on architecture. Macro-AUPRC DGS is positive for all architectures (mean +8.3 pp), confirming the F1 finding; macro-AUROC DGS reverses sign (negative), highlighting the sharp distinction between ranking and threshold-dependent metrics under imbalance. Cross-dataset validation on PlantVillage Tomato (10 classes) and Rice Leaf Disease (4 classes) confirms that the mirage requires both severe class imbalance and moderate model uncertainty; it does not appear when frozen features achieve >90% lab accuracy.',
     keywords: ['DGS-Bench', 'African agricultural AI', 'cassava disease', 'balanced metrics', 'deployment gap', 'Deep Learning Indaba'],
     topics: ['Agriculture', 'Benchmarking', 'Responsible AI', 'Cassava', 'East Africa'],
     highlights: [
-      { value: '+8.19 pp', label: 'Mean Macro-F1 Gap', sublabel: 'Paired t = 10.2, p = 0.002' },
-      { value: '-5.96 pp', label: 'Raw Acc Mirage', sublabel: 'Field Acc hides minority failure' },
+      { value: '+8.16 pp', label: 'Mean Macro-F1 Gap', sublabel: 'Paired t = 21.7, p < 1e-6' },
+      { value: '-6.00 pp', label: 'Raw Acc Mirage', sublabel: '40/40 runs negative DGS_Acc' },
       { value: '-17.0 pp', label: 'BG Perturbation Drop', sublabel: 'ViT-Small/16 loses 21.3 pp' },
       { value: 'Best Poster', label: 'DLI 2026 Winner', sublabel: '18 / 114 accepted (15.79%)' }
     ],
-    figureHeading: 'Empirical Perturbation & Cross-Architecture Mirage Evidence',
+    protocolBox: {
+      title: 'Theoretical Mirage Inequality & Mandatory Algorithm 1 Reporting Protocol',
+      subtitle: 'Closed-form onset condition under prior shift paired with the five mandatory audit rules (p < 1e-6 empirical mirage threshold).',
+      formula: 'p* = (Acc_L - r_bar_{-1}) / (r_1 - r_bar_{-1})',
+      steps: [
+        'Train candidate model f_theta strictly on balanced D_L^train without leaking natural D_F samples.',
+        'Evaluate aggregate accuracy, Macro-F1, Balanced Accuracy, Macro-AUROC, and Macro-AUPRC on both balanced D_L^test and uncurated D_F.',
+        'Compute balanced gaps DGS_F1 = F1_L - F1_F and DGS_AUPRC = AUPRC_L - AUPRC_F alongside raw DGS_Acc.',
+        'Emit WARNING: report DGS_F1 as primary metric whenever majority-class prevalence exceeds 0.30 of |D_F|.',
+        'Publish the complete per-class confusion matrix and empirical prevalence vector alongside aggregate headline numbers.'
+      ]
+    },
+    figureHeading: 'Image-Space Intervention, Prevalence Thresholds & Cross-Crop Generalization',
     figures: [
       {
-        title: 'Background Shortcut Sensitivity Under Perturbations',
-        src: '/images/papers/dgs2026/fig2_perturbation.png',
-        caption: 'Controlled perturbation curves isolate what visual cues drive predictions under field shift by progressively scrambling background pixels versus brightness and foliage regions. Background disruption drops performance by 13.6 to 21.3 percentage points across CNN and ViT models (whereas brightness changes shift accuracy under 1.7 pp), confirming heavy shortcut reliance on outdoor field clutter.',
-        alt: 'Feature perturbation curves at severity 1.0'
+        title: 'Image-Space Masking & GrabCut Foreground Validation',
+        src: '/images/papers/dgs2026/fig_imagespace_background.png',
+        caption: 'Direct pixel-space masking (center-only vs. border-only) and GrabCut background removal (n = 1,000) confirm heavy shortcut dependence on field soil and surrounding foliage: GrabCut cuts field accuracy by 20.2 pp on ResNet-50 and 34.5 pp on ViT-Small/16, whereas EfficientNet-B3 retains 49.2% accuracy from border pixels alone.',
+        alt: 'Image-space masking and GrabCut foreground validation chart'
       },
       {
-        title: 'Balanced Macro-F1 vs. Raw Accuracy Across 40 Runs',
-        src: '/images/papers/dgs2026/fig3_balanced_dgs.png',
-        caption: 'Across 40 independent experiments spanning 10 random seeds and four architectures, paired seed distributions separate raw-accuracy Deployment Gap Score from balanced Macro-F1 Deployment Gap Score with statistical significance (p < 1e-6). Raw accuracy incorrectly rewards severe CMD dominance in field imagery, whereas Macro-F1 consistently reflects minority-class failures across every run.',
-        alt: 'Balanced macro-F1 deployment gap across models'
+        title: 'Closed-Form vs. Empirical Mirage Onset Across Four Architectures',
+        src: '/images/papers/dgs2026/fig_threshold_all_arch.png',
+        caption: 'Prevalence sweeps from 20% to 65.8% dominant CMD share match the closed-form threshold prediction p* for every backbone (100% match): MobileNetV3-S enters the mirage zone at 20% prevalence, EfficientNet-B3 at 30%, ResNet-50 at 45%, and ViT-Small/16 at 50%.',
+        alt: 'Cross-architecture mirage threshold sensitivity chart'
       },
       {
-        title: 'Cross-Dataset Replication Across Crops',
-        src: '/images/papers/dgs2026/fig7_cross_dataset.png',
-        caption: 'Cross-dataset replication on 10-class PlantVillage Tomato and 4-class Rice Leaf Disease delineates when the evaluation mirage arises. Severe dominant-class imbalance produces false raw-accuracy gains whenever moderate lab feature uncertainty exists, whereas the distortion disappears once frozen features already exceed 90% baseline lab accuracy.',
-        alt: 'Cross-dataset validation on Tomato and Rice'
+        title: 'Cross-Dataset Replication Across Cassava, Tomato, and Rice',
+        src: '/images/papers/dgs2026/fig_cross_dataset_all.png',
+        caption: 'Replication across Cassava (5 classes), PlantVillage Tomato (10 classes), and Rice Leaf Disease (4 classes) isolates two joint prerequisites for raw-accuracy reversal: severe class imbalance paired with moderate baseline uncertainty (< 75% lab accuracy). Above 90% lab accuracy, sign reversal vanishes (0/20 on Tomato), although DGS_F1 (+8.9 to +19.7 pp) stays 2x to 3x larger than DGS_Acc.',
+        alt: 'Cross-dataset validation on Cassava, Tomato, and Rice'
       }
     ],
     contributions: [
-      'Defines the Deployment Gap Score (DGS) across raw accuracy, balanced accuracy, and macro-F1 to quantify lab-to-field distribution shift on imbalanced smallholder datasets.',
-      'Demonstrates an evaluation mirage across four frozen linear-probe architectures (ResNet-50, EfficientNet-B3, MobileNetV3-S, ViT-Small/16) where 65.8% CMD prevalence inflates field accuracy despite minority-class collapse (Healthy recall drops from 52.5% to 47.7%).',
-      'Establishes through seven controlled perturbations that background texture reliance (-13.6 to -21.3 pp) rather than brightness variation (<1.7 pp) dominates deployment fragility across CNNs and Vision Transformers.',
-      'Reproduces the evaluation gap across three crops and class cardinalities (Cassava 5 classes, PlantVillage Tomato 10 classes, Rice Leaf Disease 4 classes) under a reproducible 11-minute free T4 GPU benchmark.'
+      'Defines the Deployment Gap Score (DGS) across raw accuracy, balanced accuracy, Macro-F1, MCC, and Macro-AUPRC to quantify lab-to-field shift without prior-skew distortion.',
+      'Establishes across 40 multi-seed experiments that 65.8% CMD dominance reverses raw accuracy (-6.00 +/- 2.38 pp) whereas Macro-F1 exposes +8.16 +/- 2.34 pp degradation and minority CBB collapses to 28.4% AP.',
+      'Proves direct pixel-level background shortcut reliance via center/border masking, GrabCut segmentation (n = 1,000), and Grad-CAM spatial overlays (n = 200), showing 56% to 66% attribution energy falls on outer border pixels.',
+      'Extends the camera-ready protocol to post hoc Temperature Scaling, Saerens EM prior adjustment, and full fine-tuning across all four architectures, demonstrating 12/12 mirage persistence and closed-form p* predictability.'
     ],
     tables: [
       {
-        title: 'DGS-Bench Primary Benchmark: Lab (Balanced n=400) vs. Natural Field (n=19,397, 65.8% CMD)',
-        caption: 'Accuracy and F1 metrics are in percent (%); Deployment Gap Scores (DGS) are in percentage points (pp). Raw field accuracy artificially exceeds lab accuracy across all models, whereas Macro-F1 exposes +6.23 to +9.67 pp degradation.',
-        headers: ['Architecture', 'Lab Acc', 'Field Acc', 'DGS Acc', 'Field BAcc', 'Lab F1', 'Field F1', 'DGS F1'],
+        title: 'Tables 2 & 3: Multi-Seed & Multi-Metric Contrast Across 40 Runs',
+        caption: 'Mean +/- SD across 10 random seeds (42-51) for raw accuracy vs. Macro-F1, paired with canonical seed-42 Balanced Accuracy, MCC, and Macro-AUPRC gaps.',
+        headers: ['Architecture', 'DGS Acc (pp)', 'DGS F1 (pp)', 'Field AUROC (%)', 'DGS BAcc (pp)', 'DGS MCC (pp)', 'DGS AUPRC (pp)', 'Mirage'],
         rows: [
-          ['ResNet-50', '54.75', '62.80', '-8.05', '56.36', '54.71', '48.47', '+6.23'],
-          ['EfficientNet-B3', '56.25', '61.93', '-5.68', '54.66', '56.10', '46.78', '+9.32'],
-          ['MobileNetV3-S', '54.00', '56.97', '-2.97', '53.26', '54.05', '44.37', '+9.67'],
-          ['ViT-Small/16', '57.00', '64.14', '-7.14', '57.51', '56.88', '49.37', '+7.51']
+          ['ResNet-50', '-6.0 +/- 2.2', '+8.2 +/- 2.0', '85.0', '-2.7', '+5.8', '+5.7', '10/10'],
+          ['EfficientNet-B3', '-7.0 +/- 2.4', '+7.2 +/- 2.4', '83.8', '+1.0', '+9.5', '+10.5', '10/10'],
+          ['MobileNetV3-S', '-5.5 +/- 2.1', '+8.1 +/- 2.1', '82.1', '-0.5', '+7.6', '+10.6', '10/10'],
+          ['ViT-Small/16', '-5.5 +/- 3.0', '+9.1 +/- 2.9', '85.8', '-3.6', '+5.4', '+6.4', '10/10'],
+          ['All (n = 40)', '-6.0 +/- 2.4', '+8.2 +/- 2.3', '--', '-1.4', '+7.1', '+8.3', '40/40']
         ]
+      },
+      {
+        title: 'Table 4: Image-Space Background Masking & GrabCut Drop',
+        caption: 'Field accuracy under center-only (leaf kept), border-only (leaf masked, 20% chance baseline), and GrabCut (n = 1,000) foreground extraction.',
+        headers: ['Architecture', 'Original Acc (%)', 'Center-Only Acc (%)', 'Border-Only Acc (%)', 'BG Reliance (vs 20%)', 'GrabCut Drop (pp)'],
+        rows: [
+          ['ResNet-50', '62.8', '47.0', '11.2', '-8.8 pp', '62.0 -> 41.8 (-20.2)'],
+          ['EfficientNet-B3', '62.2', '58.2', '49.2', '+29.2 pp', '--'],
+          ['MobileNetV3-S', '56.6', '55.0', '24.5', '+4.5 pp', '--'],
+          ['ViT-Small/16', '65.2', '44.8', '15.7', '-4.3 pp', '63.5 -> 29.0 (-34.5)']
+        ]
+      }
+    ],
+    detailSections: [
+      {
+        id: 'per-class-diagnostics',
+        title: 'Dataset Partition, Class-Level Precision-Recall & Confusion Shifts (Table 1 & PR Audit)',
+        paragraphs: [
+          'Aggregate metrics conceal acute class-level disparity: on ResNet-50 (seed 42), dominant CMD reaches 93.8% Average Precision in natural fields whereas rare Cassava Bacterial Blight (CBB, 5.1% field share) attains only 28.4% AP, and Healthy leaf recall falls from 52.5% in balanced lab testing to 47.7% in field splits.',
+          'Figure panels below compare per-class Precision-Recall curves against uniform random baselines and contrast balanced lab vs. imbalanced field confusion matrices across all five diagnostic categories.'
+        ],
+        table: {
+          title: 'Table 1: Cassava Benchmark Partition & ResNet-50 Per-Class Field Performance',
+          headers: ['Partition / Class', 'Images', 'Field Share (%)', 'Condition', 'ResNet-50 Field AP / Recall'],
+          rows: [
+            ['Lab train', '1,600', '20.0 per class', 'Balanced (320/class)', 'Frozen backbone source features'],
+            ['Lab test', '400', '20.0 per class', 'Balanced (80/class)', 'Healthy recall 52.5% (Acc 54.75%)'],
+            ['Field test (Total)', '19,397', 'Natural Uganda', '65.8% CMD dominance', 'CMD 93.8% AP vs. CBB 28.4% AP'],
+            ['CMD (Majority)', '12,758', '65.8', 'Dominant class', '93.8% Average Precision (3.3x CBB)'],
+            ['CBB (Minority)', '687', '5.1', 'Rare disease', '28.4% AP (masked in raw Acc)']
+          ]
+        },
+        figure: {
+          title: 'Per-Class Precision-Recall Curves & Lab-vs-Field Confusion Shift',
+          src: '/images/papers/dgs2026/fig_pr_curves.png',
+          caption: 'Per-class field Precision-Recall curves isolate the mechanism behind positive DGS_F1 and DGS_AUPRC: dominant CMD dominates operating precision (93.8% AP), whereas CBB (28.4% AP) and CBSD fail silently at thresholded deployment.',
+          alt: 'Per-class precision-recall curves across cassava classes'
+        }
+      },
+      {
+        id: 'confusion-matrix-evidence',
+        title: 'Lab vs. Natural Field Confusion Matrix Comparison',
+        paragraphs: [
+          'Under balanced lab evaluation, prediction errors distribute relatively evenly across classes; under natural 65.8% CMD prevalence, linear heads bias predictions toward CMD, artificially lifting overall field hit rates from 54.75% to 62.80% despite falling minority recall.'
+        ],
+        figure: {
+          title: 'ResNet-50 Lab Test vs. Natural Field Confusion Matrices',
+          src: '/images/papers/dgs2026/fig4_confusion_matrices.png',
+          caption: 'Row-normalized confusion matrices for ResNet-50 across balanced laboratory splits (left) and natural field imagery (right), showing CMD over-prediction driving higher aggregate hit rate at the expense of Healthy and rare-disease recall.',
+          alt: 'ResNet-50 confusion matrices comparing lab and field predictions'
+        }
+      },
+      {
+        id: 'v11-calibration-em',
+        title: 'v1.1 Extension A: 10-Seed Temperature Scaling & Saerens EM Prior Adjustment',
+        paragraphs: [
+          'To test whether post hoc probability calibration or expectation-maximization prior shift correction resolves the evaluation mirage, we evaluated all four architectures across 10 seeds (40 runs) using out-of-fold Temperature Scaling fit strictly on balanced training logits and Saerens EM evaluated against the natural field split (true held-out CMD prior 65.77%).',
+          'Temperature scaling lowers field ECE by 81.7% (0.2721 to 0.0497) with zero class-ranking change (DGS_Acc remains -5.86 pp). Pairing calibrated probabilities with Saerens EM recovers the true field prevalence (68.02% +/- 3.58% vs. 65.77%) and cuts ECE to 0.0371 (Brier 0.3853), yet worsens the raw accuracy mirage to -16.87 pp and expands Macro-F1 loss to +12.01 pp because EM concentrates probability mass on CMD.'
+        ],
+        table: {
+          title: 'v1.1 Experiment A: Mean +/- SD Across 40 Seed-Architecture Runs (True Field CMD = 65.77%)',
+          headers: ['Regime (n = 40)', 'Est. CMD (%)', 'Fld ECE', 'Fld Brier', 'Fld Acc (%)', 'Fld F1 (%)', 'DGS Acc (pp)', 'DGS F1 (pp)'],
+          rows: [
+            ['Uncalibrated', '20.00 +/- 0.00', '0.2721', '0.6429', '60.79', '46.55', '-5.86', '+8.36'],
+            ['TempScaled', '20.00 +/- 0.00', '0.0497', '0.5322', '60.79', '46.55', '-5.86', '+8.36'],
+            ['Saerens EM (uncal.)', '51.87 +/- 2.00', '0.2399', '0.5722', '65.13', '48.72', '-10.19', '+6.19'],
+            ['TempScaled + Saerens EM', '68.02 +/- 3.58', '0.0371', '0.3853', '71.80', '42.91', '-16.87', '+12.01']
+          ]
+        },
+        figure: {
+          title: 'Field Calibration Error Reduction vs. Evaluation Mirage Persistence',
+          src: '/images/papers/dgs2026/fig_v11_calibration_priorshift.png',
+          caption: 'Post hoc Temperature Scaling plus Saerens EM cuts field ECE by 86.4% (0.2721 to 0.0371) and matches empirical CMD prevalence (68.0% vs. 65.8%), yet widens DGS_Acc from -5.9 to -16.9 pp as minority recall drops.',
+          alt: 'Calibration and Saerens EM prior shift results across 40 runs'
+        }
+      },
+      {
+        id: 'v11-gradcam-attribution',
+        title: 'v1.1 Extension B: Grad-CAM & ViT Spatial Attribution Before/After GrabCut',
+        paragraphs: [
+          'Across n = 200 stratified field images filtered for non-degenerate GrabCut foliage masks (40 per class; mean leaf mask area 30.59%, outer 40% border area 63.14%), only 30.39% to 36.84% of positive Grad-CAM and ViT gradient attribution falls inside the leaf mask on original images, whereas 56.29% to 63.78% sits on the outer image border.',
+          'When central leaf pixels are replaced with neutral gray (Border-only), ResNet-50 drops to 24.0% accuracy (2.0% CMD prediction rate), whereas EfficientNet-B3 maintains 40.0% accuracy and its full 16.5% CMD prediction rate by placing 66.00% of attribution energy onto outer background soil and foliage clutter.'
+        ],
+        table: {
+          title: 'v1.1 Experiment B: Spatial Attribution Energy (n = 200 Stratified Valid GrabCut Field Images)',
+          headers: ['Architecture', 'Condition', 'Acc (%)', 'CMD Pred Rate (%)', 'Foreground Energy (%)', 'Border Energy (%)'],
+          rows: [
+            ['ResNet-50', 'Original / GrabCut / Border-only', '56.5 / 43.5 / 24.0', '17.5 / 14.0 / 2.0', '36.84 / 42.91 / 37.64', '56.29 / 49.96 / 53.11'],
+            ['EfficientNet-B3', 'Original / GrabCut / Border-only', '53.5 / 37.0 / 40.0', '16.5 / 12.5 / 16.5', '36.40 / 37.15 / 29.61', '56.34 / 56.01 / 66.00'],
+            ['ViT-S/16', 'Original / GrabCut / Border-only', '57.0 / 32.0 / 40.5', '17.0 / 1.0 / 5.5', '30.39 / 31.80 / 28.37', '63.78 / 63.42 / 65.80']
+          ]
+        },
+        figure: {
+          title: 'Grad-CAM & ViT Attribution Overlays Under GrabCut and Border-Only Masking',
+          src: '/images/papers/dgs2026/fig_v11_gradcam_overlays.png',
+          caption: 'Grad-CAM and ViT patch-gradient overlays (left) paired with mean foreground attribution energy against the 30.6% leaf-mask area baseline (right, n = 200). EfficientNet-B3 still predicts CMD at 99% confidence from outer corner soil alone after the leaf is removed.',
+          alt: 'Grad-CAM and ViT attribution overlays and leaf-mask energy chart'
+        }
+      },
+      {
+        id: 'v11-multibackbone-ft',
+        title: 'v1.1 Extension C: Multi-Backbone Fine-Tuning Adaptation (12 Runs)',
+        paragraphs: [
+          'Extending Table 5 across ResNet-50, EfficientNet-B3, MobileNetV3-S, and ViT-S/16 under linear probing, last-block fine-tuning, and full end-to-end fine-tuning (12 epochs) raises field hit rate up to 79.00% on ViT-S/16, yet fails to resolve the evaluation mirage in all 12/12 evaluations (DGS_Acc stays -3.10 to -11.59 pp whereas DGS_F1 remains +2.85 to +9.61 pp).'
+        ],
+        table: {
+          title: 'v1.1 Experiment C: Linear Probe vs. Last-Block FT vs. Full FT Across All 4 Architectures',
+          headers: ['Architecture', 'Linear DGS Acc / F1', 'Last-Block FT DGS Acc / F1', 'Full FT DGS Acc / F1', 'Full FT Lab / Field Acc', 'Mirage Rate'],
+          rows: [
+            ['ResNet-50', '-9.74 / +4.06 pp', '-7.95 / +5.49 pp', '-9.92 / +3.37 pp', '64.00% / 73.92%', '3 / 3'],
+            ['EfficientNet-B3', '-5.71 / +9.03 pp', '-5.68 / +7.86 pp', '-5.66 / +7.52 pp', '51.75% / 57.41%', '3 / 3'],
+            ['MobileNetV3-S', '-3.10 / +9.61 pp', '-5.61 / +7.82 pp', '-6.40 / +6.72 pp', '60.00% / 66.40%', '3 / 3'],
+            ['ViT-S/16', '-11.59 / +2.85 pp', '-6.51 / +6.72 pp', '-9.00 / +4.33 pp', '70.00% / 79.00%', '3 / 3']
+          ]
+        },
+        figure: {
+          title: 'Multi-Backbone Fine-Tuning Mirage Persistence Across CNNs and ViTs',
+          src: '/images/papers/dgs2026/fig_v11_multibackbone_finetune.png',
+          caption: 'Comparison of raw DGS_Acc (magenta) and balanced DGS_F1 (green) across Linear Probe, Last-Block Fine-Tuning, and Full End-to-End Fine-Tuning for all four architectures, confirming mirage persistence (12/12 runs) despite backbone adaptation.',
+          alt: 'Multi-backbone fine-tuning deployment gap comparison'
+        }
       }
     ],
     isSaailLab: true,
@@ -660,38 +819,142 @@ export const PUBLICATIONS: Publication[] = [
     award: 'Best Poster Award (Publication & Dataset Category), Deep Learning Indaba 2025, Kigali',
     openAccess: true,
     paperUrl: 'https://proceedings.mlr.press/v302/nyalala26a.html',
+    pdfUrl: '/papers/cara-fm/nyalala26a.pdf',
     codeUrl: 'https://github.com/saaillab/cara-fm',
-    teaserImage: '/images/papers/carafm/cara_fm_framework.jpeg',
-    teaserCaption: 'Four-pillar theoretical blueprint of CARA-FM connecting Community-Driven Data (5M images across 25 regional languages), Indigenous Knowledge Systems validated with agricultural elders, Resource-Aware edge models (5M to 50M parameter compression tiers for 1 to 4 GB RAM devices), and Ethical participatory community governance. Unlike centralized foundation models built on high-bandwidth connectivity, the closed feedback loop pairs technical efficiency metrics with agronomic utility and community adoption across East Africa.',
-    tldr: 'Introduces the four-pillar CARA-FM framework (Community-Driven Data, Indigenous Knowledge Systems, Edge-First Architecture, Participatory Governance) for East African agricultural foundation models.',
-    abstract: 'East African agriculture supports more than 175 million people but faces mounting challenges from climate change, resource constraints, and information access barriers. Current foundation models fail to address the region’s computational limitations (devices with 1-4 GB RAM), linguistic diversity (200+ languages), and knowledge system differences. This paper presents CARA-FM (Culturally Attuned and Resource-Aware Foundation Models), a theoretical framework comprising four pillars: Community-Driven Data Architecture, Indigenous Knowledge Systems, Edge-First Model Design, and Participatory Governance. We propose evaluation metrics that span the technical (computational efficiency), agricultural (yield improvement), and cultural (community acceptance) dimensions. Although empirically unvalidated, this framework provides a research agenda for developing agricultural AI systems that operate within severe resource constraints and respect local contexts. Our contribution is theoretical and offers a blueprint for future empirical work rather than implemented solutions.',
+    teaserImage: '/images/papers/carafm/cara_fm_framework.svg',
+    teaserCaption: 'Four-pillar architecture of CARA-FM connecting Community-Driven Data, Indigenous Knowledge Systems, Edge-First Inference (1 to 4 GB RAM handsets), and Participatory Cooperative Governance, evaluated jointly across Technical (CEI, DFS, MPP), Agricultural (YIP, IOE, IAE), and Cultural (CAI, CAS, KPV) indices.',
+    teaserSummary: 'Across Kenya, Tanzania, Uganda, Rwanda, and Ethiopia, smallholder agriculture supports roughly 175 million people yet achieves only 30% to 40% of yield potential partly because farmers lack offline advisory tools in local languages. Published in PMLR Vol. 302 (pp. 1-11, 2026) with the Deep Learning Indaba 2025 Best Poster Award, CARA-FM specifies four architectural pillars and nine formal evaluation indices tailored to 1-4 GB smartphones, 1.2 Mbps rural bandwidth, and intermittent electricity. Our companion operationalization suite evaluates five edge-to-cloud architectures across Zanzibar Cloves v1 (n = 5,258) and Ugandan Cassava field splits (n = 21,397), measuring balanced cross-crop retention, CPU latency, and offline Kiswahili/English advisory routing.',
+    resultsSummary: 'Sections 1 to 7 of PMLR Vol. 302 synthesize seven infrastructure constraint categories separating standard 8-32 GB cloud foundation models from rural East African handsets and define nine normalized indices spanning technical efficiency, agronomic gain, and community acceptance. In companion empirical benchmarking, MobileNetV3-Small reaches the top CARA-FM composite readiness (0.9285; CEI = 0.8311, CAI = 0.8829) at 5.95 MB FP32 (2.91 MB FP16) and 20.69 ms CPU inference with 93.07% Cloves balanced accuracy and 63.24% Cassava field balanced accuracy, whereas ResNet-50 attains 83.27% mean balanced accuracy at 174.60 ms and 90.04 MB (composite 0.8721). Agronomic and community-trial indices (YIP, IOE, IAE, CAS, KPV) remain explicitly null (requires_field_trial) pending in-situ field pilots.',
+    tldr: 'Defines the four-pillar CARA-FM architecture and nine evaluation indices for East African agricultural foundation models, paired with an operationalized edge-to-cloud benchmark on Zanzibar Cloves and Uganda Cassava.',
+    abstract: 'East African agriculture supports more than 175 million people but faces mounting challenges from climate change, resource constraints, and information access barriers. Current foundation models fail to address the computational limitations (devices with 1-4 GB RAM), linguistic diversity (200+ languages), and knowledge system differences across the region. This paper presents CARA-FM (Culturally Attuned and Resource-Aware Foundation Models), a theoretical framework comprising four pillars: Community-Driven Data Architecture, Indigenous Knowledge Systems, Edge-First Model Design, and Participatory Governance. We propose evaluation metrics that span the technical (computational efficiency), agricultural (yield improvement), and cultural (community acceptance) dimensions. Although empirically unvalidated in the theoretical paper, this framework provides a research agenda for developing agricultural AI systems that operate within severe resource constraints and respect local contexts. Our contribution offers a blueprint for future empirical work alongside a companion reproducible evaluation package.',
     keywords: ['CARA-FM', 'foundation models', 'East African agriculture', 'responsible AI', 'indigenous knowledge', 'PMLR', 'Deep Learning Indaba'],
     topics: ['Foundation Models', 'Responsible AI', 'Agriculture', 'East Africa'],
     highlights: [
-      { value: 'PMLR 302', label: 'Published Proceedings', sublabel: 'pp. 1-11 (DLI 2025 Oral)' },
-      { value: '4 Pillars', label: 'CARA-FM Architecture', sublabel: 'Data, IKS, Edge, Governance' },
-      { value: '10x-40x', label: 'Infra Resource Gap', sublabel: 'RAM & bandwidth reality' },
-      { value: '5M-50M', label: 'Edge Compression Tiers', sublabel: 'Tiny / Lite / Edge specs' }
+      { value: 'PMLR 302', label: 'Published Proceedings', sublabel: 'pp. 1-11 (DLI 2025 Best Poster)' },
+      { value: '9 Indices', label: 'Evaluation Suite', sublabel: 'Tech, Agronomic & Cultural' },
+      { value: '1-4 GB RAM', label: 'Edge Reality Gap', sublabel: 'Offline CPU & 200+ languages' },
+      { value: '0.9285', label: 'Top Readiness Score', sublabel: 'MobileNetV3-S at 20.69 ms CPU' }
     ],
-    figureHeading: 'Deep Learning Indaba 2025 Best Poster Recognition',
+    figureHeading: 'Framework Poster & Empirical Benchmark',
     figures: [],
     posterUrl: '/images/papers/posters/cara-fm-poster-dli2025.png',
     contributions: [
-      'Quantifies concrete resource mismatches between standard foundation models (8-32 GB RAM, 50+ Mbps) and East African field realities (1-3 GB smartphones, 1.2 Mbps connectivity, intermittent power).',
-      'Formulates four interdependent design pillars: Community-Driven Data Architecture, Indigenous Knowledge Systems (IKS), Edge-First Model Design (5M-50M params), and Participatory Governance.',
-      'Defines multi-dimensional evaluation criteria balancing technical accuracy with local linguistic coverage, agrarian equity, and energy constraints.'
+      'Quantifies seven regional deployment barriers separating standard cloud foundation models (8-32 GB RAM, 50+ Mbps, continuous power) from East African smallholder realities (1-4 GB smartphones, 1.2 Mbps connectivity, 4-8 hours/day power).',
+      'Formulates four architectural pillars (Community-Driven Data Architecture, Indigenous Knowledge Systems, Edge-First Model Design, Participatory Governance) grounded in Context-First Design, Community Ownership, Knowledge Pluralism, and Radical Efficiency.',
+      'Defines nine formal evaluation indices (CEI, DFS, MPP, YIP, IOE, IAE, CAI, CAS, KPV) in a machine-validated JSON Schema and benchmarks five edge-to-cloud architectures across Zanzibar Cloves v1 and Ugandan Cassava field splits.'
     ],
     tables: [
       {
-        title: 'East African Edge Reality vs. Standard Foundation Model Assumptions',
-        headers: ['Resource Dimension', 'Standard FM Assumption', 'East African Field Reality', 'Gap Factor'],
+        title: 'Table 1: Seven East African Deployment Constraint Categories vs. Foundation Model Assumptions',
+        caption: 'Synthesizes infrastructure, hardware, linguistic, agronomic, economic, epistemic, and cultural conditions summarized in PMLR Vol. 302 Section 2 and Table 1.',
+        headers: ['Challenge Category', 'East African Field Reality', 'Design Consequence for CARA-FM'],
         rows: [
-          ['Model Memory (RAM)', '8 - 32 GB', '1 - 3 GB', '10x'],
-          ['Network Bandwidth', '50+ Mbps', '1.2 Mbps', '40x'],
-          ['Power Availability', 'Continuous', '4 - 8 hours/day', '6x'],
-          ['Target Device Cost', '$500+', '< $100', '5x'],
-          ['Cloud GPU Acceleration', 'Required', 'Unavailable offline', 'Inf']
+          ['Infrastructure', '27% internet penetration; 13% outside mobile coverage; 4-8 h/day power', 'Offline-first edge inference and store-and-forward sync'],
+          ['Computational', '1-4 GB RAM smartphones (< $100); 1.2 Mbps rural links; CPU-only', 'Compact < 500 MB artifacts with deterministic CPU execution'],
+          ['Linguistic', '200+ regional languages; sparse agricultural NLP corpora; code-mixing', 'Multilingual speech/text routing with crop glossaries'],
+          ['Data Representation', '0.5-2 ha intercropped plots, indigenous cultivars, local pest variants', 'Participatory cooperative data collection and validation'],
+          ['Economic Viability', 'Limited farmer cash liquidity; high sensitivity to recurring fees', 'Public-good access with sustainable institutional backing'],
+          ['Knowledge Systems', 'Generational seasonal, soil, and pest indicators held by elders', 'Hybrid symbolic-neural graphs with attribution protections'],
+          ['Cultural Practices', 'Cooperative decision-making and predominantly oral advisory exchange', 'Co-designed voice-first interfaces with community oversight']
         ]
+      },
+      {
+        title: 'Table 2: Nine Formal Evaluation Indices Operationalized in the CARA-FM Python Package',
+        caption: 'Pairs technical edge feasibility (CEI, DFS, MPP) with agronomic trial impact (YIP, IOE, IAE) and community cultural fidelity (CAI, CAS, KPV).',
+        headers: ['Dimension', 'Index', 'Full Name', 'Operational Scope & Measurement Source'],
+        rows: [
+          ['Technical', 'CEI', 'Computational Efficiency Index', 'Balanced accuracy weighted against < 500 MB footprint and CPU latency'],
+          ['Technical', 'DFS', 'Deployment Feasibility Score', 'Binary/weighted gate for offline CPU runtime within 1-4 GB RAM and < 250 ms'],
+          ['Technical', 'MPP', 'Multilingual Performance Parity', 'Ratio of Kiswahili and code-mixed accuracy relative to English baseline'],
+          ['Agricultural', 'YIP', 'Yield Improvement Potential', 'Harvest yield gain against regional control plot baseline (requires field trial)'],
+          ['Agricultural', 'IOE', 'Input Optimization Efficiency', 'Proportional savings in water, fertilizer, and pesticide cost (requires field trial)'],
+          ['Agricultural', 'IAE', 'Information Access Enhancement', 'Farmer reach, comprehension rate, and actionable advisory delivery (requires field trial)'],
+          ['Cultural', 'CAI', 'Cultural Alignment Index', 'Crop taxonomy fit, Kiswahili glossary parity, offline UI readiness, and IKS fit'],
+          ['Cultural', 'CAS', 'Community Acceptance Score', 'Farmer trust and sustained seasonal adoption rate (requires field trial)'],
+          ['Cultural', 'KPV', 'Knowledge Preservation Value', 'Retention of elder-verified Indigenous Knowledge concepts under attribution rules']
+        ]
+      }
+    ],
+    detailSections: [
+      {
+        id: 'research-questions-principles',
+        title: 'Four Research Questions & Design Principles (Sections 1 & 3)',
+        paragraphs: [
+          'CARA-FM organizes foundational agricultural AI research around four foundational questions pairing hardware limits with epistemological pluralism, multidimensional verification, and equitable community governance.'
+        ],
+        items: [
+          { heading: 'RQ1: Resource-Constrained Execution', text: 'Run visual diagnostics and advisory routing reliably within 1-4 GB RAM handsets, < 500 MB storage, intermittent electricity, and 1.2 Mbps or offline rural links.' },
+          { heading: 'RQ2 & Knowledge Pluralism', text: 'Encode Indigenous seasonal, soil, and pest cues in hybrid symbolic-neural graphs paired with formal attribution so local expertise informs inference without appropriation.' },
+          { heading: 'RQ3 & Radical Efficiency', text: 'Judge models jointly on balanced accuracy, memory footprint, CPU latency, agronomic benefit, and Kiswahili parity rather than leaderboard accuracy alone.' },
+          { heading: 'RQ4 & Community Ownership', text: 'Govern data trusts and benefit distribution through farmer-majority cooperative boards (Context-First Design and Participatory Community Ownership).' }
+        ]
+      },
+      {
+        id: 'four-pillars',
+        title: 'Four Interlocking Architectural Pillars (Sections 3.2 to 3.5)',
+        paragraphs: [
+          'The theoretical blueprint links participatory data stewardship, symbolic Indigenous Knowledge representation, hierarchical edge compression, and enforceable institutional audits across every deployment stage.'
+        ],
+        items: [
+          { heading: 'Pillar 1: Community-Driven Data Architecture', text: 'Extension officers and local cooperatives curate intercropped and indigenous cultivar samples with multi-tier validation, delta sync, and community data-trust licensing.' },
+          { heading: 'Pillar 2: Indigenous Knowledge Systems (IKS)', text: 'Dynamic crop-weather-soil knowledge graphs convert qualitative soil color, foliage vigor, and phenological indicators via probabilistic layers and enforce elder attribution and consent.' },
+          { heading: 'Pillar 3: Edge-First Hierarchical Design', text: 'Compresses diagnostics into compact 5M-50M parameter tiers via quantization, structured pruning, and distillation for offline smartphones, syncing optionally via federated updates to district nodes.' },
+          { heading: 'Pillar 4: Participatory Governance', text: 'Mandates farmer-majority review boards, scheduled per-group bias audits, transparent revenue-sharing charters, and accessible community grievance procedures.' }
+        ]
+      },
+      {
+        id: 'african-precedents',
+        title: 'African Agricultural AI Precedents & Regional Lessons (Section 5)',
+        paragraphs: [
+          'Empirical initiatives across Ghana, Kenya, and South Africa alongside community NLP coalitions such as Masakhane (52 African languages) and the African Union Continental AI Strategy (2025-2030) show that language-first delivery, institutional extension partnerships, and transparent data governance govern sustained farmer uptake.'
+        ],
+        table: {
+          title: 'Table 3: Precedent African Agricultural AI Systems Synthesized in Section 5',
+          headers: ['Initiative', 'Primary Country', 'Delivery Mechanism', 'Reported Field Impact'],
+          rows: [
+            ['Farmerline (Darli AI)', 'Ghana', '27-language voice and messaging agricultural chatbot', '2.5x yield increase; 1M+ farmers reached'],
+            ['Apollo Agriculture', 'Kenya', 'ML credit scoring paired with satellite crop analytics', '2.6x production increase among smallholders'],
+            ['Aerobotics', 'South Africa', 'Aerial and vision-based orchard/crop pest scouting', '20-40% crop loss reduction across 18 countries']
+          ]
+        }
+      },
+      {
+        id: 'research-agenda-risks',
+        title: 'Research Agenda, Risk Controls & Field-Trial Scope (Sections 6 & 7)',
+        paragraphs: [
+          'Section 6 defines immediate dataset and evaluation priorities, whereas Section 7 pairs each technical, social, and economic failure mode with concrete mitigation controls.'
+        ],
+        items: [
+          { heading: 'Multilingual & Indigenous Corpora', text: 'Develop a 20+-language East African Agricultural Language Corpus, indigenous crop imagery collections, and speech-text-image benchmarks spanning open backbones (LLaMA-2, mT5, XLM-R, compact ViTs/CNNs).' },
+          { heading: 'Multi-Zone Randomized Field Pilots', text: 'Conduct multi-season field validations across Kenya, Ethiopia, Uganda, Tanzania, and Rwanda with national agricultural research institutes and local farmer cooperatives.' },
+          { heading: 'Technical Bias & Shift Controls', text: 'Counter majority-class prevalence illusions and minority-disease collapse using DGS-Bench balanced audits paired with continuous local probability calibration.' },
+          { heading: 'Social & Economic Safeguards', text: 'Prevent knowledge appropriation and unaffordable subscription barriers through cooperative ownership charters, open public-good tiers, and gradual locally governed rollout.' }
+        ]
+      },
+      {
+        id: 'empirical-operationalization',
+        title: 'Companion Empirical Operationalization Benchmark (Cloves + Cassava)',
+        paragraphs: [
+          'To test computational efficiency, cross-crop field generalization, CPU edge viability, and Kiswahili parity under controlled conditions, we operationalized all nine CARA-FM indices in a runnable Python package and benchmarked five architectures (MobileNetV3-Small, EfficientNet-B0, ResNet-18, ViT-Small/16, ResNet-50) across Zanzibar Cloves Grading v1 (train = 3,673, val = 792, test = 793, 8 classes) and natural Ugandan Cassava field splits (n = 19,397 test images, 5 classes).',
+          'All five offline models satisfy DFS = 1.000 (< 500 MB disk, 0.189-0.312 GB RAM, < 250 ms CPU latency) and MPP = 1.000 using an offline English/Kiswahili/code-mixed agricultural symptom router (EN = 1.000, SW = 1.000, MIX = 1.000). Agronomic and community-trial indices (YIP, IOE, IAE, CAS, KPV) remain explicitly null (requires_field_trial) until in-situ cooperative pilots are executed.'
+        ],
+        table: {
+          title: 'Measured CARA-FM Readiness Scorecard Across Zanzibar Cloves v1 and Uganda Cassava',
+          headers: ['Model', 'Params', 'FP32 / FP16', 'CPU (ms)', 'Cloves BAcc', 'Cassava BAcc', 'CEI', 'CAI', 'Composite'],
+          rows: [
+            ['MobileNetV3-Small', '1.53M', '5.95 / 2.91 MB', '20.69', '93.07%', '63.24%', '0.8311', '0.8829', '0.9285'],
+            ['EfficientNet-B0', '4.02M', '15.60 / 7.66 MB', '44.49', '95.42%', '55.83%', '0.7717', '0.8766', '0.9121'],
+            ['ResNet-18', '11.18M', '42.72 / 21.33 MB', '69.73', '95.65%', '67.63%', '0.7493', '0.8916', '0.9102'],
+            ['ViT-Small/16', '21.67M', '82.71 / 41.33 MB', '167.95', '93.85%', '70.35%', '0.6709', '0.8214', '0.8731'],
+            ['ResNet-50', '23.52M', '90.04 / 44.87 MB', '174.60', '96.64%', '69.90%', '0.6707', '0.8175', '0.8721']
+          ]
+        },
+        figure: {
+          title: 'Cross-Crop Balanced Accuracy, Edge Latency & Composite CARA-FM Readiness',
+          src: '/images/papers/carafm/fig_cara_empirical_eval.png',
+          caption: 'Empirical CARA-FM evaluation across five edge-to-cloud architectures on Zanzibar Cloves Grading v1 and Ugandan Cassava field imagery. MobileNetV3-Small leads composite readiness (0.9285) by maintaining competitive balanced accuracy with 20.69 ms single-thread CPU latency and 5.95 MB FP32 storage.',
+          alt: 'Empirical CARA-FM multi-crop readiness evaluation chart'
+        }
       }
     ],
     isSaailLab: true,
