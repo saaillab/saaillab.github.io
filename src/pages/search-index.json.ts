@@ -77,10 +77,31 @@ export const GET: APIRoute = () => {
 		},
 		{
 			title: 'Speaking Calendar (5th ZSTC Conference)',
-			subtitle: 'Dec 2-3, 2026 ZSTC Conference & SAAIL Lab talks schedule',
+			subtitle: 'Dec 2-3, 2026 ZSTC Conference & SAAIL Lab talks schedule (.ics invite)',
 			category: 'Page',
 			url: '/resources/#speaking',
-			keywords: 'speaking calendar zstc 5th conference december 2026 talks presentations'
+			keywords: 'speaking calendar zstc 5th conference december 2026 talks presentations ics'
+		},
+		{
+			title: 'Annual Impact Report (2025-2026)',
+			subtitle: 'Print-ready synthesis of 20 papers, grants, MTech alumni & open tools',
+			category: 'Page',
+			url: '/annual-report/',
+			keywords: 'annual impact report pdf print summary publications alumni datasets'
+		},
+		{
+			title: 'Dataset Explorer & Sample Browser',
+			subtitle: 'Interactive split bars and sample imagery for ZSTC, CLOVES, Cassava & CropGuard',
+			category: 'Dataset',
+			url: '/datasets/#explorer',
+			keywords: 'dataset explorer sample browser zstc cloves cassava cropguard phash splits'
+		},
+		{
+			title: 'Zanzibar Swahili Corpus & Dira Provenance Protocol',
+			subtitle: 'Kiunguja translationese audit, source-grouped splits & spoken QA',
+			category: 'Project',
+			url: '/projects/swahili-dira/#swahili-protocol',
+			keywords: 'swahili kiunguja dira translationese corpus spoken qa zanzibar'
 		},
 		{
 			title: 'Official Media & Press Kit',

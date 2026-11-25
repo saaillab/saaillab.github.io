@@ -177,7 +177,7 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 					<span class="page-eyebrow" data-i18n="demo.eyebrow">Client-Side WebAssembly AI</span>
 					<h2 data-i18n="demo.title">In-Browser Live ONNX Inference &amp; Visual Saliency (CAM)</h2>
 					<p data-i18n="demo.lead">
-						Switch between verified PyTorch <code>MobileNetV3-Small + CAM</code> ONNX models for Zanzibar Cloves ({clovesMeta.modelSizeMB} MB, {clovesMeta.testAccuracyPct}% acc, {clovesMeta.testMacroF1Pct}% Macro-F1, <em>n</em> = {clovesMeta.testSamples}) and Ugandan Cassava Pathology ({cassavaMeta.modelSizeMB} MB, {cassavaMeta.testAccuracyPct}% acc, {cassavaMeta.testMacroF1Pct}% Macro-F1, <em>n</em> = {cassavaMeta.testSamples}), executing with real-time Class Activation Maps inside WebAssembly with zero server uploads.
+						Switch between verified PyTorch MobileNetV3-Small + CAM ONNX models for Zanzibar Cloves ({clovesMeta.modelSizeMB} MB, {clovesMeta.testAccuracyPct}% acc, {clovesMeta.testMacroF1Pct}% Macro-F1, n = {clovesMeta.testSamples}) and Ugandan Cassava Pathology ({cassavaMeta.modelSizeMB} MB, {cassavaMeta.testAccuracyPct}% acc, {cassavaMeta.testMacroF1Pct}% Macro-F1, n = {cassavaMeta.testSamples}), executing with real-time Class Activation Maps inside WebAssembly with zero server uploads.
 					</p>
 				</div>
 
@@ -1012,19 +1012,26 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 			reader.readAsDataURL(file);
 		});
 
-		let offlineState: 'idle' | 'cached' | 'other' = 'idle';
+		let offlineState: 'idle' | 'cached' | 'unsupported' | 'error' = 'idle';
 
 		offlineBtn?.addEventListener('click', async () => {
 			if (!('caches' in window)) {
-				offlineState = 'other';
-				if (offlineNote) offlineNote.textContent = 'Offline Cache API is unavailable in this browser context.';
+				offlineState = 'unsupported';
+				if (offlineNote) {
+					offlineNote.textContent = document.documentElement.lang === 'sw'
+						? 'Hifadhi ya kivinjari (Cache API) haipatikani katika mazingira haya.'
+						: 'Offline Cache API is unavailable in this browser context.';
+				}
 				return;
 			}
-			offlineState = 'other';
 			offlineBtn.disabled = true;
-			if (offlineNote) offlineNote.textContent = 'Caching ONNX weights and demo images for offline field use...';
+			if (offlineNote) {
+				offlineNote.textContent = document.documentElement.lang === 'sw'
+					? 'Inahifadhi mifumo ya ONNX na picha za mfano kwa matumizi bila mtandao...'
+					: 'Caching ONNX weights and demo images for offline field use...';
+			}
 			try {
-				const cache = await caches.open('saail-lab-v2');
+				const cache = await caches.open('saail-lab-v3');
 				const assets = [
 					'/vendor/ort/ort.wasm.min.js',
 					'/vendor/ort/ort-wasm-simd-threaded.mjs',
@@ -1058,8 +1065,12 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 					});
 				}
 			} catch (_err) {
-				offlineState = 'other';
-				if (offlineNote) offlineNote.textContent = 'Offline caching could not complete; check storage permissions.';
+				offlineState = 'error';
+				if (offlineNote) {
+					offlineNote.textContent = document.documentElement.lang === 'sw'
+						? 'Uhifadhi wa nje ya mtandao haukukamilika; kagua ruhusa za hifadhi.'
+						: 'Offline caching could not complete; check storage permissions.';
+				}
 			} finally {
 				offlineBtn.disabled = false;
 			}
@@ -1094,6 +1105,14 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 					offlineNote.textContent = isSw
 						? 'Mifumo yote miwili, injini ya WASM, na picha za mfano zimehifadhiwa kwa matumizi bila mtandao.'
 						: 'Offline ready: WASM runtime, both ONNX models (7.14 MB), and all 9 demo images are cached on this device.';
+				} else if (offlineState === 'unsupported') {
+					offlineNote.textContent = isSw
+						? 'Hifadhi ya kivinjari (Cache API) haipatikani katika mazingira haya.'
+						: 'Offline Cache API is unavailable in this browser context.';
+				} else if (offlineState === 'error') {
+					offlineNote.textContent = isSw
+						? 'Uhifadhi wa nje ya mtandao haukukamilika; kagua ruhusa za hifadhi.'
+						: 'Offline caching could not complete; check storage permissions.';
 				}
 			}
 		});

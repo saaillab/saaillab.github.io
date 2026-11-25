@@ -114,6 +114,7 @@ def main() -> int:
         "publications/index.html",
         "collaborations/index.html",
         "resources/index.html",
+        "annual-report/index.html",
         "models/cloves_mobilenetv3s.onnx",
         "models/cloves_mobilenetv3s_meta.json",
         "models/cassava_mobilenetv3s.onnx",
@@ -205,7 +206,7 @@ def main() -> int:
             if not isinstance(entries, list) or len(entries) < 25:
                 errors.append("search-index.json missing expected entries")
             urls = {e.get("url") for e in entries if isinstance(e, dict)}
-            for expected_url in ["/news/", "/tools/#live-demo", "/collaborations/#network-map", "/resources/#speaking"]:
+            for expected_url in ["/news/", "/tools/#live-demo", "/collaborations/#network-map", "/resources/#speaking", "/annual-report/", "/datasets/#explorer"]:
                 if expected_url not in urls:
                     errors.append(f"search-index.json missing {expected_url}")
             for u in urls:

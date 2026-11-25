@@ -143,6 +143,17 @@ import ModernFooter from '../components/ModernFooter.astro';
 						</article>
 
 						<article class="ledger-row">
+							<div class="row-tag">Annual Synthesis</div>
+							<div class="row-main">
+								<h3>SAAIL Lab Annual Research &amp; Field Impact Report (2025–2026)</h3>
+								<p>Print-ready summary of all 20 publications, dataset audits, MTech DSAI alumni theses, grants, and browser AI tools.</p>
+							</div>
+							<div class="row-actions">
+								<a href="/annual-report/" class="row-link">Open Report</a>
+							</div>
+						</article>
+
+						<article class="ledger-row">
 							<div class="row-tag">IITMZ Fellowships</div>
 							<div class="row-main">
 								<h3>Prospective MTech DSAI, BS Fellows &amp; Visiting Collaborators</h3>
@@ -175,6 +186,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 							Innocent Nyalala will attend the 5th Conference for the Zanzibar State Trading Corporation (ZSTC) on December 2&ndash;3, 2026. Session schedule and presentation details will be shared following the event.
 						</p>
 						<div class="row-actions">
+							<button type="button" id="downloadZstcIcsBtn" class="row-link row-link-btn">Add to Calendar (.ics)</button>
 							<a href="/projects/ubora-ai/" class="row-link">Ubora-AI ZSTC Grading</a>
 							<a href="/tools/#live-demo" class="row-link">Live Clove ONNX Demo</a>
 						</div>
@@ -317,6 +329,38 @@ import ModernFooter from '../components/ModernFooter.astro';
 				}
 			});
 		});
+
+		document.getElementById('downloadZstcIcsBtn')?.addEventListener('click', () => {
+			const ics = [
+				'BEGIN:VCALENDAR',
+				'VERSION:2.0',
+				'PRODID:-//SAAIL Lab//IIT Madras Zanzibar//EN',
+				'BEGIN:VEVENT',
+				'UID:zstc-5th-conf-2026@saaillab.github.io',
+				'DTSTAMP:20261125T120000Z',
+				'DTSTART;VALUE=DATE:20261202',
+				'DTEND;VALUE=DATE:20261204',
+				'SUMMARY:5th ZSTC Conference (SAAIL Lab Attendance)',
+				'LOCATION:Zanzibar State Trading Corporation (ZSTC), Zanzibar, Tanzania',
+				'DESCRIPTION:Innocent Nyalala attending the 5th ZSTC Conference on Dec 2-3, 2026. Details will be shared at https://saaillab.github.io/resources/#speaking.',
+				'END:VEVENT',
+				'END:VCALENDAR'
+			].join('\r\n');
+			const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = '5th_ZSTC_Conference_2026.ics';
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+			const liveEl = document.getElementById('saailLiveStatus');
+			if (liveEl) {
+				liveEl.textContent = '';
+				requestAnimationFrame(() => { liveEl.textContent = 'Downloaded 5th ZSTC Conference calendar invite (.ics).'; });
+			}
+		});
 	});
 </script>
 
@@ -421,6 +465,10 @@ import ModernFooter from '../components/ModernFooter.astro';
 	.row-link:hover {
 		border-color: var(--accent-primary);
 		color: var(--accent-primary);
+	}
+	.row-link-btn {
+		cursor: pointer;
+		font-family: inherit;
 	}
 
 	.speaking-featured {

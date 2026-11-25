@@ -1,0 +1,557 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+import metrics from '../data/scholar-metrics.json';
+import { PUBLICATIONS } from '../data/publications';
+import { PROJECTS } from '../data/projects';
+
+const saailPubs = PUBLICATIONS.filter((p) => p.isSaailLab !== false);
+const totalWorks = saailPubs.length;
+const publishedCount = saailPubs.filter((p) => p.category !== 'preprint').length;
+const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').length;
+const count2026 = saailPubs.filter((p) => p.year === 2026).length;
+const count2025 = saailPubs.filter((p) => p.year === 2025).length;
+const countJournals = saailPubs.filter((p) => p.category === 'journal').length;
+const countConfWksp = saailPubs.filter((p) => p.category === 'conference' || p.category === 'workshop').length;
+const countClinical = saailPubs.filter((p) =>
+	p.topics.some((t) => /medical|health|polyp/i.test(t))
+).length;
+const countAgri = saailPubs.filter(
+	(p) =>
+		!p.topics.some((t) => /medical|health|polyp/i.test(t)) &&
+		p.topics.some((t) => /agriculture|clove|cassava/i.test(t))
+).length;
+const countPolicy = Math.max(0, totalWorks - countClinical - countAgri);
+
+const alumniRows = [
+	{
+		name: 'Patrick Vincent Ndowo',
+		thesis: 'Auditable Multi-Task & Compositional Vision for Zanzibar Clove Grading',
+		deliverables: 'Lead student author on ETRI Journal (2026), CVPR 2026 V4A, ICLR 2026 Trustworthy AI, AI4EAC 2026 ($980 Travel Grant), and AfriCHI 2025; built the Ubora-AI Flutter TFLite INT8 app.'
+	},
+	{
+		name: 'Duen Michael Chombo',
+		thesis: 'DeepLabV3+ Segmentation & MobileViT Maize Disease Diagnostics',
+		deliverables: 'Engineered the offline Android TFLite INT8 diagnostic application pairing leaf lesion segmentation with cultivar classification for East African extension officers.'
+	},
+	{
+		name: 'Shivam Vyas',
+		thesis: 'Privacy-Preserving Facial Recognition under Federated Learning',
+		deliverables: 'Co-author on DSA 2026 few-shot cassava evaluation; developed decentralized facial identity protection workflows across edge clients.'
+	},
+	{
+		name: 'Makame Mohammed Haji',
+		thesis: 'Explainable Machine Learning for Preterm Birth Prediction',
+		deliverables: 'Built SHAP-guided clinical biomarker prediction workflows for maternal serum screening in Zanzibar and Pemba health cohorts.'
+	}
+];
+
+const datasetAuditRows = [
+	{
+		name: 'CLOVES-4603',
+		scope: '4,603 ZSTC Clove Images · 4 Grades',
+		protocol: 'Lot-aware 70/10/20 stratified 5-seed splits (test n = 921)',
+		status: 'Published · CVPR 2026 V4A & ETRI 2026'
+	},
+	{
+		name: 'ZSTC-Clove-V1',
+		scope: '5,298 Single-Clove Images · 4 Grades',
+		protocol: 'Dual-expert Saateni inspection labels (kappa = 0.87)',
+		status: 'Published · AI4EAC / EAC STI 2026'
+	},
+	{
+		name: 'CropGuard Deduplicated',
+		scope: '35,420 Unique Leaf Images · 8 Crops · 38 Classes',
+		protocol: 'Purged 80,238 duplicates via UUID grouping & 64-bit pHash',
+		status: 'Manifests Public · Manuscript Under Review'
+	},
+	{
+		name: 'DGS-Bench Field Suite',
+		scope: '19,397 Field Cassava + Tomato (10) & Rice (4)',
+		protocol: 'Deterministic 10-seed balanced vs. natural skew (65.8% CMD)',
+		status: 'Published · DLI 2026 Best Poster Award'
+	},
+	{
+		name: 'CashewAI (ERP 2026-27)',
+		scope: 'Coastal Tanzanian Cashew Orchards',
+		protocol: 'IC&SR IIT Madras grant (Rs. 9.35 lakhs, Aug 2026 to Jul 2027)',
+		status: 'Active Field Deployment'
+	},
+	{
+		name: 'PlacentaVision Clinical Cohort',
+		scope: '9,883 Three-View Placental Photographs',
+		protocol: 'Fetal, maternal & trimmed pixel-to-cm segmentation (Penn State & CPHK)',
+		status: 'Active Multi-Site Consortium'
+	},
+	{
+		name: 'Zanzibar Swahili Corpus & Dira',
+		scope: 'Coastal Kiunguja Prose & Spoken Agricultural QA',
+		protocol: 'Source-grouped provenance splits (native vs. synthetic translation)',
+		status: 'Active Curation'
+	}
+];
+---
+
+<Layout
+	title="Annual Impact Report (2025-2026) | SAAIL Lab · IIT Madras Zanzibar"
+	description="Print-ready annual research and field impact report from SAAIL Lab at IIT Madras Zanzibar covering 20 publications, open datasets, MTech alumni theses, grants, and browser AI tools."
+	canonical="https://saaillab.github.io/annual-report/"
+>
+	<ModernHeader currentPage="resources" />
+
+	<main id="main-content" class="report-main">
+		<section class="page-hero report-hero">
+			<div class="container">
+				<div class="report-letterhead">
+					<img src="/images/logo/saail-crest.png" alt="SAAIL Lab Crest" width="52" height="52" class="report-crest" />
+					<div>
+						<span class="page-eyebrow" data-i18n="report.eyebrow">Annual Impact Report · 2025–2026</span>
+						<h1 class="page-title" data-i18n="report.title">SAAIL Lab Annual Research &amp; Field Impact Report</h1>
+					</div>
+				</div>
+				<p class="page-lead" data-i18n="report.lead">
+					Comprehensive synthesis of peer-reviewed publications, leak-free agricultural benchmarks, MTech DSAI graduations, funded grants, and client-side WebAssembly AI tools authored at IIT Madras Zanzibar since October 2024.
+				</p>
+				<div class="report-actions no-print">
+					<button type="button" id="printReportBtn" class="btn btn-primary" data-i18n="report.print_btn">Print / Save PDF</button>
+					<a href="/publications/" class="btn btn-secondary">Explore All {totalWorks} Papers</a>
+					<a href="/datasets/#explorer" class="btn btn-secondary">Dataset Explorer</a>
+				</div>
+			</div>
+		</section>
+
+		<section class="section">
+			<div class="container report-stack">
+				<!-- Executive Snapshot -->
+				<div class="report-block">
+					<span class="block-kicker">01 · Executive Research Snapshot</span>
+					<h2>Verified Lab Output ({metrics.updatedAt})</h2>
+					<div class="snapshot-grid">
+						<div class="snap-card">
+							<strong>{totalWorks}</strong>
+							<span class="snap-lbl">SAAIL Lab Papers</span>
+							<span class="snap-sub">{publishedCount} published/accepted · {underReviewCount} under review</span>
+						</div>
+						<div class="snap-card">
+							<strong>2</strong>
+							<span class="snap-lbl">DLI Best Poster Awards</span>
+							<span class="snap-sub">Kigali (CARA-FM, 2025) &amp; Lagos (DGS-Bench, 2026)</span>
+						</div>
+						<div class="snap-card">
+							<strong>{metrics.citations.toLocaleString()}</strong>
+							<span class="snap-lbl">PI Career Citations</span>
+							<span class="snap-sub">h-index {metrics.hIndex} · i10-index {metrics.i10Index}</span>
+						</div>
+						<div class="snap-card">
+							<strong>{PROJECTS.length}</strong>
+							<span class="snap-lbl">Active Programs &amp; Grants</span>
+							<span class="snap-sub">Incl. IC&amp;SR IIT Madras CashewAI ERP</span>
+						</div>
+						<div class="snap-card">
+							<strong>15</strong>
+							<span class="snap-lbl">Lab Researchers &amp; Alumni</span>
+							<span class="snap-sub">5 PhD · 3 MTech · 3 BS · 4 MTech Alumni</span>
+						</div>
+						<div class="snap-card">
+							<strong>7</strong>
+							<span class="snap-lbl">Open GitHub Repositories</span>
+							<span class="snap-sub">CC BY-NC 4.0 &amp; PMLR CC BY 4.0 code/splits</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Publication Analytics -->
+				<div class="report-block">
+					<span class="block-kicker">02 · Scholarly Breakdown</span>
+					<h2>Publication Output &amp; Research Tracks ({totalWorks} Works)</h2>
+					<div class="track-grid">
+						<div class="track-card">
+							<h3>By Publication Year</h3>
+							<div class="bar-row">
+								<span>2026 Outputs</span><strong>{count2026}</strong>
+								<div class="bar-track"><div class="bar-fill" style={`width:${Math.round((count2026 / totalWorks) * 100)}%`}></div></div>
+							</div>
+							<div class="bar-row">
+								<span>2025 Outputs</span><strong>{count2025}</strong>
+								<div class="bar-track"><div class="bar-fill" style={`width:${Math.round((count2025 / totalWorks) * 100)}%`}></div></div>
+							</div>
+						</div>
+						<div class="track-card">
+							<h3>By Venue Tier</h3>
+							<div class="bar-row">
+								<span>Peer-Reviewed Journals</span><strong>{countJournals}</strong>
+								<div class="bar-track"><div class="bar-fill" style={`width:${Math.round((countJournals / totalWorks) * 100)}%`}></div></div>
+							</div>
+							<div class="bar-row">
+								<span>Conferences &amp; Workshops</span><strong>{countConfWksp}</strong>
+								<div class="bar-track"><div class="bar-fill" style={`width:${Math.round((countConfWksp / totalWorks) * 100)}%`}></div></div>
+							</div>
+							<div class="bar-row">
+								<span>Under Peer Review</span><strong>{underReviewCount}</strong>
+								<div class="bar-track"><div class="bar-fill" style={`width:${Math.round((underReviewCount / totalWorks) * 100)}%`}></div></div>
+							</div>
+						</div>
+						<div class="track-card">
+							<h3>By Primary Research Track</h3>
+							<div class="bar-row">
+								<span>Agriculture &amp; Food Systems AI</span><strong>{countAgri}</strong>
+								<div class="bar-track"><div class="bar-fill" style={`width:${Math.round((countAgri / totalWorks) * 100)}%`}></div></div>
+							</div>
+							<div class="bar-row">
+								<span>AI Policy, Safety &amp; Sovereignty</span><strong>{countPolicy}</strong>
+								<div class="bar-track"><div class="bar-fill" style={`width:${Math.round((countPolicy / totalWorks) * 100)}%`}></div></div>
+							</div>
+							<div class="bar-row">
+								<span>Clinical &amp; Biomedical AI</span><strong>{countClinical}</strong>
+								<div class="bar-track"><div class="bar-fill" style={`width:${Math.round((countClinical / totalWorks) * 100)}%`}></div></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Datasets & Grants Table -->
+				<div class="report-block">
+					<span class="block-kicker">03 · Benchmarks, Grants &amp; Field Programs</span>
+					<h2>Open Datasets, Leakage Audits &amp; Sponsored Research</h2>
+					<div class="table-wrap">
+						<table class="report-table">
+							<thead>
+								<tr>
+									<th>Dataset / Grant</th>
+									<th>Scale &amp; Domain</th>
+									<th>Evaluation / Funding Protocol</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								{datasetAuditRows.map((row) => (
+									<tr>
+										<td><strong>{row.name}</strong></td>
+										<td>{row.scope}</td>
+										<td>{row.protocol}</td>
+										<td>{row.status}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- Alumni & Tools -->
+				<div class="report-block">
+					<span class="block-kicker">04 · Training &amp; Edge Deployment</span>
+					<h2>Inaugural MTech DSAI Alumni Theses (4)</h2>
+					<div class="table-wrap">
+						<table class="report-table">
+							<thead>
+								<tr>
+									<th>Graduate</th>
+									<th>Thesis Focus</th>
+									<th>Key Deliverables &amp; Field Artifacts</th>
+								</tr>
+							</thead>
+							<tbody>
+								{alumniRows.map((alum) => (
+									<tr>
+										<td><strong>{alum.name}</strong></td>
+										<td>{alum.thesis}</td>
+										<td>{alum.deliverables}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+
+					<div class="edge-summary-box">
+						<h3>Verified Edge &amp; Browser AI Models (<a href="/tools/#live-demo">Live ONNX Demo</a>)</h3>
+						<p>
+							Alongside the offline TFLite INT8 Flutter/Android applications (Ubora-AI for ZSTC clove grading and the DeepLabV3+ + MobileViT Maize Foliar inspector), SAAIL Lab hosts dual single-file Opset 13 PyTorch MobileNetV3-Small + CAM ONNX models executing locally in WebAssembly: <strong>Zanzibar Cloves</strong> (3.57 MB, 929,316 params, 94.2% test accuracy, 94.19% Macro-F1 across <em>n</em> = 793, 4.54 ms CPU) and <strong>Ugandan Cassava Pathology</strong> (3.57 MB, 929,893 params, 82.48% test accuracy, 69.29% Macro-F1 across <em>n</em> = 2,141, 4.43 ms CPU).
+						</p>
+					</div>
+				</div>
+
+				<!-- Speaking & Institutional Footnote -->
+				<div class="report-block">
+					<span class="block-kicker">05 · Meetings &amp; Institutional Recognition</span>
+					<h2>2026 Conferences &amp; Upcoming Schedule</h2>
+					<ul class="conf-list">
+						<li><strong>December 2&ndash;3, 2026:</strong> 5th ZSTC Conference (Zanzibar State Trading Corporation). Innocent Nyalala is attending; session details will follow on <a href="/resources/#speaking">/resources/#speaking</a>.</li>
+						<li><strong>August 2026:</strong> Deep Learning Indaba 2026 (Pan-Atlantic University, Lagos), Best Poster Award for <em>DGS-Bench</em> (18 of 114 submissions).</li>
+						<li><strong>July 2026:</strong> Data Science Africa 2026 (Makerere University, Kampala), oral presentation and three empirical papers on cassava scarcity bounds and dataset bias auditing.</li>
+						<li><strong>March&ndash;June 2026:</strong> CVPR 2026 V4A (<em>CLOVES-4603</em>), 3rd TAIS at Oxford Martin School, and ICLR 2026 Workshop on Trustworthy AI (Rio de Janeiro).</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<ModernFooter />
+</Layout>
+
+<script>
+	document.getElementById('printReportBtn')?.addEventListener('click', () => {
+		window.print();
+	});
+</script>
+
+<style>
+	.report-letterhead {
+		display: flex;
+		align-items: center;
+		gap: 1.15rem;
+		margin-bottom: 0.75rem;
+	}
+	.report-crest {
+		border-radius: 50%;
+		border: 1px solid var(--border-color);
+		background: #ffffff;
+		padding: 3px;
+		flex-shrink: 0;
+	}
+	.report-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		margin-top: 1.25rem;
+	}
+	.report-stack {
+		display: flex;
+		flex-direction: column;
+		gap: 2.75rem;
+	}
+	.report-block {
+		break-inside: avoid;
+	}
+	.block-kicker {
+		display: block;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.76rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--accent-primary);
+		margin-bottom: 0.3rem;
+	}
+	.report-block h2 {
+		font-size: 1.55rem;
+		color: var(--text-primary);
+		margin: 0 0 1.15rem;
+		padding-bottom: 0.55rem;
+		border-bottom: 2px solid var(--border-color);
+	}
+	.snapshot-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.snap-card {
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 0.9rem;
+		padding: 1.1rem 1.2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.18rem;
+	}
+	.snap-card strong {
+		font-family: 'Plus Jakarta Sans', sans-serif;
+		font-size: 1.65rem;
+		font-weight: 800;
+		color: var(--accent-primary);
+		line-height: 1.15;
+	}
+	.snap-lbl {
+		font-size: 0.9rem;
+		font-weight: 700;
+		color: var(--text-primary);
+	}
+	.snap-sub {
+		font-size: 0.78rem;
+		color: var(--text-muted);
+	}
+	.track-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.track-card {
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 0.9rem;
+		padding: 1.1rem 1.2rem;
+	}
+	.track-card h3 {
+		font-size: 0.78rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--text-muted);
+		margin: 0 0 0.75rem;
+	}
+	.bar-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 0.25rem 0.65rem;
+		align-items: center;
+		font-size: 0.84rem;
+		margin-bottom: 0.65rem;
+	}
+	.bar-row:last-child { margin-bottom: 0; }
+	.bar-row span { color: var(--text-secondary); font-weight: 600; }
+	.bar-row strong {
+		font-family: 'JetBrains Mono', monospace;
+		color: var(--text-primary);
+	}
+	.bar-track {
+		grid-column: 1 / -1;
+		height: 6px;
+		background: var(--bg-secondary);
+		border-radius: 999px;
+		overflow: hidden;
+	}
+	.bar-fill {
+		height: 100%;
+		background: var(--accent-primary);
+		border-radius: 999px;
+	}
+	.table-wrap {
+		overflow-x: auto;
+		border: 1px solid var(--border-color);
+		border-radius: 0.9rem;
+		background: var(--bg-card);
+	}
+	.report-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.88rem;
+	}
+	.report-table th,
+	.report-table td {
+		text-align: left;
+		padding: 0.78rem 1rem;
+		border-bottom: 1px solid var(--border-color);
+		vertical-align: top;
+		line-height: 1.5;
+	}
+	.report-table thead th {
+		background: var(--bg-secondary);
+		font-size: 0.76rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--text-muted);
+		font-weight: 800;
+	}
+	.report-table tbody tr:last-child td { border-bottom: none; }
+	.report-table td { color: var(--text-secondary); }
+	.report-table td strong { color: var(--text-primary); }
+	.edge-summary-box {
+		margin-top: 1.25rem;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 0.9rem;
+		padding: 1.15rem 1.35rem;
+	}
+	.edge-summary-box h3 {
+		font-size: 1rem;
+		color: var(--text-primary);
+		margin: 0 0 0.45rem;
+	}
+	.edge-summary-box p {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.65;
+		color: var(--text-secondary);
+	}
+	.edge-summary-box a,
+	.conf-list a {
+		color: var(--accent-primary);
+		font-weight: 700;
+	}
+	.conf-list {
+		margin: 0;
+		padding-left: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		font-size: 0.94rem;
+		line-height: 1.6;
+		color: var(--text-secondary);
+	}
+	.conf-list strong { color: var(--text-primary); }
+
+	@media (max-width: 900px) {
+		.snapshot-grid, .track-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+	@media (max-width: 600px) {
+		.snapshot-grid, .track-grid {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	@media print {
+		:global(body) {
+			background: #ffffff !important;
+			color: #000000 !important;
+		}
+		:global(.modern-header),
+		:global(.modern-footer),
+		:global(.back-to-top),
+		.no-print {
+			display: none !important;
+		}
+		.report-main {
+			padding-top: 0 !important;
+			background: #ffffff !important;
+			color: #000000 !important;
+		}
+		.report-hero {
+			padding: 0 0 1.25rem !important;
+			background: #ffffff !important;
+			border-bottom: 1px solid #d1d5db !important;
+		}
+		.table-wrap {
+			overflow: visible !important;
+		}
+		.snap-card, .track-card, .table-wrap, .edge-summary-box {
+			background: #ffffff !important;
+			border-color: #d1d5db !important;
+			box-shadow: none !important;
+		}
+		.report-table thead th {
+			background: #f3f4f6 !important;
+			color: #111827 !important;
+			-webkit-print-color-adjust: exact;
+			print-color-adjust: exact;
+		}
+		:global(.page-title),
+		.report-block h2,
+		.track-card h3,
+		.snap-lbl,
+		.bar-row strong,
+		.report-table td strong,
+		.edge-summary-box h3,
+		.conf-list strong {
+			color: #000000 !important;
+		}
+		:global(.page-lead),
+		.snap-sub,
+		.bar-row span,
+		.report-table td,
+		.edge-summary-box p,
+		.conf-list {
+			color: #1f2937 !important;
+		}
+		:global(.page-eyebrow),
+		.block-kicker,
+		.snap-card strong {
+			color: #14532d !important;
+		}
+		.bar-fill {
+			background: #14532d !important;
+			-webkit-print-color-adjust: exact;
+			print-color-adjust: exact;
+		}
+	}
+</style>

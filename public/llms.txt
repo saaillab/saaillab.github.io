@@ -14,7 +14,7 @@
 
 ## Core Research Pillars
 1. **Precision Agriculture & Coastal Blue Economy AI** (https://saaillab.github.io/research/#agriculture): Lightweight CNN-Transformer foliar disease classification (CropGuardNet), Zanzibar clove quality grading (CLOVES-4603, ZSTC-Clove-V1, Ubora-AI), CashewAI phenology-aware orchard monitoring, and Zanzibar coastal seaweed Ice-Ice disease and marine heatwave sensing.
-2. **Swahili NLP & Cultural AI Alignment** (https://saaillab.github.io/research/#nlp): Zanzibar Swahili Corpus (coastal Kiunguja prose and spoken agricultural QA), Dira native-vs-translated Swahili provenance detection, and Culturally Attuned Resource-Aware Foundation Models (CARA-FM, PMLR Vol. 302).
+2. **Swahili NLP & Cultural AI Alignment** (https://saaillab.github.io/research/#language): Zanzibar Swahili Corpus (coastal Kiunguja prose and spoken agricultural QA), Dira native-vs-translated Swahili provenance detection, and Culturally Attuned Resource-Aware Foundation Models (CARA-FM, PMLR Vol. 302).
 3. **Responsible AI, Explainability & East African Governance** (https://saaillab.github.io/research/#responsible): Deployment Gap and Sensitivity Benchmark (DGS-Bench, Deep Learning Indaba 2026 Best Poster Award), compositional explainable AI under domain shift (ETRI Journal 2026), and East African AI Policy Harmonization (Oxford TAIS 2026).
 4. **Healthcare & Clinical Machine Learning** (https://saaillab.github.io/research/#healthcare): PlacentaVision fetal-maternal imaging with Penn State University, preterm birth serum biomarker modeling with Pemba Center for Public Health Kinetics, and boundary-aware polyp segmentation (BAFNet, Expert Systems with Applications 2025).
 
@@ -32,6 +32,9 @@
 - RSS Feed (SAAIL Lab Publications): https://saaillab.github.io/feed.xml
 - Research Group & Alumni: https://saaillab.github.io/people/
 - Open Datasets & Benchmarks: https://saaillab.github.io/datasets/
+- Interactive Dataset Explorer & Samples: https://saaillab.github.io/datasets/#explorer
+- Annual Impact Report (2025-2026): https://saaillab.github.io/annual-report/
+- Swahili Dira Protocol: https://saaillab.github.io/projects/swahili-dira/#swahili-protocol
 - Mobile Applications & Open Software: https://saaillab.github.io/tools/
 - GitHub Repositories: https://saaillab.github.io/github/
 - Conference & Field Gallery: https://saaillab.github.io/gallery/

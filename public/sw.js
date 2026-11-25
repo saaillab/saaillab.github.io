@@ -1,9 +1,10 @@
-const CACHE_NAME = 'saail-lab-v2';
+const CACHE_NAME = 'saail-lab-v3';
 const CORE_SHELL = [
   '/',
   '/tools/',
   '/datasets/',
   '/publications/',
+  '/annual-report/',
   '/news/',
   '/collaborations/',
   '/resources/',

@@ -83,6 +83,63 @@ const { project } = Astro.props;
               <li>{del}</li>
             ))}
           </ul>
+
+          {project.slug === 'swahili-dira' && (
+            <section class="swahili-protocol" id="swahili-protocol" aria-labelledby="swProtocolHeading">
+              <div class="sw-head">
+                <span class="sw-kicker">Interactive Benchmark Preview</span>
+                <h3 id="swProtocolHeading">Zanzibar Swahili Corpus &amp; Dira Audit Protocol</h3>
+                <p>Inspect how Dira separates coastal Kiunguja Swahili writing from English-translated text and organizes spoken agricultural QA curation.</p>
+              </div>
+
+              <div class="sw-tabs" role="tablist" aria-label="Swahili corpus and Dira protocol views">
+                <button id="swTabAudit" type="button" role="tab" aria-selected="true" aria-controls="swPanelAudit" tabindex="0" class="sw-tab is-active" data-sw-target="swPanelAudit">Kiunguja vs. Translationese</button>
+                <button id="swTabSplit" type="button" role="tab" aria-selected="false" aria-controls="swPanelSplit" tabindex="-1" class="sw-tab" data-sw-target="swPanelSplit">Source-Grouped Splits</button>
+                <button id="swTabQa" type="button" role="tab" aria-selected="false" aria-controls="swPanelQa" tabindex="-1" class="sw-tab" data-sw-target="swPanelQa">Spoken Agricultural QA</button>
+              </div>
+
+              <div id="swPanelAudit" class="sw-panel" role="tabpanel" aria-labelledby="swTabAudit">
+                <div class="sw-audit-grid">
+                  <div class="sw-audit-item">
+                    <strong>1. Syntactic Calquing</strong>
+                    <p>Audits clause ordering and passive nominalizations introduced when English agricultural manuals are machine-translated into standard Swahili.</p>
+                  </div>
+                  <div class="sw-audit-item">
+                    <strong>2. Coastal Kiunguja Register</strong>
+                    <p>Compares verified Unguja and coastal Tanzania editorial prose against synthetic textbook phrasing produced by general multilingual models.</p>
+                  </div>
+                  <div class="sw-audit-item">
+                    <strong>3. Agrarian Domain Lexicon</strong>
+                    <p>Evaluates accurate grounding across local crop and commodity terminology such as <em>karafuu</em> (clove), <em>mpeta</em> (Grade IV defective buds), and <em>muhogo</em> (cassava).</p>
+                  </div>
+                </div>
+              </div>
+
+              <div id="swPanelSplit" class="sw-panel" role="tabpanel" aria-labelledby="swTabSplit" hidden>
+                <div class="sw-split-box">
+                  <p>
+                    Dira enforces strict document-level source grouping across native Kiunguja prose and parallel machine-translated pairs so detectors cannot memorize stylistic quirks from overlapping passages in both training and held-out test sets.
+                  </p>
+                  <ul class="clean-list">
+                    <li><strong>Team Leads:</strong> Saleh Saleh (corpus and dialect annotation) &amp; Sri Advaita (provenance detection modeling)</li>
+                    <li><strong>Dataset Governance:</strong> Sourced strictly under community-consented Zanzibar editorial agreements</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div id="swPanelQa" class="sw-panel" role="tabpanel" aria-labelledby="swTabQa" hidden>
+                <div class="sw-split-box">
+                  <p>
+                    SAAIL Lab BS researchers pair Zanzibar editorial prose with spoken smallholder livelihood and crop diagnostic dialogues in Kiunguja. Community consent review is active; verified audio-text clips will be published directly in this panel upon completion of ethical clearance.
+                  </p>
+                  <div class="sw-inline-links">
+                    <a href="/datasets/#language" class="btn btn-secondary">Dataset Datasheet</a>
+                    <a href="/people/" class="btn btn-secondary">Swahili NLP Team</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
         </div>
 
         <aside class="proj-sidebar">
@@ -372,7 +429,129 @@ const { project } = Astro.props;
     line-height: 1.38;
   }
 
+  .swahili-protocol {
+    margin-top: 2.25rem;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+  }
+  .sw-kicker {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-primary);
+    margin-bottom: 0.25rem;
+  }
+  .sw-head h3 {
+    margin: 0 0 0.45rem !important;
+    color: var(--text-primary) !important;
+    font-size: 1.25rem;
+  }
+  .sw-head p {
+    margin: 0 0 1rem !important;
+    font-size: 0.92rem;
+  }
+  .sw-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .sw-tab {
+    padding: 0.48rem 0.95rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .sw-tab.is-active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #ffffff;
+  }
+  :global([data-theme="dark"]) .sw-tab.is-active { color: #062111; }
+  .sw-panel[hidden] { display: none; }
+  .sw-audit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .sw-audit-item,
+  .sw-split-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1rem;
+  }
+  .sw-audit-item strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+  }
+  .sw-audit-item p,
+  .sw-split-box p {
+    margin: 0 !important;
+    font-size: 0.85rem !important;
+    line-height: 1.55 !important;
+    color: var(--text-secondary);
+  }
+  .sw-split-box .clean-list {
+    margin-top: 0.75rem;
+    font-size: 0.86rem;
+  }
+  .sw-inline-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 0.85rem;
+  }
   @media (max-width: 960px) {
-    .proj-hero-grid, .proj-body-grid { grid-template-columns: 1fr; }
+    .proj-hero-grid, .proj-body-grid { grid-template-columns: minmax(0, 1fr); }
+    .sw-audit-grid { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = Array.from(document.querySelectorAll('.sw-tab')) as HTMLButtonElement[];
+    if (!tabs.length) return;
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('click', () => {
+        const targetId = tab.getAttribute('data-sw-target');
+        tabs.forEach((t) => {
+          const active = t === tab;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', String(active));
+          t.setAttribute('tabindex', active ? '0' : '-1');
+          const pid = t.getAttribute('data-sw-target');
+          const panel = pid ? document.getElementById(pid) : null;
+          if (panel) panel.hidden = !active;
+        });
+        if (targetId) {
+          const activePanel = document.getElementById(targetId);
+          if (activePanel) activePanel.hidden = false;
+        }
+      });
+      tab.addEventListener('keydown', (e: KeyboardEvent) => {
+        let next: number | null = null;
+        if (e.key === 'ArrowRight') next = (idx + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft') next = (idx - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = tabs.length - 1;
+        if (next === null) return;
+        e.preventDefault();
+        tabs[next].focus();
+        tabs[next].click();
+      });
+    });
+  });
+</script>

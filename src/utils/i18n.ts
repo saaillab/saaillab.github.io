@@ -43,9 +43,17 @@ export const SW_TRANSLATIONS: Record<string, string> = {
 	'datasets.eyebrow': 'Miundombinu ya Data · Afrika Mashariki na Zanzibar',
 	'datasets.title': 'Seti Huria za Data za AI na Majaribio ya Tathmini',
 	'datasets.lead_pre': 'Seti za data za maono ya kompyuta za kanda na vigezo vya tathmini visivyo na uvujaji wa data kutoka SAAIL Lab katika IIT Madras Zanzibar kwa mazao ya kibiashara, magonjwa ya mimea, na lugha ya Kiswahili. Zimechapishwa chini ya',
+	'datasets.explorer_title': 'Kichunguzi cha Seti za Data na Sampuli',
 	'datasets.ag_group': 'Seti za Data za Kilimo na Maono ya Kompyuta',
 	'datasets.lang_group': 'Kiswahili NLP, Asili ya Maandishi na Sera za AI',
 	'datasets.datasheet_summary': 'Kadi ya Maelezo na Utawala wa Data',
+
+	// Annual Impact Report
+	'report.eyebrow': 'Ripoti ya Mwaka · 2025–2026',
+	'report.title': 'Ripoti ya Mwaka ya Utafiti na Athari ya SAAIL Lab',
+	'report.lead': 'Muhtasari wa machapisho ya kitaaluma, majaribio huru ya data za kilimo, wahitimu wa MTech DSAI, ruzuku za utafiti, na zana za AI kwenye kivinjari kutoka IIT Madras Zanzibar tangu Oktoba 2024.',
+	'report.print_btn': 'Chapisha / Hifadhi PDF',
+	'nav.annual_report': 'Ripoti ya Mwaka',
 
 	// Hiring Page
 	'hiring.eyebrow': 'Fursa za Utafiti · IIT Madras Zanzibar',
