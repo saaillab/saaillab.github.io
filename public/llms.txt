@@ -10,7 +10,7 @@
 - **Faculty Archive**: https://inyalala.github.io/
 - **GitHub Organization**: https://github.com/saaillab
 - **Contact**: saail_lab@iitmz.ac.in
-- **Scholar Metrics (updated 2026-11-21)**: 1,270 citations (1,204 since 2021), h-index 15, i10-index 17, 42 cataloged works (20 SAAIL Lab: 15 published/accepted + 5 under review; 22 prior PI works).
+- **Scholar Metrics (updated 2026-11-25)**: 1,273 citations (1,204 since 2021), h-index 15, i10-index 17, 20 SAAIL Lab works (15 published/accepted + 5 under review). Earlier pre-IITMZ works (2015-2024) are archived at https://inyalala.github.io/publications/.
 
 ## Core Research Pillars
 1. **Precision Agriculture & Coastal Blue Economy AI** (https://saaillab.github.io/research/#agriculture): Lightweight CNN-Transformer foliar disease classification (CropGuardNet), Zanzibar clove quality grading (CLOVES-4603, ZSTC-Clove-V1, Ubora-AI), CashewAI phenology-aware orchard monitoring, and Zanzibar coastal seaweed Ice-Ice disease and marine heatwave sensing.
@@ -28,7 +28,8 @@
 - PlacentaVision & Maternal-Neonatal Clinical AI: https://saaillab.github.io/projects/placentavision/
 
 ## Key Pages & Resources
-- Publications Catalog (42 Academic Project Pages): https://saaillab.github.io/publications/
+- Publications Catalog (20 SAAIL Lab Project Pages): https://saaillab.github.io/publications/
+- RSS Feed (SAAIL Lab Publications): https://saaillab.github.io/feed.xml
 - Research Group & Alumni: https://saaillab.github.io/people/
 - Open Datasets & Benchmarks: https://saaillab.github.io/datasets/
 - Mobile Applications & Open Software: https://saaillab.github.io/tools/

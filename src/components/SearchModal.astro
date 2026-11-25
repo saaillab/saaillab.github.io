@@ -1,0 +1,335 @@
+<div id="saailSearchModal" class="search-modal" role="dialog" aria-modal="true" aria-labelledby="saailSearchLabel" hidden>
+	<div class="search-backdrop" data-close-search></div>
+	<div class="search-panel">
+		<div class="search-top">
+			<svg class="search-modal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+				<circle cx="11" cy="11" r="8"></circle>
+				<path d="M21 21l-4.35-4.35"></path>
+			</svg>
+			<label id="saailSearchLabel" for="saailSearchInput" class="sr-only">Search SAAIL Lab papers, projects, datasets, and pages</label>
+			<input
+				id="saailSearchInput"
+				type="search"
+				role="combobox"
+				aria-autocomplete="list"
+				aria-expanded="true"
+				aria-controls="saailSearchResults"
+				placeholder="Search 20 lab papers, projects, datasets, tools, people..."
+				autocomplete="off"
+				spellcheck="false"
+			/>
+			<button type="button" class="search-close-btn" data-close-search aria-label="Close search modal">Esc</button>
+		</div>
+		<ul id="saailSearchResults" class="search-results" role="listbox" aria-label="Matching SAAIL Lab entries"></ul>
+		<div class="search-foot">
+			<span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> Navigate</span>
+			<span><kbd>Enter</kbd> Open</span>
+			<span><kbd>Esc</kbd> Close</span>
+		</div>
+	</div>
+</div>
+
+<script>
+	(function initSaailQuickSearch() {
+		const modal = document.getElementById('saailSearchModal');
+		const input = document.getElementById('saailSearchInput') as HTMLInputElement | null;
+		const list = document.getElementById('saailSearchResults');
+		const triggerBtn = document.getElementById('siteSearchBtn');
+		if (!modal || !input || !list) return;
+
+		type Entry = { title: string; subtitle: string; category: string; url: string; keywords: string };
+		let entries: Entry[] | null = null;
+		let loadingPromise: Promise<Entry[]> | null = null;
+		let activeIdx = 0;
+		let lastFocused: HTMLElement | null = null;
+		let visibleItems: Entry[] = [];
+
+		async function ensureIndex(): Promise<Entry[]> {
+			if (entries) return entries;
+			if (!loadingPromise) {
+				loadingPromise = fetch('/search-index.json')
+					.then((r) => (r.ok ? r.json() : []))
+					.then((data) => {
+						entries = Array.isArray(data) ? data : [];
+						return entries;
+					})
+					.catch(() => {
+						entries = [];
+						return entries;
+					});
+			}
+			return loadingPromise;
+		}
+
+		function renderResults(query: string) {
+			if (!list) return;
+			if (!entries) {
+				list.innerHTML = '<li class="search-empty">Loading search index...</li>';
+				return;
+			}
+			const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+			visibleItems = tokens.length === 0
+				? entries.slice(0, 10)
+				: entries.filter((item) => {
+					const hay = `${item.title} ${item.subtitle} ${item.category} ${item.keywords}`.toLowerCase();
+					return tokens.every((tok) => hay.includes(tok));
+				}).slice(0, 12);
+
+			activeIdx = 0;
+			list.innerHTML = '';
+
+			if (visibleItems.length === 0) {
+				input?.removeAttribute('aria-activedescendant');
+				const li = document.createElement('li');
+				li.className = 'search-empty';
+				li.textContent = 'No SAAIL Lab pages match those terms.';
+				list.appendChild(li);
+				return;
+			}
+
+			visibleItems.forEach((item, idx) => {
+				const li = document.createElement('li');
+				li.id = `saailSearchOpt-${idx}`;
+				li.setAttribute('role', 'option');
+				li.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+				const a = document.createElement('a');
+				a.href = item.url;
+				a.className = idx === 0 ? 'search-row is-selected' : 'search-row';
+
+				const main = document.createElement('div');
+				main.className = 'search-row-main';
+				const t = document.createElement('span');
+				t.className = 'search-row-title';
+				t.textContent = item.title;
+				const s = document.createElement('span');
+				s.className = 'search-row-sub';
+				s.textContent = item.subtitle;
+				main.appendChild(t);
+				main.appendChild(s);
+
+				const badge = document.createElement('span');
+				badge.className = 'search-row-cat';
+				badge.textContent = item.category;
+
+				a.appendChild(main);
+				a.appendChild(badge);
+				li.appendChild(a);
+				list.appendChild(li);
+			});
+			input?.setAttribute('aria-activedescendant', 'saailSearchOpt-0');
+		}
+
+		function updateSelection(nextIdx: number) {
+			if (!list || visibleItems.length === 0) return;
+			activeIdx = (nextIdx + visibleItems.length) % visibleItems.length;
+			const rows = list.querySelectorAll('.search-row');
+			const options = list.querySelectorAll('li[role="option"]');
+			rows.forEach((el, i) => el.classList.toggle('is-selected', i === activeIdx));
+			options.forEach((el, i) => el.setAttribute('aria-selected', String(i === activeIdx)));
+			input?.setAttribute('aria-activedescendant', `saailSearchOpt-${activeIdx}`);
+			(rows[activeIdx] as HTMLElement | undefined)?.scrollIntoView({ block: 'nearest' });
+		}
+
+		async function openSearch() {
+			if (!modal || !input) return;
+			lastFocused = document.activeElement as HTMLElement | null;
+			modal.hidden = false;
+			document.body.style.overflow = 'hidden';
+			input.value = '';
+			renderResults('');
+			requestAnimationFrame(() => input.focus());
+			await ensureIndex();
+			if (!modal.hidden) renderResults(input.value);
+		}
+
+		function closeSearch() {
+			if (!modal) return;
+			modal.hidden = true;
+			document.body.style.overflow = '';
+			lastFocused?.focus();
+		}
+
+		triggerBtn?.addEventListener('pointerenter', () => { ensureIndex(); }, { once: true });
+		triggerBtn?.addEventListener('focus', () => { ensureIndex(); }, { once: true });
+		triggerBtn?.addEventListener('click', openSearch);
+		modal.querySelectorAll('[data-close-search]').forEach((el) => el.addEventListener('click', closeSearch));
+
+		input.addEventListener('input', () => renderResults(input.value));
+		input.addEventListener('keydown', (e) => {
+			if (e.key === 'ArrowDown') {
+				e.preventDefault();
+				updateSelection(activeIdx + 1);
+			} else if (e.key === 'ArrowUp') {
+				e.preventDefault();
+				updateSelection(activeIdx - 1);
+			} else if (e.key === 'Enter' && visibleItems[activeIdx]) {
+				e.preventDefault();
+				window.location.href = visibleItems[activeIdx].url;
+			}
+		});
+
+		document.addEventListener('keydown', (e) => {
+			if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+				e.preventDefault();
+				if (modal.hidden) openSearch();
+				else closeSearch();
+			} else if (e.key === 'Escape' && !modal.hidden) {
+				e.preventDefault();
+				closeSearch();
+			} else if (e.key === 'Tab' && !modal.hidden) {
+				const focusables = Array.from(
+					modal.querySelectorAll('input, button, a[href]')
+				).filter((el) => !(el as HTMLElement).hasAttribute('disabled')) as HTMLElement[];
+				if (focusables.length === 0) return;
+				const first = focusables[0];
+				const last = focusables[focusables.length - 1];
+				if (e.shiftKey && document.activeElement === first) {
+					e.preventDefault();
+					last.focus();
+				} else if (!e.shiftKey && document.activeElement === last) {
+					e.preventDefault();
+					first.focus();
+				}
+			}
+		});
+	})();
+</script>
+
+<style is:global>
+	.search-modal[hidden] { display: none; }
+	.search-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 2000;
+		display: grid;
+		place-items: start center;
+		padding: 10vh 1rem 2rem;
+	}
+	.search-backdrop {
+		position: fixed;
+		inset: 0;
+		background: rgba(15, 23, 42, 0.55);
+		backdrop-filter: blur(4px);
+	}
+	.search-panel {
+		position: relative;
+		z-index: 1;
+		width: min(640px, 100%);
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 1rem;
+		box-shadow: 0 24px 56px rgba(0, 0, 0, 0.25);
+		overflow: hidden;
+	}
+	.search-top {
+		display: flex;
+		align-items: center;
+		gap: 0.7rem;
+		padding: 0.85rem 1rem;
+		border-bottom: 1px solid var(--border-color);
+	}
+	.search-modal-icon { color: var(--text-muted); flex-shrink: 0; }
+	#saailSearchInput {
+		flex: 1;
+		min-width: 0;
+		border: none;
+		background: transparent;
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 0.98rem;
+		outline: none;
+	}
+	.search-close-btn {
+		padding: 0.22rem 0.55rem;
+		border-radius: 6px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-secondary);
+		color: var(--text-muted);
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.74rem;
+		cursor: pointer;
+	}
+	.search-results {
+		list-style: none;
+		margin: 0;
+		padding: 0.45rem;
+		max-height: 55vh;
+		overflow-y: auto;
+	}
+	.search-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.85rem;
+		padding: 0.65rem 0.8rem;
+		border-radius: 0.6rem;
+		text-decoration: none;
+		color: var(--text-primary);
+	}
+	.search-row:hover, .search-row.is-selected {
+		background: var(--bg-secondary);
+	}
+	.search-row-main {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+	.search-row-title {
+		font-size: 0.92rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.search-row-sub {
+		font-size: 0.78rem;
+		color: var(--text-muted);
+	}
+	.search-row-cat {
+		flex-shrink: 0;
+		font-size: 0.7rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		padding: 0.18rem 0.55rem;
+		border-radius: 999px;
+		background: #ecfdf5;
+		color: #14532d;
+	}
+	[data-theme="dark"] .search-row-cat {
+		background: rgba(52, 211, 153, 0.16);
+		color: #34d399;
+	}
+	.search-empty {
+		padding: 1.5rem 1rem;
+		text-align: center;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+	}
+	.search-foot {
+		display: flex;
+		gap: 1.15rem;
+		padding: 0.6rem 1rem;
+		border-top: 1px solid var(--border-color);
+		background: var(--bg-secondary);
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+	.search-foot kbd {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.7rem;
+		padding: 0.1rem 0.35rem;
+		border-radius: 4px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-card);
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+	}
+</style>

@@ -12,18 +12,13 @@ const saailPubs = PUBLICATIONS.filter((p) => p.isSaailLab !== false).sort((a, b)
 	return b.dateISO.localeCompare(a.dateISO);
 });
 
-const priorPubs = PUBLICATIONS.filter((p) => p.isSaailLab === false).sort((a, b) => {
-	if (b.year !== a.year) return b.year - a.year;
-	return b.dateISO.localeCompare(a.dateISO);
-});
-
 const publishedCount = saailPubs.filter((p) => p.category !== 'preprint').length;
 const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').length;
 ---
 
 <Layout
 	title="AI Publications from Zanzibar | SAAIL Lab · IIT Madras Zanzibar"
-	description="42 peer-reviewed AI, deep learning, computer vision, agricultural AI, Swahili NLP, and healthcare ML publications from SAAIL Lab at IIT Madras Zanzibar and Principal Investigator Innocent Nyalala."
+	description="Peer-reviewed AI, deep learning, computer vision, agricultural AI, Swahili NLP, and healthcare ML publications authored at SAAIL Lab (IIT Madras Zanzibar, 2024–present)."
 	canonical="https://saaillab.github.io/publications/"
 >
 	<ModernHeader currentPage="publications" />
@@ -42,7 +37,7 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 					<div class="m-chip"><strong>{underReviewCount}</strong><span>Under Peer Review</span></div>
 					<div class="m-chip">
 						<strong>{metrics.citations.toLocaleString()}</strong>
-						<span>Total Career Citations (h-index {metrics.hIndex})</span>
+						<span>PI Career Citations (h-index {metrics.hIndex})</span>
 					</div>
 				</div>
 			</div>
@@ -153,7 +148,8 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 										{pub.posterUrl && (
 											<a href={pub.posterUrl} target="_blank" rel="noopener" class="act-btn">Poster ↗</a>
 										)}
-										<button type="button" class="act-btn bib-toggle-btn" aria-expanded="false" aria-controls={`bib-${pub.slug}`} data-bib-target={`bib-${pub.slug}`}>BibTeX</button>
+										<button type="button" class="act-btn copy-bib-inline" data-orig-label="Copy BibTeX" data-bib-code={`code-${pub.slug}`}>Copy BibTeX</button>
+										<button type="button" class="act-btn bib-toggle-btn" aria-expanded="false" aria-controls={`bib-${pub.slug}`} data-bib-target={`bib-${pub.slug}`}>Preview</button>
 									</div>
 								</div>
 
@@ -174,52 +170,18 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 			</div>
 		</section>
 
-		<!-- Clearly Separated Secondary Archive: Founding PI Pre-IITMZ Publications (2015-2024) -->
+		<!-- Clean Personal Archive Pointer for Pre-IITMZ Publications & Theses -->
 		<section class="section prior-band" id="prior-works">
 			<div class="container">
-				<div class="prior-header">
-					<span class="page-eyebrow">Scholarly Archive · Pre-IITMZ (2015-2024)</span>
-					<h2>Founding PI Prior Publications (Nanjing Agricultural University Era)</h2>
-					<p>
-						The {priorPubs.length} peer-reviewed works below were published by Innocent Nyalala during his doctoral and MSc research at Nanjing Agricultural University prior to founding SAAIL Lab at IIT Madras Zanzibar in October 2024. They carry original historical affiliations and are linked here alongside his personal archive at <a href="https://inyalala.github.io/" target="_blank" rel="noopener">inyalala.github.io</a>.
-					</p>
-				</div>
-
-				<div class="prior-list">
-					{priorPubs.map((pub) => {
-						const cleanDoi = pub.doi ? pub.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').trim() : '';
-						const doiHref = cleanDoi ? `https://doi.org/${cleanDoi}` : '';
-						return (
-							<article class="prior-row">
-								<div class="prior-year">{pub.year}</div>
-								<div class="prior-main">
-									<h3>
-										<a href={`/papers/${pub.slug}/`}>{pub.title}</a>
-									</h3>
-									<p class="prior-meta">
-										{pub.authors.map((a, i) => (
-											<>
-												{a.name === 'Innocent Nyalala' ? (
-													<strong class="pi-name">{a.name}</strong>
-												) : (
-													<span>{a.name}</span>
-												)}
-												{i < pub.authors.length - 1 ? ', ' : ''}
-											</>
-										))} · <em>{pub.venue}</em>
-										{typeof pub.citations === 'number' && pub.citations > 0 ? ` · ${pub.citations}+ citations` : ''}
-									</p>
-									<p class="prior-tldr">{pub.tldr}</p>
-								</div>
-								<div class="prior-actions">
-									<a href={`/papers/${pub.slug}/`} class="act-btn">Summary &amp; Results &rarr;</a>
-									{doiHref && (
-										<a href={doiHref} target="_blank" rel="noopener" class="act-btn">DOI ↗</a>
-									)}
-								</div>
-							</article>
-						);
-					})}
+				<div class="prior-callout">
+					<div>
+						<span class="page-eyebrow">PI Personal Archive &middot; Pre-SAAIL Lab (2015&ndash;2024)</span>
+						<h2>Earlier Publications &amp; Academic Theses</h2>
+						<p>
+							Journal papers and Nanjing Agricultural University theses published by Innocent Nyalala prior to founding SAAIL Lab at IIT Madras Zanzibar in October 2024 are maintained on his personal site at <a href="https://inyalala.github.io/publications/" target="_blank" rel="noopener">inyalala.github.io/publications</a>.
+						</p>
+					</div>
+					<a href="https://inyalala.github.io/publications/" target="_blank" rel="noopener" class="btn btn-secondary prior-cta">View Personal Archive &#8599;</a>
 				</div>
 			</div>
 		</section>
@@ -476,6 +438,9 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 	.badge-venue { background: #ecfdf5; color: #14532d; border: 1px solid #bbf7d0; }
 	.badge-review { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
 	.badge-award { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 6px; }
+	:global([data-theme="dark"]) .badge-venue { background: rgba(52, 211, 153, 0.16); color: #34d399; border-color: rgba(52, 211, 153, 0.3); }
+	:global([data-theme="dark"]) .badge-review,
+	:global([data-theme="dark"]) .badge-award { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border-color: rgba(245, 158, 11, 0.35); }
 
 	.pub-title { font-size: 1.08rem; line-height: 1.35; margin-bottom: 0.3rem; }
 	.pub-title a { color: var(--text-primary); text-decoration: none; }
@@ -544,64 +509,46 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 		color: var(--text-primary);
 	}
 
-	/* Secondary Pre-IITMZ Archive */
+	/* Secondary Pre-IITMZ Pointer */
 	.prior-band {
 		background: var(--bg-secondary);
 		border-top: 1px solid var(--border-color);
 	}
-	.prior-header {
-		max-width: 100%;
-		margin-bottom: 2rem;
+	.prior-callout {
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 1rem;
+		padding: 1.75rem 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		flex-wrap: wrap;
 	}
-
 	.pi-name {
 		color: var(--accent-primary);
 		font-weight: 800;
 	}
-	.prior-header h2 {
-		font-size: 1.65rem;
-		margin-bottom: 0.55rem;
+	.prior-callout h2 {
+		font-size: 1.4rem;
+		margin-bottom: 0.45rem;
 		color: var(--text-primary);
 	}
-	.prior-header p {
+	.prior-callout p {
 		color: var(--text-secondary);
-		font-size: 0.96rem;
+		font-size: 0.94rem;
 		line-height: 1.65;
+		max-width: 760px;
+		margin: 0;
 	}
-	.prior-header a {
+	.prior-callout p a {
 		color: var(--accent-primary);
 		font-weight: 600;
 	}
-	.prior-list {
-		background: var(--bg-card);
-		border: 1px solid var(--border-color);
-		border-radius: 1rem;
-		overflow: hidden;
-	}
-	.prior-row {
-		display: grid;
-		grid-template-columns: 72px 1fr auto;
-		gap: 1.25rem;
-		align-items: start;
-		padding: 1.2rem 1.4rem;
-		border-bottom: 1px solid var(--border-color);
-	}
-	.prior-row:last-child { border-bottom: none; }
-	.prior-year {
-		font-family: 'JetBrains Mono', monospace;
-		font-size: 0.88rem;
-		font-weight: 700;
-		color: var(--text-muted);
-	}
-	.prior-main h3 { font-size: 1.02rem; margin-bottom: 0.25rem; line-height: 1.35; }
-	.prior-main h3 a { color: var(--text-primary); text-decoration: none; }
-	.prior-main h3 a:hover { color: var(--accent-primary); text-decoration: underline; }
-	.prior-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.35rem; }
-	.prior-tldr { font-size: 0.88rem; color: var(--text-secondary); }
-	.prior-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+	.prior-cta { flex-shrink: 0; }
 
 	@media (max-width: 860px) {
-		.saail-row-grid, .prior-row { grid-template-columns: 1fr; gap: 0.65rem; }
+		.saail-row-grid { grid-template-columns: 1fr; gap: 0.65rem; }
 		.pub-actions { justify-content: flex-start; max-width: none; }
 		.search-input { min-width: 0; width: 100%; }
 	}

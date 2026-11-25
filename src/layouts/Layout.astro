@@ -4,13 +4,15 @@ export interface Props {
 	description?: string;
 	canonical?: string;
 	ogImage?: string;
+	noindex?: boolean;
 }
 
 const {
 	title = "SAAIL Lab | AI Research Lab at IIT Madras Zanzibar",
 	description = "Sustainable AI for Agriculture and Intelligent Livelihoods Lab (SAAIL Lab) at the School of Engineering and Science, IIT Madras Zanzibar, led by Innocent Nyalala. Flagship AI, deep learning, machine learning, computer vision, Swahili NLP, agricultural AI, and healthcare AI research in Zanzibar, Tanzania, and East Africa.",
 	canonical = "https://saaillab.github.io/",
-	ogImage = "https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg"
+	ogImage = "https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg",
+	noindex = false
 } = Astro.props;
 ---
 
@@ -50,10 +52,11 @@ const {
 		<meta name="dc.title" content={title} />
 		<meta name="dc.subject" content="Artificial Intelligence, Sustainable Agriculture, Swahili NLP, AI Safety, Medical Imaging, East Africa" />
 		<meta name="dc.description" content={description} />
-		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-		<meta name="googlebot" content="index, follow" />
-		<meta name="bingbot" content="index, follow" />
+		<meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+		<meta name="googlebot" content={noindex ? "noindex, follow" : "index, follow"} />
+		<meta name="bingbot" content={noindex ? "noindex, follow" : "index, follow"} />
 		<link rel="canonical" href={canonical} />
+		<link rel="alternate" type="application/rss+xml" title="SAAIL Lab Publications & Updates" href="https://saaillab.github.io/feed.xml" />
 
 		<!-- Geographic and Regional SEO -->
 		<meta name="geo.region" content="TZ-15" />

@@ -11,7 +11,6 @@ const { pub } = Astro.props;
 const cleanDoi = pub.doi ? pub.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').trim() : '';
 const doiUrl = cleanDoi ? `https://doi.org/${cleanDoi}` : '';
 const isPreprint = pub.category === 'preprint';
-const isThesis = pub.slug === 'intelligent-greenhouse-arduino-2016';
 const isPdfUrl = Boolean(pub.paperUrl && (/\.pdf($|\?)/i.test(pub.paperUrl) || /openreview\.net\/pdf/i.test(pub.paperUrl)));
 const pdfTarget = pub.pdfUrl || (isPdfUrl ? pub.paperUrl : '');
 const absPdfUrl = pdfTarget
@@ -66,14 +65,11 @@ const headMetaLines: string[] = [
   `<meta name="citation_abstract" content="${escapeHtmlAttr(pub.abstract)}" />`,
   `<meta name="citation_keywords" content="${escapeHtmlAttr(pub.keywords.join('; '))}" />`,
 ];
-if (pub.category === 'journal' && !isThesis) {
+if (pub.category === 'journal') {
   headMetaLines.push(`<meta name="citation_journal_title" content="${escapeHtmlAttr(pub.venue)}" />`);
 }
 if (pub.category === 'conference' || pub.category === 'workshop') {
   headMetaLines.push(`<meta name="citation_conference_title" content="${escapeHtmlAttr(pub.venue)}" />`);
-}
-if (isThesis) {
-  headMetaLines.push(`<meta name="citation_dissertation_institution" content="Nanjing Agricultural University" />`);
 }
 if (cleanDoi) {
   headMetaLines.push(`<meta name="citation_doi" content="${escapeHtmlAttr(cleanDoi)}" />`);
@@ -209,7 +205,7 @@ const scholarLd: Record<string, unknown> = {
   ...(doiUrl ? { sameAs: doiUrl, identifier: cleanDoi } : {})
 };
 
-if (!isPreprint && !isThesis) {
+if (!isPreprint) {
   scholarLd.isPartOf = {
     '@type': pub.category === 'journal' ? 'Periodical' : 'PublicationVolume',
     name: pub.venue
@@ -362,7 +358,7 @@ const breadcrumbLd = {
         </div>
         {pub.award && <div class="award-line">{pub.award}</div>}
 
-        <div class="action-buttons" role="navigation" aria-label="Paper resources">
+        <nav class="action-buttons" aria-label="Paper resources">
           {pub.paperUrl && pub.paperUrl !== doiUrl && (
             <a href={pub.paperUrl} target="_blank" rel="noopener" class="action-pill">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -418,11 +414,28 @@ const breadcrumbLd = {
                 <polyline points="21 15 16 10 5 21"/>
               </svg>
               <span>Poster</span>
-            </a>
+            </a >
           )}
-        </div>
+        </nav>
       </div>
     </header>
+
+    {extraDetails.length > 0 && (
+      <nav class="section-jump-nav" aria-label="Monograph and paper sections">
+        <div class="container-desktop section-jump-inner">
+          <a href="#abstract" class="jump-link">Abstract</a>
+          {bodyFigs.length > 0 && <a href="#methodology" class="jump-link">Methodology</a>}
+          {hasResults && <a href="#results" class="jump-link">Results</a>}
+          {extraDetails.map((sec) => {
+            const shortJump = sec.title.includes(':') ? sec.title.split(':')[0].trim() : sec.title;
+            return (
+              <a href={`#${sec.id}`} class="jump-link">{shortJump}</a>
+            );
+          })}
+          <a href="#bibtex" class="jump-link">BibTeX</a>
+        </div>
+      </nav>
+    )}
 
     <!-- Teaser Figure + Left-Aligned Research Summary Paragraph -->
     <section class:list={['teaser-section', { 'teaser-compact': !pub.teaserImage }]}>
@@ -440,6 +453,7 @@ const breadcrumbLd = {
                 class:list={['teaser-img', 'zoomable-img', { 'teaser-svg': isSvgTeaser }]}
                 loading="eager"
               />
+              <span class="zoom-cue" aria-hidden="true">Zoom</span>
             </button>
           </figure>
         )}
@@ -483,6 +497,7 @@ const breadcrumbLd = {
                   class="analysis-img zoomable-img"
                   loading="lazy"
                 />
+                <span class="zoom-cue" aria-hidden="true">Zoom</span>
               </button>
               <figcaption class="figure-prose">{fig.caption}</figcaption>
             </figure>
@@ -517,6 +532,7 @@ const breadcrumbLd = {
                   class="analysis-img zoomable-img"
                   loading="lazy"
                 />
+                <span class="zoom-cue" aria-hidden="true">Zoom</span>
               </button>
               <figcaption class="figure-prose">{resultsFig.caption}</figcaption>
             </figure>
@@ -621,9 +637,35 @@ const breadcrumbLd = {
                     class="analysis-img zoomable-img"
                     loading="lazy"
                   />
+                  <span class="zoom-cue" aria-hidden="true">Zoom</span>
                 </button>
                 <figcaption class="figure-prose">{sec.figure.caption}</figcaption>
               </figure>
+            )}
+
+            {sec.figures && sec.figures.length > 0 && (
+              <div class:list={['detail-figures-grid', { 'detail-figures-single': sec.figures.length === 1 }]}>
+                {sec.figures.map((fig) => (
+                  <figure class="detail-fig-card">
+                    <button
+                      type="button"
+                      class="zoom-trigger"
+                      aria-label={`View full size: ${fig.alt || fig.caption}`}
+                    >
+                      <img
+                        src={fig.src}
+                        alt={fig.alt || fig.caption}
+                        class="detail-fig-img zoomable-img"
+                        loading="lazy"
+                      />
+                      <span class="zoom-cue" aria-hidden="true">Zoom</span>
+                    </button>
+                    <figcaption class="detail-fig-caption">
+                      {fig.title && <strong>{fig.title}: </strong>}{fig.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
             )}
 
             {sec.table && (
@@ -735,12 +777,19 @@ const breadcrumbLd = {
       const closeLightbox = document.getElementById('closeLightbox');
       let lastFocusEl = null;
 
+      function setBackgroundInert(active) {
+        document.querySelectorAll('main, footer, .more-works-container').forEach(function (el) {
+          el.inert = active;
+        });
+      }
+
       function openLightbox(triggerEl, imgEl) {
         if (!lightbox || !lightboxImg || !imgEl) return;
         lastFocusEl = triggerEl;
         lightboxImg.src = imgEl.src;
         lightboxImg.alt = imgEl.alt || 'Figure';
         lightbox.hidden = false;
+        setBackgroundInert(true);
         document.body.style.overflow = 'hidden';
         if (closeLightbox) closeLightbox.focus();
       }
@@ -748,6 +797,7 @@ const breadcrumbLd = {
       function hideLightbox() {
         if (!lightbox) return;
         lightbox.hidden = true;
+        setBackgroundInert(false);
         document.body.style.overflow = '';
         if (lastFocusEl && typeof lastFocusEl.focus === 'function') {
           lastFocusEl.focus();
@@ -1103,12 +1153,72 @@ const breadcrumbLd = {
     }
 
     .zoom-trigger {
+      position: relative;
       display: block;
       width: 100%;
       padding: 0;
       border: none;
       background: transparent;
       cursor: zoom-in;
+    }
+
+    .zoom-cue {
+      position: absolute;
+      right: 0.55rem;
+      bottom: 0.55rem;
+      padding: 0.22rem 0.52rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.72);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transition: opacity 0.16s ease;
+      pointer-events: none;
+    }
+
+    .zoom-trigger:hover .zoom-cue,
+    .zoom-trigger:focus-visible .zoom-cue {
+      opacity: 1;
+    }
+
+    @media (hover: none), (max-width: 760px) {
+      .zoom-cue {
+        opacity: 0.85;
+      }
+    }
+
+    .section-jump-nav {
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      background: var(--background-secondary);
+    }
+
+    .section-jump-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.4rem 1rem;
+      padding-top: 0.65rem;
+      padding-bottom: 0.65rem;
+    }
+
+    .jump-link {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.25rem 0.15rem;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .jump-link:hover,
+    .jump-link:focus-visible {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
     }
 
     .teaser-img {
@@ -1118,6 +1228,8 @@ const breadcrumbLd = {
       max-height: 1120px;
       height: auto;
       margin: 0 auto;
+      padding: 0 10px;
+      box-sizing: border-box;
       object-fit: contain;
       mix-blend-mode: multiply;
       cursor: zoom-in;
@@ -1286,7 +1398,7 @@ const breadcrumbLd = {
 
     .detail-cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
       gap: 1rem;
       margin: 0 0 1.75rem;
     }
@@ -1312,6 +1424,48 @@ const breadcrumbLd = {
       font-size: 0.93rem;
       line-height: 1.62;
       color: var(--text-secondary);
+    }
+
+    .detail-figures-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin: 1.35rem 0 1.75rem;
+    }
+
+    .detail-figures-grid.detail-figures-single {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .detail-fig-card {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .detail-fig-img {
+      display: block;
+      width: 100%;
+      max-height: 410px;
+      height: auto;
+      margin: 0 auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      cursor: zoom-in;
+    }
+
+    .detail-fig-caption {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      text-align: left;
+    }
+
+    @media (max-width: 760px) {
+      .detail-figures-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Tables: single-line rows across desktop 960px */
@@ -1542,18 +1696,19 @@ const breadcrumbLd = {
     }
 
     @media (max-width: 640px) {
-      .paper-hero { padding: 3rem 0 1.5rem; }
+      .paper-hero { padding: 1.5rem 0 1.5rem; }
       .abstract-prose p { text-align: left; }
       .action-pill { padding: 0.55rem 1rem; font-size: 0.86rem; }
       .more-works-container {
-        top: auto;
-        bottom: 1.25rem;
-        right: 1rem;
+        position: static;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0.9rem 1.1rem 0;
       }
       .more-works-dropdown {
-        top: auto;
-        bottom: calc(100% + 0.5rem);
-        right: 0;
+        top: 3.6rem;
+        bottom: auto;
+        right: 1rem;
       }
     }
   </style>

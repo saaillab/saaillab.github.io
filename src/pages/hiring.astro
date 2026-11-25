@@ -108,7 +108,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 					<div class="step-card">
 						<span class="step-num">01</span>
 						<h3>Review Our Recent Work</h3>
-						<p>Read two recent papers or active projects closely aligned with your technical background in vision, NLP, or clinical modeling.</p>
+						<p>Read two recent papers or active projects closely matched to your technical background in vision, NLP, or clinical modeling.</p>
 					</div>
 					<div class="step-card">
 						<span class="step-num">02</span>
@@ -121,12 +121,94 @@ import ModernFooter from '../components/ModernFooter.astro';
 						<p>Submit your inquiry via <a href="/contact/">our contact form</a> or write directly to <a href="mailto:saail_lab@iitmz.ac.in">saail_lab@iitmz.ac.in</a>.</p>
 					</div>
 				</div>
+
+				<div class="checklist-card">
+					<div class="checklist-head">
+						<div>
+							<span class="page-eyebrow">Packet Checklist</span>
+							<h3>Application Email Format &amp; Required Items</h3>
+						</div>
+						<div class="checklist-btns">
+							<button type="button" id="toggleApplyTpl" class="btn btn-secondary" aria-expanded="false" aria-controls="applyTemplateText">Preview Template</button>
+							<button type="button" id="copyApplyTpl" class="btn btn-secondary">Copy Email Template</button>
+						</div>
+					</div>
+					<div class="checklist-cols">
+						<div>
+							<p class="cl-sub">Subject line format (pick one):</p>
+							<ul class="cl-list">
+								<li><code>[MTech Thesis] Full Name - Research Topic</code></li>
+								<li><code>[BS Fellowship] Full Name - Stream Name</code></li>
+								<li><code>[Visiting] Full Name - Home Institution</code></li>
+							</ul>
+						</div>
+						<div>
+							<p class="cl-sub">Attach or link all four items:</p>
+							<ul class="cl-list">
+								<li>Current CV (PDF, max 2 pages)</li>
+								<li>GitHub profile, code sample, or unofficial transcript</li>
+								<li>150-word paragraph referencing two SAAIL Lab papers</li>
+								<li>Intended start term and expected weekly hours</li>
+							</ul>
+						</div>
+					</div>
+					<pre id="applyTemplateText" class="apply-tpl" hidden>To: saail_lab@iitmz.ac.in
+Subject: [MTech Thesis] Your Name - Target Research Topic
+
+Dear Innocent Nyalala and SAAIL Lab Team,
+
+I am a [MTech / BS / PhD / Visiting] candidate at [Institution] writing to express interest in joining SAAIL Lab starting [Month/Year].
+
+After reading [Paper 1] and [Paper 2], I would like to contribute to [Crop Pathology / Swahili NLP / Responsible AI / Clinical ML]. My relevant experience includes [brief project or skill summary].
+
+Attached / Linked:
+- CV (PDF)
+- GitHub / Portfolio: [URL]
+- Availability: [Dates and hours/week]
+
+Sincerely,
+[Your Name]</pre>
+				</div>
 			</div>
 		</section>
 	</main>
 
 	<ModernFooter />
 </Layout>
+
+<script>
+	const toggleTplBtn = document.getElementById('toggleApplyTpl');
+	const copyTplBtn = document.getElementById('copyApplyTpl');
+	const tplEl = document.getElementById('applyTemplateText');
+	toggleTplBtn?.addEventListener('click', () => {
+		if (!tplEl) return;
+		tplEl.hidden = !tplEl.hidden;
+		toggleTplBtn.setAttribute('aria-expanded', String(!tplEl.hidden));
+		toggleTplBtn.textContent = tplEl.hidden ? 'Preview Template' : 'Hide Template';
+	});
+	copyTplBtn?.addEventListener('click', async () => {
+		const txt = tplEl?.textContent?.trim() || '';
+		if (!txt) return;
+		let ok = false;
+		try {
+			await navigator.clipboard.writeText(txt);
+			ok = true;
+		} catch (_e) {
+			const area = document.createElement('textarea');
+			area.value = txt;
+			area.style.position = 'fixed';
+			area.style.opacity = '0';
+			document.body.appendChild(area);
+			area.select();
+			try { ok = document.execCommand('copy'); } catch (_e2) {}
+			document.body.removeChild(area);
+		}
+		if (ok) {
+			copyTplBtn.textContent = 'Template Copied!';
+			setTimeout(() => { copyTplBtn.textContent = 'Copy Email Template'; }, 1800);
+		}
+	});
+</script>
 
 <style>
 	.alt-band {
@@ -185,6 +267,8 @@ import ModernFooter from '../components/ModernFooter.astro';
 
 	.badge-open { background: #ecfdf5; color: #14532d; }
 	.badge-closed { background: #e5e7eb; color: #374151; }
+	:global([data-theme="dark"]) .badge-open { background: rgba(52, 211, 153, 0.16); color: #34d399; }
+	:global([data-theme="dark"]) .badge-closed { background: rgba(148, 163, 184, 0.18); color: #cbd5e1; }
 
 	.opp-card h3 { font-size: 1.22rem; color: var(--text-primary); line-height: 1.32; }
 	.opp-card p { font-size: 0.94rem; color: var(--text-secondary); line-height: 1.65; flex: 1; }
@@ -237,7 +321,60 @@ import ModernFooter from '../components/ModernFooter.astro';
 	.step-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; }
 	.step-card a { color: var(--accent-primary); font-weight: 700; }
 
+	.checklist-card {
+		margin-top: 1.5rem;
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 1rem;
+		padding: 1.65rem;
+	}
+	.checklist-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+		margin-bottom: 1rem;
+	}
+	.checklist-head h3 { font-size: 1.2rem; color: var(--text-primary); }
+	.checklist-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+	.apply-tpl {
+		margin-top: 1.1rem;
+		padding: 1rem 1.15rem;
+		border-radius: 0.75rem;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.8rem;
+		line-height: 1.58;
+		color: var(--text-primary);
+		overflow-x: auto;
+		white-space: pre-wrap;
+	}
+	.apply-tpl[hidden] { display: none; }
+	.checklist-cols {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.35rem;
+	}
+	.cl-sub { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.45rem; }
+	.cl-list {
+		margin: 0;
+		padding-left: 1.2rem;
+		font-size: 0.88rem;
+		color: var(--text-secondary);
+		line-height: 1.65;
+	}
+	.cl-list code {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.8rem;
+		color: var(--text-primary);
+		background: var(--bg-secondary);
+		padding: 0.08rem 0.35rem;
+		border-radius: 4px;
+	}
+
 	@media (max-width: 860px) {
-		.opp-grid, .steps-grid { grid-template-columns: 1fr; }
+		.opp-grid, .steps-grid, .checklist-cols { grid-template-columns: minmax(0, 1fr); }
 	}
 </style>
