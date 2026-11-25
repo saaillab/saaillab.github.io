@@ -1,12 +1,14 @@
 ---
 import type { Publication } from '../data/publications';
 import { PUBLICATIONS } from '../data/publications';
+import { publicationToRis } from '../utils/citations';
 
 export interface Props {
   pub: Publication;
 }
 
 const { pub } = Astro.props;
+const risCitation = publicationToRis(pub);
 
 const cleanDoi = pub.doi ? pub.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').trim() : '';
 const doiUrl = cleanDoi ? `https://doi.org/${cleanDoi}` : '';
@@ -706,18 +708,29 @@ const breadcrumbLd = {
       <div class="container-desktop">
         <div class="bibtex-header">
           <h2>BibTeX</h2>
-          <button type="button" id="copyBibBtn" class="copy-bibtex-btn" data-copy-target="bibtexCode" title="Copy BibTeX to clipboard">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-            </svg>
-            <span>Copy</span>
-          </button>
+          <div class="bibtex-actions">
+            <button type="button" id="copyBibBtn" class="copy-bibtex-btn" data-copy-target="bibtexCode" title="Copy BibTeX to clipboard">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span>Copy</span>
+            </button>
+            <button type="button" id="copyRisBtn" class="citation-secondary-btn" data-copy-target="risCode" title="Copy RIS citation for Zotero, Mendeley, or EndNote">
+              <span>Copy RIS</span>
+            </button>
+            <button type="button" id="downloadBibBtn" class="citation-secondary-btn" data-slug={pub.slug} title="Download .bib citation file">
+              <span>Download .bib</span>
+            </button>
+          </div>
         </div>
         <pre id="bibtex-code" class="bibtex-pre"><code id="bibtexCode">{pub.bibtex}</code></pre>
+        <pre id="risCode" hidden>{risCitation}</pre>
       </div>
     </section>
   </main>
+
+  <div id="paperLiveStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <footer class:list={['project-footer', footerBand]}>
     <div class="container-desktop">
@@ -832,6 +845,31 @@ const breadcrumbLd = {
         }
       });
 
+      const paperLiveEl = document.getElementById('paperLiveStatus');
+      function announcePaper(msg) {
+        if (!paperLiveEl) return;
+        paperLiveEl.textContent = '';
+        requestAnimationFrame(function () { paperLiveEl.textContent = msg; });
+      }
+
+      async function copyTextSafe(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (_err) {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.style.position = 'fixed';
+          area.style.opacity = '0';
+          document.body.appendChild(area);
+          area.select();
+          let ok = false;
+          try { ok = document.execCommand('copy'); } catch (_e2) {}
+          document.body.removeChild(area);
+          return ok;
+        }
+      }
+
       const copyBtn = document.getElementById('copyBibBtn');
       if (copyBtn) {
         const originalHtml = copyBtn.innerHTML;
@@ -839,28 +877,54 @@ const breadcrumbLd = {
           const el = document.getElementById('bibtexCode');
           const text = el ? (el.textContent || '').trim() : '';
           if (!text) return;
-          let copied = false;
-          try {
-            await navigator.clipboard.writeText(text);
-            copied = true;
-          } catch (_err) {
-            const area = document.createElement('textarea');
-            area.value = text;
-            area.style.position = 'fixed';
-            area.style.opacity = '0';
-            document.body.appendChild(area);
-            area.select();
-            try { copied = document.execCommand('copy'); } catch (_e2) {}
-            document.body.removeChild(area);
-          }
-          if (copied) {
+          if (await copyTextSafe(text)) {
             copyBtn.classList.add('copied');
             copyBtn.innerHTML = '<span>&#10003; Copied!</span>';
+            announcePaper('BibTeX citation copied to clipboard.');
             setTimeout(function () {
               copyBtn.classList.remove('copied');
               copyBtn.innerHTML = originalHtml;
             }, 1800);
           }
+        });
+      }
+
+      const copyRisBtn = document.getElementById('copyRisBtn');
+      if (copyRisBtn) {
+        const origRisHtml = copyRisBtn.innerHTML;
+        copyRisBtn.addEventListener('click', async function () {
+          const el = document.getElementById('risCode');
+          const text = el ? (el.textContent || '').trim() : '';
+          if (!text) return;
+          if (await copyTextSafe(text)) {
+            copyRisBtn.classList.add('copied');
+            copyRisBtn.innerHTML = '<span>&#10003; RIS Copied!</span>';
+            announcePaper('RIS citation copied to clipboard.');
+            setTimeout(function () {
+              copyRisBtn.classList.remove('copied');
+              copyRisBtn.innerHTML = origRisHtml;
+            }, 1800);
+          }
+        });
+      }
+
+      const downloadBibBtn = document.getElementById('downloadBibBtn');
+      if (downloadBibBtn) {
+        downloadBibBtn.addEventListener('click', function () {
+          const el = document.getElementById('bibtexCode');
+          const text = el ? (el.textContent || '').trim() : '';
+          const slug = downloadBibBtn.getAttribute('data-slug') || 'saail-paper';
+          if (!text) return;
+          const blob = new Blob([text + '\n'], { type: 'application/x-bibtex;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = slug + '.bib';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+          announcePaper('Downloaded ' + slug + '.bib.');
         });
       }
     })();
@@ -1543,6 +1607,8 @@ const breadcrumbLd = {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
       margin-bottom: 1rem;
     }
 
@@ -1576,8 +1642,55 @@ const breadcrumbLd = {
     }
 
     .copy-bibtex-btn.copied {
-      background: #10b981;
+      background: #047857;
       color: #ffffff;
+    }
+
+    .bibtex-actions {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .citation-secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--background-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .citation-secondary-btn:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+      transform: translateY(-1px);
+    }
+
+    .citation-secondary-btn.copied {
+      background: #047857;
+      border-color: #047857;
+      color: #ffffff;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .bibtex-pre {

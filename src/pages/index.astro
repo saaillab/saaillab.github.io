@@ -224,7 +224,7 @@ const featuredPubs = featuredSlugs
 						<span class="page-eyebrow">Peer-Reviewed Outputs</span>
 						<h2 class="section-title-left">Selected Recent Publications</h2>
 					</div>
-					<a href="/publications/" class="btn btn-secondary">Explore All {saailPubCount} Lab &amp; {PUBLICATIONS.length - saailPubCount} Prior Papers &rarr;</a>
+					<a href="/publications/" class="btn btn-secondary">Explore All {saailPubCount} SAAIL Lab Papers &rarr;</a>
 				</div>
 
 				<div class="pub-ledger">
@@ -1073,10 +1073,10 @@ const featuredPubs = featuredSlugs
 		.closing-grid,
 		.milestones-strip,
 		.faq-grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 		.ledger-row {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 			gap: 0.75rem;
 		}
 		.ledger-links {
@@ -1092,7 +1092,7 @@ const featuredPubs = featuredSlugs
 
 	@media (max-width: 380px) {
 		.closing-stats {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 		.impact-stat {
 			padding: 0.78rem;

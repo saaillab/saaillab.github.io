@@ -83,7 +83,7 @@ export const PROJECTS: LabProject[] = [
     status: 'Active Curation',
     funding: 'SAAIL Lab Core Research · IIT Madras Zanzibar',
     lead: 'Innocent Nyalala',
-    team: ['Saleh Salim Abdulla', 'Sri Advaita'],
+    team: ['Saleh Saleh', 'Sri Advaita'],
     partners: ['School of Engineering and Science, IIT Madras Zanzibar'],
     summary:
       'Building authentic coastal Kiunguja Swahili text and spoken domain QA paired with the Dira benchmark to detect machine-translated translationese from genuinely authored Swahili prose.',

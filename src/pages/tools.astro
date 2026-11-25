@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
+import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 ---
 
 <Layout
@@ -167,8 +168,90 @@ import ModernFooter from '../components/ModernFooter.astro';
 			</div>
 		</section>
 
+		<!-- In-Browser WebAssembly ONNX Live Inference Demo -->
+		<section class="section" id="live-demo">
+			<div class="container">
+				<div class="group-head">
+					<span class="page-eyebrow">Client-Side WebAssembly AI</span>
+					<h2>In-Browser Live ONNX Inference Demo</h2>
+					<p>
+						Run a genuine PyTorch-trained <code>MobileNetV3-Small</code> ({clovesMeta.modelSizeMB} MB, {clovesMeta.testAccuracyPct}% held-out test accuracy and {clovesMeta.testMacroF1Pct}% Macro-F1 across <em>n</em> = {clovesMeta.testSamples} images) directly inside your browser via <code>onnxruntime-web</code> WebAssembly with zero server uploads.
+					</p>
+				</div>
+
+				<div class="demo-panel">
+					<div class="demo-left">
+						<div class="demo-specs-row">
+							<span class="tool-badge badge-mobile">{clovesMeta.format}</span>
+							<span class="tool-status">{clovesMeta.modelSizeMB} MB · Test Acc {clovesMeta.testAccuracyPct}%</span>
+						</div>
+
+						<p class="demo-instructions">Select a held-out Zanzibar Cloves test sample (Grades I to IV) or upload your own clove photograph to execute local browser inference:</p>
+
+						<div class="demo-samples-grid" role="group" aria-label="Held-out Zanzibar clove test samples">
+							{clovesMeta.demoSamples.map((s) => (
+								<button
+									type="button"
+									class="demo-sample-btn"
+									data-sample-src={s.file}
+									data-sample-label={s.gradeLabel}
+								>
+									<img src={s.file} alt={`Held-out Zanzibar clove test image: ${s.gradeLabel}`} width="84" height="84" loading="lazy" />
+									<span>{s.shortLabel}</span>
+								</button>
+							))}
+						</div>
+
+						<div class="demo-upload-row">
+							<input id="demoFileInput" type="file" accept="image/*" class="sr-only" />
+							<button type="button" id="demoUploadBtn" class="btn btn-secondary">Upload Custom Clove Image</button>
+							<span id="demoInputLabel" class="demo-input-note">No image executed yet</span>
+						</div>
+					</div>
+
+					<div class="demo-right">
+						<div class="demo-preview-wrap">
+							<canvas id="demoPreviewCanvas" width="224" height="224" aria-label="Center-cropped 224x224 ONNX model input preview"></canvas>
+							<div class="demo-meta-readout">
+								<div>
+									<small>Predicted ZSTC Grade</small>
+									<strong id="demoPredClass">Click a sample image</strong>
+								</div>
+								<div>
+									<small>Browser Inference</small>
+									<strong id="demoLatency">0.0 ms</strong>
+								</div>
+								<div>
+									<small>Runtime Backend</small>
+									<strong id="demoBackend">WASM CPU (Lazy)</strong>
+								</div>
+							</div>
+						</div>
+
+						<div class="demo-bars" aria-label="Predicted ZSTC grade probabilities">
+							{clovesMeta.classes.map((clsName, idx) => (
+								<div class="prob-row" data-class-idx={idx}>
+									<div class="prob-head">
+										<span>{clsName}</span>
+										<strong class="prob-pct" id={`demoProbPct${idx}`}>0.0%</strong>
+									</div>
+									<div class="prob-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label={`${clsName} probability`}>
+										<div class="prob-fill" id={`demoProbBar${idx}`} style="width: 0%"></div>
+									</div>
+								</div>
+							))}
+						</div>
+
+						<div id="demoStatusBox" class="calc-alert alert-ok" role="status" aria-live="polite">
+							Ready: WebAssembly runtime (~4.13 MB weights) loads on first click so initial page load stays fast.
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
 		<!-- Interactive Browser Calculators -->
-		<section class="section" id="calculators">
+		<section class="section alt-band" id="calculators">
 			<div class="container">
 				<div class="group-head">
 					<span class="page-eyebrow">Interactive Diagnostics</span>
@@ -440,6 +523,216 @@ import ModernFooter from '../components/ModernFooter.astro';
 		});
 		updateCara();
 	})();
+
+	(function initOnnxLiveDemo() {
+		const sampleBtns = Array.from(document.querySelectorAll('.demo-sample-btn')) as HTMLButtonElement[];
+		const uploadBtn = document.getElementById('demoUploadBtn') as HTMLButtonElement | null;
+		const fileInput = document.getElementById('demoFileInput') as HTMLInputElement | null;
+		const canvas = document.getElementById('demoPreviewCanvas') as HTMLCanvasElement | null;
+		const inputNoteEl = document.getElementById('demoInputLabel');
+		const predEl = document.getElementById('demoPredClass');
+		const latEl = document.getElementById('demoLatency');
+		const backendEl = document.getElementById('demoBackend');
+		const statusBox = document.getElementById('demoStatusBox');
+		if (!canvas || !predEl || !latEl || !statusBox) return;
+
+		const ctx = canvas.getContext('2d', { willReadFrequently: true });
+		if (!ctx) return;
+
+		// Initial clean canvas placeholder
+		ctx.fillStyle = '#0f172a';
+		ctx.fillRect(0, 0, 224, 224);
+		ctx.fillStyle = '#cbd5e1';
+		ctx.font = '600 13px Inter, sans-serif';
+		ctx.textAlign = 'center';
+		ctx.fillText('224x224 Input Preview', 112, 114);
+
+		const CLASS_LABELS = [
+			'Grade I (Premium)',
+			'Grade II (Standard)',
+			'Grade III (Commercial)',
+			'Grade IV (Mpeta)'
+		];
+		const MODEL_URL = '/models/cloves_mobilenetv3s.onnx';
+		const ORT_VERSION = '1.20.1';
+		let ortScriptPromise: Promise<any> | null = null;
+		let sessionPromise: Promise<any> | null = null;
+		let activeReqId = 0;
+
+		function loadOrtScript(): Promise<any> {
+			if ((window as any).ort) return Promise.resolve((window as any).ort);
+			if (ortScriptPromise) return ortScriptPromise;
+			ortScriptPromise = new Promise((resolve, reject) => {
+				const script = document.createElement('script');
+				script.src = `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/dist/ort.min.js`;
+				script.async = true;
+				script.onload = () => {
+					const ort = (window as any).ort;
+					if (!ort) {
+						reject(new Error('onnxruntime-web script loaded but window.ort is missing'));
+						return;
+					}
+					ort.env.wasm.wasmPaths = `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/dist/`;
+					ort.env.wasm.numThreads = 1;
+					resolve(ort);
+				};
+				script.onerror = () => reject(new Error('Failed to load onnxruntime-web runtime from CDN.'));
+				document.head.appendChild(script);
+			});
+			return ortScriptPromise;
+		}
+
+		async function getSession() {
+			if (sessionPromise) return sessionPromise;
+			sessionPromise = (async () => {
+				statusBox!.className = 'calc-alert alert-ok';
+				statusBox!.textContent = 'Loading WebAssembly runtime and 4.13 MB MobileNetV3-Small ONNX weights...';
+				const ort = await loadOrtScript();
+				const session = await ort.InferenceSession.create(MODEL_URL, {
+					executionProviders: ['wasm']
+				});
+				if (backendEl) backendEl.textContent = 'WebAssembly CPU';
+				return { ort, session };
+			})();
+			return sessionPromise;
+		}
+
+		function softmax(logits: Float32Array): number[] {
+			let maxVal = -Infinity;
+			for (let i = 0; i < logits.length; i++) {
+				if (logits[i] > maxVal) maxVal = logits[i];
+			}
+			const exps = Array.from(logits, (v) => Math.exp(v - maxVal));
+			const sum = exps.reduce((a, b) => a + b, 0) || 1;
+			return exps.map((e) => e / sum);
+		}
+
+		function preprocessCanvasToTensor(ort: any) {
+			const imgData = ctx!.getImageData(0, 0, 224, 224).data;
+			const size = 224 * 224;
+			const floatData = new Float32Array(3 * size);
+			const mean = [0.485, 0.456, 0.406];
+			const std = [0.229, 0.224, 0.225];
+			for (let i = 0; i < size; i++) {
+				const r = imgData[i * 4] / 255.0;
+				const g = imgData[i * 4 + 1] / 255.0;
+				const b = imgData[i * 4 + 2] / 255.0;
+				floatData[i] = (r - mean[0]) / std[0];
+				floatData[size + i] = (g - mean[1]) / std[1];
+				floatData[2 * size + i] = (b - mean[2]) / std[2];
+			}
+			return new ort.Tensor('float32', floatData, [1, 3, 224, 224]);
+		}
+
+		async function runInferenceOnImage(img: HTMLImageElement, labelText: string, reqId: number) {
+			try {
+				if (reqId !== activeReqId) return;
+				if (inputNoteEl) inputNoteEl.textContent = labelText;
+				const side = Math.min(img.naturalWidth || img.width, img.naturalHeight || img.height);
+				const sx = Math.max(0, Math.floor(((img.naturalWidth || img.width) - side) / 2));
+				const sy = Math.max(0, Math.floor(((img.naturalHeight || img.height) - side) / 2));
+				ctx!.clearRect(0, 0, 224, 224);
+				ctx!.drawImage(img, sx, sy, side, side, 0, 0, 224, 224);
+
+				const { ort, session } = await getSession();
+				if (reqId !== activeReqId) return;
+				const inputTensor = preprocessCanvasToTensor(ort);
+				const t0 = performance.now();
+				const outputs = await session.run({ [session.inputNames[0]]: inputTensor });
+				if (reqId !== activeReqId) return;
+				const dtMs = performance.now() - t0;
+
+				const rawOut = outputs[session.outputNames[0]].data as Float32Array;
+				const probs = softmax(rawOut);
+				let bestIdx = 0;
+				for (let i = 1; i < probs.length; i++) {
+					if (probs[i] > probs[bestIdx]) bestIdx = i;
+				}
+
+				predEl!.textContent = CLASS_LABELS[bestIdx];
+				latEl!.textContent = `${dtMs.toFixed(1)} ms`;
+				probs.forEach((p, idx) => {
+					const pct = p * 100;
+					const pctEl = document.getElementById(`demoProbPct${idx}`);
+					const barEl = document.getElementById(`demoProbBar${idx}`);
+					if (pctEl) pctEl.textContent = `${pct.toFixed(1)}%`;
+					if (barEl) {
+						barEl.style.width = `${pct.toFixed(1)}%`;
+						barEl.parentElement?.setAttribute('aria-valuenow', pct.toFixed(0));
+					}
+				});
+
+				statusBox!.className = 'calc-alert alert-ok';
+				statusBox!.textContent = `Predicted ${CLASS_LABELS[bestIdx]} (${(probs[bestIdx] * 100).toFixed(1)}% confidence) in ${dtMs.toFixed(1)} ms locally on your device.`;
+
+				const liveEl = document.getElementById('saailLiveStatus');
+				if (liveEl) {
+					liveEl.textContent = '';
+					requestAnimationFrame(() => {
+						liveEl.textContent = `Clove prediction: ${CLASS_LABELS[bestIdx]} in ${dtMs.toFixed(1)} milliseconds.`;
+					});
+				}
+			} catch (err) {
+				if (reqId !== activeReqId) return;
+				sessionPromise = null;
+				statusBox!.className = 'calc-alert alert-warn';
+				statusBox!.textContent = `Browser inference error: ${err instanceof Error ? err.message : 'Unable to initialize WebAssembly session.'}`;
+			}
+		}
+
+		sampleBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				sampleBtns.forEach((b) => b.classList.remove('is-selected'));
+				btn.classList.add('is-selected');
+				const src = btn.getAttribute('data-sample-src') || '';
+				const lbl = btn.getAttribute('data-sample-label') || 'Sample';
+				if (!src) return;
+				const reqId = ++activeReqId;
+				const img = new Image();
+				img.onload = () => runInferenceOnImage(img, `Held-out test sample: ${lbl}`, reqId);
+				img.onerror = () => {
+					if (reqId !== activeReqId) return;
+					statusBox!.className = 'calc-alert alert-warn';
+					statusBox!.textContent = `Failed to load sample image ${src}.`;
+				};
+				img.src = src;
+			});
+		});
+
+		uploadBtn?.addEventListener('click', () => fileInput?.click());
+		fileInput?.addEventListener('change', () => {
+			const file = fileInput.files?.[0];
+			if (!file) return;
+			const reqId = ++activeReqId;
+			const fname = file.name;
+			fileInput.value = '';
+			sampleBtns.forEach((b) => b.classList.remove('is-selected'));
+			const reader = new FileReader();
+			reader.onload = () => {
+				const img = new Image();
+				img.onload = () => runInferenceOnImage(img, `Local file: ${fname}`, reqId);
+				img.onerror = () => {
+					if (reqId !== activeReqId) return;
+					statusBox!.className = 'calc-alert alert-warn';
+					statusBox!.textContent = `Unsupported or unreadable image format (${fname}). Please upload a JPEG, PNG, or WebP photograph.`;
+					const liveEl = document.getElementById('saailLiveStatus');
+					if (liveEl) {
+						liveEl.textContent = '';
+						requestAnimationFrame(() => {
+							liveEl.textContent = `Unsupported or unreadable image format (${fname}).`;
+						});
+					}
+				};
+				img.src = String(reader.result || '');
+			};
+			reader.onerror = () => {
+				if (reqId !== activeReqId) return;
+				statusBox!.className = 'calc-alert alert-warn';
+				statusBox!.textContent = `Could not read local file ${fname}.`;
+			};
+			reader.readAsDataURL(file);
+		});
+	})();
 </script>
 
 <style>
@@ -607,10 +900,155 @@ import ModernFooter from '../components/ModernFooter.astro';
 	:global([data-theme="dark"]) .alert-warn { background: rgba(245, 158, 11, 0.18); color: #fbbf24; }
 	:global([data-theme="dark"]) .alert-ok { background: rgba(52, 211, 153, 0.16); color: #34d399; }
 
+	.demo-panel {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+		gap: 1.75rem;
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 1.1rem;
+		padding: 1.65rem;
+		box-shadow: 0 4px 14px var(--shadow-light);
+	}
+	.demo-left, .demo-right {
+		display: flex;
+		flex-direction: column;
+		gap: 0.9rem;
+	}
+	.demo-specs-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+	.demo-instructions {
+		font-size: 0.9rem;
+		color: var(--text-secondary);
+		line-height: 1.55;
+		margin: 0;
+	}
+	.demo-samples-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 0.65rem;
+	}
+	.demo-sample-btn {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.45rem;
+		border-radius: 0.75rem;
+		border: 2px solid var(--border-color);
+		background: var(--bg-secondary);
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 0.76rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: border-color 0.16s ease, transform 0.16s ease;
+	}
+	.demo-sample-btn:hover,
+	.demo-sample-btn.is-selected {
+		border-color: var(--accent-primary);
+		transform: translateY(-2px);
+	}
+	.demo-sample-btn img {
+		width: 100%;
+		aspect-ratio: 1;
+		object-fit: cover;
+		border-radius: 0.5rem;
+	}
+	.demo-upload-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem;
+		margin-top: auto;
+	}
+	.demo-input-note {
+		font-size: 0.8rem;
+		color: var(--text-muted);
+	}
+	.demo-preview-wrap {
+		display: flex;
+		gap: 1.1rem;
+		align-items: stretch;
+	}
+	#demoPreviewCanvas {
+		width: 148px;
+		height: 148px;
+		border-radius: 0.75rem;
+		border: 1px solid var(--border-color);
+		flex-shrink: 0;
+		background: #0f172a;
+	}
+	.demo-meta-readout {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 0.45rem;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 0.75rem;
+		padding: 0.75rem 0.9rem;
+	}
+	.demo-meta-readout small {
+		display: block;
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.demo-meta-readout strong {
+		font-size: 0.92rem;
+		color: var(--text-primary);
+	}
+	.demo-bars {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.prob-row {
+		display: flex;
+		flex-direction: column;
+		gap: 0.22rem;
+	}
+	.prob-head {
+		display: flex;
+		justify-content: space-between;
+		font-size: 0.82rem;
+		color: var(--text-secondary);
+		font-weight: 600;
+	}
+	.prob-pct {
+		font-family: 'JetBrains Mono', monospace;
+		color: var(--text-primary);
+	}
+	.prob-track {
+		width: 100%;
+		height: 9px;
+		border-radius: 999px;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		overflow: hidden;
+	}
+	.prob-fill {
+		height: 100%;
+		background: var(--accent-primary);
+		transition: width 0.22s ease;
+	}
+
 	@media (max-width: 1024px) {
 		.apps-grid { grid-template-columns: minmax(0, 1fr); }
+		.demo-panel { grid-template-columns: minmax(0, 1fr); }
 	}
 	@media (max-width: 520px) {
 		.calc-readout { grid-template-columns: minmax(0, 1fr); }
+		.demo-samples-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.demo-preview-wrap { flex-direction: column; align-items: center; }
+		.demo-meta-readout { width: 100%; }
 	}
 </style>

@@ -35,6 +35,7 @@
 - Mobile Applications & Open Software: https://saaillab.github.io/tools/
 - GitHub Repositories: https://saaillab.github.io/github/
 - Conference & Field Gallery: https://saaillab.github.io/gallery/
+- News, Awards & Lab Milestones: https://saaillab.github.io/news/
 - Research Opportunities & Hiring: https://saaillab.github.io/hiring/
 - International Collaborations: https://saaillab.github.io/collaborations/
 - Contact: https://saaillab.github.io/contact/

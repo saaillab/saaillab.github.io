@@ -1,15 +1,436 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import ModernHeader from '../components/ModernHeader.astro';
+import ModernFooter from '../components/ModernFooter.astro';
+
+interface NewsItem {
+	id: string;
+	category: 'awards' | 'conferences' | 'publications';
+	dateLabel: string;
+	badge: string;
+	title: string;
+	summary: string;
+	links: { label: string; href: string }[];
+}
+
+const NEWS_ITEMS: NewsItem[] = [
+	{
+		id: 'dli-2026-best-poster',
+		category: 'awards',
+		dateLabel: 'August 2026',
+		badge: 'Best Poster Award · Lagos',
+		title: 'DGS-Bench Wins Best Poster Award at Deep Learning Indaba 2026',
+		summary: 'DGS-Bench (Innocent Nyalala, Surabhi Gudla, and Patrick Vincent Ndowo) earned a Best Poster Award out of 114 submissions (18 accepted, 15.79% acceptance rate) at Pan-Atlantic University, Lagos, marking SAAIL Lab\'s second consecutive Deep Learning Indaba Best Poster honor.',
+		links: [
+			{ label: 'DGS-Bench Paper Page', href: '/papers/dgs-bench/' },
+			{ label: 'Event Photos', href: '/gallery/#dli-2026' }
+		]
+	},
+	{
+		id: 'dsa-2026-kampala',
+		category: 'conferences',
+		dateLabel: 'July 2026',
+		badge: 'Oral & 3 Studies · Kampala',
+		title: 'One Oral Presentation and Three Studies at Data Science Africa 2026',
+		summary: 'At Makerere University in Kampala, Uganda, SAAIL Lab presented an empirical oral warning on DCGAN scarcity collapse (-23.2 pp at 25 shots/class) alongside studies on low-shot cassava transfer scaling (21,397 field images) and the AgriAI Bias Card crop dataset audit.',
+		links: [
+			{ label: 'DCGAN Failure Paper', href: '/papers/dcgan-cassava-dsa2026/' },
+			{ label: 'DSA 2026 Gallery', href: '/gallery/#dsa-2026' }
+		]
+	},
+	{
+		id: 'cvpr-2026-v4a',
+		category: 'conferences',
+		dateLabel: 'June 2026',
+		badge: 'CVPR 2026 Workshop · Denver',
+		title: 'CLOVES-4603 Accepted at CVPR 2026 Workshop on Vision for Agriculture',
+		summary: 'Our 4,603-image Zanzibar commercial clove quality benchmark was accepted at CVPR 2026 V4A in Denver, comparing classical GLCM+GLRLM+LBP texture models (92.94%) against fine-tuned deep backbones (99.67%) under lot-aware stratified splits.',
+		links: [
+			{ label: 'CLOVES-4603 Paper Page', href: '/papers/cloves-4603/' },
+			{ label: 'Dataset Details', href: '/datasets/#agriculture' }
+		]
+	},
+	{
+		id: 'oxford-tais-2026',
+		category: 'conferences',
+		dateLabel: 'March 2026',
+		badge: 'Oxford Martin School · UK',
+		title: 'East African AI Policy Harmonization Presented at TAIS 2026',
+		summary: 'Presented at the 3rd Technical AI Safety Conference at Oxford Martin School, comparing national AI frameworks across Ethiopia, Kenya, and Rwanda alongside compute, water, energy, and Ubuntu/Harambee/Ujamaa governance principles.',
+		links: [
+			{ label: 'TAIS 2026 Paper Page', href: '/papers/ai-policy-harmonization-tais2026/' },
+			{ label: 'Responsible AI Project', href: '/projects/responsible-ai-global-south/' }
+		]
+	},
+	{
+		id: 'iclr-2026-trustworthy',
+		category: 'conferences',
+		dateLabel: 'April 2026',
+		badge: 'ICLR 2026 Workshop · Rio',
+		title: 'Dynamic Data Re-weighting Study Accepted at ICLR 2026 Trustworthy AI',
+		summary: 'Accepted at the ICLR 2026 Workshop on Principled Design for Trustworthy AI in Rio de Janeiro, demonstrating how single-pass data re-weighting addresses subgroup disparities and shortcut bias without demographic group labels.',
+		links: [
+			{ label: 'ICLR 2026 Paper Page', href: '/papers/trustworthy-ai-iclr2026/' }
+		]
+	},
+	{
+		id: 'ai4eac-2026-grant',
+		category: 'awards',
+		dateLabel: 'March 2026',
+		badge: '$980 Travel Grant · Kigali',
+		title: 'Competitive AI4EAC Travel Grant Awarded for ZSTC-Clove-V1 Benchmark',
+		summary: 'MTech researcher Patrick Vincent Ndowo received a $980 competitive AI4EAC travel grant to present the 5,298-image ZSTC-Clove-V1 study at the 4th EAC STI Conference in Kigali, benchmarking 18 deep vision architectures against ZSTC regulatory grades.',
+		links: [
+			{ label: 'ZSTC-Clove-V1 Paper Page', href: '/papers/zstc-clove-v1/' },
+			{ label: 'Ubora-AI Project', href: '/projects/ubora-ai/' }
+		]
+	},
+	{
+		id: 'etri-journal-2026',
+		category: 'publications',
+		dateLabel: 'October 2026',
+		badge: 'ETRI Journal · Q2 SCI',
+		title: 'Compositional XAI for Clove Grading Published in ETRI Journal',
+		summary: 'Published in ETRI Journal (DOI 10.4218/etrij.2026-0225), documenting segmentation-first compositional rules that raise Explanation Evidence Ratio (EER) to 100% and eliminate background confounding across commercial clove inspection models.',
+		links: [
+			{ label: 'ETRI Paper Page', href: '/papers/clove-xai-etri2026/' },
+			{ label: 'Live ONNX Demo', href: '/tools/#live-demo' }
+		]
+	},
+	{
+		id: 'cara-fm-pmlr-2026',
+		category: 'publications',
+		dateLabel: '2026',
+		badge: 'PMLR Vol. 302 · CC BY 4.0',
+		title: 'CARA-FM Published in Proceedings of Machine Learning Research',
+		summary: 'Following its DLI 2025 Best Poster win, Culturally Attuned and Resource-Aware Foundation Models for East African Agriculture (CARA-FM) appeared in PMLR Vol. 302 with open technical readiness indices (CEI and DFS) validated across 1-4 GB Android constraints.',
+		links: [
+			{ label: 'CARA-FM Paper Page', href: '/papers/cara-fm/' },
+			{ label: 'CEI & DFS Calculator', href: '/tools/#calculators' }
+		]
+	},
+	{
+		id: 'mtech-first-cohort-2026',
+		category: 'publications',
+		dateLabel: '2026',
+		badge: 'Lab Milestone · Graduation',
+		title: 'Inaugural SAAIL Lab Cohort of Four MTech Researchers Graduates at IITMZ',
+		summary: 'Patrick Vincent Ndowo, Duen Michael Chombo, Shivam Vyas, and Makame Mohammed Haji completed their MTech Data Science & AI degrees at IIT Madras Zanzibar, shipping offline Android TFLite agricultural apps, federated privacy workflows, and clinical preterm screening pipelines.',
+		links: [
+			{ label: 'Alumni Theses & Profiles', href: '/people/#alumni' },
+			{ label: 'Mobile Apps', href: '/tools/' }
+		]
+	},
+	{
+		id: 'aaai-2026-sovereignty',
+		category: 'conferences',
+		dateLabel: 'January 2026',
+		badge: 'AAAI 2026 Workshop · EGSAI',
+		title: 'AI Sovereignty Framework Accepted at AAAI 2026 EGSAI Workshop',
+		summary: 'Accepted at the AAAI 2026 Workshop on Equitable and Sustainable Global AI (EGSAI) in Philadelphia, analyzing four structural dependency vectors alongside regional compute pooling and South-South coordination across the African Union and ASEAN.',
+		links: [
+			{ label: 'AAAI 2026 Paper Page', href: '/papers/ai-sovereignty-global-south-aaai2026/' }
+		]
+	},
+	{
+		id: 'eurips-2025-paig',
+		category: 'conferences',
+		dateLabel: 'November 2025',
+		badge: 'PAIG @ EurIPS 2025',
+		title: 'Digital Sovereignty vs. Digital Serfdom Presented at PAIG Workshop',
+		summary: 'Presented at the Private AI Governance (PAIG) Workshop at EurIPS / NeurIPS 2025, evaluating seven governance dimensions across Singapore, Vietnam, Kenya, and Syria toward equitable technology infrastructure.',
+		links: [
+			{ label: 'EurIPS Paper Page', href: '/papers/digital-sovereignty-serfdom-2025/' }
+		]
+	},
+	{
+		id: 'africhi-2025-cairo',
+		category: 'conferences',
+		dateLabel: 'November 2025',
+		badge: 'ACM AfriCHI 2025 · Cairo',
+		title: 'Indigenous AI Co-Design Study Presented at ACM AfriCHI 2025',
+		summary: 'Presented in Cairo, Egypt, reporting participatory field studies with Zanzibar clove inspectors that shaped Ubora-AI offline mobile ergonomics and transparent grade boundary feedback.',
+		links: [
+			{ label: 'AfriCHI Paper Page', href: '/papers/clove-codesign-africhi2025/' }
+		]
+	},
+	{
+		id: 'dli-2025-kigali',
+		category: 'awards',
+		dateLabel: 'August 2025',
+		badge: 'Best Poster Award · Kigali',
+		title: 'CARA-FM Wins Best Poster Award at Deep Learning Indaba 2025',
+		summary: 'Recognized with the Best Poster Award in the Publication and Dataset Category at Deep Learning Indaba 2025 in Kigali, Rwanda, establishing formal deployment feasibility rules for East African edge models.',
+		links: [
+			{ label: 'CARA-FM Paper Page', href: '/papers/cara-fm/' },
+			{ label: 'DLI 2025 Gallery', href: '/gallery/#dli-2025' }
+		]
+	},
+	{
+		id: 'elsevier-journals-2025',
+		category: 'publications',
+		dateLabel: '2025',
+		badge: 'COMPAG & ESWA · Q1',
+		title: 'Two Q1 Elsevier Journal Studies Published on Cassava Pathology and Polyp Segmentation',
+		summary: 'SAAIL Lab published weakened-signal cassava grading improvements in Computers and Electronics in Agriculture (COMPAG 2025) alongside BAFNet colorectal polyp boundary segmentation in Expert Systems with Applications (ESWA 2025).',
+		links: [
+			{ label: 'Cassava COMPAG Paper', href: '/papers/cassava-weakened-signals-2025/' },
+			{ label: 'BAFNet ESWA Paper', href: '/papers/bafnet-polyp-2025/' }
+		]
+	},
+	{
+		id: 'saail-lab-founded-2024',
+		category: 'publications',
+		dateLabel: 'October 2024',
+		badge: 'Lab Founding · IITMZ',
+		title: 'SAAIL Lab Established at IIT Madras Zanzibar',
+		summary: 'Innocent Nyalala founded the Sustainable AI for Agriculture and Intelligent Livelihoods (SAAIL) Lab inside the School of Engineering and Science at IIT Madras Zanzibar in Bweleo, Tanzania.',
+		links: [
+			{ label: 'Research Group', href: '/people/' },
+			{ label: 'Four Research Pillars', href: '/research/' }
+		]
+	}
+];
+
+const awardsCount = NEWS_ITEMS.filter((n) => n.category === 'awards').length;
+const confCount = NEWS_ITEMS.filter((n) => n.category === 'conferences').length;
+const pubCount = NEWS_ITEMS.filter((n) => n.category === 'publications').length;
 ---
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="robots" content="noindex, follow" />
-		<meta http-equiv="refresh" content="0; url=/publications/" />
-		<link rel="canonical" href="https://saaillab.github.io/publications/" />
-		<title>Redirecting to SAAIL Lab Publications</title>
-	</head>
-	<body>
-		<p>Redirecting to <a href="/publications/">SAAIL Lab Publications</a>.</p>
-	</body>
-</html>
+
+<Layout
+	title="News, Awards & Lab Milestones | SAAIL Lab · IIT Madras Zanzibar"
+	description="Verified awards, travel grants, workshop talks, journal milestones, and student graduations from SAAIL Lab at IIT Madras Zanzibar (2024-2026)."
+	canonical="https://saaillab.github.io/news/"
+>
+	<ModernHeader currentPage="news" />
+
+	<main id="main-content">
+		<section class="page-hero">
+			<div class="container">
+				<span class="page-eyebrow">Chronological Lab Record · 2024&ndash;2026</span>
+				<h1 class="page-title">News, Awards &amp; Lab Milestones</h1>
+				<p class="page-lead">
+					Awards, competitive grants, peer-reviewed acceptances, workshop talks, and graduation milestones from SAAIL Lab at IIT Madras Zanzibar. Subscribe via <a href="/feed.xml" class="inline-rss-link">RSS Feed</a> for publication updates.
+				</p>
+			</div>
+		</section>
+
+		<section class="section">
+			<div class="container">
+				<div class="news-controls">
+					<div class="filter-tabs" role="tablist" aria-label="Filter SAAIL Lab news">
+						<button type="button" role="tab" aria-selected="true" aria-controls="newsTimeline" tabindex="0" class="tab-btn is-active" data-filter="all">All Updates ({NEWS_ITEMS.length})</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="newsTimeline" tabindex="-1" class="tab-btn" data-filter="awards">Awards &amp; Grants ({awardsCount})</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="newsTimeline" tabindex="-1" class="tab-btn" data-filter="conferences">Conferences &amp; Talks ({confCount})</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="newsTimeline" tabindex="-1" class="tab-btn" data-filter="publications">Publications &amp; Lab ({pubCount})</button>
+					</div>
+					<a href="/feed.xml" class="btn btn-secondary rss-btn">Subscribe RSS ↗</a>
+				</div>
+
+				<div class="news-count" id="newsCount" aria-live="polite">Showing {NEWS_ITEMS.length} of {NEWS_ITEMS.length} verified milestones</div>
+
+				<div class="news-timeline" id="newsTimeline">
+					{NEWS_ITEMS.map((item) => (
+						<article id={item.id} class="news-card" data-category={item.category}>
+							<div class="news-meta-col">
+								<span class="news-date">{item.dateLabel}</span>
+								<span class:list={['news-badge', `badge-${item.category}`]}>{item.badge}</span>
+							</div>
+							<div class="news-body">
+								<h2>{item.title}</h2>
+								<p>{item.summary}</p>
+								<div class="news-links">
+									{item.links.map((lk) => (
+										<a href={lk.href} class="news-pill">{lk.label} &rarr;</a>
+									))}
+								</div>
+							</div>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<ModernFooter />
+</Layout>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const tabs = Array.from(document.querySelectorAll('.filter-tabs .tab-btn')) as HTMLElement[];
+		const cards = Array.from(document.querySelectorAll('#newsTimeline .news-card')) as HTMLElement[];
+		const countEl = document.getElementById('newsCount');
+
+		function filterNews(filter: string) {
+			let shown = 0;
+			cards.forEach((card) => {
+				const cat = card.getAttribute('data-category') || '';
+				const vis = filter === 'all' || cat === filter;
+				card.style.display = vis ? 'grid' : 'none';
+				if (vis) shown++;
+			});
+			if (countEl) {
+				countEl.textContent = `Showing ${shown} of ${cards.length} verified milestones`;
+			}
+		}
+
+		tabs.forEach((tab, idx) => {
+			tab.addEventListener('click', () => {
+				tabs.forEach((t) => {
+					t.classList.remove('is-active');
+					t.setAttribute('aria-selected', 'false');
+					t.setAttribute('tabindex', '-1');
+				});
+				tab.classList.add('is-active');
+				tab.setAttribute('aria-selected', 'true');
+				tab.setAttribute('tabindex', '0');
+				filterNews(tab.getAttribute('data-filter') || 'all');
+			});
+
+			tab.addEventListener('keydown', (e: KeyboardEvent) => {
+				let nextIdx: number | null = null;
+				if (e.key === 'ArrowRight') nextIdx = (idx + 1) % tabs.length;
+				else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + tabs.length) % tabs.length;
+				else if (e.key === 'Home') nextIdx = 0;
+				else if (e.key === 'End') nextIdx = tabs.length - 1;
+				if (nextIdx === null) return;
+				e.preventDefault();
+				tabs[nextIdx].focus();
+				tabs[nextIdx].click();
+			});
+		});
+	});
+</script>
+
+<style>
+	.inline-rss-link {
+		color: var(--accent-primary);
+		font-weight: 700;
+		text-decoration: underline;
+	}
+	.news-controls {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+	.filter-tabs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+	.tab-btn {
+		padding: 0.48rem 0.95rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-card);
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 0.84rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.tab-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+	.tab-btn.is-active {
+		background: var(--accent-primary);
+		border-color: var(--accent-primary);
+		color: #ffffff;
+	}
+	:global([data-theme="dark"]) .tab-btn.is-active { color: #062111; }
+
+	.news-count {
+		font-size: 0.84rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		margin-bottom: 1.25rem;
+	}
+
+	.news-timeline {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.news-card {
+		display: grid;
+		grid-template-columns: 210px minmax(0, 1fr);
+		gap: 1.35rem;
+		align-items: start;
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 1rem;
+		padding: 1.4rem 1.55rem;
+		box-shadow: 0 3px 12px var(--shadow-light);
+	}
+
+	.news-meta-col {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.45rem;
+	}
+	.news-date {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--text-muted);
+	}
+	.news-badge {
+		font-size: 0.72rem;
+		font-weight: 800;
+		padding: 0.22rem 0.65rem;
+		border-radius: 999px;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+	}
+	.badge-awards { background: #fef3c7; color: #92400e; }
+	.badge-conferences { background: #ecfdf5; color: #14532d; }
+	.badge-publications { background: #e0f2fe; color: #075985; }
+	:global([data-theme="dark"]) .badge-awards { background: rgba(245, 158, 11, 0.18); color: #fbbf24; }
+	:global([data-theme="dark"]) .badge-conferences { background: rgba(52, 211, 153, 0.16); color: #34d399; }
+	:global([data-theme="dark"]) .badge-publications { background: rgba(56, 189, 248, 0.16); color: #38bdf8; }
+
+	.news-body h2 {
+		font-size: 1.15rem;
+		color: var(--text-primary);
+		line-height: 1.35;
+		margin-bottom: 0.45rem;
+	}
+	.news-body p {
+		font-size: 0.92rem;
+		color: var(--text-secondary);
+		line-height: 1.62;
+		margin-bottom: 0.75rem;
+	}
+	.news-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+	.news-pill {
+		font-size: 0.78rem;
+		font-weight: 700;
+		padding: 0.24rem 0.7rem;
+		border-radius: 999px;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		color: var(--accent-primary);
+		text-decoration: none;
+	}
+	.news-pill:hover {
+		border-color: var(--accent-primary);
+		background: rgba(20, 83, 45, 0.08);
+	}
+	:global([data-theme="dark"]) .news-pill:hover {
+		background: rgba(52, 211, 153, 0.14);
+	}
+
+	@media (max-width: 760px) {
+		.news-card {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 0.75rem;
+		}
+	}
+</style>

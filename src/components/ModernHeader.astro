@@ -46,7 +46,7 @@ const { currentPage = '' } = Astro.props;
 					</div>
 
 					<div class="nav-item dropdown">
-						<a href="/resources/" class:list={['nav-link', { active: currentPage === 'resources' || currentPage === 'gallery' }]} aria-haspopup="true" aria-expanded="false">
+						<a href="/resources/" class:list={['nav-link', { active: currentPage === 'resources' || currentPage === 'gallery' || currentPage === 'news' }]} aria-haspopup="true" aria-expanded="false">
 							Resources
 							<svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
 								<path d="M6 9l6 6 6-6"/>
@@ -55,6 +55,7 @@ const { currentPage = '' } = Astro.props;
 						<div class="dropdown-menu">
 							<a href="/datasets/" class="dropdown-link">Datasets &amp; Benchmarks</a>
 							<a href="/tools/" class="dropdown-link">Mobile Apps &amp; Software</a>
+							<a href="/news/" class="dropdown-link">News &amp; Milestones</a>
 							<a href="/github/" class="dropdown-link">Open-Source GitHub</a>
 							<a href="/gallery/" class="dropdown-link">Gallery &amp; Posters</a>
 						</div>
@@ -106,6 +107,7 @@ const { currentPage = '' } = Astro.props;
 				<a href="/datasets/" class="mobile-link">Datasets &amp; Benchmarks</a>
 				<a href="/tools/" class="mobile-link">Mobile Apps &amp; Software</a>
 				<a href="/gallery/" class="mobile-link">Gallery &amp; Posters</a>
+				<a href="/news/" class="mobile-link">News &amp; Milestones</a>
 				<a href="/github/" class="mobile-link">GitHub</a>
 				<a href="/collaborations/" class="mobile-link">Collaborations</a>
 				<a href="/resources/" class="mobile-link">Resources</a>

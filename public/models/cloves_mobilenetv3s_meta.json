@@ -1,0 +1,65 @@
+{
+  "modelName": "MobileNetV3-Small (ZSTC Commercial Cloves, 4-Grade)",
+  "dataset": "Zanzibar Cloves Grading Dataset v1 (train=3,673, val=792, test=793)",
+  "onnxFile": "/models/cloves_mobilenetv3s.onnx",
+  "format": "FP32 Conv + INT8 Classifier ONNX (Opset 13)",
+  "opset": 13,
+  "inputShape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "params": 1521956,
+  "modelSizeMB": 4.13,
+  "testSamples": 793,
+  "testAccuracyPct": 95.46,
+  "testMacroF1Pct": 95.49,
+  "perClassF1Pct": [
+    98.44,
+    97.02,
+    93.98,
+    92.54
+  ],
+  "cpuMsPerImage": 5.49,
+  "classes": [
+    "Grade I (Premium)",
+    "Grade II (Standard)",
+    "Grade III (Commercial)",
+    "Grade IV (Mpeta)"
+  ],
+  "demoSamples": [
+    {
+      "gradeIndex": 0,
+      "gradeLabel": "Grade I (Premium)",
+      "shortLabel": "Grade I",
+      "category": "grade1",
+      "file": "/images/demo/clove_grade1.jpg",
+      "verifiedConfPct": 98.84
+    },
+    {
+      "gradeIndex": 1,
+      "gradeLabel": "Grade II (Standard)",
+      "shortLabel": "Grade II",
+      "category": "grade2",
+      "file": "/images/demo/clove_grade2.jpg",
+      "verifiedConfPct": 98.64
+    },
+    {
+      "gradeIndex": 2,
+      "gradeLabel": "Grade III (Commercial)",
+      "shortLabel": "Grade III",
+      "category": "grade3",
+      "file": "/images/demo/clove_grade3.jpg",
+      "verifiedConfPct": 99.05
+    },
+    {
+      "gradeIndex": 3,
+      "gradeLabel": "Grade IV (Mpeta)",
+      "shortLabel": "Grade IV",
+      "category": "grade4",
+      "file": "/images/demo/clove_grade4.jpg",
+      "verifiedConfPct": 99.2
+    }
+  ]
+}

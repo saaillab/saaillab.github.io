@@ -80,6 +80,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://saaillab.github.io/news/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://saaillab.github.io/images/og/saail-lab-zanzibar-og.jpg</image:loc>
+      <image:caption>News, Awards &amp; Lab Milestones | SAAIL Lab at IIT Madras Zanzibar</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://saaillab.github.io/people/</loc>
     <lastmod>2026-11-25</lastmod>
     <changefreq>monthly</changefreq>

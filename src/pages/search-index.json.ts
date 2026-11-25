@@ -62,6 +62,20 @@ export const GET: APIRoute = () => {
 			keywords: 'calculator interactive mirage threshold p* cara-fm cei dfs edge readiness'
 		},
 		{
+			title: 'In-Browser Clove Grading ONNX Demo',
+			subtitle: 'Client-side MobileNetV3-Small WebAssembly inference on ZSTC cloves',
+			category: 'Tool',
+			url: '/tools/#live-demo',
+			keywords: 'onnx wasm demo clove grading mobilenetv3 zstc live inference browser'
+		},
+		{
+			title: 'News, Awards & Lab Milestones',
+			subtitle: 'DLI Best Posters, DSA 2026, CVPR 2026, AI4EAC grant & alumni milestones',
+			category: 'Page',
+			url: '/news/',
+			keywords: 'news awards grants talks milestones dli dsa cvpr iclr oxford graduation'
+		},
+		{
 			title: 'Mobile Applications & Open-Source Toolkits',
 			subtitle: 'Ubora-AI, Maize App, CropGuardNet, DGS-Bench, CARA-FM',
 			category: 'Tool',

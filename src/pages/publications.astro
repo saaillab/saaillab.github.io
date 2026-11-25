@@ -4,6 +4,7 @@ import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
 import metrics from '../data/scholar-metrics.json';
 import { PUBLICATIONS } from '../data/publications';
+import { publicationToRis } from '../utils/citations';
 
 const saailPubs = PUBLICATIONS.filter((p) => p.isSaailLab !== false).sort((a, b) => {
 	if (a.slug === 'cropguardnet') return -1;
@@ -149,16 +150,23 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 											<a href={pub.posterUrl} target="_blank" rel="noopener" class="act-btn">Poster ↗</a>
 										)}
 										<button type="button" class="act-btn copy-bib-inline" data-orig-label="Copy BibTeX" data-bib-code={`code-${pub.slug}`}>Copy BibTeX</button>
+										<button type="button" class="act-btn copy-ris-inline" data-orig-label="Copy RIS" data-ris-code={`ris-${pub.slug}`}>Copy RIS</button>
+										<button type="button" class="act-btn download-bib-btn" data-slug={pub.slug} data-bib-code={`code-${pub.slug}`}>Download .bib</button>
 										<button type="button" class="act-btn bib-toggle-btn" aria-expanded="false" aria-controls={`bib-${pub.slug}`} data-bib-target={`bib-${pub.slug}`}>Preview</button>
 									</div>
 								</div>
 
 								<div id={`bib-${pub.slug}`} class="bib-drawer" hidden>
 									<div class="bib-drawer-top">
-										<span>BibTeX Record</span>
-										<button type="button" class="copy-bib-inline" data-orig-label="Copy" data-bib-code={`code-${pub.slug}`}>Copy</button>
+										<span>BibTeX &amp; Reference Export</span>
+										<div class="bib-drawer-actions">
+											<button type="button" class="copy-bib-inline" data-orig-label="Copy" data-bib-code={`code-${pub.slug}`}>Copy</button>
+											<button type="button" class="copy-ris-inline" data-orig-label="Copy RIS" data-ris-code={`ris-${pub.slug}`}>Copy RIS</button>
+											<button type="button" class="download-bib-btn drawer-action-btn" data-slug={pub.slug} data-bib-code={`code-${pub.slug}`}>Download .bib</button>
+										</div>
 									</div>
 									<pre><code id={`code-${pub.slug}`}>{pub.bibtex}</code></pre>
+									<pre id={`ris-${pub.slug}`} hidden>{publicationToRis(pub)}</pre>
 								</div>
 							</article>
 						);
@@ -316,6 +324,63 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 				}
 			});
 		});
+
+		document.querySelectorAll('.copy-ris-inline').forEach((btn) => {
+			btn.addEventListener('click', async () => {
+				const id = btn.getAttribute('data-ris-code') || '';
+				const codeEl = document.getElementById(id);
+				const txt = codeEl?.textContent?.trim() || '';
+				if (!txt) return;
+				let copied = false;
+				try {
+					await navigator.clipboard.writeText(txt);
+					copied = true;
+				} catch (_err) {
+					const area = document.createElement('textarea');
+					area.value = txt;
+					area.style.position = 'fixed';
+					area.style.opacity = '0';
+					document.body.appendChild(area);
+					area.select();
+					try { copied = document.execCommand('copy'); } catch (_e2) {}
+					document.body.removeChild(area);
+				}
+				if (copied) {
+					const orig = btn.getAttribute('data-orig-label') || 'Copy RIS';
+					btn.textContent = 'Copied!';
+					const liveEl = document.getElementById('saailLiveStatus');
+					if (liveEl) {
+						liveEl.textContent = '';
+						requestAnimationFrame(() => { liveEl.textContent = 'RIS citation copied to clipboard.'; });
+					}
+					setTimeout(() => { btn.textContent = orig; }, 1600);
+				}
+			});
+		});
+
+		document.querySelectorAll('.download-bib-btn').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const slug = btn.getAttribute('data-slug') || 'saail-paper';
+				const id = btn.getAttribute('data-bib-code') || '';
+				const codeEl = document.getElementById(id);
+				const txt = codeEl?.textContent?.trim() || '';
+				if (!txt) return;
+				const blob = new Blob([txt + '\n'], { type: 'application/x-bibtex;charset=utf-8' });
+				const url = URL.createObjectURL(blob);
+				const link = document.createElement('a');
+				link.href = url;
+				link.download = `${slug}.bib`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				setTimeout(() => URL.revokeObjectURL(url), 1000);
+				const liveEl = document.getElementById('saailLiveStatus');
+				if (liveEl) {
+					liveEl.textContent = '';
+					requestAnimationFrame(() => { liveEl.textContent = `Downloaded ${slug}.bib.`; });
+				}
+			});
+		});
 	});
 </script>
 
@@ -419,7 +484,7 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 
 	.saail-row-grid {
 		display: grid;
-		grid-template-columns: 190px 1fr auto;
+		grid-template-columns: 190px minmax(0, 1fr) auto;
 		gap: 1.35rem;
 		align-items: start;
 	}
@@ -455,7 +520,7 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 	.pub-venue-line { font-size: 0.82rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.45rem; }
 	.pub-tldr { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0; }
 
-	.pub-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: flex-end; max-width: 290px; }
+	.pub-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: flex-end; max-width: 340px; }
 
 	.act-btn {
 		display: inline-flex;
@@ -490,20 +555,36 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
 		padding: 0.5rem 0.9rem;
 		font-size: 0.78rem;
 		font-weight: 700;
 		border-bottom: 1px solid var(--border-color);
 	}
-	.copy-bib-inline {
+	.bib-drawer-actions {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		align-items: center;
+	}
+	.bib-drawer .copy-bib-inline,
+	.bib-drawer .copy-ris-inline,
+	.drawer-action-btn {
 		padding: 0.25rem 0.65rem;
 		border-radius: 6px;
 		border: 1px solid var(--border-color);
 		background: var(--bg-card);
 		color: var(--accent-primary);
+		font-family: inherit;
 		font-weight: 700;
 		font-size: 0.75rem;
 		cursor: pointer;
+	}
+	.bib-drawer .copy-bib-inline:hover,
+	.bib-drawer .copy-ris-inline:hover,
+	.drawer-action-btn:hover {
+		border-color: var(--accent-primary);
 	}
 	.bib-drawer pre {
 		margin: 0;
@@ -553,7 +634,7 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 	.prior-cta { flex-shrink: 0; }
 
 	@media (max-width: 860px) {
-		.saail-row-grid { grid-template-columns: 1fr; gap: 0.65rem; }
+		.saail-row-grid { grid-template-columns: minmax(0, 1fr); gap: 0.65rem; }
 		.pub-actions { justify-content: flex-start; max-width: none; }
 		.search-input { min-width: 0; width: 100%; }
 	}

@@ -208,7 +208,7 @@ const ALBUMS: EventAlbum[] = [
 		tag: 'AI Safety Policy · Oxford',
 		title: '3rd Technical AI Safety Conference (TAIS 2026)',
 		venue: 'Oxford Martin School · University of Oxford, UK',
-		date: 'May 2026',
+		date: 'March 2026',
 		summary: 'Policy harmonization research presented at Oxford Martin School comparing national AI strategies across Ethiopia (2022), Kenya (2025), and Rwanda (2023) and anchoring regional coordination in Ubuntu, Harambee, and Ujamaa principles.',
 		cover: '/images/papers/posters/tais2026-oxford-poster.png',
 		links: [
@@ -327,7 +327,7 @@ const ALBUMS: EventAlbum[] = [
 
 				<div class="albums-grid" id="albumsGrid">
 					{ALBUMS.map((album, idx) => (
-						<article class="album-card" data-category={album.category}>
+						<article id={album.id} class="album-card" data-category={album.category}>
 							<button type="button" class="album-cover-btn" data-album-idx={idx} aria-label={`Open ${album.title} slideshow (${album.slides.length} items)`}>
 								<img src={album.cover} alt={album.title} class="album-cover" loading="lazy" />
 								<span class="slide-count-badge">{album.slides.length} slides</span>
