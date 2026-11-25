@@ -8,9 +8,11 @@
 - **Principal Investigator**: Innocent Nyalala (Assistant Professor, IIT Madras Zanzibar, https://www.iitmz.ac.in/schools/engineering-and-science/faculty/prof-innocent-nyalala; Associate Research Fellow, Wadhwani School of Data Science and AI, IIT Madras)
 - **Website**: https://saaillab.github.io/
 - **Faculty Archive**: https://inyalala.github.io/
+- **Kiswahili Faculty Edition**: https://inyalala.github.io/sw/
+- **IITMZ Teaching & Course Hub**: https://inyalala.github.io/courses/ and https://inyalala.github.io/iitmz-teaching-site/
 - **GitHub Organization**: https://github.com/saaillab
 - **Contact**: saail_lab@iitmz.ac.in
-- **Scholar Metrics (updated 2026-11-25)**: 1,273 citations (1,204 since 2021), h-index 15, i10-index 17, 20 SAAIL Lab works (15 published/accepted + 5 under review). Earlier pre-IITMZ works (2015-2024) are archived at https://inyalala.github.io/publications/.
+- **Scholar Metrics (updated 2026-11-25)**: 1,273 citations (1,206 since 2021), h-index 15, i10-index 17, 20 SAAIL Lab works (15 published/accepted + 5 under review). Earlier pre-IITMZ works (2015-2024) are archived at https://inyalala.github.io/publications/.
 
 ## Core Research Pillars
 1. **Precision Agriculture & Coastal Blue Economy AI** (https://saaillab.github.io/research/#agriculture): Lightweight CNN-Transformer foliar disease classification (CropGuardNet), Zanzibar clove quality grading (CLOVES-4603, ZSTC-Clove-V1, Ubora-AI), CashewAI phenology-aware orchard monitoring, and Zanzibar coastal seaweed Ice-Ice disease and marine heatwave sensing.
