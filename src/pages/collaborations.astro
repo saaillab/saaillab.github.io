@@ -41,6 +41,149 @@ import ModernFooter from '../components/ModernFooter.astro';
       </div>
     </section>
 
+    <section class="collab-section map-section" id="network-map">
+      <div class="collab-container">
+        <div class="section-header-left">
+          <span class="section-tag">Interactive Partner Network</span>
+          <h2>East Africa &amp; Global Collaboration Map</h2>
+          <p class="section-desc">
+            Inspect SAAIL Lab's research links connecting IIT Madras Zanzibar across Tanzania, India, the United States, the United Kingdom, Australia, and China. Select a region or click any hub marker.
+          </p>
+        </div>
+
+        <div class="map-controls" role="tablist" aria-label="Filter collaboration hubs by region">
+          <button type="button" role="tab" aria-selected="true" aria-controls="collabMapInspector" tabindex="0" class="map-tab is-active" data-region="all">All Hubs (10)</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="collabMapInspector" tabindex="-1" class="map-tab" data-region="east-africa">East Africa (2)</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="collabMapInspector" tabindex="-1" class="map-tab" data-region="asia-oceania">Asia &amp; Oceania (4)</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="collabMapInspector" tabindex="-1" class="map-tab" data-region="europe-na">Europe &amp; North America (4)</button>
+        </div>
+
+        <div class="map-layout">
+          <div class="map-canvas-wrap">
+            <svg viewBox="0 0 1000 460" class="collab-map-svg" role="img" aria-label="World network map showing collaborations radiating from SAAIL Lab in Zanzibar">
+              <rect x="0" y="0" width="1000" height="460" class="map-ocean" rx="14" />
+              <g class="map-grid-lines" aria-hidden="true">
+                <line x1="0" y1="115" x2="1000" y2="115" />
+                <line x1="0" y1="230" x2="1000" y2="230" />
+                <line x1="0" y1="345" x2="1000" y2="345" />
+                <line x1="250" y1="0" x2="250" y2="460" />
+                <line x1="500" y1="0" x2="500" y2="460" />
+                <line x1="750" y1="0" x2="750" y2="460" />
+              </g>
+              <g class="map-continents" aria-hidden="true">
+                <!-- North America -->
+                <path d="M125 68 L285 64 L322 108 L295 148 L254 178 L234 218 L206 202 L180 156 L142 132 Z" />
+                <!-- South America -->
+                <path d="M262 230 L328 244 L362 292 L340 368 L300 416 L278 380 L270 302 Z" />
+                <!-- Europe -->
+                <path d="M466 64 L548 60 L568 106 L536 132 L472 130 L460 102 Z" />
+                <!-- Africa -->
+                <path d="M458 148 L556 146 L596 184 L624 224 L608 286 L562 356 L532 354 L512 280 L458 228 Z" />
+                <!-- Madagascar -->
+                <path d="M622 290 L638 286 L632 328 L616 322 Z" />
+                <!-- Asia -->
+                <path d="M558 62 L855 56 L892 108 L852 178 L788 194 L735 228 L698 205 L650 186 L588 158 L558 118 Z" />
+                <!-- Maritime SE Asia -->
+                <path d="M775 232 L845 234 L848 256 L776 254 Z" />
+                <!-- Australia -->
+                <path d="M810 294 L908 292 L928 344 L886 382 L818 368 L802 326 Z" />
+              </g>
+
+              <!-- Curved arcs radiating from Zanzibar (609, 250) -->
+              <g class="map-arcs">
+                <path data-hub="penn-state" d="M609,250 Q445,95 284,131" />
+                <path data-hub="columbia" d="M609,250 Q455,98 295,131" />
+                <path data-hub="oxford" d="M609,250 Q525,138 495,104" />
+                <path data-hub="cambridge" d="M609,250 Q536,132 503,99" />
+                <path data-hub="iitm-wsai" d="M609,250 Q672,188 723,205" />
+                <path data-hub="rutag" d="M609,250 Q676,196 728,214" />
+                <path data-hub="nau" d="M609,250 Q736,142 830,155" />
+                <path data-hub="deakin" d="M609,250 Q775,268 901,342" />
+                <path data-hub="zstc" d="M609,250 Q602,240 603,244" />
+                <path data-hub="cphk" d="M609,250 Q615,236 616,240" />
+              </g>
+
+              <!-- Home Hub: SAAIL Lab, IIT Madras Zanzibar -->
+              <g class="map-origin">
+                <circle cx="609" cy="250" r="13" class="origin-halo" />
+                <circle cx="609" cy="250" r="6" class="origin-dot" />
+                <text x="609" y="274" text-anchor="middle" class="origin-label">SAAIL Lab · Zanzibar</text>
+              </g>
+
+              <!-- Partner Nodes -->
+              <g id="mapNodesLayer" class="map-nodes">
+                <g class="hub-node" data-hub="zstc" data-region="east-africa" tabindex="0" role="button" aria-pressed="false" aria-label="Select ZSTC Saateni Zanzibar">
+                  <circle cx="603" cy="242" r="5.5" />
+                  <title>ZSTC (Saateni, Zanzibar)</title>
+                </g>
+                <g class="hub-node" data-hub="cphk" data-region="east-africa" tabindex="0" role="button" aria-pressed="false" aria-label="Select CPHK Pemba and SVSU">
+                  <circle cx="617" cy="238" r="5.5" />
+                  <title>CPHK Pemba &amp; SVSU (Pemba, Tanzania &amp; India)</title>
+                </g>
+                <g class="hub-node is-selected" data-hub="iitm-wsai" data-region="asia-oceania" tabindex="0" role="button" aria-pressed="true" aria-label="Select Wadhwani School of Data Science and AI, IIT Madras">
+                  <circle cx="723" cy="205" r="6" />
+                  <title>WSAI, IIT Madras (Chennai, India)</title>
+                </g>
+                <g class="hub-node" data-hub="rutag" data-region="asia-oceania" tabindex="0" role="button" aria-pressed="false" aria-label="Select RuTAG IIT Madras">
+                  <circle cx="729" cy="215" r="5.5" />
+                  <title>RuTAG, IIT Madras (Chennai, India)</title>
+                </g>
+                <g class="hub-node" data-hub="penn-state" data-region="europe-na" tabindex="0" role="button" aria-pressed="false" aria-label="Select Pennsylvania State University">
+                  <circle cx="284" cy="131" r="6" />
+                  <title>Pennsylvania State University (USA)</title>
+                </g>
+                <g class="hub-node" data-hub="columbia" data-region="europe-na" tabindex="0" role="button" aria-pressed="false" aria-label="Select Columbia University">
+                  <circle cx="296" cy="131" r="5.5" />
+                  <title>Columbia University (New York, USA)</title>
+                </g>
+                <g class="hub-node" data-hub="oxford" data-region="europe-na" tabindex="0" role="button" aria-pressed="false" aria-label="Select Oxford Technical AI Safety">
+                  <circle cx="495" cy="105" r="5.5" />
+                  <title>Oxford Technical AI Safety (Oxford, UK)</title>
+                </g>
+                <g class="hub-node" data-hub="cambridge" data-region="europe-na" tabindex="0" role="button" aria-pressed="false" aria-label="Select University of Cambridge and University of Salford">
+                  <circle cx="504" cy="98" r="6" />
+                  <title>University of Cambridge &amp; Salford (UK)</title>
+                </g>
+                <g class="hub-node" data-hub="deakin" data-region="asia-oceania" tabindex="0" role="button" aria-pressed="false" aria-label="Select Deakin University and Agriculture Victoria">
+                  <circle cx="901" cy="342" r="6" />
+                  <title>Deakin University &amp; AgVic (Australia)</title>
+                </g>
+                <g class="hub-node" data-hub="nau" data-region="asia-oceania" tabindex="0" role="button" aria-pressed="false" aria-label="Select Nanjing Agricultural University and XZUT">
+                  <circle cx="830" cy="155" r="6" />
+                  <title>Nanjing Agricultural University &amp; XZUT (China)</title>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <aside id="collabMapInspector" class="map-inspector" aria-live="polite">
+            <span id="hubRegionBadge" class="region-badge">Chennai, India</span>
+            <h3 id="hubTitle">Wadhwani School of Data Science and AI, IIT Madras</h3>
+            <p id="hubPartners" class="lead-line"><strong>Collaborators:</strong> Prof. Nirav Bhatt</p>
+            <p id="hubDesc" class="hub-desc">
+              Joint theoretical and empirical research spanning culturally attuned and resource-aware agricultural foundation models (CARA-FM, PMLR Vol. 302) alongside Global South AI sovereignty governance.
+            </p>
+            <div id="hubLinks" class="hub-links">
+              <a href="/papers/cara-fm/">CARA-FM (PMLR 302)</a>
+              <a href="/papers/ai-sovereignty-global-south-aaai2026/">AAAI 2026 Sovereignty</a>
+            </div>
+            <div class="hub-chip-list" aria-label="All collaboration hubs">
+              <button type="button" class="hub-chip" data-hub="zstc" data-region="east-africa" aria-pressed="false">ZSTC Zanzibar</button>
+              <button type="button" class="hub-chip" data-hub="cphk" data-region="east-africa" aria-pressed="false">CPHK Pemba</button>
+              <button type="button" class="hub-chip is-selected" data-hub="iitm-wsai" data-region="asia-oceania" aria-pressed="true">IITM WSAI</button>
+              <button type="button" class="hub-chip" data-hub="rutag" data-region="asia-oceania" aria-pressed="false">IITM RuTAG</button>
+              <button type="button" class="hub-chip" data-hub="penn-state" data-region="europe-na" aria-pressed="false">Penn State</button>
+              <button type="button" class="hub-chip" data-hub="columbia" data-region="europe-na" aria-pressed="false">Columbia</button>
+              <button type="button" class="hub-chip" data-hub="oxford" data-region="europe-na" aria-pressed="false">Oxford TAIS</button>
+              <button type="button" class="hub-chip" data-hub="cambridge" data-region="europe-na" aria-pressed="false">Cambridge &amp; Salford</button>
+              <button type="button" class="hub-chip" data-hub="deakin" data-region="asia-oceania" aria-pressed="false">Deakin &amp; AgVic</button>
+              <button type="button" class="hub-chip" data-hub="nau" data-region="asia-oceania" aria-pressed="false">NAU &amp; XZUT</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <section class="collab-section section-alt">
       <div class="collab-container">
         <div class="section-header-left">
@@ -395,7 +538,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 
   .collab-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(310px, 100%), 1fr));
     gap: 1.5rem;
   }
 
@@ -560,7 +703,7 @@ import ModernFooter from '../components/ModernFooter.astro';
     color: #ffffff;
   }
 
-  [data-theme="dark"] .btn-primary {
+  :global([data-theme="dark"]) .btn-primary {
     color: #062111;
   }
 
@@ -578,9 +721,181 @@ import ModernFooter from '../components/ModernFooter.astro';
     border-color: var(--accent-primary);
   }
 
+  /* Interactive Collaboration Map */
+  .map-section {
+    padding: 3.25rem 0;
+  }
+  .map-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 1.25rem;
+  }
+  .map-tab {
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.83rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .map-tab:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+  .map-tab.is-active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #ffffff;
+  }
+  :global([data-theme="dark"]) .map-tab.is-active { color: #062111; }
+
+  .map-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  .map-canvas-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+  }
+  .collab-map-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .map-ocean {
+    fill: var(--bg-secondary);
+  }
+  .map-grid-lines line {
+    stroke: var(--border-color);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    opacity: 0.75;
+  }
+  .map-continents path {
+    fill: var(--bg-tertiary);
+    stroke: var(--border-color);
+    stroke-width: 1.2;
+  }
+  .map-arcs path {
+    fill: none;
+    stroke: var(--accent-primary);
+    stroke-width: 1.6;
+    stroke-opacity: 0.32;
+    transition: stroke-opacity 0.2s ease, stroke-width 0.2s ease;
+  }
+  .map-arcs path.is-active-arc {
+    stroke-opacity: 0.95;
+    stroke-width: 2.6;
+  }
+  .map-arcs path.is-dimmed { stroke-opacity: 0.08; }
+  .origin-halo {
+    fill: var(--accent-gold);
+    opacity: 0.24;
+  }
+  .origin-dot {
+    fill: var(--accent-gold);
+    stroke: var(--bg-card);
+    stroke-width: 2;
+  }
+  .origin-label {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    fill: var(--text-primary);
+  }
+  .hub-node { cursor: pointer; }
+  .hub-node circle {
+    fill: var(--accent-primary);
+    stroke: var(--bg-card);
+    stroke-width: 2;
+    transition: r 0.16s ease, opacity 0.16s ease;
+  }
+  .hub-node:hover circle,
+  .hub-node.is-selected circle {
+    fill: var(--accent-gold);
+    r: 8.5;
+  }
+  .hub-node.is-dimmed { opacity: 0.25; }
+
+  .map-inspector {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.45rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    text-align: left;
+  }
+  .map-inspector h3 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .hub-desc {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  .hub-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 0.25rem;
+  }
+  .hub-links a {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    text-decoration: none;
+    padding: 0.28rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+  }
+  .hub-links a:hover { border-color: var(--accent-primary); }
+  .hub-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+  }
+  .hub-chip {
+    font-family: inherit;
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 0.24rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .hub-chip:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+  .hub-chip.is-selected {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #ffffff;
+  }
+  :global([data-theme="dark"]) .hub-chip.is-selected { color: #062111; }
+  .hub-chip.is-dimmed { opacity: 0.38; }
+
+  @media (max-width: 960px) {
+    .map-layout { grid-template-columns: minmax(0, 1fr); }
+  }
   @media (max-width: 640px) {
     .collab-grid.grid-2col {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .collab-hero {
@@ -588,3 +903,226 @@ import ModernFooter from '../components/ModernFooter.astro';
     }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const HUBS: Record<string, {
+      regionTag: string;
+      regionKey: string;
+      title: string;
+      partners: string;
+      desc: string;
+      links: { label: string; href: string }[];
+    }> = {
+      'zstc': {
+        regionTag: 'Saateni, Zanzibar',
+        regionKey: 'east-africa',
+        title: 'Zanzibar State Trading Corporation (ZSTC)',
+        partners: 'Certified ZSTC Clove Inspection Team',
+        desc: 'Participatory co-design and regulatory validation of CLOVES-4603 and ZSTC-Clove-V1, plus compositional U-Net + ResNet-18 auditing attaining 99.45% macro-F1 and 100% EER.',
+        links: [
+          { label: 'Ubora-AI Project', href: '/projects/ubora-ai/' },
+          { label: 'ETRI 2026 XAI Paper', href: '/papers/clove-xai-etri2026/' },
+          { label: 'Live Cloves Demo', href: '/tools/#live-demo' }
+        ]
+      },
+      'cphk': {
+        regionTag: 'Pemba, Tanzania & India',
+        regionKey: 'east-africa',
+        title: 'Center for Public Health Kinetics (CPHK Pemba) & SVSU',
+        partners: 'Prof. Sunil Sazawal (PhDs: Saide Mbarak, Ali Salim Ali, Ibrahim Kabole, Bihila Bakari)',
+        desc: 'Longitudinal pediatric, maternal, and preterm birth serum biomarker analytics in Pemba Island hospitals and North India under joint PhD supervision.',
+        links: [
+          { label: 'People & PhDs', href: '/people/' },
+          { label: 'Active Projects', href: '/projects/' }
+        ]
+      },
+      'iitm-wsai': {
+        regionTag: 'Chennai, India',
+        regionKey: 'asia-oceania',
+        title: 'Wadhwani School of Data Science and AI, IIT Madras',
+        partners: 'Prof. Nirav Bhatt',
+        desc: 'Joint research spanning resource-aware agricultural foundation models (CARA-FM, PMLR Vol. 302) alongside Global South AI sovereignty governance.',
+        links: [
+          { label: 'CARA-FM (PMLR 302)', href: '/papers/cara-fm/' },
+          { label: 'AAAI 2026 Sovereignty', href: '/papers/ai-sovereignty-global-south-aaai2026/' }
+        ]
+      },
+      'rutag': {
+        regionTag: 'Chennai, India',
+        regionKey: 'asia-oceania',
+        title: 'Rural Technology Action Group (RuTAG), IIT Madras',
+        partners: 'Dr. Jayababu',
+        desc: 'Shared postharvest grading workflows and smallholder datasets across spices, cardamom, millets, walnuts, and cashew orchards in Tanzania and India.',
+        links: [
+          { label: 'Ubora-AI Grading', href: '/projects/ubora-ai/' },
+          { label: 'CashewAI Project', href: '/projects/cashew-ai/' }
+        ]
+      },
+      'penn-state': {
+        regionTag: 'Pennsylvania, USA',
+        regionKey: 'europe-na',
+        title: 'Pennsylvania State University',
+        partners: 'Prof. Alison Gernand, Prof. Wang & PlacentaVision Group',
+        desc: 'Post-delivery placental morphometry and maternal-neonatal clinical imaging built for low-resource obstetric wards using calibrated smartphone imaging protocols.',
+        links: [
+          { label: 'PlacentaVision Project', href: '/projects/placentavision/' },
+          { label: 'Publications', href: '/publications/' }
+        ]
+      },
+      'columbia': {
+        regionTag: 'New York, USA',
+        regionKey: 'europe-na',
+        title: 'Columbia University',
+        partners: 'Dr. Sathish R. S.',
+        desc: 'Environmental monitoring, AI air quality index sensing, and scalable IoT systems for public health exposure assessment.',
+        links: [
+          { label: 'Responsible AI Program', href: '/projects/responsible-ai-global-south/' },
+          { label: 'Contact SAAIL Lab', href: '/contact/' }
+        ]
+      },
+      'oxford': {
+        regionTag: 'Oxford, UK & East Africa',
+        regionKey: 'europe-na',
+        title: 'Oxford Technical AI Safety & East African Cultural AI',
+        partners: 'Hope K. McCoy',
+        desc: 'Comparative audit of Ethiopian, Kenyan, and Rwandan national AI strategies proposing East African harmonization anchored in Ujamaa, Harambee, and Ubuntu ethics (TAIS 2026).',
+        links: [
+          { label: 'TAIS 2026 Oxford Paper', href: '/papers/ai-policy-harmonization-tais2026/' },
+          { label: 'Governance Project', href: '/projects/responsible-ai-global-south/' }
+        ]
+      },
+      'cambridge': {
+        regionTag: 'Cambridge & Salford, UK',
+        regionKey: 'europe-na',
+        title: 'University of Cambridge & University of Salford',
+        partners: 'Soumya Banerjee (Cambridge) & Vikranth H. Nagaraja (Salford)',
+        desc: 'Seven-dimensional AI sovereignty diagnostics (PAIG @ EurIPS 2025) and multipolar South-South compute coalitions (AAAI 2026 EGSAI).',
+        links: [
+          { label: 'Digital Sovereignty (EurIPS)', href: '/papers/digital-sovereignty-serfdom-2025/' },
+          { label: 'Global South AI (AAAI)', href: '/papers/ai-sovereignty-global-south-aaai2026/' }
+        ]
+      },
+      'deakin': {
+        regionTag: 'Victoria, Australia',
+        regionKey: 'asia-oceania',
+        title: 'Deakin University & Agriculture Victoria Research',
+        partners: 'A/Prof. Sunil Aryal, Dr. Kallol K. Karmakar & Dr. Arbind Kumar (PhD: B. C. Bhattarai)',
+        desc: 'Joint cotutelle PhD program between IIT Madras Zanzibar and Deakin University advancing agentic AI, orchard telemetry, and federated IoT security.',
+        links: [
+          { label: 'View PhD Cohort', href: '/people/' },
+          { label: 'Research Pillars', href: '/research/' }
+        ]
+      },
+      'nau': {
+        regionTag: 'Nanjing & Xuzhou, China',
+        regionKey: 'asia-oceania',
+        title: 'Nanjing Agricultural University & Xuzhou Univ. of Technology',
+        partners: 'Prof. Kunjie Chen, Prof. Baohua Zhang, Jiayu Zhang & Junfeng Gao',
+        desc: 'Joint computer vision architectures for boundary-gated colorectal polyp segmentation (BAFNet, ESWA 2025, 0.914 Dice) and signal-rectified cassava pathology (COMPAG 2025).',
+        links: [
+          { label: 'BAFNet (ESWA 2025)', href: '/papers/bafnet-polyp-2025/' },
+          { label: 'Cassava COMPAG 2025', href: '/papers/cassava-weakened-signals-2025/' }
+        ]
+      }
+    };
+
+    const nodes = Array.from(document.querySelectorAll('.hub-node')) as HTMLElement[];
+    const chips = Array.from(document.querySelectorAll('.hub-chip')) as HTMLElement[];
+    const arcs = Array.from(document.querySelectorAll('.map-arcs path')) as SVGElement[];
+    const tabs = Array.from(document.querySelectorAll('.map-tab')) as HTMLElement[];
+
+    const badgeEl = document.getElementById('hubRegionBadge');
+    const titleEl = document.getElementById('hubTitle');
+    const partnersEl = document.getElementById('hubPartners');
+    const descEl = document.getElementById('hubDesc');
+    const linksEl = document.getElementById('hubLinks');
+
+    function selectHub(id: string) {
+      const h = HUBS[id];
+      if (!h) return;
+      nodes.forEach((n) => {
+        const active = n.getAttribute('data-hub') === id;
+        n.classList.toggle('is-selected', active);
+        n.setAttribute('aria-pressed', String(active));
+      });
+      chips.forEach((c) => {
+        const active = c.getAttribute('data-hub') === id;
+        c.classList.toggle('is-selected', active);
+        c.setAttribute('aria-pressed', String(active));
+      });
+      arcs.forEach((a) => a.classList.toggle('is-active-arc', a.getAttribute('data-hub') === id));
+
+      if (badgeEl) badgeEl.textContent = h.regionTag;
+      if (titleEl) titleEl.textContent = h.title;
+      if (partnersEl) partnersEl.innerHTML = `<strong>Collaborators:</strong> ${h.partners}`;
+      if (descEl) descEl.textContent = h.desc;
+      if (linksEl) {
+        linksEl.innerHTML = h.links.map((lk) => `<a href="${lk.href}">${lk.label}</a>`).join('');
+      }
+    }
+
+    function applyRegionFilter(region: string) {
+      let firstMatch = '';
+      nodes.forEach((n) => {
+        const match = region === 'all' || n.getAttribute('data-region') === region;
+        n.classList.toggle('is-dimmed', !match);
+        n.setAttribute('aria-disabled', String(!match));
+        n.setAttribute('tabindex', match ? '0' : '-1');
+        if (match && !firstMatch) firstMatch = n.getAttribute('data-hub') || '';
+      });
+      chips.forEach((c) => {
+        const match = region === 'all' || c.getAttribute('data-region') === region;
+        c.classList.toggle('is-dimmed', !match);
+        (c as HTMLButtonElement).disabled = !match;
+      });
+      arcs.forEach((a) => {
+        const hid = a.getAttribute('data-hub') || '';
+        const match = region === 'all' || HUBS[hid]?.regionKey === region;
+        a.classList.toggle('is-dimmed', !match);
+      });
+      if (firstMatch && region !== 'all') {
+        selectHub(firstMatch);
+      }
+    }
+
+    nodes.forEach((n) => {
+      n.addEventListener('click', () => selectHub(n.getAttribute('data-hub') || ''));
+      n.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectHub(n.getAttribute('data-hub') || '');
+        }
+      });
+    });
+
+    chips.forEach((c) => {
+      c.addEventListener('click', () => selectHub(c.getAttribute('data-hub') || ''));
+    });
+
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+          t.setAttribute('tabindex', '-1');
+        });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+        applyRegionFilter(tab.getAttribute('data-region') || 'all');
+      });
+      tab.addEventListener('keydown', (e: KeyboardEvent) => {
+        let next: number | null = null;
+        if (e.key === 'ArrowRight') next = (idx + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft') next = (idx - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = tabs.length - 1;
+        if (next === null) return;
+        e.preventDefault();
+        tabs[next].focus();
+        tabs[next].click();
+      });
+    });
+  });
+</script>

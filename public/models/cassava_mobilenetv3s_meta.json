@@ -1,0 +1,82 @@
+{
+  "modelName": "MobileNetV3-Small + CAM (Ugandan Cassava Pathology, 5-Class)",
+  "dataset": "Ugandan Smallholder Cassava Field Dataset (21,397 field images; 80/10/10 stratified split, test=2,141)",
+  "onnxFile": "/models/cassava_mobilenetv3s.onnx",
+  "format": "FP32 Single-File CAM ONNX (Opset 13)",
+  "opset": 13,
+  "inputShape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "camShape": [
+    1,
+    5,
+    7,
+    7
+  ],
+  "params": 929893,
+  "modelSizeMB": 3.57,
+  "testSamples": 2141,
+  "testAccuracyPct": 82.48,
+  "testBalancedAccPct": 69.09,
+  "testMacroF1Pct": 69.29,
+  "perClassF1Pct": [
+    48.7,
+    71.4,
+    67.69,
+    92.89,
+    65.78
+  ],
+  "cpuMsPerImage": 4.43,
+  "classes": [
+    "Cassava Bacterial Blight (CBB)",
+    "Cassava Brown Streak Disease (CBSD)",
+    "Cassava Green Mite (CGM)",
+    "Cassava Mosaic Disease (CMD)",
+    "Healthy Cassava Leaf"
+  ],
+  "demoSamples": [
+    {
+      "gradeIndex": 0,
+      "gradeLabel": "Cassava Bacterial Blight (CBB)",
+      "shortLabel": "CBB",
+      "category": "class_0",
+      "file": "/images/demo/cassava_0_cbb.jpg",
+      "verifiedConfPct": 99.18
+    },
+    {
+      "gradeIndex": 1,
+      "gradeLabel": "Cassava Brown Streak Disease (CBSD)",
+      "shortLabel": "CBSD",
+      "category": "class_1",
+      "file": "/images/demo/cassava_1_cbsd.jpg",
+      "verifiedConfPct": 99.98
+    },
+    {
+      "gradeIndex": 2,
+      "gradeLabel": "Cassava Green Mite (CGM)",
+      "shortLabel": "CGM",
+      "category": "class_2",
+      "file": "/images/demo/cassava_2_cgm.jpg",
+      "verifiedConfPct": 99.41
+    },
+    {
+      "gradeIndex": 3,
+      "gradeLabel": "Cassava Mosaic Disease (CMD)",
+      "shortLabel": "CMD",
+      "category": "class_3",
+      "file": "/images/demo/cassava_3_cmd.jpg",
+      "verifiedConfPct": 98.51
+    },
+    {
+      "gradeIndex": 4,
+      "gradeLabel": "Healthy Cassava Leaf",
+      "shortLabel": "Healthy",
+      "category": "class_4",
+      "file": "/images/demo/cassava_4_healthy.jpg",
+      "verifiedConfPct": 99.88
+    }
+  ]
+}

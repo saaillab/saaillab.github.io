@@ -4,10 +4,58 @@ import json
 import re
 import sys
 import xml.etree.ElementTree as ET
+from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
+
+
+class A11yAuditParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.html_lang = None
+        self.ids: set[str] = set()
+        self.aria_controls: list[str] = []
+        self.missing_alt_imgs: list[str] = []
+        self.has_main_content = False
+        self._in_btn = False
+        self._btn_has_label = False
+        self._btn_text: list[str] = []
+        self.empty_buttons: int = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]):
+        attr_map = {k.lower(): (v if v is not None else "") for k, v in attrs}
+        if tag == "html":
+            self.html_lang = attr_map.get("lang", "").strip()
+        if "id" in attr_map and attr_map["id"]:
+            self.ids.add(attr_map["id"])
+        if tag == "main" and attr_map.get("id") == "main-content":
+            self.has_main_content = True
+        if "aria-controls" in attr_map and attr_map["aria-controls"]:
+            self.aria_controls.extend(attr_map["aria-controls"].split())
+        if tag == "img":
+            alt = attr_map.get("alt")
+            if alt is None:
+                self.missing_alt_imgs.append(attr_map.get("src", "<unknown>"))
+            elif not alt.strip() and attr_map.get("aria-hidden") != "true" and attr_map.get("role") != "presentation":
+                self.missing_alt_imgs.append(attr_map.get("src", "<empty-alt>"))
+        if tag == "button":
+            self._in_btn = True
+            self._btn_text = []
+            self._btn_has_label = bool(
+                attr_map.get("aria-label", "").strip() or attr_map.get("aria-labelledby", "").strip()
+            )
+
+    def handle_data(self, data: str):
+        if self._in_btn and data.strip():
+            self._btn_text.append(data.strip())
+
+    def handle_endtag(self, tag: str):
+        if tag == "button" and self._in_btn:
+            if not self._btn_has_label and not "".join(self._btn_text).strip():
+                self.empty_buttons += 1
+            self._in_btn = False
 
 
 def resolve_html_file(url_path: str) -> Path | None:
@@ -52,6 +100,8 @@ def main() -> int:
     required_files = [
         "index.html",
         "404.html",
+        "sw.js",
+        "site.webmanifest",
         "sitemap.xml",
         "feed.xml",
         "search-index.json",
@@ -62,19 +112,42 @@ def main() -> int:
         "tools/index.html",
         "people/index.html",
         "publications/index.html",
+        "collaborations/index.html",
+        "resources/index.html",
         "models/cloves_mobilenetv3s.onnx",
         "models/cloves_mobilenetv3s_meta.json",
+        "models/cassava_mobilenetv3s.onnx",
+        "models/cassava_mobilenetv3s_meta.json",
+        "vendor/ort/ort.wasm.min.js",
+        "vendor/ort/ort-wasm-simd-threaded.mjs",
+        "vendor/ort/ort-wasm-simd-threaded.wasm",
         "images/demo/clove_grade1.jpg",
         "images/demo/clove_grade2.jpg",
         "images/demo/clove_grade3.jpg",
         "images/demo/clove_grade4.jpg",
+        "images/demo/cassava_0_cbb.jpg",
+        "images/demo/cassava_1_cbsd.jpg",
+        "images/demo/cassava_2_cgm.jpg",
+        "images/demo/cassava_3_cmd.jpg",
+        "images/demo/cassava_4_healthy.jpg",
     ]
     for rel in required_files:
         if not (DIST / rel).exists():
             errors.append(f"Missing required build output: dist/{rel}")
 
-    if (DIST / "models" / "cloves_mobilenetv3s.onnx.data").exists():
-        errors.append("Unexpected external ONNX weight sidecar (.onnx.data) found in dist/models/")
+    sw_path = DIST / "sw.js"
+    if sw_path.exists():
+        sw_txt = sw_path.read_text(encoding="utf-8", errors="ignore")
+        core_block = re.search(r"CORE_SHELL\s*=\s*\[(.*?)\]", sw_txt, re.S)
+        if core_block:
+            for route in re.findall(r"'(/[^']*)'", core_block.group(1)):
+                if resolve_html_file(route) is None:
+                    errors.append(f"sw.js CORE_SHELL route missing in dist/: {route}")
+
+    models_dir = DIST / "models"
+    if models_dir.exists():
+        for extra in models_dir.glob("*.data"):
+            errors.append(f"Unexpected external ONNX weight sidecar found: dist/models/{extra.name}")
 
     news_html = DIST / "news" / "index.html"
     if news_html.exists():
@@ -132,10 +205,9 @@ def main() -> int:
             if not isinstance(entries, list) or len(entries) < 25:
                 errors.append("search-index.json missing expected entries")
             urls = {e.get("url") for e in entries if isinstance(e, dict)}
-            if "/news/" not in urls:
-                errors.append("search-index.json missing /news/")
-            if "/tools/#live-demo" not in urls:
-                errors.append("search-index.json missing /tools/#live-demo")
+            for expected_url in ["/news/", "/tools/#live-demo", "/collaborations/#network-map", "/resources/#speaking"]:
+                if expected_url not in urls:
+                    errors.append(f"search-index.json missing {expected_url}")
             for u in urls:
                 if isinstance(u, str) and u.startswith("/"):
                     ok, why = resolve_dist_target(u)
@@ -159,6 +231,7 @@ def main() -> int:
         rel = html_file.relative_to(DIST).as_posix()
         raw = html_file.read_text(encoding="utf-8", errors="ignore")
         is_culture_redirect = rel == "projects/cultureseeds/index.html"
+        is_meta_refresh_stub = 'http-equiv="refresh"' in raw
 
         for pat, desc in restricted_patterns:
             if re.search(pat, raw):
@@ -171,13 +244,11 @@ def main() -> int:
             if "Copy APA" in raw or "apa-box" in raw:
                 errors.append(f"Forbidden APA citation box in dist/{rel}")
 
-        # Validate meta attribute quoting
         for meta_tag in re.findall(r"<meta\b[^>]*>", raw):
             cm = re.search(r'content="([^"]*)"', meta_tag)
             if cm and ("<" in cm.group(1) or ">" in cm.group(1)):
                 errors.append(f"Unescaped < or > in <meta> in dist/{rel}")
 
-        # Validate internal links, fragment anchors, and asset src paths
         for m in re.finditer(r'(?:href|src)="(/[^"]*)"', raw):
             target = m.group(1)
             if target.startswith("//"):
@@ -186,12 +257,27 @@ def main() -> int:
             if not ok:
                 errors.append(f"Broken internal reference '{target}' ({why}) in dist/{rel}")
 
-        # Validate JSON-LD blocks
         for jm in re.finditer(r'<script type="application/ld\+json">(.*?)</script>', raw, re.S):
             try:
                 json.loads(jm.group(1))
             except Exception as exc:
                 errors.append(f"Invalid JSON-LD in dist/{rel}: {exc}")
+
+        # WCAG static accessibility checks
+        if not is_meta_refresh_stub:
+            parser = A11yAuditParser()
+            parser.feed(raw)
+            if not parser.html_lang:
+                errors.append(f"WCAG missing <html lang> in dist/{rel}")
+            if not parser.has_main_content:
+                errors.append(f"WCAG missing <main id='main-content'> in dist/{rel}")
+            if parser.empty_buttons > 0:
+                errors.append(f"WCAG {parser.empty_buttons} button(s) lack accessible label/text in dist/{rel}")
+            if parser.missing_alt_imgs:
+                errors.append(f"WCAG image(s) missing alt text ({parser.missing_alt_imgs[:2]}) in dist/{rel}")
+            for ctrl_id in parser.aria_controls:
+                if ctrl_id not in parser.ids:
+                    errors.append(f"WCAG aria-controls target '#{ctrl_id}' missing in dist/{rel}")
 
     if errors:
         print(f"SITE VERIFICATION FAILED ({len(errors)} issue(s)):")

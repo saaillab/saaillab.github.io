@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import ModernHeader from '../components/ModernHeader.astro';
 import ModernFooter from '../components/ModernFooter.astro';
 import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
+import cassavaMeta from '../../public/models/cassava_mobilenetv3s_meta.json';
+import { DEMO_CLASS_SW } from '../utils/i18n';
 ---
 
 <Layout
@@ -15,9 +17,9 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
-				<span class="page-eyebrow">Engineering &amp; Field Prototypes</span>
-				<h1 class="page-title">Mobile Applications &amp; Research Software</h1>
-				<p class="page-lead">
+				<span class="page-eyebrow" data-i18n="tools.eyebrow">Engineering &amp; Field Prototypes</span>
+				<h1 class="page-title" data-i18n="tools.title">Mobile Applications &amp; Research Software</h1>
+				<p class="page-lead" data-i18n="tools.lead">
 					Translating SAAIL Lab models into offline mobile prototypes for East African field conditions alongside reproducible PyTorch, ONNX, and XAI evaluation codebases.
 				</p>
 			</div>
@@ -168,27 +170,62 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 			</div>
 		</section>
 
-		<!-- In-Browser WebAssembly ONNX Live Inference Demo -->
+		<!-- In-Browser WebAssembly ONNX Live Inference Demo (Dual Model + Live CAM Saliency) -->
 		<section class="section" id="live-demo">
 			<div class="container">
 				<div class="group-head">
-					<span class="page-eyebrow">Client-Side WebAssembly AI</span>
-					<h2>In-Browser Live ONNX Inference Demo</h2>
-					<p>
-						Run a genuine PyTorch-trained <code>MobileNetV3-Small</code> ({clovesMeta.modelSizeMB} MB, {clovesMeta.testAccuracyPct}% held-out test accuracy and {clovesMeta.testMacroF1Pct}% Macro-F1 across <em>n</em> = {clovesMeta.testSamples} images) directly inside your browser via <code>onnxruntime-web</code> WebAssembly with zero server uploads.
+					<span class="page-eyebrow" data-i18n="demo.eyebrow">Client-Side WebAssembly AI</span>
+					<h2 data-i18n="demo.title">In-Browser Live ONNX Inference &amp; Visual Saliency (CAM)</h2>
+					<p data-i18n="demo.lead">
+						Switch between verified PyTorch <code>MobileNetV3-Small + CAM</code> ONNX models for Zanzibar Cloves ({clovesMeta.modelSizeMB} MB, {clovesMeta.testAccuracyPct}% acc, {clovesMeta.testMacroF1Pct}% Macro-F1, <em>n</em> = {clovesMeta.testSamples}) and Ugandan Cassava Pathology ({cassavaMeta.modelSizeMB} MB, {cassavaMeta.testAccuracyPct}% acc, {cassavaMeta.testMacroF1Pct}% Macro-F1, <em>n</em> = {cassavaMeta.testSamples}), executing with real-time Class Activation Maps inside WebAssembly with zero server uploads.
 					</p>
 				</div>
 
-				<div class="demo-panel">
+				<div class="demo-model-tabs" role="tablist" aria-label="Select ONNX WebAssembly inference model">
+					<button
+						type="button"
+						role="tab"
+						aria-selected="true"
+						aria-controls="demoPanelShell"
+						tabindex="0"
+						class="demo-tab is-active"
+						data-model-key="cloves"
+						data-url={clovesMeta.onnxFile}
+						data-format={clovesMeta.format}
+						data-size={clovesMeta.modelSizeMB}
+						data-spec={`${clovesMeta.modelSizeMB} MB · Acc ${clovesMeta.testAccuracyPct}% · F1 ${clovesMeta.testMacroF1Pct}% (n = ${clovesMeta.testSamples})`}
+						data-classes={JSON.stringify(clovesMeta.classes)}
+						data-i18n="demo.tab_cloves"
+					>Zanzibar Cloves (ZSTC Grades I&ndash;IV)</button>
+					<button
+						type="button"
+						role="tab"
+						aria-selected="false"
+						aria-controls="demoPanelShell"
+						tabindex="-1"
+						class="demo-tab"
+						data-model-key="cassava"
+						data-url={cassavaMeta.onnxFile}
+						data-format={cassavaMeta.format}
+						data-size={cassavaMeta.modelSizeMB}
+						data-spec={`${cassavaMeta.modelSizeMB} MB · Acc ${cassavaMeta.testAccuracyPct}% · F1 ${cassavaMeta.testMacroF1Pct}% (n = ${cassavaMeta.testSamples})`}
+						data-classes={JSON.stringify(cassavaMeta.classes)}
+						data-i18n="demo.tab_cassava"
+					>Ugandan Cassava Pathology (5 Classes)</button>
+				</div>
+
+				<div class="demo-panel" id="demoPanelShell">
 					<div class="demo-left">
 						<div class="demo-specs-row">
-							<span class="tool-badge badge-mobile">{clovesMeta.format}</span>
-							<span class="tool-status">{clovesMeta.modelSizeMB} MB · Test Acc {clovesMeta.testAccuracyPct}%</span>
+							<span class="tool-badge badge-mobile" id="demoFormatBadge">{clovesMeta.format}</span>
+							<span class="tool-status" id="demoMetricBadge">{clovesMeta.modelSizeMB} MB · Acc {clovesMeta.testAccuracyPct}% · F1 {clovesMeta.testMacroF1Pct}% (n = {clovesMeta.testSamples})</span>
 						</div>
 
-						<p class="demo-instructions">Select a held-out Zanzibar Cloves test sample (Grades I to IV) or upload your own clove photograph to execute local browser inference:</p>
+						<p class="demo-instructions" id="demoInstructions">
+							Select a held-out test photograph or upload your own image to run client-side classification and pixel-level CAM saliency:
+						</p>
 
-						<div class="demo-samples-grid" role="group" aria-label="Held-out Zanzibar clove test samples">
+						<div id="demoGridCloves" class="demo-samples-grid" role="group" aria-label="Held-out Zanzibar clove test samples">
 							{clovesMeta.demoSamples.map((s) => (
 								<button
 									type="button"
@@ -202,48 +239,82 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 							))}
 						</div>
 
+						<div id="demoGridCassava" class="demo-samples-grid demo-grid-5" role="group" aria-label="Held-out Ugandan cassava field test samples" hidden>
+							{cassavaMeta.demoSamples.map((s) => (
+								<button
+									type="button"
+									class="demo-sample-btn"
+									data-sample-src={s.file}
+									data-sample-label={s.gradeLabel}
+								>
+									<img src={s.file} alt={`Held-out Ugandan cassava test image: ${s.gradeLabel}`} width="84" height="84" loading="lazy" />
+									<span>{s.shortLabel}</span>
+								</button>
+							))}
+						</div>
+
 						<div class="demo-upload-row">
 							<input id="demoFileInput" type="file" accept="image/*" class="sr-only" />
-							<button type="button" id="demoUploadBtn" class="btn btn-secondary">Upload Custom Clove Image</button>
+							<button type="button" id="demoUploadBtn" class="btn btn-secondary" data-i18n="demo.upload_btn">Upload Custom Image</button>
+							<button type="button" id="demoOfflineBtn" class="btn btn-secondary demo-offline-btn" data-i18n="demo.save_offline">Save Models Offline</button>
 							<span id="demoInputLabel" class="demo-input-note">No image executed yet</span>
 						</div>
+						<p id="demoOfflineNote" class="demo-offline-note">PWA Offline Cache: ready for field precaching (7.14 MB total ONNX weights).</p>
 					</div>
 
 					<div class="demo-right">
 						<div class="demo-preview-wrap">
-							<canvas id="demoPreviewCanvas" width="224" height="224" aria-label="Center-cropped 224x224 ONNX model input preview"></canvas>
+							<div class="demo-canvas-col">
+								<canvas id="demoPreviewCanvas" width="224" height="224" aria-label="Center-cropped 224x224 ONNX input preview with optional CAM saliency heatmap"></canvas>
+								<div class="cam-controls">
+									<label class="cam-toggle-lbl">
+										<input id="demoCamToggle" type="checkbox" checked />
+										<span data-i18n="demo.cam_toggle">Visual Saliency (CAM)</span>
+									</label>
+									<label class="cam-opacity-lbl">
+										<span><span data-i18n="demo.cam_opacity">CAM Opacity</span>: <strong id="demoCamOpacityVal">55%</strong></span>
+										<input id="demoCamOpacity" type="range" min="0" max="85" step="5" value="55" />
+									</label>
+									<div class="cam-legend" aria-hidden="true">
+										<span>Low</span>
+										<span class="cam-ramp"></span>
+										<span>High</span>
+									</div>
+								</div>
+							</div>
+
 							<div class="demo-meta-readout">
 								<div>
-									<small>Predicted ZSTC Grade</small>
-									<strong id="demoPredClass">Click a sample image</strong>
+									<small data-i18n="demo.pred_label">Model Prediction</small>
+									<strong id="demoPredClass" data-i18n="demo.idle_pred">Select a sample image</strong>
 								</div>
 								<div>
-									<small>Browser Inference</small>
+									<small data-i18n="demo.lat_label">Browser Inference</small>
 									<strong id="demoLatency">0.0 ms</strong>
 								</div>
 								<div>
-									<small>Runtime Backend</small>
+									<small data-i18n="demo.backend_label">Runtime Backend</small>
 									<strong id="demoBackend">WASM CPU (Lazy)</strong>
 								</div>
 							</div>
 						</div>
 
-						<div class="demo-bars" aria-label="Predicted ZSTC grade probabilities">
-							{clovesMeta.classes.map((clsName, idx) => (
-								<div class="prob-row" data-class-idx={idx}>
+						<div class="demo-bars" aria-label="Predicted class probabilities">
+							{[0, 1, 2, 3, 4].map((idx) => (
+								<div class="prob-row" id={`demoProbRow${idx}`} hidden={idx >= clovesMeta.classes.length}>
 									<div class="prob-head">
-										<span>{clsName}</span>
+										<span id={`demoProbName${idx}`}>{clovesMeta.classes[idx] || ''}</span>
 										<strong class="prob-pct" id={`demoProbPct${idx}`}>0.0%</strong>
 									</div>
-									<div class="prob-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label={`${clsName} probability`}>
+									<div class="prob-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby={`demoProbName${idx}`}>
 										<div class="prob-fill" id={`demoProbBar${idx}`} style="width: 0%"></div>
 									</div>
 								</div>
 							))}
 						</div>
 
-						<div id="demoStatusBox" class="calc-alert alert-ok" role="status" aria-live="polite">
-							Ready: WebAssembly runtime (~4.13 MB weights) loads on first click so initial page load stays fast.
+						<div id="demoStatusBox" class="calc-alert alert-ok" role="status" aria-live="polite" data-i18n="demo.ready_hint">
+							Ready: ONNX WebAssembly weights load lazily on first click so initial page load stays fast.
 						</div>
 					</div>
 				</div>
@@ -362,6 +433,8 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 </Layout>
 
 <script>
+	import { DEMO_CLASS_SW } from '../utils/i18n';
+
 	document.querySelectorAll('.copy-cmd-btn').forEach((btn) => {
 		btn.addEventListener('click', async () => {
 			const cmd = btn.getAttribute('data-copy') || '';
@@ -525,10 +598,20 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 	})();
 
 	(function initOnnxLiveDemo() {
+		const modelTabs = Array.from(document.querySelectorAll('.demo-tab')) as HTMLButtonElement[];
+		const gridCloves = document.getElementById('demoGridCloves');
+		const gridCassava = document.getElementById('demoGridCassava');
+		const formatBadge = document.getElementById('demoFormatBadge');
+		const metricBadge = document.getElementById('demoMetricBadge');
 		const sampleBtns = Array.from(document.querySelectorAll('.demo-sample-btn')) as HTMLButtonElement[];
 		const uploadBtn = document.getElementById('demoUploadBtn') as HTMLButtonElement | null;
+		const offlineBtn = document.getElementById('demoOfflineBtn') as HTMLButtonElement | null;
+		const offlineNote = document.getElementById('demoOfflineNote');
 		const fileInput = document.getElementById('demoFileInput') as HTMLInputElement | null;
 		const canvas = document.getElementById('demoPreviewCanvas') as HTMLCanvasElement | null;
+		const camToggle = document.getElementById('demoCamToggle') as HTMLInputElement | null;
+		const camOpacityIn = document.getElementById('demoCamOpacity') as HTMLInputElement | null;
+		const camOpacityVal = document.getElementById('demoCamOpacityVal');
 		const inputNoteEl = document.getElementById('demoInputLabel');
 		const predEl = document.getElementById('demoPredClass');
 		const latEl = document.getElementById('demoLatency');
@@ -539,24 +622,70 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 		const ctx = canvas.getContext('2d', { willReadFrequently: true });
 		if (!ctx) return;
 
-		// Initial clean canvas placeholder
-		ctx.fillStyle = '#0f172a';
-		ctx.fillRect(0, 0, 224, 224);
-		ctx.fillStyle = '#cbd5e1';
-		ctx.font = '600 13px Inter, sans-serif';
-		ctx.textAlign = 'center';
-		ctx.fillText('224x224 Input Preview', 112, 114);
+		const MODELS: Record<'cloves' | 'cassava', {
+			url: string;
+			format: string;
+			specText: string;
+			sizeMb: number;
+			classes: string[];
+		}> = {
+			cloves: {
+				url: '/models/cloves_mobilenetv3s.onnx',
+				format: 'FP32 Single-File CAM ONNX (Opset 13)',
+				specText: '3.57 MB · Acc 94.2% · F1 94.19% (n = 793)',
+				sizeMb: 3.57,
+				classes: ['Grade I (Premium)', 'Grade II (Standard)', 'Grade III (Commercial)', 'Grade IV (Mpeta)']
+			},
+			cassava: {
+				url: '/models/cassava_mobilenetv3s.onnx',
+				format: 'FP32 Single-File CAM ONNX (Opset 13)',
+				specText: '3.57 MB · Acc 82.48% · F1 69.29% (n = 2141)',
+				sizeMb: 3.57,
+				classes: ['Cassava Bacterial Blight (CBB)', 'Cassava Brown Streak Disease (CBSD)', 'Cassava Green Mite (CGM)', 'Cassava Mosaic Disease (CMD)', 'Healthy Cassava Leaf']
+			}
+		};
+		modelTabs.forEach((tab) => {
+			const k = tab.getAttribute('data-model-key') as 'cloves' | 'cassava' | null;
+			if (!k || !MODELS[k]) return;
+			MODELS[k].url = tab.getAttribute('data-url') || MODELS[k].url;
+			MODELS[k].format = tab.getAttribute('data-format') || MODELS[k].format;
+			MODELS[k].specText = tab.getAttribute('data-spec') || MODELS[k].specText;
+			MODELS[k].sizeMb = parseFloat(tab.getAttribute('data-size') || String(MODELS[k].sizeMb));
+			try {
+				const parsed = JSON.parse(tab.getAttribute('data-classes') || '[]');
+				if (Array.isArray(parsed) && parsed.length) MODELS[k].classes = parsed;
+			} catch (_e) {}
+		});
 
-		const CLASS_LABELS = [
-			'Grade I (Premium)',
-			'Grade II (Standard)',
-			'Grade III (Commercial)',
-			'Grade IV (Mpeta)'
-		];
-		const MODEL_URL = '/models/cloves_mobilenetv3s.onnx';
+		let activeModel: 'cloves' | 'cassava' = 'cloves';
+		let lastBaseImageData: ImageData | null = null;
+		let lastCamSlice: Float32Array | null = null;
+		let lastBestClassEn: string | null = null;
+		let lastBestProbPct = 0;
+		let lastLatencyMs = 0;
+
+		function trClass(clsEn: string): string {
+			const lang = document.documentElement.lang === 'sw' ? 'sw' : 'en';
+			if (lang === 'sw' && DEMO_CLASS_SW[clsEn]) return DEMO_CLASS_SW[clsEn];
+			return clsEn;
+		}
+
+		function drawPlaceholder() {
+			lastBaseImageData = null;
+			lastCamSlice = null;
+			lastBestClassEn = null;
+			ctx!.fillStyle = '#0f172a';
+			ctx!.fillRect(0, 0, 224, 224);
+			ctx!.fillStyle = '#cbd5e1';
+			ctx!.font = '600 13px Inter, sans-serif';
+			ctx!.textAlign = 'center';
+			ctx!.fillText('224x224 Input + CAM', 112, 114);
+		}
+		drawPlaceholder();
+
 		const ORT_VERSION = '1.20.1';
 		let ortScriptPromise: Promise<any> | null = null;
-		let sessionPromise: Promise<any> | null = null;
+		const sessionPromises: Record<string, Promise<any> | null> = {};
 		let activeReqId = 0;
 
 		function loadOrtScript(): Promise<any> {
@@ -564,7 +693,7 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 			if (ortScriptPromise) return ortScriptPromise;
 			ortScriptPromise = new Promise((resolve, reject) => {
 				const script = document.createElement('script');
-				script.src = `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/dist/ort.min.js`;
+				script.src = '/vendor/ort/ort.wasm.min.js';
 				script.async = true;
 				script.onload = () => {
 					const ort = (window as any).ort;
@@ -572,29 +701,31 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 						reject(new Error('onnxruntime-web script loaded but window.ort is missing'));
 						return;
 					}
-					ort.env.wasm.wasmPaths = `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/dist/`;
+					ort.env.wasm.wasmPaths = '/vendor/ort/';
 					ort.env.wasm.numThreads = 1;
 					resolve(ort);
 				};
-				script.onerror = () => reject(new Error('Failed to load onnxruntime-web runtime from CDN.'));
+				script.onerror = () => reject(new Error('Failed to load self-hosted WebAssembly runtime (/vendor/ort/).'));
 				document.head.appendChild(script);
 			});
 			return ortScriptPromise;
 		}
 
-		async function getSession() {
-			if (sessionPromise) return sessionPromise;
-			sessionPromise = (async () => {
+		async function getSession(modelKey: 'cloves' | 'cassava') {
+			const cfg = MODELS[modelKey];
+			const existing = sessionPromises[modelKey];
+			if (existing) return existing;
+			sessionPromises[modelKey] = (async () => {
 				statusBox!.className = 'calc-alert alert-ok';
-				statusBox!.textContent = 'Loading WebAssembly runtime and 4.13 MB MobileNetV3-Small ONNX weights...';
+				statusBox!.textContent = `Loading WebAssembly runtime and ${cfg.sizeMb} MB MobileNetV3-Small ONNX weights...`;
 				const ort = await loadOrtScript();
-				const session = await ort.InferenceSession.create(MODEL_URL, {
+				const session = await ort.InferenceSession.create(cfg.url, {
 					executionProviders: ['wasm']
 				});
 				if (backendEl) backendEl.textContent = 'WebAssembly CPU';
 				return { ort, session };
 			})();
-			return sessionPromise;
+			return sessionPromises[modelKey]!;
 		}
 
 		function softmax(logits: Float32Array): number[] {
@@ -607,8 +738,105 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 			return exps.map((e) => e / sum);
 		}
 
+		function camColor(t: number): [number, number, number] {
+			const c = Math.max(0, Math.min(1, t));
+			if (c < 0.25) {
+				const f = c / 0.25;
+				return [0, Math.round(60 * f), Math.round(160 + 95 * f)];
+			} else if (c < 0.5) {
+				const f = (c - 0.25) / 0.25;
+				return [0, Math.round(60 + 195 * f), Math.round(255 - 120 * f)];
+			} else if (c < 0.75) {
+				const f = (c - 0.5) / 0.25;
+				return [Math.round(255 * f), 255, Math.round(135 * (1 - f))];
+			}
+			const f = (c - 0.75) / 0.25;
+			return [255, Math.round(255 * (1 - f)), 0];
+		}
+
+		function compositeCanvas() {
+			if (!lastBaseImageData) return;
+			const out = new ImageData(new Uint8ClampedArray(lastBaseImageData.data), 224, 224);
+			const showCam = Boolean(camToggle?.checked);
+			const alphaMax = Number(camOpacityIn?.value ?? '55') / 100;
+			if (camOpacityVal) camOpacityVal.textContent = `${Math.round(alphaMax * 100)}%`;
+
+			if (showCam && lastCamSlice && alphaMax > 0) {
+				let minV = Infinity;
+				let maxV = -Infinity;
+				for (let i = 0; i < 49; i++) {
+					const v = lastCamSlice[i];
+					if (v < minV) minV = v;
+					if (v > maxV) maxV = v;
+				}
+				const span = Math.max(1e-6, maxV - minV);
+				const norm7 = new Float32Array(49);
+				for (let i = 0; i < 49; i++) {
+					norm7[i] = (lastCamSlice[i] - minV) / span;
+				}
+				const d = out.data;
+				for (let py = 0; py < 224; py++) {
+					const gy = (py / 223) * 6;
+					const y0 = Math.floor(gy);
+					const y1 = Math.min(6, y0 + 1);
+					const fy = gy - y0;
+					for (let px = 0; px < 224; px++) {
+						const gx = (px / 223) * 6;
+						const x0 = Math.floor(gx);
+						const x1 = Math.min(6, x0 + 1);
+						const fx = gx - x0;
+						const v00 = norm7[y0 * 7 + x0];
+						const v10 = norm7[y0 * 7 + x1];
+						const v01 = norm7[y1 * 7 + x0];
+						const v11 = norm7[y1 * 7 + x1];
+						const val = (v00 * (1 - fx) + v10 * fx) * (1 - fy) + (v01 * (1 - fx) + v11 * fx) * fy;
+						const [hr, hg, hb] = camColor(val);
+						const a = alphaMax * (0.25 + 0.75 * val);
+						const off = (py * 224 + px) * 4;
+						d[off] = Math.round(d[off] * (1 - a) + hr * a);
+						d[off + 1] = Math.round(d[off + 1] * (1 - a) + hg * a);
+						d[off + 2] = Math.round(d[off + 2] * (1 - a) + hb * a);
+					}
+				}
+			}
+			ctx!.putImageData(out, 0, 0);
+		}
+
+		function syncModelUI(modelKey: 'cloves' | 'cassava') {
+			activeModel = modelKey;
+			activeReqId++;
+			sampleBtns.forEach((b) => b.classList.remove('is-selected'));
+			if (gridCloves) gridCloves.hidden = modelKey !== 'cloves';
+			if (gridCassava) gridCassava.hidden = modelKey !== 'cassava';
+			const cfg = MODELS[modelKey];
+			if (formatBadge) formatBadge.textContent = cfg.format;
+			if (metricBadge) metricBadge.textContent = cfg.specText;
+			drawPlaceholder();
+			predEl!.textContent = document.documentElement.lang === 'sw' ? 'Chagua picha ya mfano' : 'Select a sample image';
+			latEl!.textContent = '0.0 ms';
+			if (inputNoteEl) inputNoteEl.textContent = document.documentElement.lang === 'sw' ? 'Hakuna picha iliyojaribiwa bado' : 'No image executed yet';
+			for (let i = 0; i < 5; i++) {
+				const row = document.getElementById(`demoProbRow${i}`);
+				const nm = document.getElementById(`demoProbName${i}`);
+				const pctEl = document.getElementById(`demoProbPct${i}`);
+				const barEl = document.getElementById(`demoProbBar${i}`);
+				if (row) row.hidden = i >= cfg.classes.length;
+				if (nm) nm.textContent = cfg.classes[i] ? trClass(cfg.classes[i]) : '';
+				if (pctEl) pctEl.textContent = '0.0%';
+				if (barEl) {
+					barEl.style.width = '0%';
+					barEl.parentElement?.setAttribute('aria-valuenow', '0');
+				}
+			}
+			statusBox!.className = 'calc-alert alert-ok';
+			statusBox!.textContent = document.documentElement.lang === 'sw'
+				? 'Tayari: uzito wa ONNX hupakiwa tu unapobofya picha.'
+				: `Ready: ${cfg.sizeMb} MB ONNX model + 7x7 CAM saliency loads on first click.`;
+		}
+
 		function preprocessCanvasToTensor(ort: any) {
-			const imgData = ctx!.getImageData(0, 0, 224, 224).data;
+			const base = lastBaseImageData!;
+			const imgData = base.data;
 			const size = 224 * 224;
 			const floatData = new Float32Array(3 * size);
 			const mean = [0.485, 0.456, 0.406];
@@ -624,7 +852,7 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 			return new ort.Tensor('float32', floatData, [1, 3, 224, 224]);
 		}
 
-		async function runInferenceOnImage(img: HTMLImageElement, labelText: string, reqId: number) {
+		async function runInferenceOnImage(img: HTMLImageElement, labelText: string, reqId: number, modelKey: 'cloves' | 'cassava') {
 			try {
 				if (reqId !== activeReqId) return;
 				if (inputNoteEl) inputNoteEl.textContent = labelText;
@@ -633,8 +861,9 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 				const sy = Math.max(0, Math.floor(((img.naturalHeight || img.height) - side) / 2));
 				ctx!.clearRect(0, 0, 224, 224);
 				ctx!.drawImage(img, sx, sy, side, side, 0, 0, 224, 224);
+				lastBaseImageData = ctx!.getImageData(0, 0, 224, 224);
 
-				const { ort, session } = await getSession();
+				const { ort, session } = await getSession(modelKey);
 				if (reqId !== activeReqId) return;
 				const inputTensor = preprocessCanvasToTensor(ort);
 				const t0 = performance.now();
@@ -642,19 +871,36 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 				if (reqId !== activeReqId) return;
 				const dtMs = performance.now() - t0;
 
-				const rawOut = outputs[session.outputNames[0]].data as Float32Array;
+				const logitsTensor = outputs['logits'] || outputs[session.outputNames[0]];
+				const camTensor = outputs['cam_maps'] || outputs[session.outputNames[1]];
+				const rawOut = logitsTensor.data as Float32Array;
 				const probs = softmax(rawOut);
 				let bestIdx = 0;
 				for (let i = 1; i < probs.length; i++) {
 					if (probs[i] > probs[bestIdx]) bestIdx = i;
 				}
 
-				predEl!.textContent = CLASS_LABELS[bestIdx];
+				if (camTensor && camTensor.data) {
+					const offset = bestIdx * 49;
+					lastCamSlice = (camTensor.data as Float32Array).slice(offset, offset + 49);
+				} else {
+					lastCamSlice = null;
+				}
+				compositeCanvas();
+
+				const cfg = MODELS[modelKey];
+				lastBestClassEn = cfg.classes[bestIdx];
+				lastBestProbPct = probs[bestIdx] * 100;
+				lastLatencyMs = dtMs;
+
+				predEl!.textContent = trClass(lastBestClassEn);
 				latEl!.textContent = `${dtMs.toFixed(1)} ms`;
 				probs.forEach((p, idx) => {
 					const pct = p * 100;
+					const nmEl = document.getElementById(`demoProbName${idx}`);
 					const pctEl = document.getElementById(`demoProbPct${idx}`);
 					const barEl = document.getElementById(`demoProbBar${idx}`);
+					if (nmEl && cfg.classes[idx]) nmEl.textContent = trClass(cfg.classes[idx]);
 					if (pctEl) pctEl.textContent = `${pct.toFixed(1)}%`;
 					if (barEl) {
 						barEl.style.width = `${pct.toFixed(1)}%`;
@@ -662,23 +908,54 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 					}
 				});
 
+				const dispName = trClass(lastBestClassEn);
 				statusBox!.className = 'calc-alert alert-ok';
-				statusBox!.textContent = `Predicted ${CLASS_LABELS[bestIdx]} (${(probs[bestIdx] * 100).toFixed(1)}% confidence) in ${dtMs.toFixed(1)} ms locally on your device.`;
+				statusBox!.textContent = document.documentElement.lang === 'sw'
+					? `Utabiri: ${dispName} (uhakika wa ${lastBestProbPct.toFixed(1)}%) ndani ya ${dtMs.toFixed(1)} ms kwenye kifaa chako.`
+					: `Predicted ${dispName} (${lastBestProbPct.toFixed(1)}% confidence) in ${dtMs.toFixed(1)} ms locally on your device.`;
 
 				const liveEl = document.getElementById('saailLiveStatus');
 				if (liveEl) {
 					liveEl.textContent = '';
 					requestAnimationFrame(() => {
-						liveEl.textContent = `Clove prediction: ${CLASS_LABELS[bestIdx]} in ${dtMs.toFixed(1)} milliseconds.`;
+						liveEl.textContent = `Prediction: ${dispName} in ${dtMs.toFixed(1)} milliseconds.`;
 					});
 				}
 			} catch (err) {
 				if (reqId !== activeReqId) return;
-				sessionPromise = null;
+				sessionPromises[modelKey] = null;
 				statusBox!.className = 'calc-alert alert-warn';
 				statusBox!.textContent = `Browser inference error: ${err instanceof Error ? err.message : 'Unable to initialize WebAssembly session.'}`;
 			}
 		}
+
+		modelTabs.forEach((tab, idx) => {
+			tab.addEventListener('click', () => {
+				const key = (tab.getAttribute('data-model-key') === 'cassava' ? 'cassava' : 'cloves') as 'cloves' | 'cassava';
+				modelTabs.forEach((t) => {
+					t.classList.remove('is-active');
+					t.setAttribute('aria-selected', 'false');
+					t.setAttribute('tabindex', '-1');
+				});
+				tab.classList.add('is-active');
+				tab.setAttribute('aria-selected', 'true');
+				tab.setAttribute('tabindex', '0');
+				syncModelUI(key);
+			});
+			tab.addEventListener('keydown', (e: KeyboardEvent) => {
+				let next: number | null = null;
+				if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') next = (idx + 1) % modelTabs.length;
+				else if (e.key === 'Home') next = 0;
+				else if (e.key === 'End') next = modelTabs.length - 1;
+				if (next === null) return;
+				e.preventDefault();
+				modelTabs[next].focus();
+				modelTabs[next].click();
+			});
+		});
+
+		camToggle?.addEventListener('change', compositeCanvas);
+		camOpacityIn?.addEventListener('input', compositeCanvas);
 
 		sampleBtns.forEach((btn) => {
 			btn.addEventListener('click', () => {
@@ -688,8 +965,9 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 				const lbl = btn.getAttribute('data-sample-label') || 'Sample';
 				if (!src) return;
 				const reqId = ++activeReqId;
+				const mKey = activeModel;
 				const img = new Image();
-				img.onload = () => runInferenceOnImage(img, `Held-out test sample: ${lbl}`, reqId);
+				img.onload = () => runInferenceOnImage(img, `Held-out test sample: ${trClass(lbl)}`, reqId, mKey);
 				img.onerror = () => {
 					if (reqId !== activeReqId) return;
 					statusBox!.className = 'calc-alert alert-warn';
@@ -704,13 +982,14 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 			const file = fileInput.files?.[0];
 			if (!file) return;
 			const reqId = ++activeReqId;
+			const mKey = activeModel;
 			const fname = file.name;
 			fileInput.value = '';
 			sampleBtns.forEach((b) => b.classList.remove('is-selected'));
 			const reader = new FileReader();
 			reader.onload = () => {
 				const img = new Image();
-				img.onload = () => runInferenceOnImage(img, `Local file: ${fname}`, reqId);
+				img.onload = () => runInferenceOnImage(img, `Local file: ${fname}`, reqId, mKey);
 				img.onerror = () => {
 					if (reqId !== activeReqId) return;
 					statusBox!.className = 'calc-alert alert-warn';
@@ -731,6 +1010,92 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 				statusBox!.textContent = `Could not read local file ${fname}.`;
 			};
 			reader.readAsDataURL(file);
+		});
+
+		let offlineState: 'idle' | 'cached' | 'other' = 'idle';
+
+		offlineBtn?.addEventListener('click', async () => {
+			if (!('caches' in window)) {
+				offlineState = 'other';
+				if (offlineNote) offlineNote.textContent = 'Offline Cache API is unavailable in this browser context.';
+				return;
+			}
+			offlineState = 'other';
+			offlineBtn.disabled = true;
+			if (offlineNote) offlineNote.textContent = 'Caching ONNX weights and demo images for offline field use...';
+			try {
+				const cache = await caches.open('saail-lab-v2');
+				const assets = [
+					'/vendor/ort/ort.wasm.min.js',
+					'/vendor/ort/ort-wasm-simd-threaded.mjs',
+					'/vendor/ort/ort-wasm-simd-threaded.wasm',
+					'/models/cloves_mobilenetv3s.onnx',
+					'/models/cloves_mobilenetv3s_meta.json',
+					'/models/cassava_mobilenetv3s.onnx',
+					'/models/cassava_mobilenetv3s_meta.json',
+					'/images/demo/clove_grade1.jpg',
+					'/images/demo/clove_grade2.jpg',
+					'/images/demo/clove_grade3.jpg',
+					'/images/demo/clove_grade4.jpg',
+					'/images/demo/cassava_0_cbb.jpg',
+					'/images/demo/cassava_1_cbsd.jpg',
+					'/images/demo/cassava_2_cgm.jpg',
+					'/images/demo/cassava_3_cmd.jpg',
+					'/images/demo/cassava_4_healthy.jpg'
+				];
+				await cache.addAll(assets);
+				offlineState = 'cached';
+				if (offlineNote) {
+					offlineNote.textContent = document.documentElement.lang === 'sw'
+						? 'Mifumo yote miwili, injini ya WASM, na picha za mfano zimehifadhiwa kwa matumizi bila mtandao.'
+						: 'Offline ready: WASM runtime, both ONNX models (7.14 MB), and all 9 demo images are cached on this device.';
+				}
+				const liveEl = document.getElementById('saailLiveStatus');
+				if (liveEl) {
+					liveEl.textContent = '';
+					requestAnimationFrame(() => {
+						liveEl.textContent = 'WebAssembly runtime and both ONNX models cached for offline use.';
+					});
+				}
+			} catch (_err) {
+				offlineState = 'other';
+				if (offlineNote) offlineNote.textContent = 'Offline caching could not complete; check storage permissions.';
+			} finally {
+				offlineBtn.disabled = false;
+			}
+		});
+
+		window.addEventListener('saail:langchange', () => {
+			const cfg = MODELS[activeModel];
+			const isSw = document.documentElement.lang === 'sw';
+			for (let i = 0; i < cfg.classes.length; i++) {
+				const nm = document.getElementById(`demoProbName${i}`);
+				if (nm) nm.textContent = trClass(cfg.classes[i]);
+			}
+			if (lastBestClassEn) {
+				const disp = trClass(lastBestClassEn);
+				predEl!.textContent = disp;
+				statusBox!.textContent = isSw
+					? `Utabiri: ${disp} (uhakika wa ${lastBestProbPct.toFixed(1)}%) ndani ya ${lastLatencyMs.toFixed(1)} ms kwenye kifaa chako.`
+					: `Predicted ${disp} (${lastBestProbPct.toFixed(1)}% confidence) in ${lastLatencyMs.toFixed(1)} ms locally on your device.`;
+			} else {
+				predEl!.textContent = isSw ? 'Chagua picha ya mfano' : 'Select a sample image';
+				if (inputNoteEl) inputNoteEl.textContent = isSw ? 'Hakuna picha iliyojaribiwa bado' : 'No image executed yet';
+				statusBox!.textContent = isSw
+					? 'Tayari: uzito wa ONNX hupakiwa tu unapobofya picha.'
+					: `Ready: ${cfg.sizeMb} MB ONNX model + 7x7 CAM saliency loads on first click.`;
+			}
+			if (offlineNote) {
+				if (offlineState === 'idle') {
+					offlineNote.textContent = isSw
+						? 'Hifadhi ya Nje ya Mtandao: tayari kuhifadhi mifumo ya ONNX (7.14 MB).'
+						: 'PWA Offline Cache: ready for field precaching (7.14 MB total ONNX weights).';
+				} else if (offlineState === 'cached') {
+					offlineNote.textContent = isSw
+						? 'Mifumo yote miwili, injini ya WASM, na picha za mfano zimehifadhiwa kwa matumizi bila mtandao.'
+						: 'Offline ready: WASM runtime, both ONNX models (7.14 MB), and all 9 demo images are cached on this device.';
+				}
+			}
 		});
 	})();
 </script>
@@ -933,6 +1298,86 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 		grid-template-columns: repeat(4, minmax(0, 1fr));
 		gap: 0.65rem;
 	}
+	.demo-samples-grid[hidden] { display: none !important; }
+	.demo-grid-5 {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+	}
+	.demo-model-tabs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 1rem;
+	}
+	.demo-tab {
+		padding: 0.48rem 1rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-card);
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 0.84rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.demo-tab:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+	.demo-tab.is-active {
+		background: var(--accent-primary);
+		border-color: var(--accent-primary);
+		color: #ffffff;
+	}
+	:global([data-theme="dark"]) .demo-tab.is-active { color: #062111; }
+	.demo-canvas-col {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		flex-shrink: 0;
+		width: 176px;
+	}
+	.prob-row[hidden] { display: none !important; }
+	.cam-controls {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 0.65rem;
+		padding: 0.45rem 0.6rem;
+		font-size: 0.72rem;
+		color: var(--text-secondary);
+	}
+	.cam-toggle-lbl {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		cursor: pointer;
+	}
+	.cam-opacity-lbl {
+		display: flex;
+		flex-direction: column;
+		gap: 0.12rem;
+	}
+	.cam-opacity-lbl input[type="range"] { width: 100%; accent-color: var(--accent-primary); }
+	.cam-legend {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: 0.66rem;
+		color: var(--text-muted);
+	}
+	.cam-ramp {
+		flex: 1;
+		height: 6px;
+		border-radius: 999px;
+		background: linear-gradient(90deg, #003ca0 0%, #00ff87 38%, #ffff00 72%, #ff0000 100%);
+	}
+	.demo-offline-note {
+		font-size: 0.76rem;
+		color: var(--text-muted);
+		margin: 0;
+	}
 	.demo-sample-btn {
 		display: flex;
 		flex-direction: column;
@@ -1048,7 +1493,10 @@ import clovesMeta from '../../public/models/cloves_mobilenetv3s_meta.json';
 	@media (max-width: 520px) {
 		.calc-readout { grid-template-columns: minmax(0, 1fr); }
 		.demo-samples-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.demo-grid-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 		.demo-preview-wrap { flex-direction: column; align-items: center; }
+		.demo-canvas-col,
 		.demo-meta-readout { width: 100%; }
+		.demo-canvas-col { align-items: center; }
 	}
 </style>

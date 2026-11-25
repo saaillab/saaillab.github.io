@@ -14,10 +14,10 @@ import ModernFooter from '../components/ModernFooter.astro';
 	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
-				<span class="page-eyebrow">Data Infrastructure · East Africa &amp; Zanzibar</span>
-				<h1 class="page-title">Open AI Datasets &amp; Evaluation Benchmarks</h1>
+				<span class="page-eyebrow" data-i18n="datasets.eyebrow">Data Infrastructure · East Africa &amp; Zanzibar</span>
+				<h1 class="page-title" data-i18n="datasets.title">Open AI Datasets &amp; Evaluation Benchmarks</h1>
 				<p class="page-lead">
-					Curated regional computer vision datasets and leak-free evaluation benchmarks from SAAIL Lab at IIT Madras Zanzibar across Zanzibar specialty commodities, African crop pathology, and Swahili language technologies. Released under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener">CC BY-NC 4.0</a>.
+					<span data-i18n="datasets.lead_pre">Curated regional computer vision datasets and leak-free evaluation benchmarks from SAAIL Lab at IIT Madras Zanzibar across Zanzibar specialty commodities, African crop pathology, and Swahili language technologies. Released under</span> <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noopener">CC BY-NC 4.0</a>.
 				</p>
 			</div>
 		</section>
@@ -25,7 +25,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 		<section class="section">
 			<div class="container ds-stack">
 				<div id="agriculture" class="group-section">
-					<h2 class="group-title">Agricultural &amp; Computer Vision Benchmarks</h2>
+					<h2 class="group-title" data-i18n="datasets.ag_group">Agricultural &amp; Computer Vision Benchmarks</h2>
 					<div class="ds-grid">
 						<article class="ds-card">
 							<div class="ds-meta">
@@ -44,7 +44,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 								<button type="button" class="copy-cmd-btn" data-copy="git clone https://github.com/saaillab/CLOVES-4603.git">Copy</button>
 							</div>
 							<details class="datasheet-drawer">
-								<summary>Datasheet &amp; Governance Card</summary>
+								<summary data-i18n="datasets.datasheet_summary">Datasheet &amp; Governance Card</summary>
 								<dl class="datasheet-dl">
 									<div><dt>Classes &amp; Labels</dt><dd>4 official ZSTC commercial grades (Grade 1, Grade 2, Grade 3, Grade 4; 4,603 images)</dd></div>
 									<div><dt>Modality &amp; Resolution</dt><dd>Standardized 224x224 RGB clove quality imagery</dd></div>
@@ -77,7 +77,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 								<button type="button" class="copy-cmd-btn" data-copy="git clone https://github.com/saaillab/zstc-clove-v1.git">Copy</button>
 							</div>
 							<details class="datasheet-drawer">
-								<summary>Datasheet &amp; Governance Card</summary>
+								<summary data-i18n="datasets.datasheet_summary">Datasheet &amp; Governance Card</summary>
 								<dl class="datasheet-dl">
 									<div><dt>Classes &amp; Labels</dt><dd>4 regulatory grades: Grade I (1,455), Grade II (1,320), Grade III (1,398), Grade IV mpeta (1,125)</dd></div>
 									<div><dt>Modality &amp; Resolution</dt><dd>Single-clove and lot RGB photographs standardized for edge inspection</dd></div>
@@ -110,7 +110,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 								<button type="button" class="copy-cmd-btn" data-copy="git clone https://github.com/saaillab/CropGuardNet.git">Copy</button>
 							</div>
 							<details class="datasheet-drawer">
-								<summary>Datasheet &amp; Governance Card</summary>
+								<summary data-i18n="datasets.datasheet_summary">Datasheet &amp; Governance Card</summary>
 								<dl class="datasheet-dl">
 									<div><dt>Classes &amp; Labels</dt><dd>8 crops across 38 disease/healthy classes; 35,420 deduplicated leaf images</dd></div>
 									<div><dt>Modality &amp; Resolution</dt><dd>224x224 RGB foliar disease images with clean and field-transfer subsets</dd></div>
@@ -143,7 +143,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 								<button type="button" class="copy-cmd-btn" data-copy="pip install git+https://github.com/saaillab/dgs-bench.git">Copy</button>
 							</div>
 							<details class="datasheet-drawer">
-								<summary>Datasheet &amp; Governance Card</summary>
+								<summary data-i18n="datasets.datasheet_summary">Datasheet &amp; Governance Card</summary>
 								<dl class="datasheet-dl">
 									<div><dt>Classes &amp; Labels</dt><dd>Cassava (5 classes, 19,397 field images), Tomato (10 classes), and Rice (4 classes)</dd></div>
 									<div><dt>Modality &amp; Resolution</dt><dd>Field smallholder smartphone &amp; lab RGB foliage imagery under natural class skew (65.8% CMD)</dd></div>
@@ -162,7 +162,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 				</div>
 
 				<div id="language" class="group-section">
-					<h2 class="group-title">Swahili NLP, Provenance &amp; Cultural AI Safety</h2>
+					<h2 class="group-title" data-i18n="datasets.lang_group">Swahili NLP, Provenance &amp; Cultural AI Safety</h2>
 					<div class="ds-grid">
 						<article class="ds-card">
 							<div class="ds-meta">
@@ -174,7 +174,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 								Comparative policy and governance evaluation criteria anchoring national AI strategies in Ubuntu, Harambee, and Ujamaa alongside seven-dimensional sovereignty metrics across the Global South.
 							</p>
 							<details class="datasheet-drawer">
-								<summary>Datasheet &amp; Governance Card</summary>
+								<summary data-i18n="datasets.datasheet_summary">Datasheet &amp; Governance Card</summary>
 								<dl class="datasheet-dl">
 									<div><dt>Classes &amp; Labels</dt><dd>7 sovereignty dimensions &amp; national AI strategy audit criteria (Ethiopia, Kenya, Rwanda)</dd></div>
 									<div><dt>Modality &amp; Resolution</dt><dd>Structured policy documents, infrastructure indicators (water/power/compute), and rubrics</dd></div>
@@ -200,7 +200,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 								Authentic Kiunguja/coastal Swahili text and spoken domain QA paired with the <em>Dira</em> provenance dataset built to benchmark and detect synthetic translationese versus natural native Swahili writing.
 							</p>
 							<details class="datasheet-drawer">
-								<summary>Datasheet &amp; Governance Card</summary>
+								<summary data-i18n="datasets.datasheet_summary">Datasheet &amp; Governance Card</summary>
 								<dl class="datasheet-dl">
 									<div><dt>Classes &amp; Labels</dt><dd>Native Kiunguja/coastal Swahili prose vs. machine-translated Swahili provenance pairs</dd></div>
 									<div><dt>Modality &amp; Resolution</dt><dd>Editorial Swahili text, lexical/discourse annotations, and spoken agricultural QA audio-text pairs</dd></div>

@@ -15,6 +15,23 @@ const saailPubs = PUBLICATIONS.filter((p) => p.isSaailLab !== false).sort((a, b)
 
 const publishedCount = saailPubs.filter((p) => p.category !== 'preprint').length;
 const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').length;
+const totalWorks = saailPubs.length || 1;
+const count2026 = saailPubs.filter((p) => p.year === 2026).length;
+const count2025 = saailPubs.filter((p) => p.year === 2025).length;
+const countJournals = saailPubs.filter((p) => p.category === 'journal').length;
+const countConfWksp = saailPubs.filter((p) => p.category === 'conference' || p.category === 'workshop').length;
+const countClinical = saailPubs.filter((p) =>
+	p.topics.some((t) => /medical|health|polyp/i.test(t))
+).length;
+const countAgri = saailPubs.filter(
+	(p) =>
+		!p.topics.some((t) => /medical|health|polyp/i.test(t)) &&
+		p.topics.some((t) => /agriculture|clove|cassava/i.test(t))
+).length;
+const countPolicy = Math.max(0, saailPubs.length - countClinical - countAgri);
+
+const allBibBundle = saailPubs.map((p) => p.bibtex.trim()).join('\n\n');
+const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 ---
 
 <Layout
@@ -47,6 +64,50 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 		<!-- Primary Section: SAAIL Lab Publications -->
 		<section class="section">
 			<div class="container">
+				<div class="pub-analytics" aria-label="SAAIL Lab Publications Distribution">
+					<div class="ana-card">
+						<h3>By Publication Year</h3>
+						<div class="ana-row">
+							<span>2026 Outputs</span><strong>{count2026}</strong>
+							<div class="ana-track"><div class="ana-fill" style={`width:${Math.round((count2026 / totalWorks) * 100)}%`}></div></div>
+						</div>
+						<div class="ana-row">
+							<span>2025 Outputs</span><strong>{count2025}</strong>
+							<div class="ana-track"><div class="ana-fill" style={`width:${Math.round((count2025 / totalWorks) * 100)}%`}></div></div>
+						</div>
+					</div>
+					<div class="ana-card">
+						<h3>By Venue Tier</h3>
+						<div class="ana-row">
+							<span>Peer-Reviewed Journals</span><strong>{countJournals}</strong>
+							<div class="ana-track"><div class="ana-fill" style={`width:${Math.round((countJournals / totalWorks) * 100)}%`}></div></div>
+						</div>
+						<div class="ana-row">
+							<span>Conferences &amp; Workshops</span><strong>{countConfWksp}</strong>
+							<div class="ana-track"><div class="ana-fill" style={`width:${Math.round((countConfWksp / totalWorks) * 100)}%`}></div></div>
+						</div>
+						<div class="ana-row">
+							<span>Under Peer Review</span><strong>{underReviewCount}</strong>
+							<div class="ana-track"><div class="ana-fill" style={`width:${Math.round((underReviewCount / totalWorks) * 100)}%`}></div></div>
+						</div>
+					</div>
+					<div class="ana-card">
+						<h3>By Primary Research Track</h3>
+						<div class="ana-row">
+							<span>Agriculture &amp; Food Systems AI</span><strong>{countAgri}</strong>
+							<div class="ana-track"><div class="ana-fill" style={`width:${Math.round((countAgri / totalWorks) * 100)}%`}></div></div>
+						</div>
+						<div class="ana-row">
+							<span>AI Policy, Safety &amp; Sovereignty</span><strong>{countPolicy}</strong>
+							<div class="ana-track"><div class="ana-fill" style={`width:${Math.round((countPolicy / totalWorks) * 100)}%`}></div></div>
+						</div>
+						<div class="ana-row">
+							<span>Clinical &amp; Biomedical AI</span><strong>{countClinical}</strong>
+							<div class="ana-track"><div class="ana-fill" style={`width:${Math.round((countClinical / totalWorks) * 100)}%`}></div></div>
+						</div>
+					</div>
+				</div>
+
 				<div class="controls-bar">
 					<div class="filter-tabs" role="tablist" aria-label="Filter SAAIL Lab publications">
 						<button type="button" role="tab" aria-selected="true" aria-controls="saailList" tabindex="0" class="tab-btn is-active" data-filter="all">All SAAIL Lab ({saailPubs.length})</button>
@@ -56,14 +117,20 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 						<button type="button" role="tab" aria-selected="false" aria-controls="saailList" tabindex="-1" class="tab-btn" data-filter="agri">Agriculture &amp; Vision</button>
 					</div>
 
-					<input
-						id="pubSearch"
-						type="search"
-						placeholder="Search title, year, author, DOI, keyword..."
-						aria-label="Search SAAIL Lab publications"
-						class="search-input"
-					/>
+					<div class="pub-bulk-controls">
+						<input
+							id="pubSearch"
+							type="search"
+							placeholder="Search title, year, author, DOI, keyword..."
+							aria-label="Search SAAIL Lab publications"
+							class="search-input"
+						/>
+						<button type="button" id="downloadAllBibBtn" class="act-btn bulk-btn">Download All 20 (.bib)</button>
+						<button type="button" id="downloadAllRisBtn" class="act-btn bulk-btn">Download All 20 (.ris)</button>
+					</div>
 				</div>
+				<pre id="allBibBundle" hidden>{allBibBundle}</pre>
+				<pre id="allRisBundle" hidden>{allRisBundle}</pre>
 
 				<div class="result-count" id="resultCount" aria-live="polite">Showing {saailPubs.length} of {saailPubs.length} SAAIL Lab works</div>
 
@@ -381,6 +448,33 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 				}
 			});
 		});
+
+		function triggerBundleDownload(sourceId: string, filename: string, mime: string) {
+			const el = document.getElementById(sourceId);
+			const txt = el?.textContent?.trim() || '';
+			if (!txt) return;
+			const blob = new Blob([txt + '\n'], { type: `${mime};charset=utf-8` });
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = filename;
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			setTimeout(() => URL.revokeObjectURL(url), 1000);
+			const liveEl = document.getElementById('saailLiveStatus');
+			if (liveEl) {
+				liveEl.textContent = '';
+				requestAnimationFrame(() => { liveEl.textContent = `Downloaded ${filename} containing all 20 publications.`; });
+			}
+		}
+
+		document.getElementById('downloadAllBibBtn')?.addEventListener('click', () => {
+			triggerBundleDownload('allBibBundle', 'saail-lab-publications-2025-2026.bib', 'application/x-bibtex');
+		});
+		document.getElementById('downloadAllRisBtn')?.addEventListener('click', () => {
+			triggerBundleDownload('allRisBundle', 'saail-lab-publications-2025-2026.ris', 'application/x-research-info-systems');
+		});
 	});
 </script>
 
@@ -633,9 +727,65 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 	}
 	.prior-cta { flex-shrink: 0; }
 
+	.pub-analytics {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+	.ana-card {
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 0.9rem;
+		padding: 1rem 1.15rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.55rem;
+	}
+	.ana-card h3 {
+		font-size: 0.8rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--accent-primary);
+		margin: 0 0 0.15rem;
+	}
+	.ana-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 0.25rem 0.6rem;
+		align-items: center;
+		font-size: 0.82rem;
+		color: var(--text-secondary);
+	}
+	.ana-row strong {
+		font-family: 'JetBrains Mono', monospace;
+		color: var(--text-primary);
+	}
+	.ana-track {
+		grid-column: 1 / -1;
+		height: 6px;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		border-radius: 999px;
+		overflow: hidden;
+	}
+	.ana-fill {
+		height: 100%;
+		background: var(--accent-primary);
+	}
+	.pub-bulk-controls {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.bulk-btn {
+		white-space: nowrap;
+	}
 	@media (max-width: 860px) {
 		.saail-row-grid { grid-template-columns: minmax(0, 1fr); gap: 0.65rem; }
 		.pub-actions { justify-content: flex-start; max-width: none; }
 		.search-input { min-width: 0; width: 100%; }
+		.pub-analytics { grid-template-columns: minmax(0, 1fr); }
 	}
 </style>

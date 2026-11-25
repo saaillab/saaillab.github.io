@@ -244,6 +244,8 @@ const {
 		<div id="saailLiveStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
 		<script>
+			import { SW_TRANSLATIONS } from '../utils/i18n';
+
 			document.addEventListener('DOMContentLoaded', function() {
 				const backToTopBtn = document.getElementById('backToTop');
 				window.addEventListener('scroll', function() {
@@ -257,6 +259,62 @@ const {
 					const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 					window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
 				});
+
+				// Bilingual EN / SW switcher
+				const langBtn = document.getElementById('langToggle') as HTMLButtonElement | null;
+				const applyLang = (lang: 'en' | 'sw', announce: boolean) => {
+					document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
+						if (!el.hasAttribute('data-i18n-en-html')) {
+							el.setAttribute('data-i18n-en-html', el.innerHTML);
+						}
+						const key = el.getAttribute('data-i18n') || '';
+						if (lang === 'sw' && SW_TRANSLATIONS[key]) {
+							el.textContent = SW_TRANSLATIONS[key];
+						} else {
+							el.innerHTML = el.getAttribute('data-i18n-en-html') || el.innerHTML;
+						}
+					});
+					document.documentElement.lang = lang === 'sw' ? 'sw' : 'en';
+					localStorage.setItem('saail_lang', lang);
+					if (langBtn) {
+						langBtn.textContent = lang === 'sw' ? 'EN' : 'SW';
+						langBtn.setAttribute('aria-pressed', String(lang === 'sw'));
+						langBtn.setAttribute(
+							'aria-label',
+							lang === 'sw' ? 'Switch language to English' : 'Switch language to Kiswahili'
+						);
+					}
+					window.dispatchEvent(new CustomEvent('saail:langchange', { detail: { lang } }));
+					if (announce) {
+						const liveEl = document.getElementById('saailLiveStatus');
+						if (liveEl) {
+							liveEl.textContent = '';
+							requestAnimationFrame(() => {
+								liveEl.textContent = lang === 'sw' ? 'Lugha imebadilishwa kuwa Kiswahili.' : 'Language switched to English.';
+							});
+						}
+					}
+				};
+
+				const savedLang = localStorage.getItem('saail_lang') === 'sw' ? 'sw' : 'en';
+				if (savedLang === 'sw') {
+					applyLang('sw', false);
+				} else if (langBtn) {
+					langBtn.textContent = 'SW';
+					langBtn.setAttribute('aria-pressed', 'false');
+				}
+
+				langBtn?.addEventListener('click', function() {
+					const cur = localStorage.getItem('saail_lang') === 'sw' ? 'sw' : 'en';
+					applyLang(cur === 'sw' ? 'en' : 'sw', true);
+				});
+
+				// Register offline-first Service Worker
+				if ('serviceWorker' in navigator) {
+					window.addEventListener('load', () => {
+						navigator.serviceWorker.register('/sw.js').catch(() => {});
+					});
+				}
 			});
 		</script>
 	</body>

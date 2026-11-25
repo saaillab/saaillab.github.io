@@ -1,11 +1,13 @@
 {
   "name": "SAAIL Lab - Sustainable AI for Agriculture & Intelligent Livelihoods",
   "short_name": "SAAIL Lab",
+  "id": "/",
+  "scope": "/",
   "description": "AI, Deep Learning, Machine Learning, Computer Vision, Swahili NLP, Agricultural AI, and Healthcare AI research lab led by Innocent Nyalala at IIT Madras Zanzibar.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f9faf8",
-  "theme_color": "#165b33",
+  "theme_color": "#14532d",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

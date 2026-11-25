@@ -37,5 +37,29 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Run site verification checks
+      - name: Run site verification & WCAG static checks
         run: python scripts/verify_site.py
+
+      - name: Upload built dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: saail-dist
+          path: dist/
+
+  lighthouse-a11y:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download built dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: saail-dist
+          path: dist/
+
+      - name: Audit Accessibility and SEO via Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          uploadArtifacts: false
+          configPath: .lighthouserc.json
+        env:
+          LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}

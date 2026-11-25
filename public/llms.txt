@@ -36,6 +36,9 @@
 - GitHub Repositories: https://saaillab.github.io/github/
 - Conference & Field Gallery: https://saaillab.github.io/gallery/
 - News, Awards & Lab Milestones: https://saaillab.github.io/news/
+- Speaking Calendar & Official Media Kit: https://saaillab.github.io/resources/#speaking
+- Interactive Global Collaboration Map: https://saaillab.github.io/collaborations/#network-map
+- Dual Cloves & Cassava ONNX WASM Live Demo: https://saaillab.github.io/tools/#live-demo
 - Research Opportunities & Hiring: https://saaillab.github.io/hiring/
 - International Collaborations: https://saaillab.github.io/collaborations/
 - Contact: https://saaillab.github.io/contact/

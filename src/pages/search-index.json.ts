@@ -62,11 +62,32 @@ export const GET: APIRoute = () => {
 			keywords: 'calculator interactive mirage threshold p* cara-fm cei dfs edge readiness'
 		},
 		{
-			title: 'In-Browser Clove Grading ONNX Demo',
-			subtitle: 'Client-side MobileNetV3-Small WebAssembly inference on ZSTC cloves',
+			title: 'Dual ONNX Live Demo: Cloves & Cassava + CAM',
+			subtitle: 'Client-side MobileNetV3-Small WebAssembly inference & visual saliency',
 			category: 'Tool',
 			url: '/tools/#live-demo',
-			keywords: 'onnx wasm demo clove grading mobilenetv3 zstc live inference browser'
+			keywords: 'onnx wasm demo clove grading cassava disease cam saliency heatmap browser offline'
+		},
+		{
+			title: 'Collaboration Network Map & Consortia',
+			subtitle: 'IIT Madras, ZSTC, CPHK Pemba, Penn State, Columbia, Deakin, Oxford, NAU',
+			category: 'Page',
+			url: '/collaborations/#network-map',
+			keywords: 'collaborations map network partners zstc deakin penn state pemba oxford cambridge'
+		},
+		{
+			title: 'Speaking Calendar (5th ZSTC Conference)',
+			subtitle: 'Dec 2-3, 2026 ZSTC Conference & SAAIL Lab talks schedule',
+			category: 'Page',
+			url: '/resources/#speaking',
+			keywords: 'speaking calendar zstc 5th conference december 2026 talks presentations'
+		},
+		{
+			title: 'Official Media & Press Kit',
+			subtitle: 'Approved lab/PI bios and downloadable high-res SAAIL Lab logos',
+			category: 'Page',
+			url: '/resources/#media-kit',
+			keywords: 'media kit press logos crest portrait approved bio download'
 		},
 		{
 			title: 'News, Awards & Lab Milestones',

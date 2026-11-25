@@ -20,63 +20,64 @@ const { currentPage = '' } = Astro.props;
 
 				<div class="nav-menu">
 					<div class="nav-item">
-						<a href="/" class:list={['nav-link', { active: currentPage === 'home' }]}>Home</a>
+						<a href="/" data-i18n="nav.home" class:list={['nav-link', { active: currentPage === 'home' }]}>Home</a>
 					</div>
 
 					<div class="nav-item dropdown">
 						<a href="/research/" class:list={['nav-link', { active: currentPage === 'research' }]} aria-haspopup="true" aria-expanded="false">
-							Research
+							<span data-i18n="nav.research">Research</span>
 							<svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
 								<path d="M6 9l6 6 6-6"/>
 							</svg>
 						</a>
 						<div class="dropdown-menu">
-							<a href="/research/" class="dropdown-link">Research Pillars</a>
-							<a href="/projects/" class="dropdown-link">Active Projects &amp; Grants</a>
-							<a href="/collaborations/" class="dropdown-link">Global Collaborations</a>
+							<a href="/research/" data-i18n="nav.research_pillars" class="dropdown-link">Research Pillars</a>
+							<a href="/projects/" data-i18n="nav.projects" class="dropdown-link">Active Projects &amp; Grants</a>
+							<a href="/collaborations/" data-i18n="nav.collaborations" class="dropdown-link">Global Collaborations</a>
 						</div>
 					</div>
 
 					<div class="nav-item">
-						<a href="/publications/" class:list={['nav-link', { active: currentPage === 'publications' }]}>Publications</a>
+						<a href="/publications/" data-i18n="nav.publications" class:list={['nav-link', { active: currentPage === 'publications' }]}>Publications</a>
 					</div>
 
 					<div class="nav-item">
-						<a href="/people/" class:list={['nav-link', { active: currentPage === 'people' }]}>People</a>
+						<a href="/people/" data-i18n="nav.people" class:list={['nav-link', { active: currentPage === 'people' }]}>People</a>
 					</div>
 
 					<div class="nav-item dropdown">
 						<a href="/resources/" class:list={['nav-link', { active: currentPage === 'resources' || currentPage === 'gallery' || currentPage === 'news' }]} aria-haspopup="true" aria-expanded="false">
-							Resources
+							<span data-i18n="nav.resources">Resources</span>
 							<svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
 								<path d="M6 9l6 6 6-6"/>
 							</svg>
 						</a>
 						<div class="dropdown-menu">
-							<a href="/datasets/" class="dropdown-link">Datasets &amp; Benchmarks</a>
-							<a href="/tools/" class="dropdown-link">Mobile Apps &amp; Software</a>
-							<a href="/news/" class="dropdown-link">News &amp; Milestones</a>
-							<a href="/github/" class="dropdown-link">Open-Source GitHub</a>
-							<a href="/gallery/" class="dropdown-link">Gallery &amp; Posters</a>
+							<a href="/datasets/" data-i18n="nav.datasets" class="dropdown-link">Datasets &amp; Benchmarks</a>
+							<a href="/tools/" data-i18n="nav.tools" class="dropdown-link">Mobile Apps &amp; Software</a>
+							<a href="/news/" data-i18n="nav.news" class="dropdown-link">News &amp; Milestones</a>
+							<a href="/github/" data-i18n="nav.github" class="dropdown-link">Open-Source GitHub</a>
+							<a href="/gallery/" data-i18n="nav.gallery" class="dropdown-link">Gallery &amp; Posters</a>
 						</div>
 					</div>
 
 					<div class="nav-item">
-						<a href="/hiring/" class:list={['nav-link', { active: currentPage === 'hiring' }]}>Join Us</a>
+						<a href="/hiring/" data-i18n="nav.join" class:list={['nav-link', { active: currentPage === 'hiring' }]}>Join Us</a>
 					</div>
 
 					<div class="nav-item">
-						<a href="/contact/" class:list={['nav-link', { active: currentPage === 'contact' }]}>Contact</a>
+						<a href="/contact/" data-i18n="nav.contact" class:list={['nav-link', { active: currentPage === 'contact' }]}>Contact</a>
 					</div>
 				</div>
 
 				<div class="nav-actions">
+					<button id="langToggle" class="lang-toggle" type="button" aria-label="Switch language to Kiswahili" aria-pressed="false" title="Toggle English / Kiswahili">SW</button>
 					<button id="siteSearchBtn" class="search-trigger" type="button" aria-label="Search SAAIL Lab site (Ctrl K)" aria-haspopup="dialog" aria-controls="saailSearchModal">
 						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 							<circle cx="11" cy="11" r="8"></circle>
 							<path d="M21 21l-4.35-4.35"></path>
 						</svg>
-						<span class="search-trigger-label">Search</span>
+						<span class="search-trigger-label" data-i18n="nav.search">Search</span>
 						<kbd class="search-trigger-kbd">Ctrl K</kbd>
 					</button>
 
@@ -99,20 +100,20 @@ const { currentPage = '' } = Astro.props;
 			</div>
 
 			<div class="mobile-menu" id="mobileMenu">
-				<a href="/" class="mobile-link">Home</a>
-				<a href="/research/" class="mobile-link">Research Pillars</a>
-				<a href="/projects/" class="mobile-link">Active Projects &amp; Grants</a>
-				<a href="/publications/" class="mobile-link">Publications</a>
-				<a href="/people/" class="mobile-link">People</a>
-				<a href="/datasets/" class="mobile-link">Datasets &amp; Benchmarks</a>
-				<a href="/tools/" class="mobile-link">Mobile Apps &amp; Software</a>
-				<a href="/gallery/" class="mobile-link">Gallery &amp; Posters</a>
-				<a href="/news/" class="mobile-link">News &amp; Milestones</a>
-				<a href="/github/" class="mobile-link">GitHub</a>
-				<a href="/collaborations/" class="mobile-link">Collaborations</a>
-				<a href="/resources/" class="mobile-link">Resources</a>
-				<a href="/hiring/" class="mobile-link">Join Us</a>
-				<a href="/contact/" class="mobile-link">Contact</a>
+				<a href="/" data-i18n="nav.home" class="mobile-link">Home</a>
+				<a href="/research/" data-i18n="nav.research_pillars" class="mobile-link">Research Pillars</a>
+				<a href="/projects/" data-i18n="nav.projects" class="mobile-link">Active Projects &amp; Grants</a>
+				<a href="/publications/" data-i18n="nav.publications" class="mobile-link">Publications</a>
+				<a href="/people/" data-i18n="nav.people" class="mobile-link">People</a>
+				<a href="/datasets/" data-i18n="nav.datasets" class="mobile-link">Datasets &amp; Benchmarks</a>
+				<a href="/tools/" data-i18n="nav.tools" class="mobile-link">Mobile Apps &amp; Software</a>
+				<a href="/gallery/" data-i18n="nav.gallery" class="mobile-link">Gallery &amp; Posters</a>
+				<a href="/news/" data-i18n="nav.news" class="mobile-link">News &amp; Milestones</a>
+				<a href="/github/" data-i18n="nav.github" class="mobile-link">GitHub</a>
+				<a href="/collaborations/" data-i18n="nav.collaborations" class="mobile-link">Collaborations</a>
+				<a href="/resources/" data-i18n="nav.resources" class="mobile-link">Resources</a>
+				<a href="/hiring/" data-i18n="nav.join" class="mobile-link">Join Us</a>
+				<a href="/contact/" data-i18n="nav.contact" class="mobile-link">Contact</a>
 			</div>
 		</div>
 	</nav>
@@ -311,9 +312,35 @@ const { currentPage = '' } = Astro.props;
 		cursor: pointer;
 		transition: all 0.18s ease;
 	}
-	.search-trigger:hover {
+	.search-trigger:hover,
+	.lang-toggle:hover {
 		border-color: var(--accent-primary);
 		color: var(--accent-primary);
+	}
+	.lang-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: 36px;
+		min-width: 38px;
+		padding: 0 0.55rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-secondary);
+		color: var(--text-primary);
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.76rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: all 0.18s ease;
+	}
+	.lang-toggle[aria-pressed="true"] {
+		background: var(--accent-primary);
+		border-color: var(--accent-primary);
+		color: #ffffff;
+	}
+	:global([data-theme="dark"]) .lang-toggle[aria-pressed="true"] {
+		color: #062111;
 	}
 	.search-trigger-kbd {
 		font-family: 'JetBrains Mono', monospace;
@@ -424,6 +451,10 @@ const { currentPage = '' } = Astro.props;
 
 	@media (min-width: 1025px) {
 		.mobile-menu.active { display: none; }
+	}
+	@media (max-width: 480px) {
+		.nav-content { gap: 0.5rem; }
+		.nav-actions { gap: 0.35rem; }
 	}
 </style>
 
