@@ -92,7 +92,7 @@ export const PROJECTS: LabProject[] = [
       'The SAAIL Lab BS research team curates verified native Swahili prose alongside spoken Zanzibar agricultural QA, training and benchmarking the Dira detector to measure provenance quality across modern language models.'
     ],
     objectives: [
-      'Curate verified native Kiunguja and East African editorial Swahili corpora alongside aligned synthetic translations.',
+      'Curate verified native Kiunguja and East African editorial Swahili corpora alongside parallel synthetic translations.',
       'Develop lexical, discourse, and neural stylometric detectors separating translationese from human Swahili authoring.',
       'Construct audio-text smallholder agricultural and coastal livelihood QA pairs grounded in Zanzibar dialect usage.'
     ],
@@ -191,7 +191,7 @@ export const PROJECTS: LabProject[] = [
     objectives: [
       'Eliminate offline-augmented train/test contamination via specimen UUID grouping and 64-bit DCT perceptual hashing.',
       'Engineer sub-0.5M parameter hybrid CNN-Transformer architectures running at 200 FPS in single-thread CPU ONNX.',
-      'Quantify field deployment collapse across minority diseases and publish reproducible Kaggle T4 benchmark harnesses.'
+      'Quantify field deployment collapse across minority diseases and publish reproducible Kaggle T4 benchmark suites.'
     ],
     deliverables: [
       'CropGuardNet framework & 80,238-duplicate purge audit',

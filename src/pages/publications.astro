@@ -307,6 +307,11 @@ const underReviewCount = saailPubs.filter((p) => p.category === 'preprint').leng
 				if (copied) {
 					const orig = btn.getAttribute('data-orig-label') || 'Copy';
 					btn.textContent = 'Copied!';
+					const liveEl = document.getElementById('saailLiveStatus');
+					if (liveEl) {
+						liveEl.textContent = '';
+						requestAnimationFrame(() => { liveEl.textContent = 'BibTeX citation copied to clipboard.'; });
+					}
 					setTimeout(() => { btn.textContent = orig; }, 1600);
 				}
 			});

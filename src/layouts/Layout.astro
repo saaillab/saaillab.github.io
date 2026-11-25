@@ -241,6 +241,7 @@ const {
 				<path d="M12 19V5M5 12L12 5L19 12"/>
 			</svg>
 		</button>
+		<div id="saailLiveStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
 		<script>
 			document.addEventListener('DOMContentLoaded', function() {
@@ -535,5 +536,13 @@ const {
 	.back-to-top:hover {
 		transform: translateY(-2px);
 		background: var(--accent-secondary);
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
 	}
 </style>

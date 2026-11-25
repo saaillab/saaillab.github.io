@@ -12,7 +12,7 @@
 				type="search"
 				role="combobox"
 				aria-autocomplete="list"
-				aria-expanded="true"
+				aria-expanded="false"
 				aria-controls="saailSearchResults"
 				placeholder="Search 20 lab papers, projects, datasets, tools, people..."
 				autocomplete="off"
@@ -79,6 +79,7 @@
 			list.innerHTML = '';
 
 			if (visibleItems.length === 0) {
+				input?.setAttribute('aria-expanded', 'false');
 				input?.removeAttribute('aria-activedescendant');
 				const li = document.createElement('li');
 				li.className = 'search-empty';
@@ -86,6 +87,7 @@
 				list.appendChild(li);
 				return;
 			}
+			input?.setAttribute('aria-expanded', 'true');
 
 			visibleItems.forEach((item, idx) => {
 				const li = document.createElement('li');
@@ -146,6 +148,8 @@
 			if (!modal) return;
 			modal.hidden = true;
 			document.body.style.overflow = '';
+			input?.setAttribute('aria-expanded', 'false');
+			input?.removeAttribute('aria-activedescendant');
 			lastFocused?.focus();
 		}
 

@@ -205,6 +205,11 @@ Sincerely,
 		}
 		if (ok) {
 			copyTplBtn.textContent = 'Template Copied!';
+			const liveEl = document.getElementById('saailLiveStatus');
+			if (liveEl) {
+				liveEl.textContent = '';
+				requestAnimationFrame(() => { liveEl.textContent = 'Application email template copied to clipboard.'; });
+			}
 			setTimeout(() => { copyTplBtn.textContent = 'Copy Email Template'; }, 1800);
 		}
 	});

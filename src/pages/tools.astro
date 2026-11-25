@@ -84,7 +84,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 				<div class="group-head">
 					<span class="page-eyebrow">Open-Source Code</span>
 					<h2>Reproducible Benchmarks &amp; Toolkits</h2>
-					<p>Released at <a href="https://github.com/saaillab" target="_blank" rel="noopener">github.com/saaillab</a> (<code>CC BY-NC 4.0</code>; CARA-FM aligned with PMLR Vol. 302 under <code>CC BY 4.0</code>).</p>
+					<p>Released at <a href="https://github.com/saaillab" target="_blank" rel="noopener">github.com/saaillab</a> (<code>CC BY-NC 4.0</code>; CARA-FM follows PMLR Vol. 302 under <code>CC BY 4.0</code>).</p>
 				</div>
 
 				<div class="apps-grid apps-grid-2">
@@ -299,6 +299,11 @@ import ModernFooter from '../components/ModernFooter.astro';
 			}
 			if (ok) {
 				btn.textContent = 'Copied!';
+				const liveEl = document.getElementById('saailLiveStatus');
+				if (liveEl) {
+					liveEl.textContent = '';
+					requestAnimationFrame(() => { liveEl.textContent = 'Command copied to clipboard.'; });
+				}
 				setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
 			}
 		});
