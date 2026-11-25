@@ -44,9 +44,9 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
-				<span class="page-eyebrow">Scholarly Record · Zanzibar &amp; East Africa AI</span>
-				<h1 class="page-title">SAAIL Lab Publications</h1>
-				<p class="page-lead">
+				<span class="page-eyebrow" data-i18n="pubs.eyebrow">Scholarly Record · Zanzibar &amp; East Africa AI</span>
+				<h1 class="page-title" data-i18n="pubs.title">SAAIL Lab Publications</h1>
+				<p class="page-lead" data-i18n="pubs.lead">
 					Peer-reviewed journal articles, conference papers, and manuscripts authored at SAAIL Lab (IIT Madras Zanzibar, 2025 to Present), covering deep learning for agriculture, computer vision, Responsible AI, Swahili NLP, AI Policy, and clinical machine learning.
 				</p>
 
@@ -64,6 +64,7 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 		<!-- Primary Section: SAAIL Lab Publications -->
 		<section class="section">
 			<div class="container">
+				<h2 class="sr-only" data-i18n="pubs.analytics_heading">Publication Analytics</h2>
 				<div class="pub-analytics" aria-label="SAAIL Lab Publications Distribution">
 					<div class="ana-card">
 						<h3>By Publication Year</h3>
@@ -125,6 +126,12 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 							aria-label="Search SAAIL Lab publications"
 							class="search-input"
 						/>
+						<select id="pubSort" aria-label="Sort SAAIL Lab publications" class="sort-select">
+							<option value="default">Sort: Flagship &amp; Newest</option>
+							<option value="year">Sort: Newest Year First</option>
+							<option value="journal">Sort: Peer-Reviewed Journals First</option>
+						</select>
+						<button type="button" id="copyPubFilterUrlBtn" class="act-btn bulk-btn">Copy Filter Link</button>
 						<button type="button" id="downloadAllBibBtn" class="act-btn bulk-btn">Download All 20 (.bib)</button>
 						<button type="button" id="downloadAllRisBtn" class="act-btn bulk-btn">Download All 20 (.ris)</button>
 					</div>
@@ -135,7 +142,7 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 				<div class="result-count" id="resultCount" aria-live="polite">Showing {saailPubs.length} of {saailPubs.length} SAAIL Lab works</div>
 
 				<div class="pubs-list" id="saailList">
-					{saailPubs.map((pub) => {
+					{saailPubs.map((pub, pubIdx) => {
 						const isUnderReview = pub.category === 'preprint';
 						const cleanDoi = pub.doi ? pub.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').trim() : '';
 						const doiHref = cleanDoi ? `https://doi.org/${cleanDoi}` : '';
@@ -162,6 +169,10 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 							<article
 								class="pub-item"
 								data-status={isUnderReview ? 'preprint' : 'published'}
+								data-category={pub.category}
+								data-year={pub.year}
+								data-date={pub.dateISO}
+								data-orig-idx={pubIdx}
 								data-policy={isPolicy ? 'yes' : 'no'}
 								data-agri={isAgri ? 'yes' : 'no'}
 								data-search={searchText}
@@ -272,14 +283,68 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 		const items = Array.from(document.querySelectorAll('#saailList .pub-item')) as HTMLElement[];
 		const countEl = document.getElementById('resultCount');
 		const emptyEl = document.getElementById('noPubResults');
-		let activeFilter = 'all';
+		const listEl = document.getElementById('saailList');
+		const sortSelect = document.getElementById('pubSort') as HTMLSelectElement | null;
+		const copyFilterUrlBtn = document.getElementById('copyPubFilterUrlBtn') as HTMLButtonElement | null;
+		const urlParams = new URLSearchParams(window.location.search);
+
+		let activeFilter = urlParams.get('filter') || 'all';
+		const validFilters = new Set(['all', 'published', 'preprint', 'policy', 'agri']);
+		if (!validFilters.has(activeFilter)) activeFilter = 'all';
+
+		if (searchInput && urlParams.get('q')) {
+			searchInput.value = urlParams.get('q') || '';
+		}
+		if (sortSelect && urlParams.get('sort')) {
+			const s = urlParams.get('sort') || 'default';
+			if (['default', 'year', 'journal'].includes(s)) sortSelect.value = s;
+		}
+
+		tabs.forEach((t) => {
+			const match = (t.getAttribute('data-filter') || 'all') === activeFilter;
+			t.classList.toggle('is-active', match);
+			t.setAttribute('aria-selected', String(match));
+			t.setAttribute('tabindex', match ? '0' : '-1');
+		});
+
+		function syncUrlState() {
+			const params = new URLSearchParams();
+			if (activeFilter !== 'all') params.set('filter', activeFilter);
+			const qVal = searchInput?.value.trim() || '';
+			if (qVal) params.set('q', qVal);
+			const sortVal = sortSelect?.value || 'default';
+			if (sortVal !== 'default') params.set('sort', sortVal);
+			const qs = params.toString();
+			const target = qs ? `${window.location.pathname}?${qs}${window.location.hash}` : `${window.location.pathname}${window.location.hash}`;
+			window.history.replaceState(null, '', target);
+		}
+
+		function applySort() {
+			if (!listEl) return;
+			const mode = sortSelect?.value || 'default';
+			const sorted = Array.from(items).sort((a, b) => {
+				if (mode === 'year') {
+					const dy = Number(b.getAttribute('data-year') || 0) - Number(a.getAttribute('data-year') || 0);
+					if (dy !== 0) return dy;
+					return String(b.getAttribute('data-date') || '').localeCompare(String(a.getAttribute('data-date') || ''));
+				}
+				if (mode === 'journal') {
+					const ja = a.getAttribute('data-category') === 'journal' ? 0 : 1;
+					const jb = b.getAttribute('data-category') === 'journal' ? 0 : 1;
+					if (ja !== jb) return ja - jb;
+				}
+				return Number(a.getAttribute('data-orig-idx') || 0) - Number(b.getAttribute('data-orig-idx') || 0);
+			});
+			sorted.forEach((node) => listEl.appendChild(node));
+		}
 
 		function applyFilter() {
+			applySort();
 			const q = (searchInput?.value || '').trim().toLowerCase();
 			let lastVisible: HTMLElement | null = null;
 			let shown = 0;
 
-			items.forEach((item) => {
+			Array.from(listEl?.querySelectorAll('.pub-item') || items).forEach((item) => {
 				item.classList.remove('is-last-visible');
 				const st = item.getAttribute('data-status') || '';
 				const pol = item.getAttribute('data-policy') === 'yes';
@@ -294,10 +359,10 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 
 				const qOk = !q || hay.includes(q);
 				const vis = fOk && qOk;
-				item.style.display = vis ? 'block' : 'none';
+				(item as HTMLElement).style.display = vis ? 'block' : 'none';
 				if (vis) {
 					shown++;
-					lastVisible = item;
+					lastVisible = item as HTMLElement;
 				}
 			});
 
@@ -314,6 +379,7 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 					countEl.textContent = nextText;
 				}
 			}
+			syncUrlState();
 		}
 
 		tabs.forEach((tab, idx) => {
@@ -347,6 +413,35 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 		applyFilter();
 
 		searchInput?.addEventListener('input', applyFilter);
+		sortSelect?.addEventListener('change', applyFilter);
+		copyFilterUrlBtn?.addEventListener('click', async () => {
+			syncUrlState();
+			const url = window.location.href;
+			let copied = false;
+			try {
+				await navigator.clipboard.writeText(url);
+				copied = true;
+			} catch (_e) {
+				const area = document.createElement('textarea');
+				area.value = url;
+				area.style.position = 'fixed';
+				area.style.opacity = '0';
+				document.body.appendChild(area);
+				area.select();
+				try { copied = document.execCommand('copy'); } catch (_e2) {}
+				document.body.removeChild(area);
+			}
+			if (copied) {
+				const orig = 'Copy Filter Link';
+				copyFilterUrlBtn.textContent = 'Link Copied!';
+				const liveEl = document.getElementById('saailLiveStatus');
+				if (liveEl) {
+					liveEl.textContent = '';
+					requestAnimationFrame(() => { liveEl.textContent = 'Shareable publications filter URL copied to clipboard.'; });
+				}
+				setTimeout(() => { copyFilterUrlBtn.textContent = orig; }, 1600);
+			}
+		});
 
 		document.querySelectorAll('.bib-toggle-btn').forEach((btn) => {
 			btn.addEventListener('click', () => {
@@ -779,13 +874,28 @@ const allRisBundle = saailPubs.map((p) => publicationToRis(p)).join('\r\n\r\n');
 		align-items: center;
 		gap: 0.5rem;
 	}
+	.sort-select {
+		padding: 0.44rem 0.78rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-color);
+		background: var(--bg-card);
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 0.82rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.sort-select:focus-visible {
+		outline: 2px solid var(--accent-primary);
+		outline-offset: 2px;
+	}
 	.bulk-btn {
 		white-space: nowrap;
 	}
 	@media (max-width: 860px) {
 		.saail-row-grid { grid-template-columns: minmax(0, 1fr); gap: 0.65rem; }
 		.pub-actions { justify-content: flex-start; max-width: none; }
-		.search-input { min-width: 0; width: 100%; }
+		.search-input, .sort-select { min-width: 0; width: 100%; }
 		.pub-analytics { grid-template-columns: minmax(0, 1fr); }
 	}
 </style>

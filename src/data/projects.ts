@@ -40,7 +40,7 @@ export const PROJECTS: LabProject[] = [
     ],
     objectives: [
       'Trace structural compute, platform, and regulatory dependencies shaping AI autonomy across Global South economies.',
-      'Audit policy divergence across Ethiopia (2022), Rwanda (2023), and Kenya (2025) to identify regional harmonization pathways.',
+      'Audit policy variation across Ethiopia (2022), Rwanda (2023), and Kenya (2025) to identify regional harmonization pathways.',
       'Anchor continental oversight and public-interest AI infrastructure in Ubuntu, Harambee, and Ujamaa principles.',
       'Evaluate research sovereignty metrics and farmer proximity as quantitative predictors of real-world deployment.'
     ],
@@ -127,10 +127,10 @@ export const PROJECTS: LabProject[] = [
       'Participatory computer vision datasets (CLOVES-4603, ZSTC-Clove-V1), compositional Explanation Evidence Ratio (EER) auditing, capture-session confounding diagnostics, and the offline Ubora-AI Flutter mobile grading app.',
     description: [
       'Zanzibar clove grading directly governs farmer payouts across up to a 53% price gap between Commercial Grade I and lower grades, yet inspection at ZSTC warehouses remains manual and subjective.',
-      'In partnership with ZSTC Saateni inspectors, SAAIL Lab released public commercial benchmarks (CLOVES-4603 and ZSTC-Clove-V1), proved in ETRI Journal (2026) that segmentation-first compositional pipelines achieve 100% Explanation Evidence Ratio on true clove tissue, uncovered capture-session background shortcuts, and shipped the quantized INT8 Ubora-AI Flutter app.'
+      'In partnership with ZSTC Saateni inspectors, SAAIL Lab released public commercial benchmarks (CLOVES-4603 and ZSTC-Clove-V1), proved in ETRI Journal (2026) that segmentation-first compositional pipelines achieve 100% Explanation Evidence Ratio on true clove tissue, identified capture-session background shortcuts, and shipped the quantized INT8 Ubora-AI Flutter app.'
     ],
     objectives: [
-      'Release standardized, multi-grade commercial clove imagery captured under authentic ZSTC grading workflows.',
+      'Release standardized, multi-grade commercial clove imagery collected under authentic ZSTC grading workflows.',
       'Enforce compositional segmentation-first inference so grading decisions rely strictly on clove buds rather than tray illumination shortcuts.',
       'Quantize inference into an offline Flutter + TFLite INT8 smartphone inspector usable without cloud connectivity.'
     ],
@@ -185,7 +185,7 @@ export const PROJECTS: LabProject[] = [
     summary:
       'Leak-free UUID and 64-bit pHash deduplication across 35,420 unique leaf images, sub-megabyte CropGuardNet ONNX inference (481.6K params, 5.00 ms), DGS-Bench field gap auditing, and DSA 2026 data-efficiency bounds.',
     description: [
-      'Prior plant disease detectors report inflated >99% accuracies driven by augmented duplicate leakage across splits and break catastrophically when evaluated on authentic smallholder field captures.',
+      'Prior plant disease detectors report inflated >99% accuracies driven by augmented duplicate leakage across splits and break catastrophically when evaluated on authentic smallholder field photographs.',
       'This core research thrust pairs leak-free multi-crop modeling (CropGuardNet across 8 crops and 38 classes) with formal deployment auditing (DGS-Bench Best Poster at DLI 2026), few-shot budget scaling and DCGAN failure proofs at DSA 2026 Kampala, and offline TFLite INT8 Android tooling.'
     ],
     objectives: [
@@ -238,13 +238,13 @@ export const PROJECTS: LabProject[] = [
     summary:
       'Dual-stream phenology-aware computer vision for integrated foliar/nut disease detection, pest identification, and yield forecasting across smallholder Tanzanian cashew orchards.',
     description: [
-      'Cashew is a cornerstone export crop for southern Tanzania and coastal regions, yet orchard management suffers from delayed scouting of fungal blight, gummosis, anthracnose, and red rust infestations across irregular phenological transitions.',
+      'Cashew is a primary export crop for southern Tanzania and coastal regions, yet orchard management suffers from delayed scouting of fungal blight, gummosis, anthracnose, and red rust infestations across irregular phenological transitions.',
       'Funded by IC&SR (Industrial Consultancy & Sponsored Research), IIT Madras under Exploratory Research Project ERP 2026-27 (Rs. 9.35 lakhs, August 2026 to July 2027), CashewAI develops phenology-aware dual-stream deep learning models suited for offline mobile scouting in smallholder cashew orchards.'
     ],
     objectives: [
       'Collect geographically stratified multi-season cashew leaf, bark, nut, and panicle imagery across coastal Tanzanian orchards.',
       'Train phenology-aware detectors distinguishing healthy developmental transitions from anthracnose, gummosis, leaf miner, and red rust.',
-      'Deliver low-bandwidth seasonal yield and intervention advisories tailored to farmer cooperatives.'
+      'Deliver low-bandwidth seasonal yield and intervention advisories built for farmer cooperatives.'
     ],
     deliverables: [
       'Multi-season East African cashew phenology and foliar/stem disease imagery archive',

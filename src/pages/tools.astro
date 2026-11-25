@@ -255,6 +255,8 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 
 						<div class="demo-upload-row">
 							<input id="demoFileInput" type="file" accept="image/*" class="sr-only" />
+							<input id="demoCameraInput" type="file" accept="image/*" capture="environment" class="sr-only" />
+							<button type="button" id="demoCameraBtn" class="btn btn-primary" data-i18n="demo.camera_btn">Take Field Photo</button>
 							<button type="button" id="demoUploadBtn" class="btn btn-secondary" data-i18n="demo.upload_btn">Upload Custom Image</button>
 							<button type="button" id="demoOfflineBtn" class="btn btn-secondary demo-offline-btn" data-i18n="demo.save_offline">Save Models Offline</button>
 							<span id="demoInputLabel" class="demo-input-note">No image executed yet</span>
@@ -273,7 +275,7 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 									</label>
 									<label class="cam-opacity-lbl">
 										<span><span data-i18n="demo.cam_opacity">CAM Opacity</span>: <strong id="demoCamOpacityVal">55%</strong></span>
-										<input id="demoCamOpacity" type="range" min="0" max="85" step="5" value="55" />
+										<input id="demoCamOpacity" type="range" min="0" max="85" step="5" value="55" aria-valuetext="55%" />
 									</label>
 									<div class="cam-legend" aria-hidden="true">
 										<span>Low</span>
@@ -325,9 +327,9 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 		<section class="section alt-band" id="calculators">
 			<div class="container">
 				<div class="group-head">
-					<span class="page-eyebrow">Interactive Diagnostics</span>
-					<h2>Interactive Evaluation Calculators</h2>
-					<p>Compute exact closed-form DGS-Bench mirage onset thresholds and CARA-FM edge readiness scores directly in your browser using verified equations from both repositories.</p>
+					<span class="page-eyebrow" data-i18n="calc.eyebrow">Interactive Diagnostics</span>
+					<h2 data-i18n="calc.title">Interactive Evaluation Calculators</h2>
+					<p data-i18n="calc.lead">Compute exact closed-form DGS-Bench mirage onset thresholds and CARA-FM edge readiness scores directly in your browser using verified equations from both repositories.</p>
 				</div>
 
 				<div class="apps-grid apps-grid-2">
@@ -350,19 +352,19 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 						<div class="calc-controls">
 							<label class="calc-field">
 								<span>Balanced Lab Accuracy (<code>Acc_L</code>): <strong id="dgsLabVal">55.85%</strong></span>
-								<input id="dgsLab" type="range" min="30" max="99" step="0.05" value="55.85" />
+								<input id="dgsLab" type="range" min="30" max="99" step="0.05" value="55.85" aria-valuetext="55.85%" />
 							</label>
 							<label class="calc-field">
 								<span>Majority-Class Recall (<code>r_1</code>): <strong id="dgsR1Val">65.0%</strong></span>
-								<input id="dgsR1" type="range" min="20" max="99.5" step="0.1" value="65.0" />
+								<input id="dgsR1" type="range" min="20" max="99.5" step="0.1" value="65.0" aria-valuetext="65.0%" />
 							</label>
 							<label class="calc-field">
 								<span>Mean Minority Recall (<code>r_bar</code>): <strong id="dgsRMinorVal">53.4%</strong></span>
-								<input id="dgsRMinor" type="range" min="15" max="99" step="0.1" value="53.4" />
+								<input id="dgsRMinor" type="range" min="15" max="99" step="0.1" value="53.4" aria-valuetext="53.4%" />
 							</label>
 							<label class="calc-field">
 								<span>Field Majority Prevalence (<code>p</code>): <strong id="dgsPrevVal">65.8%</strong></span>
-								<input id="dgsPrev" type="range" min="20" max="95" step="0.1" value="65.8" />
+								<input id="dgsPrev" type="range" min="20" max="95" step="0.1" value="65.8" aria-valuetext="65.8%" />
 							</label>
 						</div>
 
@@ -371,7 +373,7 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 							<div><small>Projected Field Acc</small><strong id="dgsFldAccOut">61.0%</strong></div>
 							<div><small>Projected <code>DGS_Acc</code></small><strong id="dgsDeltaOut">-5.2 pp</strong></div>
 						</div>
-						<div id="dgsAlertBox" class="calc-alert alert-warn">Evaluation Mirage Active: report DGS_F1 as primary metric.</div>
+						<div id="dgsAlertBox" class="calc-alert alert-warn" role="status" aria-live="polite">Evaluation Mirage Active: report DGS_F1 as primary metric.</div>
 					</article>
 
 					<!-- CARA-FM Edge Readiness Calculator -->
@@ -393,23 +395,23 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 						<div class="calc-controls">
 							<label class="calc-field">
 								<span>Cross-Crop Balanced Acc: <strong id="caraBaccVal">78.16%</strong></span>
-								<input id="caraBacc" type="range" min="30" max="99.5" step="0.05" value="78.16" />
+								<input id="caraBacc" type="range" min="30" max="99.5" step="0.05" value="78.16" aria-valuetext="78.16%" />
 							</label>
 							<label class="calc-field">
 								<span>Model Size (MB): <strong id="caraSizeVal">5.95 MB</strong></span>
-								<input id="caraSize" type="range" min="1" max="1500" step="0.5" value="5.95" />
+								<input id="caraSize" type="range" min="1" max="1500" step="0.5" value="5.95" aria-valuetext="5.95 MB" />
 							</label>
 							<label class="calc-field">
 								<span>Peak RAM (GB): <strong id="caraRamVal">0.19 GB</strong></span>
-								<input id="caraRam" type="range" min="0.05" max="8.0" step="0.05" value="0.19" />
+								<input id="caraRam" type="range" min="0.05" max="8.0" step="0.05" value="0.19" aria-valuetext="0.19 GB" />
 							</label>
 							<label class="calc-field">
 								<span>Target Smartphone RAM (1&ndash;4 GB): <strong id="caraDevRamVal">2.0 GB</strong></span>
-								<input id="caraDevRam" type="range" min="1.0" max="4.0" step="0.5" value="2.0" />
+								<input id="caraDevRam" type="range" min="1.0" max="4.0" step="0.5" value="2.0" aria-valuetext="2.0 GB" />
 							</label>
 							<label class="calc-field">
 								<span>CPU Latency (ms): <strong id="caraLatVal">20.7 ms</strong></span>
-								<input id="caraLat" type="range" min="5" max="1000" step="1" value="20.69" />
+								<input id="caraLat" type="range" min="5" max="1000" step="1" value="20.69" aria-valuetext="20.7 ms" />
 							</label>
 							<div class="calc-checks">
 								<label><input id="caraOffline" type="checkbox" checked /> Offline Capable</label>
@@ -422,8 +424,83 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 							<div><small><code>DFS</code></small><strong id="caraDfsOut">1.000</strong></div>
 							<div><small>Edge Tech Mean</small><strong id="caraMeanOut">0.916</strong></div>
 						</div>
-						<div id="caraAlertBox" class="calc-alert alert-ok">Edge-Ready: clears 500 MB storage, 1.30 GB RAM headroom, and 250 ms CPU gate.</div>
+						<div id="caraAlertBox" class="calc-alert alert-ok" role="status" aria-live="polite">Edge-Ready: clears 500 MB storage, 1.30 GB RAM headroom, and 250 ms CPU gate.</div>
 					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- Interactive AgriAI Bias Card & Audit Checklist Generator -->
+		<section class="section" id="bias-card">
+			<div class="container">
+				<div class="group-head">
+					<span class="page-eyebrow" data-i18n="bias.eyebrow">DSA 2026 Audit Standard</span>
+					<h2 data-i18n="bias.title">AgriAI Bias Card &amp; Dataset Audit Generator</h2>
+					<p data-i18n="bias.lead">Score any agricultural vision dataset across the five representativeness dimensions introduced in SAAIL Lab's DSA 2026 audit rubric (geography, imaging environment, class balance, image quality, and morphological coverage) and export Markdown or JSON documentation.</p>
+				</div>
+
+				<div class="bias-shell">
+					<div class="bias-form-grid">
+						<label class="bias-field bias-wide">
+							<span>Dataset or Benchmark Name</span>
+							<input id="biasDatasetName" type="text" value="iCassava 2019 (Ugandan Field Benchmark)" />
+						</label>
+
+						<label class="bias-field">
+							<span>1. Geography &amp; Regional Provenance</span>
+							<select id="biasGeo" class="bias-dim">
+								<option value="0">0 - Single lab or undocumented origin</option>
+								<option value="1">1 - Partial regional provenance listed</option>
+								<option value="2" selected>2 - East African / target regional field sites verified</option>
+							</select>
+						</label>
+
+						<label class="bias-field">
+							<span>2. Imaging Environment &amp; Canopy Clutter</span>
+							<select id="biasSensor" class="bias-dim">
+								<option value="0">0 - Uniform studio background only</option>
+								<option value="1">1 - Mixed backgrounds documented without field validation</option>
+								<option value="2" selected>2 - Authentic smartphone field lighting &amp; canopy clutter</option>
+							</select>
+						</label>
+
+						<label class="bias-field">
+							<span>3. Class Balance (Gini Coefficient &lt;= 0.10)</span>
+							<select id="biasBalance" class="bias-dim">
+								<option value="0">0 - Severe imbalance unaddressed in reporting</option>
+								<option value="1" selected>1 - Natural field skew documented with Macro-F1 (CMD 65.8%)</option>
+								<option value="2">2 - Gini balance &lt;= 0.10 or stratified balanced validation</option>
+							</select>
+						</label>
+
+						<label class="bias-field">
+							<span>4. Image Quality &amp; Resolution Fidelity</span>
+							<select id="biasDedup" class="bias-dim">
+								<option value="0">0 - Low-resolution or motion-blur artifacts unaudited</option>
+								<option value="1">1 - Basic resolution filtering applied</option>
+								<option value="2" selected>2 - Quality screening &amp; resolution standards verified</option>
+							</select>
+						</label>
+
+						<label class="bias-field">
+							<span>5. Morphological Diversity &amp; Symptom Coverage</span>
+							<select id="biasShift" class="bias-dim">
+								<option value="0">0 - Single symptom severity stage or cultivar only</option>
+								<option value="1">1 - Multiple disease stages partially represented</option>
+								<option value="2" selected>2 - Multi-stage symptom progression &amp; leaf variance covered</option>
+							</select>
+						</label>
+					</div>
+
+					<div class="bias-summary-row">
+						<div id="biasStatusBanner" class="calc-alert alert-ok" role="status" aria-live="polite">
+							AgriAI Audit Score: 9 / 10 (Tier A: Field-Validated Representativeness)
+						</div>
+						<div class="bias-export-btns">
+							<button type="button" id="copyBiasMdBtn" class="btn btn-primary">Copy Markdown Card</button>
+							<button type="button" id="downloadBiasJsonBtn" class="btn btn-secondary">Download Audit (.json)</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -481,6 +558,10 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 			document.getElementById('dgsR1Val')!.textContent = `${r1.toFixed(1)}%`;
 			document.getElementById('dgsRMinorVal')!.textContent = `${rm.toFixed(1)}%`;
 			document.getElementById('dgsPrevVal')!.textContent = `${p.toFixed(1)}%`;
+			labIn!.setAttribute('aria-valuetext', `${accL.toFixed(2)}%`);
+			r1In!.setAttribute('aria-valuetext', `${r1.toFixed(1)}%`);
+			rmIn!.setAttribute('aria-valuetext', `${rm.toFixed(1)}%`);
+			pvIn!.setAttribute('aria-valuetext', `${p.toFixed(1)}%`);
 
 			const pFrac = p / 100;
 			const accF = pFrac * r1 + (1 - pFrac) * rm;
@@ -543,11 +624,17 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 			const offline = offIn!.checked;
 			const cpuOnly = cpuIn!.checked;
 
+			const sizeLabel = `${sizeMb >= 100 ? sizeMb.toFixed(0) : sizeMb.toFixed(2)} MB`;
 			document.getElementById('caraBaccVal')!.textContent = `${bacc.toFixed(2)}%`;
-			document.getElementById('caraSizeVal')!.textContent = `${sizeMb >= 100 ? sizeMb.toFixed(0) : sizeMb.toFixed(2)} MB`;
+			document.getElementById('caraSizeVal')!.textContent = sizeLabel;
 			document.getElementById('caraRamVal')!.textContent = `${ramGb.toFixed(2)} GB`;
 			document.getElementById('caraDevRamVal')!.textContent = `${deviceRam.toFixed(1)} GB`;
 			document.getElementById('caraLatVal')!.textContent = `${latMs.toFixed(1)} ms`;
+			baccIn!.setAttribute('aria-valuetext', `${bacc.toFixed(2)}%`);
+			sizeIn!.setAttribute('aria-valuetext', sizeLabel);
+			ramIn!.setAttribute('aria-valuetext', `${ramGb.toFixed(2)} GB`);
+			devRamIn!.setAttribute('aria-valuetext', `${deviceRam.toFixed(1)} GB`);
+			latIn!.setAttribute('aria-valuetext', `${latMs.toFixed(1)} ms`);
 
 			const acc = clip01(bacc / 100);
 			const sizeScore = clip01(1 / (1 + Math.max(sizeMb, 0.01) / 125));
@@ -605,9 +692,11 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 		const metricBadge = document.getElementById('demoMetricBadge');
 		const sampleBtns = Array.from(document.querySelectorAll('.demo-sample-btn')) as HTMLButtonElement[];
 		const uploadBtn = document.getElementById('demoUploadBtn') as HTMLButtonElement | null;
+		const cameraBtn = document.getElementById('demoCameraBtn') as HTMLButtonElement | null;
 		const offlineBtn = document.getElementById('demoOfflineBtn') as HTMLButtonElement | null;
 		const offlineNote = document.getElementById('demoOfflineNote');
 		const fileInput = document.getElementById('demoFileInput') as HTMLInputElement | null;
+		const cameraInput = document.getElementById('demoCameraInput') as HTMLInputElement | null;
 		const canvas = document.getElementById('demoPreviewCanvas') as HTMLCanvasElement | null;
 		const camToggle = document.getElementById('demoCamToggle') as HTMLInputElement | null;
 		const camOpacityIn = document.getElementById('demoCamOpacity') as HTMLInputElement | null;
@@ -759,7 +848,9 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 			const out = new ImageData(new Uint8ClampedArray(lastBaseImageData.data), 224, 224);
 			const showCam = Boolean(camToggle?.checked);
 			const alphaMax = Number(camOpacityIn?.value ?? '55') / 100;
-			if (camOpacityVal) camOpacityVal.textContent = `${Math.round(alphaMax * 100)}%`;
+			const pctText = `${Math.round(alphaMax * 100)}%`;
+			if (camOpacityVal) camOpacityVal.textContent = pctText;
+			camOpacityIn?.setAttribute('aria-valuetext', pctText);
 
 			if (showCam && lastCamSlice && alphaMax > 0) {
 				let minV = Infinity;
@@ -909,8 +1000,9 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 				});
 
 				const dispName = trClass(lastBestClassEn);
+				const isSwNow = document.documentElement.lang === 'sw';
 				statusBox!.className = 'calc-alert alert-ok';
-				statusBox!.textContent = document.documentElement.lang === 'sw'
+				statusBox!.textContent = isSwNow
 					? `Utabiri: ${dispName} (uhakika wa ${lastBestProbPct.toFixed(1)}%) ndani ya ${dtMs.toFixed(1)} ms kwenye kifaa chako.`
 					: `Predicted ${dispName} (${lastBestProbPct.toFixed(1)}% confidence) in ${dtMs.toFixed(1)} ms locally on your device.`;
 
@@ -918,7 +1010,9 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 				if (liveEl) {
 					liveEl.textContent = '';
 					requestAnimationFrame(() => {
-						liveEl.textContent = `Prediction: ${dispName} in ${dtMs.toFixed(1)} milliseconds.`;
+						liveEl.textContent = isSwNow
+							? `Utabiri: ${dispName} ndani ya milisekunde ${dtMs.toFixed(1)}.`
+							: `Prediction: ${dispName} in ${dtMs.toFixed(1)} milliseconds.`;
 					});
 				}
 			} catch (err) {
@@ -977,28 +1071,29 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 			});
 		});
 
-		uploadBtn?.addEventListener('click', () => fileInput?.click());
-		fileInput?.addEventListener('change', () => {
-			const file = fileInput.files?.[0];
-			if (!file) return;
+		function handleLocalImageFile(file: File, prefix: string) {
 			const reqId = ++activeReqId;
 			const mKey = activeModel;
-			const fname = file.name;
-			fileInput.value = '';
+			const fname = file.name || 'camera_snap.jpg';
 			sampleBtns.forEach((b) => b.classList.remove('is-selected'));
 			const reader = new FileReader();
 			reader.onload = () => {
 				const img = new Image();
-				img.onload = () => runInferenceOnImage(img, `Local file: ${fname}`, reqId, mKey);
+				img.onload = () => runInferenceOnImage(img, `${prefix}: ${fname}`, reqId, mKey);
 				img.onerror = () => {
 					if (reqId !== activeReqId) return;
+					const isSwNow = document.documentElement.lang === 'sw';
 					statusBox!.className = 'calc-alert alert-warn';
-					statusBox!.textContent = `Unsupported or unreadable image format (${fname}). Please upload a JPEG, PNG, or WebP photograph.`;
+					statusBox!.textContent = isSwNow
+						? `Picha isiyosomeka (${fname}). Tafadhali pakia JPEG, PNG, au WebP.`
+						: `Unsupported or unreadable image format (${fname}). Please upload a JPEG, PNG, or WebP photograph.`;
 					const liveEl = document.getElementById('saailLiveStatus');
 					if (liveEl) {
 						liveEl.textContent = '';
 						requestAnimationFrame(() => {
-							liveEl.textContent = `Unsupported or unreadable image format (${fname}).`;
+							liveEl.textContent = isSwNow
+								? `Picha isiyosomeka (${fname}).`
+								: `Unsupported or unreadable image format (${fname}).`;
 						});
 					}
 				};
@@ -1010,6 +1105,21 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 				statusBox!.textContent = `Could not read local file ${fname}.`;
 			};
 			reader.readAsDataURL(file);
+		}
+
+		uploadBtn?.addEventListener('click', () => fileInput?.click());
+		cameraBtn?.addEventListener('click', () => cameraInput?.click());
+		fileInput?.addEventListener('change', () => {
+			const file = fileInput.files?.[0];
+			if (!file) return;
+			fileInput.value = '';
+			handleLocalImageFile(file, 'Local file');
+		});
+		cameraInput?.addEventListener('change', () => {
+			const file = cameraInput.files?.[0];
+			if (!file) return;
+			cameraInput.value = '';
+			handleLocalImageFile(file, 'Field camera');
 		});
 
 		let offlineState: 'idle' | 'cached' | 'unsupported' | 'error' = 'idle';
@@ -1052,8 +1162,9 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 				];
 				await cache.addAll(assets);
 				offlineState = 'cached';
+				const isSwNow = document.documentElement.lang === 'sw';
 				if (offlineNote) {
-					offlineNote.textContent = document.documentElement.lang === 'sw'
+					offlineNote.textContent = isSwNow
 						? 'Mifumo yote miwili, injini ya WASM, na picha za mfano zimehifadhiwa kwa matumizi bila mtandao.'
 						: 'Offline ready: WASM runtime, both ONNX models (7.14 MB), and all 9 demo images are cached on this device.';
 				}
@@ -1061,7 +1172,9 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 				if (liveEl) {
 					liveEl.textContent = '';
 					requestAnimationFrame(() => {
-						liveEl.textContent = 'WebAssembly runtime and both ONNX models cached for offline use.';
+						liveEl.textContent = isSwNow
+							? 'Injini ya WebAssembly na mifumo yote miwili imehifadhiwa kwa matumizi bila mtandao.'
+							: 'WebAssembly runtime and both ONNX models cached for offline use.';
 					});
 				}
 			} catch (_err) {
@@ -1114,6 +1227,108 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 						? 'Uhifadhi wa nje ya mtandao haukukamilika; kagua ruhusa za hifadhi.'
 						: 'Offline caching could not complete; check storage permissions.';
 				}
+			}
+		});
+	})();
+
+	(function initAgriAiBiasCard() {
+		const nameIn = document.getElementById('biasDatasetName') as HTMLInputElement | null;
+		const geoSel = document.getElementById('biasGeo') as HTMLSelectElement | null;
+		const senSel = document.getElementById('biasSensor') as HTMLSelectElement | null;
+		const balSel = document.getElementById('biasBalance') as HTMLSelectElement | null;
+		const dedSel = document.getElementById('biasDedup') as HTMLSelectElement | null;
+		const shfSel = document.getElementById('biasShift') as HTMLSelectElement | null;
+		const banner = document.getElementById('biasStatusBanner');
+		const copyMdBtn = document.getElementById('copyBiasMdBtn') as HTMLButtonElement | null;
+		const dlJsonBtn = document.getElementById('downloadBiasJsonBtn') as HTMLButtonElement | null;
+		if (!nameIn || !geoSel || !senSel || !balSel || !dedSel || !shfSel || !banner) return;
+
+		function getAuditData() {
+			const dims = [
+				{ dimension: 'Geography & Regional Provenance', score: Number(geoSel!.value), note: geoSel!.options[geoSel!.selectedIndex].text },
+				{ dimension: 'Imaging Environment & Canopy Clutter', score: Number(senSel!.value), note: senSel!.options[senSel!.selectedIndex].text },
+				{ dimension: 'Class Balance (Gini <= 0.10)', score: Number(balSel!.value), note: balSel!.options[balSel!.selectedIndex].text },
+				{ dimension: 'Image Quality & Resolution Fidelity', score: Number(dedSel!.value), note: dedSel!.options[dedSel!.selectedIndex].text },
+				{ dimension: 'Morphological Diversity & Symptom Coverage', score: Number(shfSel!.value), note: shfSel!.options[shfSel!.selectedIndex].text }
+			];
+			const total = dims.reduce((acc, d) => acc + d.score, 0);
+			const tier = total >= 8
+				? 'Tier A: Field-Validated Representativeness'
+				: total >= 5
+					? 'Tier B: Partial Audit (Document Gaps)'
+					: 'Tier C: Lab-Bound / High Deployment Risk';
+			return {
+				dataset: nameIn!.value.trim() || 'Unnamed Agricultural Dataset',
+				scoreOutOf10: total,
+				tier,
+				dimensions: dims,
+				standard: 'SAAIL Lab AgriAI Bias Card (DSA 2026)'
+			};
+		}
+
+		function updateBiasBanner() {
+			const data = getAuditData();
+			banner!.className = data.scoreOutOf10 >= 8 ? 'calc-alert alert-ok' : 'calc-alert alert-warn';
+			banner!.textContent = `AgriAI Audit Score: ${data.scoreOutOf10} / 10 (${data.tier})`;
+		}
+
+		[nameIn, geoSel, senSel, balSel, dedSel, shfSel].forEach((el) => {
+			el.addEventListener('input', updateBiasBanner);
+			el.addEventListener('change', updateBiasBanner);
+		});
+		updateBiasBanner();
+
+		copyMdBtn?.addEventListener('click', async () => {
+			const data = getAuditData();
+			const md = [
+				`# AgriAI Bias Card: ${data.dataset}`,
+				`- **Audit Score:** ${data.scoreOutOf10} / 10 (${data.tier})`,
+				`- **Framework:** ${data.standard}`,
+				'',
+				'| Dimension | Score (0-2) | Evidence Summary |',
+				'| :--- | :--- | :--- |',
+				...data.dimensions.map((d) => `| ${d.dimension} | ${d.score} / 2 | ${d.note} |`)
+			].join('\n');
+			let ok = false;
+			try {
+				await navigator.clipboard.writeText(md);
+				ok = true;
+			} catch (_e) {
+				const area = document.createElement('textarea');
+				area.value = md;
+				area.style.position = 'fixed';
+				area.style.opacity = '0';
+				document.body.appendChild(area);
+				area.select();
+				try { ok = document.execCommand('copy'); } catch (_e2) {}
+				document.body.removeChild(area);
+			}
+			if (ok) {
+				copyMdBtn.textContent = 'Markdown Copied!';
+				const liveEl = document.getElementById('saailLiveStatus');
+				if (liveEl) {
+					liveEl.textContent = '';
+					requestAnimationFrame(() => { liveEl.textContent = 'AgriAI Bias Card Markdown copied to clipboard.'; });
+				}
+				setTimeout(() => { copyMdBtn.textContent = 'Copy Markdown Card'; }, 1600);
+			}
+		});
+
+		dlJsonBtn?.addEventListener('click', () => {
+			const data = getAuditData();
+			const blob = new Blob([JSON.stringify(data, null, 2) + '\n'], { type: 'application/json;charset=utf-8' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `${data.dataset.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-agriai-bias-card.json`;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+			const liveEl = document.getElementById('saailLiveStatus');
+			if (liveEl) {
+				liveEl.textContent = '';
+				requestAnimationFrame(() => { liveEl.textContent = 'Downloaded AgriAI Bias Card JSON report.'; });
 			}
 		});
 	})();
@@ -1517,5 +1732,55 @@ import { DEMO_CLASS_SW } from '../utils/i18n';
 		.demo-canvas-col,
 		.demo-meta-readout { width: 100%; }
 		.demo-canvas-col { align-items: center; }
+	}
+
+	.bias-shell {
+		background: var(--bg-card);
+		border: 1px solid var(--border-color);
+		border-radius: 1.15rem;
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		box-shadow: 0 8px 24px var(--shadow-light);
+	}
+	.bias-form-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.bias-field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+	.bias-wide { grid-column: 1 / -1; }
+	.bias-field span {
+		font-size: 0.84rem;
+		font-weight: 700;
+		color: var(--text-primary);
+	}
+	.bias-field input,
+	.bias-field select {
+		width: 100%;
+		padding: 0.6rem 0.8rem;
+		border: 1px solid var(--border-color);
+		border-radius: 0.6rem;
+		background: var(--bg-secondary);
+		color: var(--text-primary);
+		font-family: inherit;
+		font-size: 0.88rem;
+	}
+	.bias-summary-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.9rem;
+	}
+	.bias-summary-row .calc-alert { flex: 1; min-width: min(240px, 100%); }
+	.bias-export-btns { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+	@media (max-width: 780px) {
+		.bias-form-grid { grid-template-columns: minmax(0, 1fr); }
 	}
 </style>

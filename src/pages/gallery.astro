@@ -308,9 +308,9 @@ const ALBUMS: EventAlbum[] = [
 	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
-				<span class="page-eyebrow">Conferences, Fieldwork &amp; Awards</span>
-				<h1 class="page-title">Event Gallery &amp; Poster Slideshows</h1>
-				<p class="page-lead">
+				<span class="page-eyebrow" data-i18n="gallery.eyebrow">Conferences, Fieldwork &amp; Awards</span>
+				<h1 class="page-title" data-i18n="gallery.title">Event Gallery &amp; Poster Slideshows</h1>
+				<p class="page-lead" data-i18n="gallery.lead">
 					Click any conference event below to read the session summary, inspect high-resolution posters, and step through the photo slideshow.
 				</p>
 			</div>
@@ -524,6 +524,9 @@ const ALBUMS: EventAlbum[] = [
 			renderSlide();
 			modal.hidden = false;
 			document.body.style.overflow = 'hidden';
+			document.querySelectorAll('header.modern-header, main#main-content, footer.modern-footer').forEach((el) => {
+				el.inert = true;
+			});
 			closeBtn?.focus();
 		}
 
@@ -531,6 +534,9 @@ const ALBUMS: EventAlbum[] = [
 			if (!modal) return;
 			modal.hidden = true;
 			document.body.style.overflow = '';
+			document.querySelectorAll('header.modern-header, main#main-content, footer.modern-footer').forEach((el) => {
+				el.inert = false;
+			});
 			if (lastTriggerEl && typeof lastTriggerEl.focus === 'function') {
 				lastTriggerEl.focus();
 			}
@@ -766,8 +772,8 @@ const ALBUMS: EventAlbum[] = [
 		flex-shrink: 0;
 		background: none;
 		border: 1px solid var(--border-color);
-		width: 38px;
-		height: 38px;
+		width: 44px;
+		height: 44px;
 		border-radius: 50%;
 		font-size: 1.5rem;
 		line-height: 1;
@@ -812,8 +818,8 @@ const ALBUMS: EventAlbum[] = [
 		background: rgba(12, 26, 18, 0.78);
 		color: #ffffff;
 		border: 1px solid rgba(255, 255, 255, 0.25);
-		width: 42px;
-		height: 42px;
+		width: 44px;
+		height: 44px;
 		border-radius: 50%;
 		font-size: 1.2rem;
 		cursor: pointer;

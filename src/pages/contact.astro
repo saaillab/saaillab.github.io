@@ -14,9 +14,9 @@ import ModernFooter from '../components/ModernFooter.astro';
 	<main id="main-content">
 		<section class="page-hero">
 			<div class="container">
-				<span class="page-eyebrow">Reach SAAIL Lab</span>
-				<h1 class="page-title">Contact Us</h1>
-				<p class="page-lead">
+				<span class="page-eyebrow" data-i18n="contact.eyebrow">Reach SAAIL Lab</span>
+				<h1 class="page-title" data-i18n="contact.title">Contact Us</h1>
+				<p class="page-lead" data-i18n="contact.lead">
 					Connect with our research team at the School of Engineering and Science, IIT Madras Zanzibar regarding collaborations, open datasets, visiting stays, and student research fellowships.
 				</p>
 			</div>
@@ -27,32 +27,35 @@ import ModernFooter from '../components/ModernFooter.astro';
 				<div class="contact-layout">
 					<!-- Left: Official Lab Email FormSubmit (saail_lab@iitmz.ac.in) + Direct Compose Fallbacks -->
 					<div class="form-card">
-						<h2>Send a Research Inquiry</h2>
+						<h2 data-i18n="contact.form_title">Send a Research Inquiry</h2>
 						<p class="form-intro">
 							Messages route directly to <a href="mailto:saail_lab@iitmz.ac.in">saail_lab@iitmz.ac.in</a>. You can submit below or launch your mail client directly with prefilled details.
 						</p>
 
 						<div id="formBanner" class="form-banner" hidden role="status" aria-live="polite" tabindex="-1"></div>
 
-						<form id="saailContactForm" class="contact-form" action="https://formsubmit.co/ajax/saail_lab@iitmz.ac.in" method="POST">
+						<form id="saailContactForm" class="contact-form" action="https://formsubmit.co/ajax/saail_lab@iitmz.ac.in" method="POST" novalidate>
 							<input type="hidden" name="_subject" value="New Research Inquiry · SAAIL Lab Website" />
 							<input type="hidden" name="_template" value="table" />
 							<input type="hidden" name="_captcha" value="false" />
 							<div class="form-row">
 								<div class="form-group">
 									<label for="firstName">First Name *</label>
-									<input type="text" id="firstName" name="firstName" required autocomplete="given-name" placeholder="e.g., Umniya" />
+									<input type="text" id="firstName" name="firstName" required autocomplete="given-name" aria-describedby="firstNameError" placeholder="e.g., Umniya" />
+									<span id="firstNameError" class="field-error" hidden></span>
 								</div>
 								<div class="form-group">
 									<label for="lastName">Last Name *</label>
-									<input type="text" id="lastName" name="lastName" required autocomplete="family-name" placeholder="e.g., Hassan" />
+									<input type="text" id="lastName" name="lastName" required autocomplete="family-name" aria-describedby="lastNameError" placeholder="e.g., Hassan" />
+									<span id="lastNameError" class="field-error" hidden></span>
 								</div>
 							</div>
 
 							<div class="form-row">
 								<div class="form-group">
 									<label for="email">Email Address *</label>
-									<input type="email" id="email" name="email" required autocomplete="email" placeholder="you@institution.edu" />
+									<input type="email" id="email" name="email" required autocomplete="email" aria-describedby="emailError" placeholder="you@institution.edu" />
+									<span id="emailError" class="field-error" hidden></span>
 								</div>
 								<div class="form-group">
 									<label for="institution">Institution / Organization</label>
@@ -62,7 +65,7 @@ import ModernFooter from '../components/ModernFooter.astro';
 
 							<div class="form-group">
 								<label for="topic">Inquiry Topic *</label>
-								<select id="topic" name="topic" required>
+								<select id="topic" name="topic" required aria-describedby="topicError">
 									<option value="">Select a topic...</option>
 									<option value="Agriculture & Blue Economy Research">Precision Agriculture &amp; Blue Economy Collaboration</option>
 									<option value="Swahili NLP & Dira Provenance">Swahili NLP, Corpus &amp; Dira Provenance</option>
@@ -72,16 +75,19 @@ import ModernFooter from '../components/ModernFooter.astro';
 									<option value="Dataset or Code Access">Dataset, Benchmark, or Code Access</option>
 									<option value="General Inquiry">General Lab Inquiry</option>
 								</select>
+								<span id="topicError" class="field-error" hidden></span>
 							</div>
 
 							<div class="form-group">
 								<label for="portfolioUrl">CV, Paper, or GitHub Link (Optional)</label>
-								<input type="url" id="portfolioUrl" name="portfolioUrl" autocomplete="url" placeholder="https://github.com/... or Google Drive link" />
+								<input type="url" id="portfolioUrl" name="portfolioUrl" autocomplete="url" aria-describedby="portfolioUrlError" placeholder="https://github.com/... or Google Drive link" />
+								<span id="portfolioUrlError" class="field-error" hidden></span>
 							</div>
 
 							<div class="form-group">
 								<label for="message">Message *</label>
-								<textarea id="message" name="message" rows="5" required placeholder="Share details of your research proposal, question, or background..."></textarea>
+								<textarea id="message" name="message" rows="5" required aria-describedby="messageError" placeholder="Share details of your research proposal, question, or background..."></textarea>
+								<span id="messageError" class="field-error" hidden></span>
 							</div>
 
 							<div class="submit-actions">
@@ -250,8 +256,62 @@ import ModernFooter from '../components/ModernFooter.astro';
 
 		if (!(form instanceof HTMLFormElement)) return;
 
+		function setFieldError(id: string, msg: string) {
+			const inputEl = document.getElementById(id) as (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null);
+			const errEl = document.getElementById(`${id}Error`);
+			if (!inputEl) return false;
+			if (msg) {
+				inputEl.setAttribute('aria-invalid', 'true');
+				if (errEl) {
+					errEl.textContent = msg;
+					errEl.hidden = false;
+				}
+				return false;
+			}
+			inputEl.removeAttribute('aria-invalid');
+			if (errEl) {
+				errEl.textContent = '';
+				errEl.hidden = true;
+			}
+			return true;
+		}
+
+		function validateForm(): boolean {
+			const first = (document.getElementById('firstName') as HTMLInputElement | null)?.value.trim() || '';
+			const last = (document.getElementById('lastName') as HTMLInputElement | null)?.value.trim() || '';
+			const mail = (document.getElementById('email') as HTMLInputElement | null)?.value.trim() || '';
+			const topicVal = (document.getElementById('topic') as HTMLSelectElement | null)?.value.trim() || '';
+			const urlVal = (document.getElementById('portfolioUrl') as HTMLInputElement | null)?.value.trim() || '';
+			const msgVal = (document.getElementById('message') as HTMLTextAreaElement | null)?.value.trim() || '';
+
+			const isSw = document.documentElement.lang === 'sw';
+			const checks: [string, boolean][] = [
+				['firstName', setFieldError('firstName', first ? '' : (isSw ? 'Tafadhali weka jina la kwanza.' : 'Please enter your first name.'))],
+				['lastName', setFieldError('lastName', last ? '' : (isSw ? 'Tafadhali weka jina la mwisho.' : 'Please enter your last name.'))],
+				['email', setFieldError('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail) ? '' : (isSw ? 'Weka barua pepe sahihi.' : 'Enter a valid email address.'))],
+				['topic', setFieldError('topic', topicVal ? '' : (isSw ? 'Chagua mada ya mawasiliano.' : 'Please select an inquiry topic.'))],
+				['portfolioUrl', setFieldError('portfolioUrl', !urlVal || (() => { try { new URL(urlVal); return true; } catch { return false; } })() ? '' : (isSw ? 'Weka kiungo sahihi cha wavuti (https://...).' : 'Enter a valid full URL starting with https:// or http://.'))],
+				['message', setFieldError('message', msgVal ? '' : (isSw ? 'Andika ujumbe wako mfupi.' : 'Please enter your message.'))]
+			];
+
+			const firstBad = checks.find(([, ok]) => !ok);
+			if (firstBad) {
+				document.getElementById(firstBad[0])?.focus();
+				showBanner(false, isSw ? 'Kagua sehemu zilizowekwa alama nyekundu kabla ya kutuma.' : 'Please review the highlighted fields below before submitting.');
+				return false;
+			}
+			return true;
+		}
+
+		['firstName', 'lastName', 'email', 'topic', 'portfolioUrl', 'message'].forEach((fid) => {
+			const el = document.getElementById(fid);
+			el?.addEventListener('input', () => setFieldError(fid, ''));
+			el?.addEventListener('change', () => setFieldError(fid, ''));
+		});
+
 		form.addEventListener('submit', async function (e) {
 			e.preventDefault();
+			if (!validateForm()) return;
 			if (submitBtn instanceof HTMLButtonElement) {
 				submitBtn.disabled = true;
 				submitBtn.textContent = 'Sending...';
@@ -355,6 +415,23 @@ import ModernFooter from '../components/ModernFooter.astro';
 		outline-offset: 2px;
 		background: var(--bg-card);
 	}
+	.form-group [aria-invalid="true"] {
+		border-color: #dc2626;
+		background: rgba(254, 242, 242, 0.45);
+	}
+	:global([data-theme="dark"]) .form-group [aria-invalid="true"] {
+		border-color: #f87171;
+		background: rgba(127, 29, 29, 0.22);
+	}
+	.field-error {
+		font-size: 0.78rem;
+		font-weight: 600;
+		color: #b91c1c;
+	}
+	:global([data-theme="dark"]) .field-error {
+		color: #fca5a5;
+	}
+	.field-error[hidden] { display: none; }
 
 	.submit-actions {
 		display: flex;

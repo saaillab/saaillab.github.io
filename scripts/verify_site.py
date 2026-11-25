@@ -19,6 +19,7 @@ class A11yAuditParser(HTMLParser):
         self.aria_controls: list[str] = []
         self.missing_alt_imgs: list[str] = []
         self.has_main_content = False
+        self.headings: list[int] = []
         self._in_btn = False
         self._btn_has_label = False
         self._btn_text: list[str] = []
@@ -26,6 +27,8 @@ class A11yAuditParser(HTMLParser):
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]):
         attr_map = {k.lower(): (v if v is not None else "") for k, v in attrs}
+        if tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
+            self.headings.append(int(tag[1]))
         if tag == "html":
             self.html_lang = attr_map.get("lang", "").strip()
         if "id" in attr_map and attr_map["id"]:
@@ -206,7 +209,7 @@ def main() -> int:
             if not isinstance(entries, list) or len(entries) < 25:
                 errors.append("search-index.json missing expected entries")
             urls = {e.get("url") for e in entries if isinstance(e, dict)}
-            for expected_url in ["/news/", "/tools/#live-demo", "/collaborations/#network-map", "/resources/#speaking", "/annual-report/", "/datasets/#explorer"]:
+            for expected_url in ["/news/", "/tools/#live-demo", "/tools/#bias-card", "/collaborations/#network-map", "/resources/#speaking", "/annual-report/", "/datasets/#explorer"]:
                 if expected_url not in urls:
                     errors.append(f"search-index.json missing {expected_url}")
             for u in urls:
@@ -272,6 +275,16 @@ def main() -> int:
                 errors.append(f"WCAG missing <html lang> in dist/{rel}")
             if not parser.has_main_content:
                 errors.append(f"WCAG missing <main id='main-content'> in dist/{rel}")
+            if parser.headings:
+                if parser.headings[0] != 1:
+                    errors.append(f"WCAG first heading is <h{parser.headings[0]}> (expected <h1>) in dist/{rel}")
+                for h_idx in range(1, len(parser.headings)):
+                    if parser.headings[h_idx] > parser.headings[h_idx - 1] + 1:
+                        errors.append(
+                            f"WCAG heading skip h{parser.headings[h_idx - 1]} -> h{parser.headings[h_idx]} in dist/{rel}"
+                        )
+            else:
+                errors.append(f"WCAG no headings found in dist/{rel}")
             if parser.empty_buttons > 0:
                 errors.append(f"WCAG {parser.empty_buttons} button(s) lack accessible label/text in dist/{rel}")
             if parser.missing_alt_imgs:

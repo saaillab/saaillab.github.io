@@ -137,6 +137,9 @@
 			lastFocused = document.activeElement as HTMLElement | null;
 			modal.hidden = false;
 			document.body.style.overflow = 'hidden';
+			document.querySelectorAll('main, footer').forEach((el) => {
+				(el as HTMLElement).inert = true;
+			});
 			input.value = '';
 			renderResults('');
 			requestAnimationFrame(() => input.focus());
@@ -148,6 +151,9 @@
 			if (!modal) return;
 			modal.hidden = true;
 			document.body.style.overflow = '';
+			document.querySelectorAll('main, footer').forEach((el) => {
+				(el as HTMLElement).inert = false;
+			});
 			input?.setAttribute('aria-expanded', 'false');
 			input?.removeAttribute('aria-activedescendant');
 			lastFocused?.focus();
@@ -231,6 +237,9 @@
 		gap: 0.7rem;
 		padding: 0.85rem 1rem;
 		border-bottom: 1px solid var(--border-color);
+	}
+	.search-top:focus-within {
+		box-shadow: inset 0 0 0 2px var(--accent-primary);
 	}
 	.search-modal-icon { color: var(--text-muted); flex-shrink: 0; }
 	#saailSearchInput {

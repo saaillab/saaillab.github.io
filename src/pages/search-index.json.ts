@@ -63,10 +63,17 @@ export const GET: APIRoute = () => {
 		},
 		{
 			title: 'Dual ONNX Live Demo: Cloves & Cassava + CAM',
-			subtitle: 'Client-side MobileNetV3-Small WebAssembly inference & visual saliency',
+			subtitle: 'Client-side MobileNetV3-Small WebAssembly inference, camera snap & visual saliency',
 			category: 'Tool',
 			url: '/tools/#live-demo',
-			keywords: 'onnx wasm demo clove grading cassava disease cam saliency heatmap browser offline'
+			keywords: 'onnx wasm demo clove grading cassava disease cam saliency heatmap camera browser offline'
+		},
+		{
+			title: 'AgriAI Bias Card & Dataset Audit Generator',
+			subtitle: 'Interactive 5-dimension DSA 2026 dataset representativeness & leakage scorer',
+			category: 'Tool',
+			url: '/tools/#bias-card',
+			keywords: 'agriai bias card dataset audit leakage representativeness markdown json'
 		},
 		{
 			title: 'Collaboration Network Map & Consortia',
